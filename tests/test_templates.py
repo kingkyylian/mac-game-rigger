@@ -15,6 +15,8 @@ BoneSpec = templates.BoneSpec
 RigTemplate = templates.RigTemplate
 load_template = templates.load_template
 
+REPO_ROOT = Path(__file__).resolve().parents[1]
+
 
 def test_loads_humanoid_template_from_json_and_counts_bones(tmp_path):
     template_path = tmp_path / "humanoid.json"
@@ -59,3 +61,21 @@ def test_loads_humanoid_template_from_json_and_counts_bones(tmp_path):
         tail_landmark="spine",
     )
     assert template.bones[1].parent == "Hips"
+
+
+def test_loads_builtin_humanoid_template_with_core_game_bones():
+    template = load_template(REPO_ROOT / "addon/mac_game_rigger/templates/humanoid.json")
+    bone_names = {bone.name for bone in template.bones}
+
+    assert template.category == "humanoid"
+    assert len(template.bones) == 17
+    assert {"Hips", "Spine", "UpperArm.L", "UpperLeg.R", "Foot.L", "Foot.R"}.issubset(
+        bone_names
+    )
+    assert template.required_landmarks
+    assert {"hips", "spine", "chest", "neck", "head"}.issubset(template.required_landmarks)
+    assert {"upper_arm.L", "upper_arm.R", "upper_leg.L", "upper_leg.R"}.issubset(
+        template.required_landmarks
+    )
+    assert template.mirror_pairs["UpperArm.L"] == "UpperArm.R"
+    assert template.mirror_pairs["UpperLeg.L"] == "UpperLeg.R"

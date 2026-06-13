@@ -1,0 +1,139 @@
+{
+  "name": "Humanoid",
+  "category": "humanoid",
+  "required_landmarks": [
+    "hips",
+    "spine",
+    "chest",
+    "neck",
+    "head",
+    "shoulder.L",
+    "upper_arm.L",
+    "lower_arm.L",
+    "hand.L",
+    "shoulder.R",
+    "upper_arm.R",
+    "lower_arm.R",
+    "hand.R",
+    "upper_leg.L",
+    "lower_leg.L",
+    "foot.L",
+    "toe.L",
+    "upper_leg.R",
+    "lower_leg.R",
+    "foot.R",
+    "toe.R"
+  ],
+  "mirror_pairs": {
+    "UpperArm.L": "UpperArm.R",
+    "LowerArm.L": "LowerArm.R",
+    "Hand.L": "Hand.R",
+    "UpperLeg.L": "UpperLeg.R",
+    "LowerLeg.L": "LowerLeg.R",
+    "Foot.L": "Foot.R"
+  },
+  "bones": [
+    {
+      "name": "Hips",
+      "parent": null,
+      "head_landmark": "hips",
+      "tail_landmark": "spine"
+    },
+    {
+      "name": "Spine",
+      "parent": "Hips",
+      "head_landmark": "spine",
+      "tail_landmark": "chest"
+    },
+    {
+      "name": "Chest",
+      "parent": "Spine",
+      "head_landmark": "chest",
+      "tail_landmark": "neck"
+    },
+    {
+      "name": "Neck",
+      "parent": "Chest",
+      "head_landmark": "neck",
+      "tail_landmark": "head"
+    },
+    {
+      "name": "Head",
+      "parent": "Neck",
+      "head_landmark": "neck",
+      "tail_landmark": "head"
+    },
+    {
+      "name": "UpperArm.L",
+      "parent": "Chest",
+      "head_landmark": "shoulder.L",
+      "tail_landmark": "upper_arm.L"
+    },
+    {
+      "name": "LowerArm.L",
+      "parent": "UpperArm.L",
+      "head_landmark": "upper_arm.L",
+      "tail_landmark": "lower_arm.L"
+    },
+    {
+      "name": "Hand.L",
+      "parent": "LowerArm.L",
+      "head_landmark": "lower_arm.L",
+      "tail_landmark": "hand.L"
+    },
+    {
+      "name": "UpperArm.R",
+      "parent": "Chest",
+      "head_landmark": "shoulder.R",
+      "tail_landmark": "upper_arm.R"
+    },
+    {
+      "name": "LowerArm.R",
+      "parent": "UpperArm.R",
+      "head_landmark": "upper_arm.R",
+      "tail_landmark": "lower_arm.R"
+    },
+    {
+      "name": "Hand.R",
+      "parent": "LowerArm.R",
+      "head_landmark": "lower_arm.R",
+      "tail_landmark": "hand.R"
+    },
+    {
+      "name": "UpperLeg.L",
+      "parent": "Hips",
+      "head_landmark": "hips",
+      "tail_landmark": "upper_leg.L"
+    },
+    {
+      "name": "LowerLeg.L",
+      "parent": "UpperLeg.L",
+      "head_landmark": "upper_leg.L",
+      "tail_landmark": "lower_leg.L"
+    },
+    {
+      "name": "Foot.L",
+      "parent": "LowerLeg.L",
+      "head_landmark": "lower_leg.L",
+      "tail_landmark": "foot.L"
+    },
+    {
+      "name": "UpperLeg.R",
+      "parent": "Hips",
+      "head_landmark": "hips",
+      "tail_landmark": "upper_leg.R"
+    },
+    {
+      "name": "LowerLeg.R",
+      "parent": "UpperLeg.R",
+      "head_landmark": "upper_leg.R",
+      "tail_landmark": "lower_leg.R"
+    },
+    {
+      "name": "Foot.R",
+      "parent": "LowerLeg.R",
+      "head_landmark": "lower_leg.R",
+      "tail_landmark": "foot.R"
+    }
+  ]
+}
