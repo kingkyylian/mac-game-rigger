@@ -13,6 +13,10 @@ class MGR_PT_main_panel(bpy.types.Panel):
         layout.label(text="Mac Game Rigger Alpha")
         layout.label(text="Assisted rigging workbench")
         layout.operator("mgr.analyze_asset", text="Analyze Selected Mesh")
+        layout.separator()
+        layout.prop(context.scene, "mgr_landmark_name")
+        layout.operator("mgr.create_landmark", text="Create Landmark")
+        layout.operator("mgr.clear_landmarks", text="Clear Landmarks")
 
 
 classes = [MGR_PT_main_panel]
