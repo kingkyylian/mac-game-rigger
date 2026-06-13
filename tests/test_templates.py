@@ -79,3 +79,21 @@ def test_loads_builtin_humanoid_template_with_core_game_bones():
     )
     assert template.mirror_pairs["UpperArm.L"] == "UpperArm.R"
     assert template.mirror_pairs["UpperLeg.L"] == "UpperLeg.R"
+
+
+def test_loads_builtin_quadruped_template_with_tail_and_leg_chains():
+    template = load_template(REPO_ROOT / "addon/mac_game_rigger/templates/quadruped.json")
+    bone_names = {bone.name for bone in template.bones}
+
+    assert template.category == "quadruped"
+    assert len(template.bones) >= 20
+    assert {"FrontUpperLeg.L", "RearUpperLeg.R", "Tail.001"}.issubset(bone_names)
+    assert {"pelvis", "spine", "chest", "neck", "head"}.issubset(
+        template.required_landmarks
+    )
+    assert {"front_leg.L", "front_leg.R", "rear_leg.L", "rear_leg.R"}.issubset(
+        template.required_landmarks
+    )
+    assert {"tail_base", "tail_tip"}.issubset(template.required_landmarks)
+    assert template.mirror_pairs["FrontUpperLeg.L"] == "FrontUpperLeg.R"
+    assert template.mirror_pairs["RearUpperLeg.L"] == "RearUpperLeg.R"
