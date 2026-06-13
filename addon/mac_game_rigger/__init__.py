@@ -1,8 +1,9 @@
 from .bl_info import bl_info
+from .ui.operators import classes as operator_classes
 from .ui.panels import classes as panel_classes
 
 
-classes = [*panel_classes]
+classes = [*operator_classes, *panel_classes]
 
 
 def register():
@@ -17,4 +18,3 @@ def unregister():
 
     for cls in reversed(classes):
         bpy.utils.unregister_class(cls)
-

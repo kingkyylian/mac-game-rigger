@@ -12,6 +12,7 @@ class MGR_PT_main_panel(bpy.types.Panel):
         layout = self.layout
         layout.label(text="Mac Game Rigger Alpha")
         layout.label(text="Assisted rigging workbench")
+        layout.operator("mgr.analyze_asset", text="Analyze Selected Mesh")
 
 
 classes = [MGR_PT_main_panel]
