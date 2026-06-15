@@ -5,6 +5,7 @@ import bpy
 from ..core.armature_builder import build_armature_from_template, collect_landmark_positions
 from ..core.landmarks import Landmark, mirror_landmark, missing_landmarks
 from ..core.templates import load_template
+from ..core.weight_cleanup import cleanup_mesh_weights
 from ..core.weight_binding import (
     apply_capsule_weights_to_mesh,
     find_mgr_armature,
@@ -235,6 +236,45 @@ class MGR_OT_apply_capsule_weights(bpy.types.Operator):
         return {"FINISHED"}
 
 
+class MGR_OT_cleanup_weights(bpy.types.Operator):
+    bl_idname = "mgr.cleanup_weights"
+    bl_label = "Cleanup Weights"
+    bl_options = {"REGISTER", "UNDO"}
+
+    def execute(self, context):
+        meshes = selected_meshes(context)
+        if not meshes:
+            self.report({"WARNING"}, "Select at least one mesh")
+            _set_weight_cleanup_message(context.scene, "No mesh selected")
+            return {"CANCELLED"}
+
+        totals = {
+            "unweighted": 0,
+            "over_limit": 0,
+            "removed_empty": 0,
+            "pruned": 0,
+            "normalized": 0,
+        }
+        for mesh in meshes:
+            result = cleanup_mesh_weights(mesh)
+            totals["unweighted"] += result.unweighted_vertices
+            totals["over_limit"] += result.over_limit_vertices
+            totals["removed_empty"] += result.removed_empty_groups
+            totals["pruned"] += result.pruned_weights
+            totals["normalized"] += result.normalized_vertices
+
+        message = (
+            f"unweighted={totals['unweighted']} "
+            f"over_limit={totals['over_limit']} "
+            f"removed_empty={totals['removed_empty']} "
+            f"pruned={totals['pruned']} "
+            f"normalized={totals['normalized']}"
+        )
+        _set_weight_cleanup_message(context.scene, message)
+        self.report({"INFO"}, message)
+        return {"FINISHED"}
+
+
 def _uses_humanoid_roll_preset(bone_name):
     return any(
         token in bone_name
@@ -262,6 +302,11 @@ def _set_validation_message(scene, message):
     scene["mgr_landmark_validation_message"] = message
 
 
+def _set_weight_cleanup_message(scene, message):
+    scene.mgr_weight_cleanup_message = message
+    scene["mgr_weight_cleanup_message"] = message
+
+
 def register_properties():
     bpy.types.Scene.mgr_landmark_name = bpy.props.StringProperty(
         name="Landmark Name",
@@ -275,6 +320,10 @@ def register_properties():
         name="Landmark Validation",
         default="",
     )
+    bpy.types.Scene.mgr_weight_cleanup_message = bpy.props.StringProperty(
+        name="Weight Cleanup",
+        default="",
+    )
 
 
 def unregister_properties():
@@ -284,6 +333,8 @@ def unregister_properties():
         del bpy.types.Scene.mgr_current_template
     if hasattr(bpy.types.Scene, "mgr_landmark_validation_message"):
         del bpy.types.Scene.mgr_landmark_validation_message
+    if hasattr(bpy.types.Scene, "mgr_weight_cleanup_message"):
+        del bpy.types.Scene.mgr_weight_cleanup_message
 
 
 classes = [
@@ -296,4 +347,5 @@ classes = [
     MGR_OT_fix_bone_rolls,
     MGR_OT_bind_automatic_weights,
     MGR_OT_apply_capsule_weights,
+    MGR_OT_cleanup_weights,
 ]

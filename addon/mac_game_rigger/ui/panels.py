@@ -25,8 +25,11 @@ class MGR_PT_main_panel(bpy.types.Panel):
         layout.operator("mgr.fix_bone_rolls", text="Fix Bone Rolls")
         layout.operator("mgr.bind_automatic_weights", text="Bind Automatic Weights")
         layout.operator("mgr.apply_capsule_weights", text="Apply Capsule Weights")
+        layout.operator("mgr.cleanup_weights", text="Cleanup Weights")
         if context.scene.mgr_landmark_validation_message:
             layout.label(text=context.scene.mgr_landmark_validation_message)
+        if context.scene.mgr_weight_cleanup_message:
+            layout.label(text=context.scene.mgr_weight_cleanup_message)
 
 
 classes = [MGR_PT_main_panel]
