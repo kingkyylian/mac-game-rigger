@@ -10,6 +10,7 @@ from ..core.pose_tests import (
     apply_neck_turn,
     reset_pose,
 )
+from ..core.preview import render_preview_png
 from ..core.qa_report import RigQAReport, save_qa_report
 from ..core.templates import load_template
 from ..core.weight_cleanup import cleanup_mesh_weights
@@ -357,6 +358,24 @@ class MGR_OT_write_qa_report(bpy.types.Operator):
         return {"FINISHED"}
 
 
+class MGR_OT_render_front_preview(bpy.types.Operator):
+    bl_idname = "mgr.render_front_preview"
+    bl_label = "Render Front Preview"
+    bl_options = {"REGISTER"}
+
+    def execute(self, context):
+        return _execute_preview_render(context, self, pose_function=None)
+
+
+class MGR_OT_render_pose_preview(bpy.types.Operator):
+    bl_idname = "mgr.render_pose_preview"
+    bl_label = "Render Pose Preview"
+    bl_options = {"REGISTER", "UNDO"}
+
+    def execute(self, context):
+        return _execute_preview_render(context, self, pose_function=apply_neck_turn)
+
+
 def _execute_pose_test(context, operator, pose_function, label):
     armature = find_mgr_armature(bpy)
     if armature is None:
@@ -374,6 +393,19 @@ def _execute_pose_test(context, operator, pose_function, label):
         report_type = {"INFO"}
     _set_pose_test_message(context.scene, message)
     operator.report(report_type, message)
+    return {"FINISHED"}
+
+
+def _execute_preview_render(context, operator, pose_function=None):
+    if pose_function is not None:
+        armature = find_mgr_armature(bpy)
+        if armature is not None:
+            pose_function(armature)
+    output_path = Path(context.scene.mgr_preview_output_path).expanduser()
+    render_preview_png(bpy, output_path)
+    message = f"Wrote preview PNG: {output_path}"
+    _set_preview_message(context.scene, message)
+    operator.report({"INFO"}, message)
     return {"FINISHED"}
 
 
@@ -447,6 +479,11 @@ def _set_qa_report_message(scene, message):
     scene["mgr_qa_report_message"] = message
 
 
+def _set_preview_message(scene, message):
+    scene.mgr_preview_message = message
+    scene["mgr_preview_message"] = message
+
+
 def register_properties():
     bpy.types.Scene.mgr_landmark_name = bpy.props.StringProperty(
         name="Landmark Name",
@@ -477,6 +514,15 @@ def register_properties():
         name="QA Report",
         default="",
     )
+    bpy.types.Scene.mgr_preview_output_path = bpy.props.StringProperty(
+        name="Preview PNG Path",
+        default=str(Path.cwd() / "preview.png"),
+        subtype="FILE_PATH",
+    )
+    bpy.types.Scene.mgr_preview_message = bpy.props.StringProperty(
+        name="Preview",
+        default="",
+    )
 
 
 def unregister_properties():
@@ -494,6 +540,10 @@ def unregister_properties():
         del bpy.types.Scene.mgr_qa_report_path
     if hasattr(bpy.types.Scene, "mgr_qa_report_message"):
         del bpy.types.Scene.mgr_qa_report_message
+    if hasattr(bpy.types.Scene, "mgr_preview_output_path"):
+        del bpy.types.Scene.mgr_preview_output_path
+    if hasattr(bpy.types.Scene, "mgr_preview_message"):
+        del bpy.types.Scene.mgr_preview_message
 
 
 classes = [
@@ -512,4 +562,6 @@ classes = [
     MGR_OT_pose_knee_bend,
     MGR_OT_pose_neck_turn,
     MGR_OT_write_qa_report,
+    MGR_OT_render_front_preview,
+    MGR_OT_render_pose_preview,
 ]

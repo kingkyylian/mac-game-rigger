@@ -34,6 +34,10 @@ class MGR_PT_main_panel(bpy.types.Panel):
         layout.separator()
         layout.prop(context.scene, "mgr_qa_report_path")
         layout.operator("mgr.write_qa_report", text="Write QA Report")
+        layout.separator()
+        layout.prop(context.scene, "mgr_preview_output_path")
+        layout.operator("mgr.render_front_preview", text="Render Front Preview")
+        layout.operator("mgr.render_pose_preview", text="Render Pose Preview")
         if context.scene.mgr_landmark_validation_message:
             layout.label(text=context.scene.mgr_landmark_validation_message)
         if context.scene.mgr_weight_cleanup_message:
@@ -42,6 +46,8 @@ class MGR_PT_main_panel(bpy.types.Panel):
             layout.label(text=context.scene.mgr_pose_test_message)
         if context.scene.mgr_qa_report_message:
             layout.label(text=context.scene.mgr_qa_report_message)
+        if context.scene.mgr_preview_message:
+            layout.label(text=context.scene.mgr_preview_message)
 
 
 classes = [MGR_PT_main_panel]
