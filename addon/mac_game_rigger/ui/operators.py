@@ -142,6 +142,45 @@ class MGR_OT_mirror_landmarks(bpy.types.Operator):
         return {"FINISHED"}
 
 
+class MGR_OT_fix_bone_rolls(bpy.types.Operator):
+    bl_idname = "mgr.fix_bone_rolls"
+    bl_label = "Fix Bone Rolls"
+    bl_options = {"REGISTER", "UNDO"}
+
+    def execute(self, context):
+        armature = bpy.data.objects.get("MGR_Armature")
+        if armature is None or armature.type != "ARMATURE":
+            self.report({"WARNING"}, "Create MGR_Armature first")
+            context.scene["mgr_last_bone_roll_count"] = 0
+            return {"CANCELLED"}
+
+        bpy.ops.object.mode_set(mode="OBJECT")
+        bpy.ops.object.select_all(action="DESELECT")
+        armature.select_set(True)
+        context.view_layer.objects.active = armature
+        bpy.ops.object.mode_set(mode="EDIT")
+
+        changed_count = 0
+        for bone in armature.data.edit_bones:
+            if not _uses_humanoid_roll_preset(bone.name):
+                continue
+            if round(bone.roll, 6) != 0.0:
+                changed_count += 1
+            bone.roll = 0.0
+
+        bpy.ops.object.mode_set(mode="OBJECT")
+        context.scene["mgr_last_bone_roll_count"] = changed_count
+        self.report({"INFO"}, f"Fixed roll on {changed_count} bones")
+        return {"FINISHED"}
+
+
+def _uses_humanoid_roll_preset(bone_name):
+    return any(
+        token in bone_name
+        for token in ("Arm", "Hand", "Leg", "Foot")
+    )
+
+
 def _validate_scene_landmarks(scene):
     template_name = scene.mgr_current_template.strip()
     template_path = TEMPLATE_DIR / f"{template_name}.json"
@@ -193,4 +232,5 @@ classes = [
     MGR_OT_validate_landmarks,
     MGR_OT_mirror_landmarks,
     MGR_OT_generate_armature,
+    MGR_OT_fix_bone_rolls,
 ]
