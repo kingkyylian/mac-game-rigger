@@ -1,7 +1,13 @@
+from pathlib import Path
+
 import bpy
+
+from ..core.landmarks import Landmark, missing_landmarks
+from ..core.templates import load_template
 
 
 LANDMARK_PREFIX = "MGR_Landmark_"
+TEMPLATE_DIR = Path(__file__).resolve().parents[1] / "templates"
 
 
 class MGR_OT_analyze_asset(bpy.types.Operator):
@@ -58,16 +64,69 @@ class MGR_OT_clear_landmarks(bpy.types.Operator):
         return {"FINISHED"}
 
 
+class MGR_OT_validate_landmarks(bpy.types.Operator):
+    bl_idname = "mgr.validate_landmarks"
+    bl_label = "Validate Landmarks"
+    bl_options = {"REGISTER"}
+
+    def execute(self, context):
+        template_name = context.scene.mgr_current_template.strip()
+        template_path = TEMPLATE_DIR / f"{template_name}.json"
+        template = load_template(template_path)
+        placed_landmarks = [
+            Landmark(
+                name=obj.name.removeprefix(LANDMARK_PREFIX),
+                position=tuple(obj.location),
+            )
+            for obj in context.scene.objects
+            if obj.name.startswith(LANDMARK_PREFIX)
+        ]
+        missing = missing_landmarks(template.required_landmarks, placed_landmarks)
+
+        if missing:
+            message = f"Missing landmarks: {', '.join(missing)}"
+            _set_validation_message(context.scene, message)
+            self.report({"WARNING"}, message)
+            return {"FINISHED"}
+
+        message = f"All {template.category} landmarks present"
+        _set_validation_message(context.scene, message)
+        self.report({"INFO"}, message)
+        return {"FINISHED"}
+
+
+def _set_validation_message(scene, message):
+    scene.mgr_landmark_validation_message = message
+    scene["mgr_landmark_validation_message"] = message
+
+
 def register_properties():
     bpy.types.Scene.mgr_landmark_name = bpy.props.StringProperty(
         name="Landmark Name",
         default="hips",
+    )
+    bpy.types.Scene.mgr_current_template = bpy.props.StringProperty(
+        name="Current Template",
+        default="humanoid",
+    )
+    bpy.types.Scene.mgr_landmark_validation_message = bpy.props.StringProperty(
+        name="Landmark Validation",
+        default="",
     )
 
 
 def unregister_properties():
     if hasattr(bpy.types.Scene, "mgr_landmark_name"):
         del bpy.types.Scene.mgr_landmark_name
+    if hasattr(bpy.types.Scene, "mgr_current_template"):
+        del bpy.types.Scene.mgr_current_template
+    if hasattr(bpy.types.Scene, "mgr_landmark_validation_message"):
+        del bpy.types.Scene.mgr_landmark_validation_message
 
 
-classes = [MGR_OT_analyze_asset, MGR_OT_create_landmark, MGR_OT_clear_landmarks]
+classes = [
+    MGR_OT_analyze_asset,
+    MGR_OT_create_landmark,
+    MGR_OT_clear_landmarks,
+    MGR_OT_validate_landmarks,
+]
