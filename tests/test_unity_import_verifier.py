@@ -122,3 +122,50 @@ exit 1
     assert result.returncode == 1
     assert "Unity import check failed with exit code 1" in result.stderr
     assert "Unity license failure" in result.stderr
+
+
+def test_unity_import_verifier_times_out_and_prints_log(tmp_path):
+    fbx_path = tmp_path / "sample.fbx"
+    fbx_path.write_bytes(b"Kaydara FBX Binary  \x00\x1a\x00")
+    fake_unity = tmp_path / "fake-unity-hangs"
+    fake_unity.write_text(
+        """#!/usr/bin/env bash
+set -euo pipefail
+log_path=""
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    -logFile)
+      log_path="$2"
+      shift 2
+      ;;
+    *)
+      shift
+      ;;
+  esac
+done
+echo "Unity import still waiting" > "$log_path"
+sleep 5
+""",
+        encoding="utf-8",
+    )
+    fake_unity.chmod(0o755)
+
+    result = subprocess.run(
+        [
+            str(SCRIPT_PATH),
+            "--fbx",
+            str(fbx_path),
+            "--unity",
+            str(fake_unity),
+            "--timeout-seconds",
+            "1",
+        ],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert result.returncode == 124
+    assert "Unity import check timed out after 1 seconds" in result.stderr
+    assert "Unity import still waiting" in result.stderr

@@ -4,12 +4,13 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 UNITY_EDITOR="${UNITY_EDITOR:-}"
+TIMEOUT_SECONDS="${UNITY_IMPORT_TIMEOUT_SECONDS:-180}"
 FBX_PATH=""
 PROJECT_PATH=""
 
 usage() {
   cat <<'USAGE'
-Usage: scripts/verify_unity_fbx_import.sh --fbx path/to/model.fbx [--unity /path/to/Unity] [--project /path/to/temp-project]
+Usage: scripts/verify_unity_fbx_import.sh --fbx path/to/model.fbx [--unity /path/to/Unity] [--project /path/to/temp-project] [--timeout-seconds 180]
 
 Verifies that Unity can import an exported FBX by running a batchmode Unity project
 with the MacGameRiggerFbxImportCheck editor script.
@@ -28,6 +29,10 @@ while [ "$#" -gt 0 ]; do
       ;;
     --project)
       PROJECT_PATH="$2"
+      shift 2
+      ;;
+    --timeout-seconds)
+      TIMEOUT_SECONDS="$2"
       shift 2
       ;;
     -h|--help)
@@ -51,6 +56,18 @@ fi
 if [ ! -f "$FBX_PATH" ]; then
   echo "FBX file not found: $FBX_PATH" >&2
   exit 66
+fi
+
+case "$TIMEOUT_SECONDS" in
+  ''|*[!0-9]*)
+    echo "Invalid --timeout-seconds value: $TIMEOUT_SECONDS" >&2
+    exit 64
+    ;;
+esac
+
+if [ "$TIMEOUT_SECONDS" -lt 1 ]; then
+  echo "Invalid --timeout-seconds value: $TIMEOUT_SECONDS" >&2
+  exit 64
 fi
 
 find_unity_editor() {
@@ -93,7 +110,27 @@ set +e
   -nographics \
   -projectPath "$PROJECT_PATH" \
   -executeMethod MacGameRiggerFbxImportCheck.Run \
-  -logFile "$LOG_PATH"
+  -logFile "$LOG_PATH" &
+unity_pid=$!
+elapsed=0
+while kill -0 "$unity_pid" >/dev/null 2>&1; do
+  if [ "$elapsed" -ge "$TIMEOUT_SECONDS" ]; then
+    kill "$unity_pid" >/dev/null 2>&1
+    sleep 1
+    if kill -0 "$unity_pid" >/dev/null 2>&1; then
+      kill -9 "$unity_pid" >/dev/null 2>&1
+    fi
+    wait "$unity_pid" >/dev/null 2>&1
+    echo "Unity import check timed out after $TIMEOUT_SECONDS seconds" >&2
+    if [ -f "$LOG_PATH" ]; then
+      tail -n 80 "$LOG_PATH" >&2
+    fi
+    exit 124
+  fi
+  sleep 1
+  elapsed=$((elapsed + 1))
+done
+wait "$unity_pid"
 unity_status=$?
 set -e
 
