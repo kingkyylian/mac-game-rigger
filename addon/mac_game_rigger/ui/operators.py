@@ -4,6 +4,12 @@ import bpy
 
 from ..core.armature_builder import build_armature_from_template, collect_landmark_positions
 from ..core.landmarks import Landmark, mirror_landmark, missing_landmarks
+from ..core.pose_tests import (
+    apply_humanoid_arm_raise,
+    apply_humanoid_knee_bend,
+    apply_neck_turn,
+    reset_pose,
+)
 from ..core.templates import load_template
 from ..core.weight_cleanup import cleanup_mesh_weights
 from ..core.weight_binding import (
@@ -275,6 +281,82 @@ class MGR_OT_cleanup_weights(bpy.types.Operator):
         return {"FINISHED"}
 
 
+class MGR_OT_reset_pose(bpy.types.Operator):
+    bl_idname = "mgr.reset_pose"
+    bl_label = "Reset Pose"
+    bl_options = {"REGISTER", "UNDO"}
+
+    def execute(self, context):
+        return _execute_pose_test(
+            context,
+            self,
+            reset_pose,
+            "Reset pose",
+        )
+
+
+class MGR_OT_pose_arm_raise(bpy.types.Operator):
+    bl_idname = "mgr.pose_arm_raise"
+    bl_label = "Pose Arm Raise"
+    bl_options = {"REGISTER", "UNDO"}
+
+    def execute(self, context):
+        return _execute_pose_test(
+            context,
+            self,
+            apply_humanoid_arm_raise,
+            "Arm raise",
+        )
+
+
+class MGR_OT_pose_knee_bend(bpy.types.Operator):
+    bl_idname = "mgr.pose_knee_bend"
+    bl_label = "Pose Knee Bend"
+    bl_options = {"REGISTER", "UNDO"}
+
+    def execute(self, context):
+        return _execute_pose_test(
+            context,
+            self,
+            apply_humanoid_knee_bend,
+            "Knee bend",
+        )
+
+
+class MGR_OT_pose_neck_turn(bpy.types.Operator):
+    bl_idname = "mgr.pose_neck_turn"
+    bl_label = "Pose Neck Turn"
+    bl_options = {"REGISTER", "UNDO"}
+
+    def execute(self, context):
+        return _execute_pose_test(
+            context,
+            self,
+            apply_neck_turn,
+            "Neck turn",
+        )
+
+
+def _execute_pose_test(context, operator, pose_function, label):
+    armature = find_mgr_armature(bpy)
+    if armature is None:
+        message = "Generate MGR_Armature first"
+        _set_pose_test_message(context.scene, message)
+        operator.report({"WARNING"}, message)
+        return {"CANCELLED"}
+
+    result = pose_function(armature)
+    if result.missing_bones:
+        message = f"Missing pose bones: {', '.join(result.missing_bones)}"
+        report_type = {"WARNING"}
+    else:
+        message = f"{label}: changed={result.changed_bones}"
+        report_type = {"INFO"}
+    _set_pose_test_message(context.scene, message)
+    operator.report(report_type, message)
+    return {"FINISHED"}
+
+
 def _uses_humanoid_roll_preset(bone_name):
     return any(
         token in bone_name
@@ -307,6 +389,11 @@ def _set_weight_cleanup_message(scene, message):
     scene["mgr_weight_cleanup_message"] = message
 
 
+def _set_pose_test_message(scene, message):
+    scene.mgr_pose_test_message = message
+    scene["mgr_pose_test_message"] = message
+
+
 def register_properties():
     bpy.types.Scene.mgr_landmark_name = bpy.props.StringProperty(
         name="Landmark Name",
@@ -324,6 +411,10 @@ def register_properties():
         name="Weight Cleanup",
         default="",
     )
+    bpy.types.Scene.mgr_pose_test_message = bpy.props.StringProperty(
+        name="Pose Test",
+        default="",
+    )
 
 
 def unregister_properties():
@@ -335,6 +426,8 @@ def unregister_properties():
         del bpy.types.Scene.mgr_landmark_validation_message
     if hasattr(bpy.types.Scene, "mgr_weight_cleanup_message"):
         del bpy.types.Scene.mgr_weight_cleanup_message
+    if hasattr(bpy.types.Scene, "mgr_pose_test_message"):
+        del bpy.types.Scene.mgr_pose_test_message
 
 
 classes = [
@@ -348,4 +441,8 @@ classes = [
     MGR_OT_bind_automatic_weights,
     MGR_OT_apply_capsule_weights,
     MGR_OT_cleanup_weights,
+    MGR_OT_reset_pose,
+    MGR_OT_pose_arm_raise,
+    MGR_OT_pose_knee_bend,
+    MGR_OT_pose_neck_turn,
 ]

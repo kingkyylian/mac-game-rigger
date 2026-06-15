@@ -26,10 +26,17 @@ class MGR_PT_main_panel(bpy.types.Panel):
         layout.operator("mgr.bind_automatic_weights", text="Bind Automatic Weights")
         layout.operator("mgr.apply_capsule_weights", text="Apply Capsule Weights")
         layout.operator("mgr.cleanup_weights", text="Cleanup Weights")
+        layout.separator()
+        layout.operator("mgr.reset_pose", text="Reset Pose")
+        layout.operator("mgr.pose_arm_raise", text="Pose Arm Raise")
+        layout.operator("mgr.pose_knee_bend", text="Pose Knee Bend")
+        layout.operator("mgr.pose_neck_turn", text="Pose Neck Turn")
         if context.scene.mgr_landmark_validation_message:
             layout.label(text=context.scene.mgr_landmark_validation_message)
         if context.scene.mgr_weight_cleanup_message:
             layout.label(text=context.scene.mgr_weight_cleanup_message)
+        if context.scene.mgr_pose_test_message:
+            layout.label(text=context.scene.mgr_pose_test_message)
 
 
 classes = [MGR_PT_main_panel]
