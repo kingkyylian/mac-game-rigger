@@ -5,7 +5,11 @@ import bpy
 from ..core.armature_builder import build_armature_from_template, collect_landmark_positions
 from ..core.landmarks import Landmark, mirror_landmark, missing_landmarks
 from ..core.templates import load_template
-from ..core.weight_binding import find_mgr_armature, selected_meshes
+from ..core.weight_binding import (
+    apply_capsule_weights_to_mesh,
+    find_mgr_armature,
+    selected_meshes,
+)
 
 
 LANDMARK_PREFIX = "MGR_Landmark_"
@@ -204,6 +208,33 @@ class MGR_OT_bind_automatic_weights(bpy.types.Operator):
         return {"FINISHED"}
 
 
+class MGR_OT_apply_capsule_weights(bpy.types.Operator):
+    bl_idname = "mgr.apply_capsule_weights"
+    bl_label = "Apply Capsule Weights"
+    bl_options = {"REGISTER", "UNDO"}
+
+    def execute(self, context):
+        meshes = selected_meshes(context)
+        armature = find_mgr_armature(bpy)
+        if not meshes:
+            self.report({"WARNING"}, "Select at least one mesh")
+            context.scene["mgr_last_capsule_weighted_vertices"] = 0
+            return {"CANCELLED"}
+        if armature is None:
+            self.report({"WARNING"}, "Generate MGR_Armature first")
+            context.scene["mgr_last_capsule_weighted_vertices"] = 0
+            return {"CANCELLED"}
+
+        weighted_vertices = 0
+        for mesh in meshes:
+            result = apply_capsule_weights_to_mesh(mesh, armature)
+            weighted_vertices += result.weighted_vertices
+
+        context.scene["mgr_last_capsule_weighted_vertices"] = weighted_vertices
+        self.report({"INFO"}, f"Capsule-weighted {weighted_vertices} vertices")
+        return {"FINISHED"}
+
+
 def _uses_humanoid_roll_preset(bone_name):
     return any(
         token in bone_name
@@ -264,4 +295,5 @@ classes = [
     MGR_OT_generate_armature,
     MGR_OT_fix_bone_rolls,
     MGR_OT_bind_automatic_weights,
+    MGR_OT_apply_capsule_weights,
 ]

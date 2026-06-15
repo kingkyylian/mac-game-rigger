@@ -1,5 +1,6 @@
 import importlib.util
 from pathlib import Path
+import sys
 
 import pytest
 
@@ -8,6 +9,7 @@ MODULE_PATH = Path(__file__).resolve().parents[1] / "addon/mac_game_rigger/core/
 spec = importlib.util.spec_from_file_location("weight_binding", MODULE_PATH)
 weight_binding = importlib.util.module_from_spec(spec)
 assert spec.loader is not None
+sys.modules[spec.name] = weight_binding
 spec.loader.exec_module(weight_binding)
 
 
