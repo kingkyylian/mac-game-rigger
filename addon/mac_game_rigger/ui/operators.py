@@ -10,8 +10,13 @@ from ..core.pose_tests import (
     apply_neck_turn,
     reset_pose,
 )
+from ..core.qa_report import RigQAReport, save_qa_report
 from ..core.templates import load_template
 from ..core.weight_cleanup import cleanup_mesh_weights
+from ..core.weight_cleanup import (
+    find_unweighted_vertices,
+    find_vertices_over_influence_limit,
+)
 from ..core.weight_binding import (
     apply_capsule_weights_to_mesh,
     find_mgr_armature,
@@ -337,6 +342,21 @@ class MGR_OT_pose_neck_turn(bpy.types.Operator):
         )
 
 
+class MGR_OT_write_qa_report(bpy.types.Operator):
+    bl_idname = "mgr.write_qa_report"
+    bl_label = "Write QA Report"
+    bl_options = {"REGISTER"}
+
+    def execute(self, context):
+        output_path = Path(context.scene.mgr_qa_report_path).expanduser()
+        report = _build_scene_qa_report(context.scene)
+        save_qa_report(report, output_path)
+        message = f"Wrote QA report: {output_path}"
+        _set_qa_report_message(context.scene, message)
+        self.report({"INFO"}, message)
+        return {"FINISHED"}
+
+
 def _execute_pose_test(context, operator, pose_function, label):
     armature = find_mgr_armature(bpy)
     if armature is None:
@@ -355,6 +375,34 @@ def _execute_pose_test(context, operator, pose_function, label):
     _set_pose_test_message(context.scene, message)
     operator.report(report_type, message)
     return {"FINISHED"}
+
+
+def _build_scene_qa_report(scene):
+    meshes = [obj for obj in scene.objects if obj.type == "MESH"]
+    armature = find_mgr_armature(bpy)
+    unweighted_vertices = sum(len(find_unweighted_vertices(mesh)) for mesh in meshes)
+    over_limit_vertices = sum(
+        len(find_vertices_over_influence_limit(mesh))
+        for mesh in meshes
+    )
+    warnings = []
+    errors = []
+    if armature is None:
+        errors.append("MGR_Armature missing")
+    if unweighted_vertices:
+        warnings.append(f"Unweighted vertices: {unweighted_vertices}")
+    if over_limit_vertices:
+        warnings.append(f"Over-limit vertices: {over_limit_vertices}")
+
+    return RigQAReport(
+        mesh_count=len(meshes),
+        vertex_count=sum(len(mesh.data.vertices) for mesh in meshes),
+        bone_count=len(armature.data.bones) if armature is not None else 0,
+        unweighted_vertices=unweighted_vertices,
+        over_limit_vertices=over_limit_vertices,
+        warnings=tuple(warnings),
+        errors=tuple(errors),
+    )
 
 
 def _uses_humanoid_roll_preset(bone_name):
@@ -394,6 +442,11 @@ def _set_pose_test_message(scene, message):
     scene["mgr_pose_test_message"] = message
 
 
+def _set_qa_report_message(scene, message):
+    scene.mgr_qa_report_message = message
+    scene["mgr_qa_report_message"] = message
+
+
 def register_properties():
     bpy.types.Scene.mgr_landmark_name = bpy.props.StringProperty(
         name="Landmark Name",
@@ -415,6 +468,15 @@ def register_properties():
         name="Pose Test",
         default="",
     )
+    bpy.types.Scene.mgr_qa_report_path = bpy.props.StringProperty(
+        name="QA Report Path",
+        default=str(Path.cwd() / "qa_report.json"),
+        subtype="FILE_PATH",
+    )
+    bpy.types.Scene.mgr_qa_report_message = bpy.props.StringProperty(
+        name="QA Report",
+        default="",
+    )
 
 
 def unregister_properties():
@@ -428,6 +490,10 @@ def unregister_properties():
         del bpy.types.Scene.mgr_weight_cleanup_message
     if hasattr(bpy.types.Scene, "mgr_pose_test_message"):
         del bpy.types.Scene.mgr_pose_test_message
+    if hasattr(bpy.types.Scene, "mgr_qa_report_path"):
+        del bpy.types.Scene.mgr_qa_report_path
+    if hasattr(bpy.types.Scene, "mgr_qa_report_message"):
+        del bpy.types.Scene.mgr_qa_report_message
 
 
 classes = [
@@ -445,4 +511,5 @@ classes = [
     MGR_OT_pose_arm_raise,
     MGR_OT_pose_knee_bend,
     MGR_OT_pose_neck_turn,
+    MGR_OT_write_qa_report,
 ]
