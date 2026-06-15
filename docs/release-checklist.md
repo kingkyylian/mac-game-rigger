@@ -17,7 +17,7 @@ Release: Mac Game Rigger Alpha 0.1.0
 | Preview PNG | pass | `blender_tests/test_preview_operator.py`. |
 | Export | pass | `blender_tests/test_unity_fbx_export_operator.py` and `test_unreal_fbx_export_operator.py` create FBX files and QA JSON. |
 | Package | pass | `scripts/package_addon.sh` creates `dist/MacGameRigger-0.1.0.zip`. |
-| Smoke benchmark | partial | `docs/alpha-smoke-results.md` has 5 generated proxy rows, but real Unity/Unreal import is blocked. |
+| Smoke benchmark | partial | `docs/alpha-smoke-results.md` has 5 generated proxy rows, but real Unity/Unreal import is blocked by sandboxed Unity batchmode. |
 
 ## Verification Commands
 
@@ -32,11 +32,14 @@ blender --background --factory-startup --python blender_tests/test_preview_opera
 blender --background --factory-startup --python blender_tests/test_unity_fbx_export_operator.py
 blender --background --factory-startup --python blender_tests/test_unreal_fbx_export_operator.py
 scripts/package_addon.sh
+python3 -m pytest tests/test_unity_import_verifier.py -q
+scripts/verify_unity_fbx_import.sh --fbx <exported.fbx> --unity /Applications/Unity/Hub/Editor/6000.4.1f1/Unity.app/Contents/MacOS/Unity
 ```
 
 ## Known issues
 
-- Unity/Unreal engine import validation is blocked: Unity Hub is installed, but no Unity Editor binary was found; `UnrealEditor` is not available on `PATH`.
+- Unity import validation is blocked inside the current sandbox: Unity Editor exists at `/Applications/Unity/Hub/Editor/6000.4.1f1/Unity.app/Contents/MacOS/Unity`, but Unity Package Manager fails with `listen EPERM` unless the verifier is allowed to run outside the sandbox.
+- Unreal engine import validation is not available: `UnrealEditor` is not on `PATH`.
 - Smoke results currently use generated proxy scenes, not licensed production assets.
 - Wing and prop-specific rig helpers are not implemented in alpha 0.1.0.
 - Finger rigging, cloth/skirt deformation, and advanced tail/wing controls remain out of V1 scope.
