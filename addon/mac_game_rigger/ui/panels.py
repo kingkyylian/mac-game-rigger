@@ -16,6 +16,7 @@ class MGR_PT_main_panel(bpy.types.Panel):
         layout.separator()
         layout.prop(context.scene, "mgr_landmark_name")
         layout.operator("mgr.create_landmark", text="Create Landmark")
+        layout.operator("mgr.mirror_landmarks", text="Mirror Landmarks")
         layout.operator("mgr.clear_landmarks", text="Clear Landmarks")
         layout.separator()
         layout.prop(context.scene, "mgr_current_template")

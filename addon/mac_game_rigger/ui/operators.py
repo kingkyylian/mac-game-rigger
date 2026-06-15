@@ -2,7 +2,7 @@ from pathlib import Path
 
 import bpy
 
-from ..core.landmarks import Landmark, missing_landmarks
+from ..core.landmarks import Landmark, mirror_landmark, missing_landmarks
 from ..core.templates import load_template
 
 
@@ -95,6 +95,42 @@ class MGR_OT_validate_landmarks(bpy.types.Operator):
         return {"FINISHED"}
 
 
+class MGR_OT_mirror_landmarks(bpy.types.Operator):
+    bl_idname = "mgr.mirror_landmarks"
+    bl_label = "Mirror Landmarks"
+    bl_options = {"REGISTER", "UNDO"}
+
+    def execute(self, context):
+        mirrored_count = 0
+        left_landmarks = [
+            obj
+            for obj in context.scene.objects
+            if obj.name.startswith(LANDMARK_PREFIX) and obj.name.endswith(".L")
+        ]
+
+        for left_obj in left_landmarks:
+            source = Landmark(
+                name=left_obj.name.removeprefix(LANDMARK_PREFIX),
+                position=tuple(left_obj.location),
+            )
+            mirrored = mirror_landmark(source)
+            target_name = f"{LANDMARK_PREFIX}{mirrored.name}"
+            target = bpy.data.objects.get(target_name)
+            if target is None:
+                bpy.ops.object.empty_add(type="SPHERE", location=mirrored.position)
+                target = context.object
+                target.name = target_name
+                target.empty_display_size = left_obj.empty_display_size
+            else:
+                target.location = mirrored.position
+            target.empty_display_type = "SPHERE"
+            mirrored_count += 1
+
+        message = f"Mirrored {mirrored_count} landmarks"
+        self.report({"INFO"}, message)
+        return {"FINISHED"}
+
+
 def _set_validation_message(scene, message):
     scene.mgr_landmark_validation_message = message
     scene["mgr_landmark_validation_message"] = message
@@ -129,4 +165,5 @@ classes = [
     MGR_OT_create_landmark,
     MGR_OT_clear_landmarks,
     MGR_OT_validate_landmarks,
+    MGR_OT_mirror_landmarks,
 ]
