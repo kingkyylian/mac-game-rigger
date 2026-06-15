@@ -23,6 +23,7 @@ class MGR_PT_main_panel(bpy.types.Panel):
         layout.operator("mgr.validate_landmarks", text="Validate Landmarks")
         layout.operator("mgr.generate_armature", text="Generate Armature")
         layout.operator("mgr.fix_bone_rolls", text="Fix Bone Rolls")
+        layout.operator("mgr.bind_automatic_weights", text="Bind Automatic Weights")
         if context.scene.mgr_landmark_validation_message:
             layout.label(text=context.scene.mgr_landmark_validation_message)
 

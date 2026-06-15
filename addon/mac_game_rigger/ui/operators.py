@@ -5,6 +5,7 @@ import bpy
 from ..core.armature_builder import build_armature_from_template, collect_landmark_positions
 from ..core.landmarks import Landmark, mirror_landmark, missing_landmarks
 from ..core.templates import load_template
+from ..core.weight_binding import find_mgr_armature, selected_meshes
 
 
 LANDMARK_PREFIX = "MGR_Landmark_"
@@ -174,6 +175,35 @@ class MGR_OT_fix_bone_rolls(bpy.types.Operator):
         return {"FINISHED"}
 
 
+class MGR_OT_bind_automatic_weights(bpy.types.Operator):
+    bl_idname = "mgr.bind_automatic_weights"
+    bl_label = "Bind Automatic Weights"
+    bl_options = {"REGISTER", "UNDO"}
+
+    def execute(self, context):
+        meshes = selected_meshes(context)
+        armature = find_mgr_armature(bpy)
+        if not meshes:
+            self.report({"WARNING"}, "Select at least one mesh")
+            return {"CANCELLED"}
+        if armature is None:
+            self.report({"WARNING"}, "Generate MGR_Armature first")
+            return {"CANCELLED"}
+
+        bound_count = 0
+        for mesh in meshes:
+            bpy.ops.object.mode_set(mode="OBJECT")
+            bpy.ops.object.select_all(action="DESELECT")
+            mesh.select_set(True)
+            armature.select_set(True)
+            context.view_layer.objects.active = armature
+            bpy.ops.object.parent_set(type="ARMATURE_AUTO")
+            bound_count += 1
+
+        self.report({"INFO"}, f"Bound {bound_count} mesh objects")
+        return {"FINISHED"}
+
+
 def _uses_humanoid_roll_preset(bone_name):
     return any(
         token in bone_name
@@ -233,4 +263,5 @@ classes = [
     MGR_OT_mirror_landmarks,
     MGR_OT_generate_armature,
     MGR_OT_fix_bone_rolls,
+    MGR_OT_bind_automatic_weights,
 ]
