@@ -36,6 +36,7 @@ def test_save_qa_report_writes_expected_json_fields(tmp_path):
         "bone_count": 17,
         "unweighted_vertices": 3,
         "over_limit_vertices": 4,
+        "export_profile": None,
         "warnings": ["Missing preview"],
         "errors": ["No export path"],
     }

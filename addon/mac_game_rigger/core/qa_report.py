@@ -12,6 +12,7 @@ class RigQAReport:
     bone_count: int
     unweighted_vertices: int
     over_limit_vertices: int
+    export_profile: str | None = None
     warnings: tuple[str, ...] = ()
     errors: tuple[str, ...] = ()
 

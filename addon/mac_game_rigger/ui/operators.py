@@ -3,6 +3,8 @@ from pathlib import Path
 import bpy
 
 from ..core.armature_builder import build_armature_from_template, collect_landmark_positions
+from ..core.export_profiles import load_builtin_export_profile
+from ..core.fbx_export import export_fbx_with_profile
 from ..core.landmarks import Landmark, mirror_landmark, missing_landmarks
 from ..core.pose_tests import (
     apply_humanoid_arm_raise,
@@ -376,6 +378,20 @@ class MGR_OT_render_pose_preview(bpy.types.Operator):
         return _execute_preview_render(context, self, pose_function=apply_neck_turn)
 
 
+class MGR_OT_export_unity_fbx(bpy.types.Operator):
+    bl_idname = "mgr.export_unity_fbx"
+    bl_label = "Export Unity FBX"
+    bl_options = {"REGISTER"}
+
+    def execute(self, context):
+        return _execute_fbx_export(
+            context,
+            self,
+            profile_slug="unity_fbx",
+            output_path=Path(context.scene.mgr_unity_export_path).expanduser(),
+        )
+
+
 def _execute_pose_test(context, operator, pose_function, label):
     armature = find_mgr_armature(bpy)
     if armature is None:
@@ -396,6 +412,20 @@ def _execute_pose_test(context, operator, pose_function, label):
     return {"FINISHED"}
 
 
+def _execute_fbx_export(context, operator, profile_slug: str, output_path: Path):
+    profile = load_builtin_export_profile(profile_slug)
+    export_fbx_with_profile(bpy, output_path, profile)
+    report = _build_scene_qa_report(context.scene, export_profile=profile.slug)
+    save_qa_report(report, output_path.with_suffix(".qa.json"))
+    message = (
+        f"Exported {profile.name}: {output_path} "
+        f"add_leaf_bones={profile.add_leaf_bones}"
+    )
+    _set_export_message(context.scene, message)
+    operator.report({"INFO"}, message)
+    return {"FINISHED"}
+
+
 def _execute_preview_render(context, operator, pose_function=None):
     if pose_function is not None:
         armature = find_mgr_armature(bpy)
@@ -409,7 +439,7 @@ def _execute_preview_render(context, operator, pose_function=None):
     return {"FINISHED"}
 
 
-def _build_scene_qa_report(scene):
+def _build_scene_qa_report(scene, export_profile=None):
     meshes = [obj for obj in scene.objects if obj.type == "MESH"]
     armature = find_mgr_armature(bpy)
     unweighted_vertices = sum(len(find_unweighted_vertices(mesh)) for mesh in meshes)
@@ -432,6 +462,7 @@ def _build_scene_qa_report(scene):
         bone_count=len(armature.data.bones) if armature is not None else 0,
         unweighted_vertices=unweighted_vertices,
         over_limit_vertices=over_limit_vertices,
+        export_profile=export_profile,
         warnings=tuple(warnings),
         errors=tuple(errors),
     )
@@ -484,6 +515,11 @@ def _set_preview_message(scene, message):
     scene["mgr_preview_message"] = message
 
 
+def _set_export_message(scene, message):
+    scene.mgr_export_message = message
+    scene["mgr_export_message"] = message
+
+
 def register_properties():
     bpy.types.Scene.mgr_landmark_name = bpy.props.StringProperty(
         name="Landmark Name",
@@ -523,6 +559,15 @@ def register_properties():
         name="Preview",
         default="",
     )
+    bpy.types.Scene.mgr_unity_export_path = bpy.props.StringProperty(
+        name="Unity FBX Path",
+        default=str(Path.cwd() / "result_unity.fbx"),
+        subtype="FILE_PATH",
+    )
+    bpy.types.Scene.mgr_export_message = bpy.props.StringProperty(
+        name="Export",
+        default="",
+    )
 
 
 def unregister_properties():
@@ -544,6 +589,10 @@ def unregister_properties():
         del bpy.types.Scene.mgr_preview_output_path
     if hasattr(bpy.types.Scene, "mgr_preview_message"):
         del bpy.types.Scene.mgr_preview_message
+    if hasattr(bpy.types.Scene, "mgr_unity_export_path"):
+        del bpy.types.Scene.mgr_unity_export_path
+    if hasattr(bpy.types.Scene, "mgr_export_message"):
+        del bpy.types.Scene.mgr_export_message
 
 
 classes = [
@@ -564,4 +613,5 @@ classes = [
     MGR_OT_write_qa_report,
     MGR_OT_render_front_preview,
     MGR_OT_render_pose_preview,
+    MGR_OT_export_unity_fbx,
 ]

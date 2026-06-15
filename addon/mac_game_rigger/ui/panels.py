@@ -38,6 +38,9 @@ class MGR_PT_main_panel(bpy.types.Panel):
         layout.prop(context.scene, "mgr_preview_output_path")
         layout.operator("mgr.render_front_preview", text="Render Front Preview")
         layout.operator("mgr.render_pose_preview", text="Render Pose Preview")
+        layout.separator()
+        layout.prop(context.scene, "mgr_unity_export_path")
+        layout.operator("mgr.export_unity_fbx", text="Export Unity FBX")
         if context.scene.mgr_landmark_validation_message:
             layout.label(text=context.scene.mgr_landmark_validation_message)
         if context.scene.mgr_weight_cleanup_message:
@@ -48,6 +51,8 @@ class MGR_PT_main_panel(bpy.types.Panel):
             layout.label(text=context.scene.mgr_qa_report_message)
         if context.scene.mgr_preview_message:
             layout.label(text=context.scene.mgr_preview_message)
+        if context.scene.mgr_export_message:
+            layout.label(text=context.scene.mgr_export_message)
 
 
 classes = [MGR_PT_main_panel]
