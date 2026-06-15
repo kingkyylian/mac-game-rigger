@@ -2,6 +2,7 @@ from pathlib import Path
 
 import bpy
 
+from ..core.armature_builder import build_armature_from_template, collect_landmark_positions
 from ..core.landmarks import Landmark, mirror_landmark, missing_landmarks
 from ..core.templates import load_template
 
@@ -70,18 +71,7 @@ class MGR_OT_validate_landmarks(bpy.types.Operator):
     bl_options = {"REGISTER"}
 
     def execute(self, context):
-        template_name = context.scene.mgr_current_template.strip()
-        template_path = TEMPLATE_DIR / f"{template_name}.json"
-        template = load_template(template_path)
-        placed_landmarks = [
-            Landmark(
-                name=obj.name.removeprefix(LANDMARK_PREFIX),
-                position=tuple(obj.location),
-            )
-            for obj in context.scene.objects
-            if obj.name.startswith(LANDMARK_PREFIX)
-        ]
-        missing = missing_landmarks(template.required_landmarks, placed_landmarks)
+        template, missing = _validate_scene_landmarks(context.scene)
 
         if missing:
             message = f"Missing landmarks: {', '.join(missing)}"
@@ -92,6 +82,27 @@ class MGR_OT_validate_landmarks(bpy.types.Operator):
         message = f"All {template.category} landmarks present"
         _set_validation_message(context.scene, message)
         self.report({"INFO"}, message)
+        return {"FINISHED"}
+
+
+class MGR_OT_generate_armature(bpy.types.Operator):
+    bl_idname = "mgr.generate_armature"
+    bl_label = "Generate Armature"
+    bl_options = {"REGISTER", "UNDO"}
+
+    def execute(self, context):
+        template, missing = _validate_scene_landmarks(context.scene)
+        if missing:
+            message = f"Missing landmarks: {', '.join(missing)}"
+            _set_validation_message(context.scene, message)
+            self.report({"WARNING"}, message)
+            return {"CANCELLED"}
+
+        armature = build_armature_from_template(
+            template,
+            collect_landmark_positions(context.scene),
+        )
+        self.report({"INFO"}, f"Generated {armature.name}")
         return {"FINISHED"}
 
 
@@ -131,6 +142,21 @@ class MGR_OT_mirror_landmarks(bpy.types.Operator):
         return {"FINISHED"}
 
 
+def _validate_scene_landmarks(scene):
+    template_name = scene.mgr_current_template.strip()
+    template_path = TEMPLATE_DIR / f"{template_name}.json"
+    template = load_template(template_path)
+    placed_landmarks = [
+        Landmark(
+            name=obj.name.removeprefix(LANDMARK_PREFIX),
+            position=tuple(obj.location),
+        )
+        for obj in scene.objects
+        if obj.name.startswith(LANDMARK_PREFIX)
+    ]
+    return template, missing_landmarks(template.required_landmarks, placed_landmarks)
+
+
 def _set_validation_message(scene, message):
     scene.mgr_landmark_validation_message = message
     scene["mgr_landmark_validation_message"] = message
@@ -166,4 +192,5 @@ classes = [
     MGR_OT_clear_landmarks,
     MGR_OT_validate_landmarks,
     MGR_OT_mirror_landmarks,
+    MGR_OT_generate_armature,
 ]

@@ -21,6 +21,7 @@ class MGR_PT_main_panel(bpy.types.Panel):
         layout.separator()
         layout.prop(context.scene, "mgr_current_template")
         layout.operator("mgr.validate_landmarks", text="Validate Landmarks")
+        layout.operator("mgr.generate_armature", text="Generate Armature")
         if context.scene.mgr_landmark_validation_message:
             layout.label(text=context.scene.mgr_landmark_validation_message)
 
