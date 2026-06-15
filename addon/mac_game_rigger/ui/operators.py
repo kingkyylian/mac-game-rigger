@@ -392,6 +392,20 @@ class MGR_OT_export_unity_fbx(bpy.types.Operator):
         )
 
 
+class MGR_OT_export_unreal_fbx(bpy.types.Operator):
+    bl_idname = "mgr.export_unreal_fbx"
+    bl_label = "Export Unreal FBX"
+    bl_options = {"REGISTER"}
+
+    def execute(self, context):
+        return _execute_fbx_export(
+            context,
+            self,
+            profile_slug="unreal_fbx",
+            output_path=Path(context.scene.mgr_unreal_export_path).expanduser(),
+        )
+
+
 def _execute_pose_test(context, operator, pose_function, label):
     armature = find_mgr_armature(bpy)
     if armature is None:
@@ -564,6 +578,11 @@ def register_properties():
         default=str(Path.cwd() / "result_unity.fbx"),
         subtype="FILE_PATH",
     )
+    bpy.types.Scene.mgr_unreal_export_path = bpy.props.StringProperty(
+        name="Unreal FBX Path",
+        default=str(Path.cwd() / "result_unreal.fbx"),
+        subtype="FILE_PATH",
+    )
     bpy.types.Scene.mgr_export_message = bpy.props.StringProperty(
         name="Export",
         default="",
@@ -591,6 +610,8 @@ def unregister_properties():
         del bpy.types.Scene.mgr_preview_message
     if hasattr(bpy.types.Scene, "mgr_unity_export_path"):
         del bpy.types.Scene.mgr_unity_export_path
+    if hasattr(bpy.types.Scene, "mgr_unreal_export_path"):
+        del bpy.types.Scene.mgr_unreal_export_path
     if hasattr(bpy.types.Scene, "mgr_export_message"):
         del bpy.types.Scene.mgr_export_message
 
@@ -614,4 +635,5 @@ classes = [
     MGR_OT_render_front_preview,
     MGR_OT_render_pose_preview,
     MGR_OT_export_unity_fbx,
+    MGR_OT_export_unreal_fbx,
 ]

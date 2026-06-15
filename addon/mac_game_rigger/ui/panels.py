@@ -41,6 +41,8 @@ class MGR_PT_main_panel(bpy.types.Panel):
         layout.separator()
         layout.prop(context.scene, "mgr_unity_export_path")
         layout.operator("mgr.export_unity_fbx", text="Export Unity FBX")
+        layout.prop(context.scene, "mgr_unreal_export_path")
+        layout.operator("mgr.export_unreal_fbx", text="Export Unreal FBX")
         if context.scene.mgr_landmark_validation_message:
             layout.label(text=context.scene.mgr_landmark_validation_message)
         if context.scene.mgr_weight_cleanup_message:
