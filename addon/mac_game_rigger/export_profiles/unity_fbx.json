@@ -1,0 +1,10 @@
+{
+  "name": "Unity FBX",
+  "slug": "unity_fbx",
+  "forward_axis": "-Z",
+  "up_axis": "Y",
+  "add_leaf_bones": false,
+  "apply_unit_scale": true,
+  "use_selection": true,
+  "global_scale": 1.0
+}

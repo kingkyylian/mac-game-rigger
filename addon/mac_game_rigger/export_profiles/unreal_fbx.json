@@ -1,0 +1,10 @@
+{
+  "name": "Unreal FBX",
+  "slug": "unreal_fbx",
+  "forward_axis": "X",
+  "up_axis": "Z",
+  "add_leaf_bones": false,
+  "apply_unit_scale": true,
+  "use_selection": true,
+  "global_scale": 1.0
+}
