@@ -67,6 +67,7 @@ python3 -m pytest tests -q
 
 log_step "Run compileall"
 python3 -m compileall addon/mac_game_rigger tests
+python3 -m py_compile scripts/run_blender_compat_matrix.py
 
 if [ "$SKIP_BLENDER" -eq 0 ]; then
   if [ -z "$BLENDER_BIN" ] && command -v blender >/dev/null 2>&1; then
@@ -100,6 +101,7 @@ required_package_paths=(
   "docs/alpha-smoke-results.md"
   "docs/alpha-gap-roadmap.md"
   "docs/install-guide.md"
+  "docs/blender-compatibility-matrix.md"
   "samples/manifest.json"
 )
 

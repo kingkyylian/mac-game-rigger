@@ -44,6 +44,7 @@ docs/alpha-gap-roadmap.md
 docs/install-guide.md
 docs/asset-evaluation-protocol.md
 docs/deformation-scoring-rubric.md
+docs/blender-compatibility-matrix.md
 docs/unity-import-verification.md
 docs/unreal-import-verification.md
 ```
@@ -55,6 +56,12 @@ scripts/run_full_alpha_smoke.sh --skip-blender
 ```
 
 Pass `--blender /path/to/blender` to include headless Blender tests and `--unity-fbx <export.fbx>` to include Unity import verification.
+
+Run the Blender compatibility matrix directly:
+
+```bash
+scripts/run_blender_compat_matrix.py --discover --skip-tests
+```
 
 ## Planned Layout
 
