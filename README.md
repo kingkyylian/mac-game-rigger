@@ -67,7 +67,7 @@ Validate real asset evidence gates:
 
 ```bash
 scripts/validate_asset_evidence.py --manifest samples/manifest.json
-scripts/validate_asset_evidence.py --manifest samples/manifest.json --require-production-trial
+scripts/validate_asset_evidence.py --manifest samples/manifest.json --evidence-root . --require-production-trial
 ```
 
 ## Planned Layout

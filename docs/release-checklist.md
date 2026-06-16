@@ -40,6 +40,14 @@ python3 -m pytest tests/test_unity_import_verifier.py -q
 scripts/verify_unity_fbx_import.sh --fbx <exported.fbx> --unity /Applications/Unity/Hub/Editor/6000.4.1f1/Unity.app/Contents/MacOS/Unity --timeout-seconds 180
 ```
 
+## Production Trial Gate Command
+
+This is expected to return non-zero until complete real asset evidence exists:
+
+```bash
+scripts/validate_asset_evidence.py --manifest samples/manifest.json --evidence-root . --require-production-trial
+```
+
 ## Known issues
 
 - Unity import validation passes outside the sandbox after restarting a stale Unity Licensing Client process. Sandboxed Unity batchmode still fails with Package Manager `listen EPERM`, so engine import verification must run outside the sandbox.

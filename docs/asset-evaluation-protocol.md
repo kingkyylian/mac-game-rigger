@@ -80,17 +80,30 @@ Example `evidence` entry:
 }
 ```
 
+For large evidence that is stored outside the repository, use object form with a storage reference:
+
+```json
+{
+  "exportUnityFbx": {
+    "storageReference": "s3://studio-rig-evidence/H-001/export-unity.fbx"
+  }
+}
+```
+
 Validate the manifest and current evidence state:
 
 ```bash
 scripts/validate_asset_evidence.py --manifest samples/manifest.json
+scripts/validate_asset_evidence.py --manifest samples/manifest.json --check-evidence-files --evidence-root .
 ```
 
 Enforce the production trial gate:
 
 ```bash
-scripts/validate_asset_evidence.py --manifest samples/manifest.json --require-production-trial
+scripts/validate_asset_evidence.py --manifest samples/manifest.json --evidence-root . --require-production-trial
 ```
+
+`--require-production-trial` also checks local evidence file existence. Relative paths are resolved from `--evidence-root`.
 
 ## Standard Workflow
 
@@ -167,6 +180,8 @@ The validator enforces this as:
 - at least 70% of complete assets scoring 3 or higher;
 - at least 3 Unity import passes;
 - at least 1 Unreal pass or explicit Unreal blocker.
+
+Complete evidence means the slot has real asset metadata, deformation score, QA report, preview, exported FBX, notes, and local files or explicit storage references for those artifacts.
 
 ## Failure Classification
 

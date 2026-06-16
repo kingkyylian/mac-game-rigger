@@ -37,8 +37,18 @@ def parse_args() -> argparse.Namespace:
         description="Validate Mac Game Rigger sample asset evidence and production-trial gates."
     )
     parser.add_argument("--manifest", default=str(DEFAULT_MANIFEST), help="Path to manifest JSON.")
+    parser.add_argument(
+        "--evidence-root",
+        default=str(REPO_ROOT),
+        help="Root used to resolve relative evidence file paths.",
+    )
     parser.add_argument("--output", help="Write JSON report to this path.")
     parser.add_argument("--quiet", action="store_true", help="Do not print JSON to stdout.")
+    parser.add_argument(
+        "--check-evidence-files",
+        action="store_true",
+        help="Check that local evidence file paths exist.",
+    )
     parser.add_argument(
         "--require-production-trial",
         action="store_true",
@@ -72,6 +82,44 @@ def has_non_empty_evidence(evidence: dict[str, Any], keys: tuple[str, ...]) -> b
         if isinstance(value, dict) and any(non_empty_string(item) for item in value.values()):
             return True
     return False
+
+
+def evidence_references(evidence: dict[str, Any], keys: tuple[str, ...]) -> list[dict[str, str]]:
+    references: list[dict[str, str]] = []
+    for key in keys:
+        value = evidence.get(key)
+        if non_empty_string(value):
+            references.append({"key": key, "path": value})
+        elif isinstance(value, dict):
+            path = value.get("path") or value.get("filePath")
+            storage_reference = value.get("storageReference")
+            url = value.get("url")
+            if non_empty_string(path):
+                references.append({"key": key, "path": path})
+            elif non_empty_string(storage_reference):
+                references.append({"key": key, "storageReference": storage_reference})
+            elif non_empty_string(url):
+                references.append({"key": key, "url": url})
+    return references
+
+
+def evidence_file_issues(
+    slot_id: str,
+    evidence: dict[str, Any],
+    keys: tuple[str, ...],
+    label: str,
+    evidence_root: Path,
+) -> list[str]:
+    issues: list[str] = []
+    for reference in evidence_references(evidence, keys):
+        path_value = reference.get("path")
+        if not path_value:
+            continue
+        path = Path(path_value)
+        resolved_path = path if path.is_absolute() else evidence_root / path
+        if not resolved_path.exists():
+            issues.append(f"{slot_id}: {label} evidence file not found: {path_value}")
+    return issues
 
 
 def validate_base_slot(slot: dict[str, Any], index: int, seen_ids: set[str]) -> list[str]:
@@ -134,7 +182,12 @@ def validate_real_asset(slot: dict[str, Any]) -> list[str]:
     return issues
 
 
-def validate_evidence(slot: dict[str, Any]) -> tuple[bool, list[str]]:
+def validate_evidence(
+    slot: dict[str, Any],
+    *,
+    evidence_root: Path,
+    check_files: bool,
+) -> tuple[bool, list[str]]:
     slot_id = slot["id"]
     real_asset = slot.get("realAsset")
     evidence = slot.get("evidence", {})
@@ -159,11 +212,53 @@ def validate_evidence(slot: dict[str, Any]) -> tuple[bool, list[str]]:
     if failure_type is not None and failure_type not in FAILURE_TYPES:
         issues.append(f"{slot_id}: invalid failureType {failure_type!r}")
 
+    if check_files:
+        issues.extend(
+            evidence_file_issues(
+                slot_id,
+                evidence,
+                ("qaReport", "qaReportPath"),
+                "QA report",
+                evidence_root,
+            )
+        )
+        issues.extend(
+            evidence_file_issues(
+                slot_id,
+                evidence,
+                ("previewNeutral", "previewPose", "previewPath"),
+                "preview",
+                evidence_root,
+            )
+        )
+        issues.extend(
+            evidence_file_issues(
+                slot_id,
+                evidence,
+                ("exportUnityFbx", "exportUnrealFbx", "exportFbx"),
+                "exported FBX",
+                evidence_root,
+            )
+        )
+        issues.extend(
+            evidence_file_issues(
+                slot_id,
+                evidence,
+                ("notes", "notesPath"),
+                "review notes",
+                evidence_root,
+            )
+        )
+
     return not issues, issues
 
 
-def classify_slot(slot: dict[str, Any]) -> dict[str, Any]:
-    complete, evidence_issues = validate_evidence(slot)
+def classify_slot(slot: dict[str, Any], *, evidence_root: Path, check_files: bool) -> dict[str, Any]:
+    complete, evidence_issues = validate_evidence(
+        slot,
+        evidence_root=evidence_root,
+        check_files=check_files,
+    )
     evidence = slot.get("evidence", {})
     score = evidence.get("deformationScore")
     unity_status = evidence_status(evidence.get("unityImport"))
@@ -221,7 +316,12 @@ def production_trial_gate(classified_slots: list[dict[str, Any]]) -> dict[str, A
     }
 
 
-def validate_manifest(manifest: dict[str, Any]) -> dict[str, Any]:
+def validate_manifest(
+    manifest: dict[str, Any],
+    *,
+    evidence_root: Path,
+    check_files: bool,
+) -> dict[str, Any]:
     structural_issues: list[str] = []
     if manifest.get("schemaVersion") != 1:
         structural_issues.append("schemaVersion must be 1")
@@ -246,7 +346,9 @@ def validate_manifest(manifest: dict[str, Any]) -> dict[str, Any]:
         structural_issues.extend(base_issues)
         structural_issues.extend(real_asset_issues)
         if not base_issues and not real_asset_issues:
-            classified_slots.append(classify_slot(slot))
+            classified_slots.append(
+                classify_slot(slot, evidence_root=evidence_root, check_files=check_files)
+            )
 
     real_asset_slots = [slot for slot in classified_slots if slot["hasRealAsset"]]
     complete_slots = [slot for slot in classified_slots if slot["evidenceComplete"]]
@@ -256,6 +358,8 @@ def validate_manifest(manifest: dict[str, Any]) -> dict[str, Any]:
 
     return {
         "schemaStatus": "pass" if not structural_issues else "fail",
+        "evidenceFileCheck": "enabled" if check_files else "disabled",
+        "evidenceRoot": str(evidence_root),
         "structuralIssues": structural_issues,
         "slotCount": len(slots),
         "realAssetCount": len(real_asset_slots),
@@ -269,8 +373,14 @@ def validate_manifest(manifest: dict[str, Any]) -> dict[str, Any]:
 def main() -> int:
     args = parse_args()
     manifest_path = Path(args.manifest)
+    evidence_root = Path(args.evidence_root)
+    check_files = bool(args.check_evidence_files or args.require_production_trial)
     try:
-        report = validate_manifest(load_manifest(manifest_path))
+        report = validate_manifest(
+            load_manifest(manifest_path),
+            evidence_root=evidence_root,
+            check_files=check_files,
+        )
     except (OSError, json.JSONDecodeError) as exc:
         print(f"Failed to read manifest: {exc}", file=sys.stderr)
         return 66

@@ -40,6 +40,14 @@ def mark_complete(slot, *, score=4, unity="pass", unreal=None):
     slot["evidence"] = evidence
 
 
+def create_evidence_files(evidence_root, slot):
+    evidence = slot["evidence"]
+    for key in ("qaReport", "previewNeutral", "exportUnityFbx", "notes"):
+        path = evidence_root / evidence[key]
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(f"{slot['id']} {key}\n", encoding="utf-8")
+
+
 def run_validator(manifest_path, *args):
     return subprocess.run(
         [str(SCRIPT_PATH), "--manifest", str(manifest_path), *args],
@@ -133,11 +141,17 @@ def test_asset_evidence_validator_passes_production_trial_gate(tmp_path):
                 unity="pass" if slot["id"] in {"H-001", "H-002", "Q-001"} else "not tested",
                 unreal="blocked" if slot["id"] == "H-001" else None,
             )
+            create_evidence_files(tmp_path, next_slot)
         slots.append(next_slot)
     manifest["slots"] = slots
     manifest_path = write_manifest(tmp_path, manifest)
 
-    result = run_validator(manifest_path, "--require-production-trial")
+    result = run_validator(
+        manifest_path,
+        "--evidence-root",
+        str(tmp_path),
+        "--require-production-trial",
+    )
 
     assert result.returncode == 0
     payload = json.loads(result.stdout)
@@ -145,3 +159,46 @@ def test_asset_evidence_validator_passes_production_trial_gate(tmp_path):
     assert payload["productionTrialGate"]["completeRealAssetCount"] == 10
     assert payload["productionTrialGate"]["requirements"]["unityImportPassesAtLeast3"] is True
     assert payload["productionTrialGate"]["requirements"]["unrealPassOrExplicitBlocker"] is True
+
+
+def test_asset_evidence_validator_require_trial_fails_missing_evidence_files(tmp_path):
+    manifest = load_base_manifest()
+    required_ids = {
+        "H-001",
+        "H-002",
+        "H-003",
+        "H-006",
+        "H-009",
+        "H-010",
+        "Q-001",
+        "Q-002",
+        "C-001",
+        "P-001",
+    }
+    slots = []
+    for slot in manifest["slots"]:
+        next_slot = copy.deepcopy(slot)
+        if slot["id"] in required_ids:
+            mark_complete(
+                next_slot,
+                score=4,
+                unity="pass" if slot["id"] in {"H-001", "H-002", "Q-001"} else "not tested",
+                unreal="blocked" if slot["id"] == "H-001" else None,
+            )
+        slots.append(next_slot)
+    manifest["slots"] = slots
+    manifest_path = write_manifest(tmp_path, manifest)
+
+    result = run_validator(
+        manifest_path,
+        "--evidence-root",
+        str(tmp_path),
+        "--require-production-trial",
+    )
+
+    assert result.returncode == 1
+    payload = json.loads(result.stdout)
+    assert payload["evidenceFileCheck"] == "enabled"
+    incomplete = payload["incompleteRealAssets"]
+    assert incomplete
+    assert any("file not found" in issue for slot in incomplete for issue in slot["issues"])
