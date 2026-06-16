@@ -70,6 +70,7 @@ log_step "Run compileall"
 python3 -m compileall addon/mac_game_rigger tests
 python3 -m py_compile scripts/run_blender_compat_matrix.py
 python3 -m py_compile scripts/validate_asset_evidence.py
+python3 -m py_compile scripts/register_asset_evidence.py
 
 if [ "$SKIP_BLENDER" -eq 0 ]; then
   if [ -z "$BLENDER_BIN" ] && command -v blender >/dev/null 2>&1; then
@@ -107,6 +108,7 @@ required_package_paths=(
   "samples/manifest.json"
   "scripts/run_full_alpha_smoke.sh"
   "scripts/validate_asset_evidence.py"
+  "scripts/register_asset_evidence.py"
   "scripts/run_blender_compat_matrix.py"
 )
 

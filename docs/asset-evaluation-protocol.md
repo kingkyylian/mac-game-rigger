@@ -105,6 +105,29 @@ scripts/validate_asset_evidence.py --manifest samples/manifest.json --evidence-r
 
 `--require-production-trial` also checks local evidence file existence. Relative paths are resolved from `--evidence-root`.
 
+Register one completed slot without hand-editing JSON:
+
+```bash
+scripts/register_asset_evidence.py \
+  --manifest samples/manifest.json \
+  --slot H-001 \
+  --source-name "Internal Hero Character" \
+  --source-url "https://example.invalid/source-or-ticket" \
+  --license internal-test \
+  --external-path /external/assets/H-001-humanoid-clean-neutral.glb \
+  --qa-report evidence/H-001/qa-report.json \
+  --preview-neutral evidence/H-001/preview-neutral.png \
+  --export-unity-fbx evidence/H-001/export-unity.fbx \
+  --notes evidence/H-001/notes.md \
+  --deformation-score 4 \
+  --unity-status pass \
+  --unreal-status blocked \
+  --evidence-root . \
+  --check-files
+```
+
+The register script refuses to overwrite an existing slot unless `--force` is passed.
+
 ## Standard Workflow
 
 For every asset:
