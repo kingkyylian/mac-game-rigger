@@ -108,6 +108,8 @@ scripts/validate_asset_evidence.py --manifest samples/manifest.json --evidence-r
 Register one completed slot without hand-editing JSON:
 
 ```bash
+scripts/create_evidence_skeleton.py --evidence-root .
+
 scripts/register_asset_evidence.py \
   --manifest samples/manifest.json \
   --slot H-001 \
@@ -125,6 +127,8 @@ scripts/register_asset_evidence.py \
   --evidence-root . \
   --check-files
 ```
+
+`create_evidence_skeleton.py` creates only evidence folders and `notes.md` checklists. It does not create fake QA reports, previews, FBX files, or engine import results.
 
 The register script refuses to overwrite an existing slot unless `--force` is passed.
 
