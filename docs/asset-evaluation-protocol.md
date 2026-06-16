@@ -54,6 +54,44 @@ For every real asset, record:
 
 Use `samples/manifest.json` as the source of truth.
 
+Example `realAsset` entry:
+
+```json
+{
+  "sourceName": "Internal Hero Character",
+  "sourceUrl": "https://example.invalid/source-or-ticket",
+  "license": "internal-test",
+  "canCommitBinary": false,
+  "externalPath": "/external/assets/H-001-humanoid-clean-neutral.glb"
+}
+```
+
+Example `evidence` entry:
+
+```json
+{
+  "qaReport": "evidence/H-001/qa-report.json",
+  "previewNeutral": "evidence/H-001/preview-neutral.png",
+  "exportUnityFbx": "evidence/H-001/export-unity.fbx",
+  "notes": "evidence/H-001/notes.md",
+  "deformationScore": 4,
+  "unityImport": { "status": "pass" },
+  "unrealImport": { "status": "blocked" }
+}
+```
+
+Validate the manifest and current evidence state:
+
+```bash
+scripts/validate_asset_evidence.py --manifest samples/manifest.json
+```
+
+Enforce the production trial gate:
+
+```bash
+scripts/validate_asset_evidence.py --manifest samples/manifest.json --require-production-trial
+```
+
 ## Standard Workflow
 
 For every asset:
@@ -115,6 +153,20 @@ The first real validation pack should include at least:
 - 1 wide-shoulder or bulky humanoid;
 - 1 tail creature;
 - 1 accessory or prop-heavy character.
+
+The validator enforces this as:
+
+- at least 10 complete real assets;
+- at least 3 humanoids;
+- at least 2 quadrupeds;
+- `H-006` low-poly humanoid complete;
+- `H-010` thin-limb humanoid complete;
+- `H-003` or `H-009` wide/bulky stress case complete;
+- at least 1 tail creature;
+- at least 1 prop or accessory-heavy slot;
+- at least 70% of complete assets scoring 3 or higher;
+- at least 3 Unity import passes;
+- at least 1 Unreal pass or explicit Unreal blocker.
 
 ## Failure Classification
 

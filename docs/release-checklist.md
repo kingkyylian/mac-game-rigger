@@ -19,11 +19,13 @@ Release: Mac Game Rigger Alpha 0.1.0
 | Package | pass | `scripts/package_addon.sh` creates `dist/MacGameRigger-0.1.0.zip`. |
 | Smoke benchmark | pass | `docs/alpha-smoke-results.md` has 5 generated full-workflow proxy rows, 5 real glTF sample asset import rows, and one Unity batchmode import verifier pass for `mac_game_rigger_unity_export.fbx`. |
 | Blender compatibility matrix | partial | `scripts/run_blender_compat_matrix.py` passed 15 Blender headless tests on local Blender 4.5.10 LTS outside the sandbox; Blender 4.2 target evidence is still required before beta. |
+| Real asset evidence gate | blocked | `scripts/validate_asset_evidence.py` validates the manifest schema. Production trial is blocked until 10 complete real asset evidence entries are present. |
 
 ## Verification Commands
 
 ```bash
 python3 -m pytest tests -q
+scripts/validate_asset_evidence.py --manifest samples/manifest.json
 scripts/run_blender_compat_matrix.py --discover --skip-tests
 blender --background --factory-startup --python blender_tests/test_generate_armature_operator.py
 blender --background --factory-startup --python blender_tests/test_capsule_weights_operator.py
@@ -43,6 +45,7 @@ scripts/verify_unity_fbx_import.sh --fbx <exported.fbx> --unity /Applications/Un
 - Unity import validation passes outside the sandbox after restarting a stale Unity Licensing Client process. Sandboxed Unity batchmode still fails with Package Manager `listen EPERM`, so engine import verification must run outside the sandbox.
 - Unreal engine import validation is not available: `UnrealEditor` is not on `PATH`.
 - Blender 4.2 target compatibility is not yet proven locally; current discovered Blender is 4.5.10 LTS.
+- Production trial evidence is not present yet; `samples/manifest.json` has slots but no complete real asset evidence entries.
 - Full rig workflow timings currently use generated proxy scenes; five real Khronos glTF sample assets are covered as Blender import/readiness baselines, not production deformation QA.
 - Wing and prop-specific rig helpers are not implemented in alpha 0.1.0.
 - Finger rigging, cloth/skirt deformation, and advanced tail/wing controls remain out of V1 scope.

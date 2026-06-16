@@ -63,6 +63,13 @@ Run the Blender compatibility matrix directly:
 scripts/run_blender_compat_matrix.py --discover --skip-tests
 ```
 
+Validate real asset evidence gates:
+
+```bash
+scripts/validate_asset_evidence.py --manifest samples/manifest.json
+scripts/validate_asset_evidence.py --manifest samples/manifest.json --require-production-trial
+```
+
 ## Planned Layout
 
 ```text
