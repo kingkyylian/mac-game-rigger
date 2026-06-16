@@ -69,6 +69,7 @@ Validate real asset evidence gates:
 scripts/create_evidence_skeleton.py --evidence-root .
 scripts/register_asset_evidence.py --help
 scripts/validate_asset_evidence.py --manifest samples/manifest.json
+scripts/generate_asset_evidence_report.py --manifest samples/manifest.json --evidence-root .
 scripts/validate_asset_evidence.py --manifest samples/manifest.json --evidence-root . --require-production-trial
 ```
 

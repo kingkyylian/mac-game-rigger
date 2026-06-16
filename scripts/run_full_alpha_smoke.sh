@@ -72,6 +72,7 @@ python3 -m py_compile scripts/run_blender_compat_matrix.py
 python3 -m py_compile scripts/validate_asset_evidence.py
 python3 -m py_compile scripts/register_asset_evidence.py
 python3 -m py_compile scripts/create_evidence_skeleton.py
+python3 -m py_compile scripts/generate_asset_evidence_report.py
 
 if [ "$SKIP_BLENDER" -eq 0 ]; then
   if [ -z "$BLENDER_BIN" ] && command -v blender >/dev/null 2>&1; then
@@ -111,6 +112,7 @@ required_package_paths=(
   "scripts/validate_asset_evidence.py"
   "scripts/register_asset_evidence.py"
   "scripts/create_evidence_skeleton.py"
+  "scripts/generate_asset_evidence_report.py"
   "scripts/run_blender_compat_matrix.py"
 )
 

@@ -105,6 +105,16 @@ scripts/validate_asset_evidence.py --manifest samples/manifest.json --evidence-r
 
 `--require-production-trial` also checks local evidence file existence. Relative paths are resolved from `--evidence-root`.
 
+Generate a Markdown progress report:
+
+```bash
+scripts/generate_asset_evidence_report.py \
+  --manifest samples/manifest.json \
+  --evidence-root . \
+  --check-evidence-files \
+  --output docs/asset-evidence-progress.local.md
+```
+
 Register one completed slot without hand-editing JSON:
 
 ```bash
