@@ -37,6 +37,25 @@ This repository is at project foundation stage. The current source of truth for 
 docs/product-scope.md
 ```
 
+Current alpha execution and verification docs:
+
+```text
+docs/alpha-gap-roadmap.md
+docs/install-guide.md
+docs/asset-evaluation-protocol.md
+docs/deformation-scoring-rubric.md
+docs/unity-import-verification.md
+docs/unreal-import-verification.md
+```
+
+Run the local alpha smoke gate:
+
+```bash
+scripts/run_full_alpha_smoke.sh --skip-blender
+```
+
+Pass `--blender /path/to/blender` to include headless Blender tests and `--unity-fbx <export.fbx>` to include Unity import verification.
+
 ## Planned Layout
 
 ```text
@@ -60,4 +79,3 @@ samples/
 - Blender 4.2 installed locally.
 - Python 3.11 for pure-Python tests.
 - Blender Python for add-on and integration behavior.
-

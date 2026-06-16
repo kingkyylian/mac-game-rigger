@@ -19,6 +19,7 @@ rsync -a \
   "$BUILD_DIR/"
 
 rsync -a "$REPO_ROOT/docs" "$BUILD_DIR/"
+rsync -a "$REPO_ROOT/samples" "$BUILD_DIR/"
 cp "$REPO_ROOT/README.md" "$BUILD_DIR/README.md"
 cp "$REPO_ROOT/pyproject.toml" "$BUILD_DIR/pyproject.toml"
 
