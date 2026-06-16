@@ -31,21 +31,28 @@ Candidate editor path examples:
 /Users/Shared/Epic Games/UE_5.4/Engine/Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor
 ```
 
-## Target Command Shape
+## Current Command
 
-The future verifier should follow this pattern:
+Current environment/path check:
 
 ```bash
 scripts/verify_unreal_fbx_import.sh \
   --fbx <exported.fbx> \
   --unreal <path-to-UnrealEditor> \
-  --timeout-seconds 240
+  --timeout-seconds 240 \
+  --dry-run
 ```
 
-Expected successful output should be machine-readable:
+Expected dry-run output:
 
 ```json
-{"status":"pass","assetPath":"/Game/MacGameRiggerImportCandidate/<file>"}
+{"status":"ready","unrealEditor":"<path-to-UnrealEditor>","fbx":"<exported.fbx>","timeoutSeconds":240}
+```
+
+Without `--dry-run`, the script currently returns a machine-readable blocked result because the real Unreal batch import commandlet is not implemented yet:
+
+```json
+{"status":"blocked","reason":"unreal_batch_import_not_implemented","unrealEditor":"<path-to-UnrealEditor>","fbx":"<exported.fbx>","timeoutSeconds":240}
 ```
 
 ## Minimum Checks
@@ -71,4 +78,7 @@ Before production trial, collect:
 
 ## Current Blocker
 
-The blocker is environment availability, not add-on code: `UnrealEditor` needs to be installed or its path supplied before the verifier can be implemented and tested end to end.
+There are two current blockers:
+
+- `UnrealEditor` needs to be installed or its path supplied on the local machine.
+- The Unreal batch import commandlet still needs to be implemented. Until then, `scripts/verify_unreal_fbx_import.sh` can verify inputs and report `blocked`, but cannot prove a real Unreal import pass.
