@@ -24,6 +24,11 @@ rsync -a \
   --exclude "__pycache__/" \
   "$REPO_ROOT/scripts" \
   "$BUILD_DIR/"
+rsync -a \
+  --exclude "__pycache__/" \
+  --exclude "*.pyc" \
+  "$REPO_ROOT/tools" \
+  "$BUILD_DIR/"
 cp "$REPO_ROOT/README.md" "$BUILD_DIR/README.md"
 cp "$REPO_ROOT/pyproject.toml" "$BUILD_DIR/pyproject.toml"
 

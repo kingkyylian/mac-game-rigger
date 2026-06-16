@@ -51,7 +51,7 @@ scripts/validate_asset_evidence.py --manifest samples/manifest.json --evidence-r
 ## Known issues
 
 - Unity import validation passes outside the sandbox after restarting a stale Unity Licensing Client process. Sandboxed Unity batchmode still fails with Package Manager `listen EPERM`, so engine import verification must run outside the sandbox.
-- Unreal engine import validation is not available: `UnrealEditor` is not on `PATH`.
+- Unreal engine import validation is not complete: prepare-only workspace creation and unattended runner orchestration are implemented, but `UnrealEditor` is not on `PATH` and no real Unreal Editor import pass has been captured.
 - Blender 4.2 target compatibility is not yet proven locally; current discovered Blender is 4.5.10 LTS.
 - Production trial evidence is not present yet; `samples/manifest.json` has slots but no complete real asset evidence entries.
 - Full rig workflow timings currently use generated proxy scenes; five real Khronos glTF sample assets are covered as Blender import/readiness baselines, not production deformation QA.

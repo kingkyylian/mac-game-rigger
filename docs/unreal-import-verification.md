@@ -1,10 +1,22 @@
 # Unreal Import Verification
 
-Unreal import validation is not yet complete. This document defines the missing gate and the first implementation target.
+Unreal import validation is not yet complete. The verifier can now prepare a
+repeatable Unreal import workspace and run an Unreal Editor executable with the
+prepared Python import script, but the local alpha environment has not produced
+a real Unreal Editor import pass yet.
 
 ## Current Status
 
 `UnrealEditor` is not currently available on `PATH`, so alpha smoke has not verified a real Unreal import.
+
+Implemented locally:
+
+- FBX input validation;
+- Unreal Editor path validation for dry-run/non-dry-run modes;
+- prepare-only workspace creation without requiring Unreal Editor;
+- Unreal Python import script template;
+- unattended editor invocation with machine-readable config/result paths;
+- machine-readable failure when Unreal exits without writing a result JSON.
 
 Unity import verification has passed once, but Unity success does not prove Unreal success. Unreal can expose separate FBX problems:
 
@@ -49,15 +61,58 @@ Expected dry-run output:
 {"status":"ready","unrealEditor":"<path-to-UnrealEditor>","fbx":"<exported.fbx>","timeoutSeconds":240}
 ```
 
-Without `--dry-run`, the script currently returns a machine-readable blocked result because the real Unreal batch import commandlet is not implemented yet:
+Prepare a throwaway Unreal import workspace without requiring Unreal Editor:
+
+```bash
+scripts/verify_unreal_fbx_import.sh \
+  --fbx <exported.fbx> \
+  --project /tmp/MacGameRiggerImportCheck \
+  --prepare-only
+```
+
+Expected prepare-only output:
 
 ```json
-{"status":"blocked","reason":"unreal_batch_import_not_implemented","unrealEditor":"<path-to-UnrealEditor>","fbx":"<exported.fbx>","timeoutSeconds":240}
+{
+  "status": "prepared",
+  "projectPath": "/tmp/MacGameRiggerImportCheck",
+  "projectFile": "/tmp/MacGameRiggerImportCheck/MacGameRiggerImportCheck.uproject",
+  "copiedFbx": "/tmp/MacGameRiggerImportCheck/Import/<exported.fbx>",
+  "scriptPath": "/tmp/MacGameRiggerImportCheck/Content/Python/MacGameRiggerFbxImportCheck.py",
+  "configPath": "/tmp/MacGameRiggerImportCheck/Saved/MacGameRiggerImportCheck/import-config.json",
+  "resultPath": "/tmp/MacGameRiggerImportCheck/Saved/MacGameRiggerImportCheck/import-result.json"
+}
 ```
+
+Run the prepared Unreal import check:
+
+```bash
+scripts/verify_unreal_fbx_import.sh \
+  --fbx <exported.fbx> \
+  --unreal <path-to-UnrealEditor> \
+  --project /tmp/MacGameRiggerImportCheck \
+  --timeout-seconds 240
+```
+
+Expected successful output includes:
+
+```json
+{
+  "status": "pass",
+  "projectPath": "/tmp/MacGameRiggerImportCheck",
+  "resultPath": "/tmp/MacGameRiggerImportCheck/Saved/MacGameRiggerImportCheck/import-result.json",
+  "unrealExitCode": 0,
+  "importedObjectPaths": ["/Game/MacGameRiggerImportCandidate/<asset>"]
+}
+```
+
+If Unreal exits but the Python import script does not write the result JSON, the
+verifier exits non-zero with `reason: "unreal_result_missing"` and stores stdout
+and stderr logs under `Saved/MacGameRiggerImportCheck/`.
 
 ## Minimum Checks
 
-The first Unreal verifier should check:
+The Unreal runner checks or records:
 
 - Unreal starts in unattended/batch mode;
 - the FBX can be imported;
@@ -78,7 +133,7 @@ Before production trial, collect:
 
 ## Current Blocker
 
-There are two current blockers:
+Current blockers:
 
 - `UnrealEditor` needs to be installed or its path supplied on the local machine.
-- The Unreal batch import commandlet still needs to be implemented. Until then, `scripts/verify_unreal_fbx_import.sh` can verify inputs and report `blocked`, but cannot prove a real Unreal import pass.
+- A real Unreal Editor run still needs to be captured for at least one humanoid and one non-humanoid exported FBX. Until that evidence exists, Unreal import is implemented as a verifier path but not proven as a production-trial pass.
