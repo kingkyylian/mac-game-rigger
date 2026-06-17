@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "description": "Candidate public asset sources for the first Mac Game Rigger production-trial pack. These are source candidates only; do not treat a slot as realAsset until the binary is downloaded, inspected, and registered in samples/manifest.json.",
+  "licenseBasis": [
+    {
+      "source": "Quaternius FAQ",
+      "url": "https://quaternius.com/faq.html",
+      "summary": "Quaternius states that models are under CC0, usable without attribution in commercial, educational, and personal projects."
+    },
+    {
+      "source": "Kenney Support",
+      "url": "https://kenney.nl/support",
+      "summary": "Kenney states that game assets on its asset pages are public domain licensed (CC0) and usable in commercial projects."
+    }
+  ],
+  "candidateSlots": [
+    {
+      "slotId": "H-001",
+      "candidateSourceName": "Quaternius Ultimate Animated Character Pack",
+      "sourceUrl": "https://quaternius.com/",
+      "license": "CC0",
+      "targetUse": "baseline clean humanoid",
+      "selectionNotes": "Pick a normal-proportion human character with a neutral pose and minimal accessories."
+    },
+    {
+      "slotId": "H-002",
+      "candidateSourceName": "Quaternius Ultimate Animated Character Pack",
+      "sourceUrl": "https://quaternius.com/",
+      "license": "CC0",
+      "targetUse": "stylized short-limb/chibi-like humanoid",
+      "selectionNotes": "Pick a short-limb or large-head stylized character if present; otherwise mark this slot as needing a second public source."
+    },
+    {
+      "slotId": "H-003",
+      "candidateSourceName": "Quaternius Modular Character Outfits - Fantasy or RPG Character Pack",
+      "sourceUrl": "https://quaternius.com/",
+      "license": "CC0",
+      "targetUse": "armored humanoid",
+      "selectionNotes": "Pick knight/armor variant to stress rigid armor binding and weight bleed."
+    },
+    {
+      "slotId": "H-006",
+      "candidateSourceName": "Quaternius Animated Man Pack or Animated Woman Pack",
+      "sourceUrl": "https://quaternius.com/",
+      "license": "CC0",
+      "targetUse": "low-poly humanoid",
+      "selectionNotes": "Use the simplest low-poly human mesh available and record vertex count after import."
+    },
+    {
+      "slotId": "H-009",
+      "candidateSourceName": "Quaternius Ultimate Modular Men Pack or Ultimate Animated Character Pack",
+      "sourceUrl": "https://quaternius.com/",
+      "license": "CC0",
+      "targetUse": "wide-shoulder humanoid stress case",
+      "selectionNotes": "Pick a bulky/soldier/armored male character to stress shoulder deformation."
+    },
+    {
+      "slotId": "H-010",
+      "candidateSourceName": "Quaternius Ultimate Animated Character Pack",
+      "sourceUrl": "https://quaternius.com/",
+      "license": "CC0",
+      "targetUse": "thin-limb humanoid stress case",
+      "selectionNotes": "Pick the thinnest human/elf-like character available; if none exists, mark source gap before registering the slot."
+    },
+    {
+      "slotId": "Q-001",
+      "candidateSourceName": "Quaternius Ultimate Animated Animal Pack or Farm Animal Pack",
+      "sourceUrl": "https://quaternius.com/",
+      "license": "CC0",
+      "targetUse": "baseline quadruped dog-like asset",
+      "selectionNotes": "Pick husky/shiba/dog model and verify it imports as a four-leg character rather than a decorative static mesh."
+    },
+    {
+      "slotId": "Q-002",
+      "candidateSourceName": "Quaternius Cube World Kit or Ultimate Animated Animal Pack",
+      "sourceUrl": "https://quaternius.com/",
+      "license": "CC0",
+      "targetUse": "small quadruped cat-like asset",
+      "selectionNotes": "Pick cat or small mammal model with visible tail base."
+    },
+    {
+      "slotId": "C-001",
+      "candidateSourceName": "Quaternius Animated Dinosaur Pack or Ultimate Monsters",
+      "sourceUrl": "https://quaternius.com/",
+      "license": "CC0",
+      "targetUse": "tail creature",
+      "selectionNotes": "Pick dinosaur/dragon-like model with a long tail. If wings are absent, record this as tail-only evidence and keep wing helper out of scope."
+    },
+    {
+      "slotId": "P-001",
+      "candidateSourceName": "Quaternius Steampunk Turret Pack or Fantasy Props MegaKit",
+      "sourceUrl": "https://quaternius.com/",
+      "license": "CC0",
+      "targetUse": "prop or hinge-like mechanical asset",
+      "selectionNotes": "Pick a turret or hinged prop with clear rotating parts for prop-rig validation."
+    }
+  ],
+  "registrationRule": "A candidate becomes a realAsset only after the binary is downloaded, license/source is recorded, and local asset path or storage reference is known.",
+  "nextAction": "Download one H-001 candidate first, inspect it in Blender, then register only H-001 in samples/manifest.json with scripts/register_asset_evidence.py after QA/preview/export evidence exists."
+}

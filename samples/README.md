@@ -69,6 +69,12 @@ The alpha benchmark intentionally starts with **asset slots**, not bundled asset
 
 ## Adding Real Assets
 
+Use `samples/asset-source-candidates.json` and
+`docs/production-trial-asset-source-plan.md` to pick the first public candidate
+pack for a slot. Candidate source selection is not the same as real evidence:
+do not fill `realAsset` in `samples/manifest.json` until the exact binary path
+or storage reference is known.
+
 When a real asset is added, update the matching row with:
 
 - actual filename
@@ -84,4 +90,3 @@ H-001-humanoid-clean-neutral.glb
 ```
 
 Do not overwrite the slot ID when changing filenames. The slot ID is the stable benchmark identity.
-

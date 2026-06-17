@@ -20,6 +20,12 @@ Each evaluated asset must produce:
 
 Every asset must use a stable slot ID from `samples/README.md` and `samples/manifest.json`.
 
+Candidate source planning lives in `samples/asset-source-candidates.json` and
+`docs/production-trial-asset-source-plan.md`. A candidate source is not a real
+asset record. Only populate `samples/manifest.json` `realAsset` after the exact
+binary has been downloaded or stored and the local path or storage reference is
+known.
+
 Filename format:
 
 ```text
