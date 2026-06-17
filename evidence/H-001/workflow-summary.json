@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "status": "pass",
+  "assetPath": "/Users/kyylian/mac-game-rigger/local_assets/H-001/H-001-quaternius-animated-human.fbx",
+  "stripSourceRig": {
+    "removedArmatures": 1,
+    "removedArmatureModifiers": 1,
+    "removedVertexGroups": 34
+  },
+  "meshCount": 1,
+  "bbox": {
+    "min_x": -1.250227689743042,
+    "max_x": 1.0774208307266235,
+    "min_y": -1.3061479330062866,
+    "max_y": 0.9846701622009277,
+    "min_z": -0.005914192646741867,
+    "max_z": 5.253471851348877
+  },
+  "artifacts": {
+    "qaReport": "/Users/kyylian/mac-game-rigger/evidence/H-001/qa-report.json",
+    "previewNeutral": "/Users/kyylian/mac-game-rigger/evidence/H-001/preview-neutral.png",
+    "previewPose": "/Users/kyylian/mac-game-rigger/evidence/H-001/preview-pose.png",
+    "exportUnityFbx": "/Users/kyylian/mac-game-rigger/evidence/H-001/export-unity.fbx",
+    "exportQaReport": "/Users/kyylian/mac-game-rigger/evidence/H-001/export-unity.qa.json"
+  },
+  "qa": {
+    "mesh_count": 1,
+    "vertex_count": 791,
+    "bone_count": 17,
+    "unweighted_vertices": 0,
+    "over_limit_vertices": 0,
+    "export_profile": null,
+    "warnings": [],
+    "errors": []
+  }
+}

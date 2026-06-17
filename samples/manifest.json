@@ -8,9 +8,31 @@
       "targetFilename": "H-001-humanoid-clean-neutral.glb",
       "preferredFormat": "GLB",
       "rigTarget": "Humanoid template",
-      "expectedRisks": ["baseline proportions"],
-      "realAsset": null,
-      "evidence": {}
+      "expectedRisks": [
+        "baseline proportions"
+      ],
+      "realAsset": {
+        "sourceName": "Quaternius Animated Man Pack - Animated Human.fbx",
+        "license": "CC0",
+        "canCommitBinary": false,
+        "sourceUrl": "https://quaternius.com/packs/animatedman.html",
+        "externalPath": "local_assets/H-001/H-001-quaternius-animated-human.fbx"
+      },
+      "evidence": {
+        "qaReport": "evidence/H-001/qa-report.json",
+        "previewNeutral": "evidence/H-001/preview-neutral.png",
+        "notes": "evidence/H-001/notes.md",
+        "deformationScore": 2,
+        "unityImport": {
+          "status": "blocked"
+        },
+        "unrealImport": {
+          "status": "blocked"
+        },
+        "previewPose": "evidence/H-001/preview-pose.png",
+        "exportUnityFbx": "evidence/H-001/export-unity.fbx",
+        "failureType": "deformation quality issue"
+      }
     },
     {
       "id": "H-002",
@@ -18,7 +40,11 @@
       "targetFilename": "H-002-humanoid-stylized-chibi.glb",
       "preferredFormat": "GLB",
       "rigTarget": "Humanoid template",
-      "expectedRisks": ["large head", "short limbs", "template scaling"],
+      "expectedRisks": [
+        "large head",
+        "short limbs",
+        "template scaling"
+      ],
       "realAsset": null,
       "evidence": {}
     },
@@ -28,7 +54,10 @@
       "targetFilename": "H-003-humanoid-armored.fbx",
       "preferredFormat": "FBX",
       "rigTarget": "Humanoid template",
-      "expectedRisks": ["rigid armor", "weight bleed"],
+      "expectedRisks": [
+        "rigid armor",
+        "weight bleed"
+      ],
       "realAsset": null,
       "evidence": {}
     },
@@ -38,7 +67,10 @@
       "targetFilename": "H-004-humanoid-long-coat.glb",
       "preferredFormat": "GLB",
       "rigTarget": "Humanoid template",
-      "expectedRisks": ["coat deformation", "manual cleanup"],
+      "expectedRisks": [
+        "coat deformation",
+        "manual cleanup"
+      ],
       "realAsset": null,
       "evidence": {}
     },
@@ -48,7 +80,10 @@
       "targetFilename": "H-005-humanoid-separate-hair.glb",
       "preferredFormat": "GLB",
       "rigTarget": "Humanoid template",
-      "expectedRisks": ["multi-mesh", "hair intersections"],
+      "expectedRisks": [
+        "multi-mesh",
+        "hair intersections"
+      ],
       "realAsset": null,
       "evidence": {}
     },
@@ -58,7 +93,9 @@
       "targetFilename": "H-006-humanoid-lowpoly.glb",
       "preferredFormat": "GLB",
       "rigTarget": "Humanoid template",
-      "expectedRisks": ["low-poly deformation"],
+      "expectedRisks": [
+        "low-poly deformation"
+      ],
       "realAsset": null,
       "evidence": {}
     },
@@ -68,7 +105,9 @@
       "targetFilename": "H-007-humanoid-generated.obj",
       "preferredFormat": "OBJ",
       "rigTarget": "Humanoid template",
-      "expectedRisks": ["generated topology"],
+      "expectedRisks": [
+        "generated topology"
+      ],
       "realAsset": null,
       "evidence": {}
     },
@@ -78,7 +117,10 @@
       "targetFilename": "H-008-humanoid-vrm-avatar.vrm",
       "preferredFormat": "VRM",
       "rigTarget": "Humanoid template",
-      "expectedRisks": ["VRM compatibility", "avatar conventions"],
+      "expectedRisks": [
+        "VRM compatibility",
+        "avatar conventions"
+      ],
       "realAsset": null,
       "evidence": {}
     },
@@ -88,7 +130,9 @@
       "targetFilename": "H-009-humanoid-wide-shoulders.glb",
       "preferredFormat": "GLB",
       "rigTarget": "Humanoid template",
-      "expectedRisks": ["shoulder deformation"],
+      "expectedRisks": [
+        "shoulder deformation"
+      ],
       "realAsset": null,
       "evidence": {}
     },
@@ -98,7 +142,10 @@
       "targetFilename": "H-010-humanoid-thin-limbs.glb",
       "preferredFormat": "GLB",
       "rigTarget": "Humanoid template",
-      "expectedRisks": ["thin limbs", "capsule weighting stability"],
+      "expectedRisks": [
+        "thin limbs",
+        "capsule weighting stability"
+      ],
       "realAsset": null,
       "evidence": {}
     },
@@ -108,7 +155,9 @@
       "targetFilename": "Q-001-quadruped-dog.glb",
       "preferredFormat": "GLB",
       "rigTarget": "Quadruped template",
-      "expectedRisks": ["baseline four-leg deformation"],
+      "expectedRisks": [
+        "baseline four-leg deformation"
+      ],
       "realAsset": null,
       "evidence": {}
     },
@@ -118,7 +167,10 @@
       "targetFilename": "Q-002-quadruped-cat.glb",
       "preferredFormat": "GLB",
       "rigTarget": "Quadruped template",
-      "expectedRisks": ["small body", "tail base"],
+      "expectedRisks": [
+        "small body",
+        "tail base"
+      ],
       "realAsset": null,
       "evidence": {}
     },
@@ -128,7 +180,10 @@
       "targetFilename": "Q-003-quadruped-horse.fbx",
       "preferredFormat": "FBX",
       "rigTarget": "Quadruped template",
-      "expectedRisks": ["long legs", "hoof targets"],
+      "expectedRisks": [
+        "long legs",
+        "hoof targets"
+      ],
       "realAsset": null,
       "evidence": {}
     },
@@ -138,7 +193,10 @@
       "targetFilename": "Q-004-quadruped-lizard.glb",
       "preferredFormat": "GLB",
       "rigTarget": "Quadruped + tail helper",
-      "expectedRisks": ["low body", "long tail"],
+      "expectedRisks": [
+        "low body",
+        "long tail"
+      ],
       "realAsset": null,
       "evidence": {}
     },
@@ -148,7 +206,9 @@
       "targetFilename": "Q-005-quadruped-generated-creature.obj",
       "preferredFormat": "OBJ",
       "rigTarget": "Quadruped template",
-      "expectedRisks": ["generated creature topology"],
+      "expectedRisks": [
+        "generated creature topology"
+      ],
       "realAsset": null,
       "evidence": {}
     },
@@ -158,7 +218,10 @@
       "targetFilename": "C-001-tail-creature-dragon.glb",
       "preferredFormat": "GLB",
       "rigTarget": "Quadruped + tail + wing helpers",
-      "expectedRisks": ["tail chain", "wing deformation"],
+      "expectedRisks": [
+        "tail chain",
+        "wing deformation"
+      ],
       "realAsset": null,
       "evidence": {}
     },
@@ -168,7 +231,10 @@
       "targetFilename": "C-002-wing-creature-bird.glb",
       "preferredFormat": "GLB",
       "rigTarget": "Wing helper",
-      "expectedRisks": ["wing deformation", "mirror behavior"],
+      "expectedRisks": [
+        "wing deformation",
+        "mirror behavior"
+      ],
       "realAsset": null,
       "evidence": {}
     },
@@ -178,7 +244,9 @@
       "targetFilename": "C-003-tail-character-biped.glb",
       "preferredFormat": "GLB",
       "rigTarget": "Humanoid + tail helper",
-      "expectedRisks": ["tail base on biped"],
+      "expectedRisks": [
+        "tail base on biped"
+      ],
       "realAsset": null,
       "evidence": {}
     },
@@ -188,7 +256,9 @@
       "targetFilename": "C-004-wing-character-humanoid.fbx",
       "preferredFormat": "FBX",
       "rigTarget": "Humanoid + wing helper",
-      "expectedRisks": ["wing-body transition"],
+      "expectedRisks": [
+        "wing-body transition"
+      ],
       "realAsset": null,
       "evidence": {}
     },
@@ -198,7 +268,10 @@
       "targetFilename": "C-005-tail-creature-serpent.glb",
       "preferredFormat": "GLB",
       "rigTarget": "Tail chain helper",
-      "expectedRisks": ["continuous body", "long tail"],
+      "expectedRisks": [
+        "continuous body",
+        "long tail"
+      ],
       "realAsset": null,
       "evidence": {}
     },
@@ -208,7 +281,9 @@
       "targetFilename": "P-001-prop-door-hinge.glb",
       "preferredFormat": "GLB",
       "rigTarget": "Prop hinge template",
-      "expectedRisks": ["single hinge rotation"],
+      "expectedRisks": [
+        "single hinge rotation"
+      ],
       "realAsset": null,
       "evidence": {}
     },
@@ -218,7 +293,10 @@
       "targetFilename": "P-002-prop-treasure-chest.fbx",
       "preferredFormat": "FBX",
       "rigTarget": "Prop hinge template",
-      "expectedRisks": ["lid hinge", "base separation"],
+      "expectedRisks": [
+        "lid hinge",
+        "base separation"
+      ],
       "realAsset": null,
       "evidence": {}
     },
@@ -228,7 +306,9 @@
       "targetFilename": "P-003-prop-robot-arm.glb",
       "preferredFormat": "GLB",
       "rigTarget": "Prop hinge template",
-      "expectedRisks": ["multi-segment articulation"],
+      "expectedRisks": [
+        "multi-segment articulation"
+      ],
       "realAsset": null,
       "evidence": {}
     },
@@ -238,7 +318,10 @@
       "targetFilename": "P-004-prop-turret.glb",
       "preferredFormat": "GLB",
       "rigTarget": "Prop hinge template",
-      "expectedRisks": ["yaw hierarchy", "pitch hierarchy"],
+      "expectedRisks": [
+        "yaw hierarchy",
+        "pitch hierarchy"
+      ],
       "realAsset": null,
       "evidence": {}
     },
@@ -248,7 +331,9 @@
       "targetFilename": "P-005-prop-crane-claw.glb",
       "preferredFormat": "GLB",
       "rigTarget": "Prop hinge template",
-      "expectedRisks": ["multiple child hinges"],
+      "expectedRisks": [
+        "multiple child hinges"
+      ],
       "realAsset": null,
       "evidence": {}
     }

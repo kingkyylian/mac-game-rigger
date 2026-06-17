@@ -13,6 +13,13 @@ def load_manifest():
     return json.loads(BASE_MANIFEST.read_text(encoding="utf-8"))
 
 
+def clear_registered_assets(manifest):
+    for slot in manifest["slots"]:
+        slot["realAsset"] = None
+        slot["evidence"] = {}
+    return manifest
+
+
 def write_manifest(tmp_path, manifest):
     path = tmp_path / "manifest.json"
     path.write_text(json.dumps(manifest), encoding="utf-8")
@@ -61,7 +68,7 @@ def run_report(manifest_path, evidence_root, *extra):
 
 
 def test_generate_asset_evidence_report_shows_blocked_empty_manifest(tmp_path):
-    manifest_path = write_manifest(tmp_path, load_manifest())
+    manifest_path = write_manifest(tmp_path, clear_registered_assets(load_manifest()))
 
     result = run_report(manifest_path, tmp_path)
 
@@ -73,7 +80,7 @@ def test_generate_asset_evidence_report_shows_blocked_empty_manifest(tmp_path):
 
 
 def test_generate_asset_evidence_report_writes_output_file(tmp_path):
-    manifest_path = write_manifest(tmp_path, load_manifest())
+    manifest_path = write_manifest(tmp_path, clear_registered_assets(load_manifest()))
     output_path = tmp_path / "report.md"
 
     result = run_report(manifest_path, tmp_path, "--output", str(output_path))
@@ -84,7 +91,7 @@ def test_generate_asset_evidence_report_writes_output_file(tmp_path):
 
 
 def test_generate_asset_evidence_report_shows_complete_slot_and_file_check(tmp_path):
-    manifest = load_manifest()
+    manifest = clear_registered_assets(load_manifest())
     slots = []
     for slot in manifest["slots"]:
         next_slot = copy.deepcopy(slot)

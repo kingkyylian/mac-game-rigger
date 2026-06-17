@@ -9,9 +9,17 @@ VALIDATOR_SCRIPT = REPO_ROOT / "scripts" / "validate_asset_evidence.py"
 BASE_MANIFEST = REPO_ROOT / "samples" / "manifest.json"
 
 
+def clear_registered_assets(manifest):
+    for slot in manifest["slots"]:
+        slot["realAsset"] = None
+        slot["evidence"] = {}
+    return manifest
+
+
 def copy_manifest(tmp_path):
     manifest_path = tmp_path / "manifest.json"
-    manifest_path.write_text(BASE_MANIFEST.read_text(encoding="utf-8"), encoding="utf-8")
+    manifest = clear_registered_assets(json.loads(BASE_MANIFEST.read_text(encoding="utf-8")))
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
     return manifest_path
 
 

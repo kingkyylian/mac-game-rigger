@@ -11,12 +11,13 @@ Rig target: Humanoid template
 ## Required Artifacts
 
 - [x] `asset-import-smoke.json`
-- [ ] `qa-report.json`
-- [ ] `preview-neutral.png`
-- [ ] `preview-pose.png` when relevant
-- [ ] `export-unity.fbx` or `export.fbx`
-- [ ] `unity-import.json` when Unity import is run
-- [ ] `unreal-import.json` when Unreal import is run or blocked
+- [x] `workflow-summary.json`
+- [x] `qa-report.json`
+- [x] `preview-neutral.png`
+- [x] `preview-pose.png` when relevant
+- [x] `export-unity.fbx` or `export.fbx`
+- [x] `unity-import.json` when Unity import is run
+- [x] `unreal-import.json` when Unreal import is run or blocked
 
 ## Review
 
@@ -30,32 +31,42 @@ Blender import smoke: pass in Blender 4.5.10.
 Import metrics: 1 mesh, 1 armature, 48 bones, 1 material, 791 vertices, 1578 faces, 9 actions.
 Suggested category: humanoid.
 
-Deformation score: not tested
-Unity import status: not tested
-Unreal import status: not tested
-Manual cleanup required: not assessed
-Failure type: not assessed
+Mac Game Rigger workflow: pass in Blender 4.5.10.
+Workflow summary: `evidence/H-001/workflow-summary.json`
+Generated armature: 17 bones.
+Source rig stripping: 1 armature, 1 armature modifier, and 34 vertex groups removed before MGR weighting.
+Capsule weighting: 791 vertices weighted.
+QA result: 0 unweighted vertices, 0 over-limit vertices, no warnings, no errors.
+Unity FBX export: `evidence/H-001/export-unity.fbx`
 
-Do not register this slot in `samples/manifest.json` yet. The source binary is
-downloaded and importable, but required QA, preview, and exported FBX evidence is
-still missing.
+Deformation score: 2
+Unity import status: blocked; Unity Editor is not installed/discoverable locally.
+Unreal import status: blocked; Unreal Editor is not installed/discoverable locally.
+Manual cleanup required: yes, landmark/camera/pose alignment needs tuning before quality claim.
+Failure type: deformation quality issue
+
+Registration status: H-001 may be registered as complete evidence, but it should
+be treated as a weak-quality baseline, not a production-quality success. The
+source binary remains local-only under `local_assets/`.
 
 ## Register Command
 
 ```bash
 scripts/register_asset_evidence.py \
   --slot H-001 \
-  --source-name "<source asset name>" \
-  --source-url "<source url or ticket>" \
-  --license "<license>" \
-  --external-path "<source asset path>" \
+  --source-name "Quaternius Animated Man Pack - Animated Human.fbx" \
+  --source-url "https://quaternius.com/packs/animatedman.html" \
+  --license "CC0" \
+  --external-path "local_assets/H-001/H-001-quaternius-animated-human.fbx" \
   --qa-report evidence/H-001/qa-report.json \
   --preview-neutral evidence/H-001/preview-neutral.png \
+  --preview-pose evidence/H-001/preview-pose.png \
   --export-unity-fbx evidence/H-001/export-unity.fbx \
   --notes evidence/H-001/notes.md \
-  --deformation-score <1-5> \
-  --unity-status <pass|fail|blocked|not tested> \
-  --unreal-status <pass|fail|blocked|not tested> \
+  --deformation-score 2 \
+  --unity-status blocked \
+  --unreal-status blocked \
+  --failure-type "deformation quality issue" \
   --evidence-root . \
   --check-files
 ```

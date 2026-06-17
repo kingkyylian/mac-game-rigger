@@ -13,6 +13,13 @@ def load_base_manifest():
     return json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
 
 
+def clear_registered_assets(manifest):
+    for slot in manifest["slots"]:
+        slot["realAsset"] = None
+        slot["evidence"] = {}
+    return manifest
+
+
 def write_manifest(tmp_path, manifest):
     path = tmp_path / "manifest.json"
     path.write_text(json.dumps(manifest), encoding="utf-8")
@@ -59,7 +66,7 @@ def run_validator(manifest_path, *args):
 
 
 def test_asset_evidence_validator_allows_empty_manifest_but_blocks_trial(tmp_path):
-    manifest_path = write_manifest(tmp_path, load_base_manifest())
+    manifest_path = write_manifest(tmp_path, clear_registered_assets(load_base_manifest()))
 
     result = run_validator(manifest_path)
 
@@ -71,7 +78,7 @@ def test_asset_evidence_validator_allows_empty_manifest_but_blocks_trial(tmp_pat
 
 
 def test_asset_evidence_validator_require_trial_exits_nonzero_when_gate_missing(tmp_path):
-    manifest_path = write_manifest(tmp_path, load_base_manifest())
+    manifest_path = write_manifest(tmp_path, clear_registered_assets(load_base_manifest()))
 
     result = run_validator(manifest_path, "--require-production-trial")
 
@@ -81,7 +88,7 @@ def test_asset_evidence_validator_require_trial_exits_nonzero_when_gate_missing(
 
 
 def test_asset_evidence_validator_reports_incomplete_real_asset(tmp_path):
-    manifest = load_base_manifest()
+    manifest = clear_registered_assets(load_base_manifest())
     slot = manifest["slots"][0]
     slot["realAsset"] = {
         "sourceName": "Incomplete sample",
@@ -105,7 +112,7 @@ def test_asset_evidence_validator_reports_incomplete_real_asset(tmp_path):
 
 
 def test_asset_evidence_validator_fails_bad_real_asset_schema(tmp_path):
-    manifest = load_base_manifest()
+    manifest = clear_registered_assets(load_base_manifest())
     manifest["slots"][0]["realAsset"] = {"sourceName": "Bad sample"}
     manifest_path = write_manifest(tmp_path, manifest)
 
@@ -118,7 +125,7 @@ def test_asset_evidence_validator_fails_bad_real_asset_schema(tmp_path):
 
 
 def test_asset_evidence_validator_passes_production_trial_gate(tmp_path):
-    manifest = load_base_manifest()
+    manifest = clear_registered_assets(load_base_manifest())
     required_ids = {
         "H-001",
         "H-002",
@@ -162,7 +169,7 @@ def test_asset_evidence_validator_passes_production_trial_gate(tmp_path):
 
 
 def test_asset_evidence_validator_require_trial_fails_missing_evidence_files(tmp_path):
-    manifest = load_base_manifest()
+    manifest = clear_registered_assets(load_base_manifest())
     required_ids = {
         "H-001",
         "H-002",
