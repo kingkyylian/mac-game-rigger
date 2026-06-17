@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "status": "pass",
+  "slotId": "H-001",
+  "source": {
+    "name": "Quaternius Animated Human.fbx",
+    "url": "https://quaternius.com/packs/animatedman.html",
+    "license": "CC0",
+    "localPath": "/Users/kyylian/mac-game-rigger/local_assets/H-001/H-001-quaternius-animated-human.fbx"
+  },
+  "metrics": {
+    "meshCount": 1,
+    "armatureCount": 1,
+    "boneCount": 48,
+    "materialCount": 1,
+    "vertexCount": 791,
+    "faceCount": 1578,
+    "actionCount": 9,
+    "bbox": {
+      "width": 2.3276,
+      "depth": 2.2908,
+      "height": 5.2594
+    },
+    "hasArmature": true,
+    "suggestedCategory": "humanoid",
+    "meshNames": [
+      "Human_Mesh"
+    ],
+    "armatureNames": [
+      "Human Armature"
+    ]
+  }
+}

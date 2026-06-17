@@ -41,7 +41,7 @@ The initial production-trial set is:
 
 | Slot | Candidate source | Why |
 |---|---|---|
-| `H-001` | Quaternius Ultimate Animated Character Pack | Baseline normal humanoid. |
+| `H-001` | Quaternius Animated Man Pack - `Animated Human.fbx` | Baseline normal humanoid; downloaded locally and passed Blender import smoke. |
 | `H-002` | Quaternius Ultimate Animated Character Pack | Stylized/short-limb candidate if available. |
 | `H-003` | Quaternius Modular Character Outfits - Fantasy or RPG Character Pack | Armored humanoid stress case. |
 | `H-006` | Quaternius Animated Man Pack or Animated Woman Pack | Low-poly humanoid candidate. |
@@ -70,9 +70,12 @@ This avoids inflating `realAssetCount` with assets we have not actually tested.
 
 Start with `H-001` only:
 
-1. Download one normal-proportion humanoid from Quaternius.
-2. Save it outside git or under a git-ignored local asset folder.
-3. Open/import in Blender.
+1. Download one normal-proportion humanoid from Quaternius. Done for
+   `Animated Human.fbx`.
+2. Save it outside git or under a git-ignored local asset folder. Done under
+   `local_assets/H-001/`.
+3. Open/import in Blender. Done; see
+   `evidence/H-001/asset-import-smoke.json`.
 4. Run the Mac Game Rigger workflow.
 5. Generate `evidence/H-001/qa-report.json`, preview PNG, and Unity FBX.
 6. Register H-001 with `scripts/register_asset_evidence.py`.

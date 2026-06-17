@@ -16,11 +16,11 @@
   "candidateSlots": [
     {
       "slotId": "H-001",
-      "candidateSourceName": "Quaternius Ultimate Animated Character Pack",
-      "sourceUrl": "https://quaternius.com/",
+      "candidateSourceName": "Quaternius Animated Man Pack - Animated Human.fbx",
+      "sourceUrl": "https://quaternius.com/packs/animatedman.html",
       "license": "CC0",
       "targetUse": "baseline clean humanoid",
-      "selectionNotes": "Pick a normal-proportion human character with a neutral pose and minimal accessories."
+      "selectionNotes": "Selected as first real-source candidate. Local binary is kept under ignored local_assets/H-001/ and imported successfully in Blender 4.5.10; manifest registration still waits for QA, preview, and export evidence."
     },
     {
       "slotId": "H-002",
@@ -96,5 +96,5 @@
     }
   ],
   "registrationRule": "A candidate becomes a realAsset only after the binary is downloaded, license/source is recorded, and local asset path or storage reference is known.",
-  "nextAction": "Download one H-001 candidate first, inspect it in Blender, then register only H-001 in samples/manifest.json with scripts/register_asset_evidence.py after QA/preview/export evidence exists."
+  "nextAction": "Run the full Mac Game Rigger workflow on H-001, generate QA/preview/export evidence, then register only H-001 in samples/manifest.json with scripts/register_asset_evidence.py."
 }
