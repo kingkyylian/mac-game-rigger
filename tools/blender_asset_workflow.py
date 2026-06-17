@@ -61,6 +61,10 @@ def humanoid_landmarks_from_bbox(bbox: dict[str, float]) -> dict[str, tuple[floa
     }
 
 
+def pose_preview_operator_name() -> str:
+    return "pose_arm_raise"
+
+
 def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Run the Mac Game Rigger humanoid workflow on a real asset."
@@ -207,6 +211,14 @@ def run_operator(label: str, operator_call) -> str:
     return "FINISHED"
 
 
+def run_pose_preview(bpy_module, preview_pose_path: Path) -> str:
+    operator_name = pose_preview_operator_name()
+    run_operator(operator_name, getattr(bpy_module.ops.mgr, operator_name))
+    bpy_module.context.scene.mgr_preview_output_path = str(preview_pose_path)
+    run_operator("render_pose_preview_frame", bpy_module.ops.mgr.render_front_preview)
+    return operator_name
+
+
 def main() -> int:
     args = parse_args(blender_script_args())
     asset_path = Path(args.asset).expanduser().resolve()
@@ -250,8 +262,7 @@ def main() -> int:
 
         bpy.context.scene.mgr_preview_output_path = str(preview_neutral_path)
         run_operator("render_front_preview", bpy.ops.mgr.render_front_preview)
-        bpy.context.scene.mgr_preview_output_path = str(preview_pose_path)
-        run_operator("render_pose_preview", bpy.ops.mgr.render_pose_preview)
+        pose_operator = run_pose_preview(bpy, preview_pose_path)
         run_operator("reset_pose", bpy.ops.mgr.reset_pose)
 
         select_meshes(bpy)
@@ -273,6 +284,9 @@ def main() -> int:
                 "previewPose": str(preview_pose_path),
                 "exportUnityFbx": str(unity_export_path),
                 "exportQaReport": str(export_qa_path),
+            },
+            "posePreview": {
+                "operator": pose_operator,
             },
             "qa": qa_payload,
         }

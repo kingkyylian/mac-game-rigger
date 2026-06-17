@@ -38,11 +38,12 @@ Source rig stripping: 1 armature, 1 armature modifier, and 34 vertex groups remo
 Capsule weighting: 791 vertices weighted.
 QA result: 0 unweighted vertices, 0 over-limit vertices, no warnings, no errors.
 Unity FBX export: `evidence/H-001/export-unity.fbx`
+Pose preview operator: `pose_arm_raise`; 4 pose bones changed before rendering `preview-pose.png`.
 
 Deformation score: 2
 Unity import status: blocked; Unity Editor is not installed/discoverable locally.
 Unreal import status: blocked; Unreal Editor is not installed/discoverable locally.
-Manual cleanup required: yes, landmark/camera/pose alignment needs tuning before quality claim.
+Manual cleanup required: yes, landmark/camera alignment and arm deformation need tuning before quality claim.
 Failure type: deformation quality issue
 
 Registration status: H-001 may be registered as complete evidence, but it should

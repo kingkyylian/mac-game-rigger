@@ -23,6 +23,9 @@
     "exportUnityFbx": "/Users/kyylian/mac-game-rigger/evidence/H-001/export-unity.fbx",
     "exportQaReport": "/Users/kyylian/mac-game-rigger/evidence/H-001/export-unity.qa.json"
   },
+  "posePreview": {
+    "operator": "pose_arm_raise"
+  },
   "qa": {
     "mesh_count": 1,
     "vertex_count": 791,

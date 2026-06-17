@@ -48,3 +48,7 @@ def test_humanoid_landmarks_from_bbox_contains_required_template_points():
     assert landmarks["foot.L"][1] < landmarks["hips"][1]
     assert landmarks["toe.L"][1] < landmarks["foot.L"][1]
     assert landmarks["head"][2] > landmarks["chest"][2] > landmarks["hips"][2]
+
+
+def test_pose_preview_uses_visible_arm_raise_pose():
+    assert blender_asset_workflow.pose_preview_operator_name() == "pose_arm_raise"
