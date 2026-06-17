@@ -20,7 +20,7 @@
       "sourceUrl": "https://quaternius.com/packs/animatedman.html",
       "license": "CC0",
       "targetUse": "baseline clean humanoid",
-      "selectionNotes": "Selected as first real-source candidate. Local binary is kept under ignored local_assets/H-001/ and imported successfully in Blender 4.5.10; manifest registration still waits for QA, preview, and export evidence."
+      "selectionNotes": "Selected and registered as first real-source evidence. Local binary is kept under ignored local_assets/H-001/; Blender import and MGR workflow pass, but deformation score is 2 and engine import remains blocked."
     },
     {
       "slotId": "H-002",
@@ -40,11 +40,11 @@
     },
     {
       "slotId": "H-006",
-      "candidateSourceName": "Quaternius Animated Man Pack or Animated Woman Pack",
-      "sourceUrl": "https://quaternius.com/",
+      "candidateSourceName": "Quaternius Animated Woman Pack - Animated Woman.fbx",
+      "sourceUrl": "https://quaternius.com/packs/animatedwoman.html",
       "license": "CC0",
       "targetUse": "low-poly humanoid",
-      "selectionNotes": "Use the simplest low-poly human mesh available and record vertex count after import."
+      "selectionNotes": "Selected and registered as complete failure evidence. Blender import and MGR workflow pass, but preview/deformation output is not visually usable; manifest score is 1 with failureType deformation quality issue."
     },
     {
       "slotId": "H-009",
@@ -96,5 +96,5 @@
     }
   ],
   "registrationRule": "A candidate becomes a realAsset only after the binary is downloaded, license/source is recorded, and local asset path or storage reference is known.",
-  "nextAction": "Run the full Mac Game Rigger workflow on H-001, generate QA/preview/export evidence, then register only H-001 in samples/manifest.json with scripts/register_asset_evidence.py."
+  "nextAction": "Continue with H-002, H-003, H-009, H-010, Q-001, Q-002, C-001, and P-001 candidates, but prioritize fixing preview framing/orientation and deformation quality before treating any additional humanoid slot as a quality success."
 }

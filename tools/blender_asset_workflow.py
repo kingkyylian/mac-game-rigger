@@ -65,6 +65,39 @@ def pose_preview_operator_name() -> str:
     return "pose_arm_raise"
 
 
+def preview_material_name() -> str:
+    return "MGR_Evidence_Preview_Material"
+
+
+def camera_plan_from_bbox(
+    bbox: dict[str, float],
+    *,
+    axis: str = "y",
+) -> dict[str, tuple[float, float, float] | float]:
+    center_x = (bbox["min_x"] + bbox["max_x"]) / 2.0
+    center_y = (bbox["min_y"] + bbox["max_y"]) / 2.0
+    center_z = (bbox["min_z"] + bbox["max_z"]) / 2.0
+    height = max(bbox["max_z"] - bbox["min_z"], 0.1)
+    width = max(bbox["max_x"] - bbox["min_x"], 0.1)
+    depth = max(bbox["max_y"] - bbox["min_y"], 0.1)
+    distance = max(height * 1.6, width * 2.5, depth * 3.0, 6.0)
+    if axis == "x":
+        camera_location = (bbox["min_x"] - distance, center_y, center_z)
+        key_light_location = (bbox["min_x"] - (distance * 0.6), center_y, center_z + height)
+    elif axis == "y":
+        camera_location = (center_x, bbox["min_y"] - distance, center_z)
+        key_light_location = (center_x, bbox["min_y"] - (distance * 0.6), center_z + height)
+    else:
+        raise ValueError(f"Unsupported camera axis: {axis}")
+    target = (center_x, center_y, center_z)
+    return {
+        "cameraLocation": camera_location,
+        "target": target,
+        "keyLightLocation": key_light_location,
+        "orthographicScale": max(height * 1.8, width * 2.0, 1.0),
+    }
+
+
 def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Run the Mac Game Rigger humanoid workflow on a real asset."
@@ -72,6 +105,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--asset", required=True, help="Source FBX, GLB/GLTF, OBJ, or BLEND path.")
     parser.add_argument("--evidence-dir", required=True, help="Evidence output directory.")
     parser.add_argument("--summary", required=True, help="Workflow summary JSON path.")
+    parser.add_argument("--camera-axis", choices=("x", "y"), default="y", help="Axis used for evidence previews.")
     return parser.parse_args(argv)
 
 
@@ -173,32 +207,51 @@ def select_meshes(bpy_module) -> list[Any]:
     return meshes
 
 
-def setup_camera_and_light(bpy_module, bbox: dict[str, float]) -> None:
+def apply_preview_material(bpy_module) -> None:
+    material = bpy_module.data.materials.get(preview_material_name())
+    if material is None:
+        material = bpy_module.data.materials.new(preview_material_name())
+    material.diffuse_color = (0.78, 0.78, 0.74, 1.0)
+    material.use_nodes = True
+    nodes = material.node_tree.nodes
+    for node in tuple(nodes):
+        nodes.remove(node)
+    output = nodes.new(type="ShaderNodeOutputMaterial")
+    emission = nodes.new(type="ShaderNodeEmission")
+    emission.inputs["Color"].default_value = (0.78, 0.78, 0.74, 1.0)
+    emission.inputs["Strength"].default_value = 1.0
+    material.node_tree.links.new(emission.outputs["Emission"], output.inputs["Surface"])
+
+    for obj in bpy_module.context.scene.objects:
+        if obj.type != "MESH":
+            continue
+        obj.data.materials.clear()
+        obj.data.materials.append(material)
+
+
+def setup_camera_and_light(bpy_module, bbox: dict[str, float], *, axis: str) -> None:
     from mathutils import Vector
 
-    center_x = (bbox["min_x"] + bbox["max_x"]) / 2.0
-    center_y = (bbox["min_y"] + bbox["max_y"]) / 2.0
-    center_z = (bbox["min_z"] + bbox["max_z"]) / 2.0
+    plan = camera_plan_from_bbox(bbox, axis=axis)
     height = max(bbox["max_z"] - bbox["min_z"], 0.1)
-    width = max(bbox["max_x"] - bbox["min_x"], 0.1)
-    depth = max(bbox["max_y"] - bbox["min_y"], 0.1)
-    distance = max(height * 1.15, width * 2.5, depth * 2.5, 4.0)
-    target = Vector((center_x, center_y, center_z))
+    target = Vector(plan["target"])
 
-    bpy_module.ops.object.light_add(type="AREA", location=(center_x, center_y - height, center_z + height))
+    world = bpy_module.context.scene.world
+    if world is not None:
+        world.color = (0.08, 0.08, 0.08)
+
+    bpy_module.ops.object.light_add(type="AREA", location=plan["keyLightLocation"])
     light = bpy_module.context.object
     light.name = "MGR_Workflow_Key_Light"
-    light.data.energy = 500
+    light.data.energy = 900
     light.data.size = max(height, 2.0)
 
-    camera_location = (center_x, bbox["min_y"] - distance, center_z)
-
-    bpy_module.ops.object.camera_add(
-        location=camera_location,
-    )
+    bpy_module.ops.object.camera_add(location=plan["cameraLocation"])
     camera = bpy_module.context.object
     camera.name = "MGR_Workflow_Camera"
-    camera.data.lens = 45
+    camera.data.type = "ORTHO"
+    camera.data.ortho_scale = plan["orthographicScale"]
+    camera.data.clip_end = 1000
     direction = target - camera.location
     camera.rotation_euler = direction.to_track_quat("-Z", "Y").to_euler()
     bpy_module.context.scene.camera = camera
@@ -243,7 +296,8 @@ def main() -> int:
     import_asset(bpy, asset_path)
     imported_bbox = mesh_bbox(bpy)
     strip_result = strip_source_rig(bpy)
-    setup_camera_and_light(bpy, imported_bbox)
+    apply_preview_material(bpy)
+    setup_camera_and_light(bpy, imported_bbox, axis=args.camera_axis)
 
     mac_game_rigger.register()
     try:
@@ -287,6 +341,9 @@ def main() -> int:
             },
             "posePreview": {
                 "operator": pose_operator,
+            },
+            "camera": {
+                "axis": args.camera_axis,
             },
             "qa": qa_payload,
         }

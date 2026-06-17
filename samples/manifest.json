@@ -96,8 +96,28 @@
       "expectedRisks": [
         "low-poly deformation"
       ],
-      "realAsset": null,
-      "evidence": {}
+      "realAsset": {
+        "sourceName": "Quaternius Animated Woman Pack - Animated Woman.fbx",
+        "license": "CC0",
+        "canCommitBinary": false,
+        "sourceUrl": "https://quaternius.com/packs/animatedwoman.html",
+        "externalPath": "local_assets/H-006/H-006-quaternius-animated-woman.fbx"
+      },
+      "evidence": {
+        "qaReport": "evidence/H-006/qa-report.json",
+        "previewNeutral": "evidence/H-006/preview-neutral.png",
+        "notes": "evidence/H-006/notes.md",
+        "deformationScore": 1,
+        "unityImport": {
+          "status": "blocked"
+        },
+        "unrealImport": {
+          "status": "blocked"
+        },
+        "previewPose": "evidence/H-006/preview-pose.png",
+        "exportUnityFbx": "evidence/H-006/export-unity.fbx",
+        "failureType": "deformation quality issue"
+      }
     },
     {
       "id": "H-007",

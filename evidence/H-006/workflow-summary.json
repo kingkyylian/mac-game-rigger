@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "status": "pass",
+  "assetPath": "/Users/kyylian/mac-game-rigger/local_assets/H-006/H-006-quaternius-animated-woman.fbx",
+  "stripSourceRig": {
+    "removedArmatures": 1,
+    "removedArmatureModifiers": 1,
+    "removedVertexGroups": 34
+  },
+  "meshCount": 1,
+  "bbox": {
+    "min_x": -0.9946401119232178,
+    "max_x": 1.089712381362915,
+    "min_y": -0.7680971026420593,
+    "max_y": 0.42551133036613464,
+    "min_z": -0.006181878503412008,
+    "max_z": 5.2019853591918945
+  },
+  "artifacts": {
+    "qaReport": "/Users/kyylian/mac-game-rigger/evidence/H-006/qa-report.json",
+    "previewNeutral": "/Users/kyylian/mac-game-rigger/evidence/H-006/preview-neutral.png",
+    "previewPose": "/Users/kyylian/mac-game-rigger/evidence/H-006/preview-pose.png",
+    "exportUnityFbx": "/Users/kyylian/mac-game-rigger/evidence/H-006/export-unity.fbx",
+    "exportQaReport": "/Users/kyylian/mac-game-rigger/evidence/H-006/export-unity.qa.json"
+  },
+  "posePreview": {
+    "operator": "pose_arm_raise"
+  },
+  "camera": {
+    "axis": "x"
+  },
+  "qa": {
+    "mesh_count": 1,
+    "vertex_count": 954,
+    "bone_count": 17,
+    "unweighted_vertices": 0,
+    "over_limit_vertices": 0,
+    "export_profile": null,
+    "warnings": [],
+    "errors": []
+  }
+}

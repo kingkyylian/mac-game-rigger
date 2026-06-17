@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "status": "blocked",
+  "reason": "unreal_editor_not_found",
+  "checkedOn": "2026-06-17",
+  "fbx": "evidence/H-006/export-unity.fbx",
+  "verificationCommand": "scripts/verify_unreal_fbx_import.sh --fbx evidence/H-006/export-unity.fbx",
+  "details": "Unreal Editor was not found under /Applications or /Users/Shared/Epic Games. Install Unreal Editor or pass --unreal to run the real import check."
+}

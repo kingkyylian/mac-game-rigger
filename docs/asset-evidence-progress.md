@@ -8,8 +8,8 @@ Evidence root: `.`
 ## Summary
 
 - Slots: 25
-- Real assets registered: 1
-- Complete evidence entries: 1
+- Real assets registered: 2
+- Complete evidence entries: 2
 - Score >= 3 count: 0
 - Score >= 3 ratio: 0.0
 
@@ -20,7 +20,7 @@ Evidence root: `.`
 | `completeRealAssetsAtLeast10` | missing |
 | `humanoidsAtLeast3` | missing |
 | `quadrupedsAtLeast2` | missing |
-| `lowPolyHumanoidIncluded` | missing |
+| `lowPolyHumanoidIncluded` | pass |
 | `thinLimbHumanoidIncluded` | missing |
 | `wideShoulderOrBulkyIncluded` | missing |
 | `tailCreatureIncluded` | missing |
@@ -34,7 +34,6 @@ Evidence root: `.`
 - `completeRealAssetsAtLeast10`
 - `humanoidsAtLeast3`
 - `quadrupedsAtLeast2`
-- `lowPolyHumanoidIncluded`
 - `thinLimbHumanoidIncluded`
 - `wideShoulderOrBulkyIncluded`
 - `tailCreatureIncluded`
@@ -46,7 +45,7 @@ Evidence root: `.`
 
 | Category | Complete Evidence Count |
 |---|---:|
-| humanoid | 1 |
+| humanoid | 2 |
 | quadruped | 0 |
 | tail creature | 0 |
 | wing creature | 0 |
@@ -61,7 +60,7 @@ Evidence root: `.`
 | H-003 | humanoid | missing | missing |  |  |  |  |
 | H-004 | humanoid | missing | missing |  |  |  |  |
 | H-005 | humanoid | missing | missing |  |  |  |  |
-| H-006 | humanoid | missing | missing |  |  |  |  |
+| H-006 | humanoid | pass | pass | 1 | blocked | blocked |  |
 | H-007 | humanoid | missing | missing |  |  |  |  |
 | H-008 | humanoid | missing | missing |  |  |  |  |
 | H-009 | humanoid | missing | missing |  |  |  |  |
