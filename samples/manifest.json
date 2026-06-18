@@ -107,7 +107,7 @@
         "qaReport": "evidence/H-006/qa-report.json",
         "previewNeutral": "evidence/H-006/preview-neutral.png",
         "notes": "evidence/H-006/notes.md",
-        "deformationScore": 1,
+        "deformationScore": 2,
         "unityImport": {
           "status": "blocked"
         },

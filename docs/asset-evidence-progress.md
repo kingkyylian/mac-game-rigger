@@ -60,7 +60,7 @@ Evidence root: `.`
 | H-003 | humanoid | missing | missing |  |  |  |  |
 | H-004 | humanoid | missing | missing |  |  |  |  |
 | H-005 | humanoid | missing | missing |  |  |  |  |
-| H-006 | humanoid | pass | pass | 1 | blocked | blocked |  |
+| H-006 | humanoid | pass | pass | 2 | blocked | blocked |  |
 | H-007 | humanoid | missing | missing |  |  |  |  |
 | H-008 | humanoid | missing | missing |  |  |  |  |
 | H-009 | humanoid | missing | missing |  |  |  |  |

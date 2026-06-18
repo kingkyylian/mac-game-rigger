@@ -2,6 +2,8 @@ import copy
 import json
 from pathlib import Path
 import subprocess
+import struct
+import zlib
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -47,12 +49,43 @@ def mark_complete(slot, *, score=4, unity="pass", unreal=None):
     slot["evidence"] = evidence
 
 
+def write_test_png(path, rows):
+    height = len(rows)
+    width = len(rows[0])
+    raw = b"".join(b"\x00" + bytes(row) for row in rows)
+
+    def chunk(kind, payload):
+        return (
+            struct.pack(">I", len(payload))
+            + kind
+            + payload
+            + struct.pack(">I", zlib.crc32(kind + payload) & 0xFFFFFFFF)
+        )
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(
+        b"\x89PNG\r\n\x1a\n"
+        + chunk(b"IHDR", struct.pack(">IIBBBBB", width, height, 8, 0, 0, 0, 0))
+        + chunk(b"IDAT", zlib.compress(raw))
+        + chunk(b"IEND", b"")
+    )
+
+
 def create_evidence_files(evidence_root, slot):
     evidence = slot["evidence"]
-    for key in ("qaReport", "previewNeutral", "exportUnityFbx", "notes"):
+    for key in ("qaReport", "exportUnityFbx", "notes"):
         path = evidence_root / evidence[key]
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(f"{slot['id']} {key}\n", encoding="utf-8")
+    write_test_png(
+        evidence_root / evidence["previewNeutral"],
+        rows=[
+            [30, 30, 30, 220],
+            [30, 220, 220, 30],
+            [30, 220, 220, 30],
+            [30, 30, 30, 220],
+        ],
+    )
 
 
 def run_validator(manifest_path, *args):
@@ -209,3 +242,33 @@ def test_asset_evidence_validator_require_trial_fails_missing_evidence_files(tmp
     incomplete = payload["incompleteRealAssets"]
     assert incomplete
     assert any("file not found" in issue for slot in incomplete for issue in slot["issues"])
+
+
+def test_asset_evidence_validator_rejects_blank_preview_png(tmp_path):
+    manifest = clear_registered_assets(load_base_manifest())
+    slot = manifest["slots"][0]
+    mark_complete(slot, score=4, unity="pass", unreal="blocked")
+    create_evidence_files(tmp_path, slot)
+    write_test_png(
+        tmp_path / slot["evidence"]["previewNeutral"],
+        rows=[
+            [80, 80, 80, 80],
+            [80, 80, 80, 80],
+            [80, 80, 80, 80],
+            [80, 80, 80, 80],
+        ],
+    )
+    manifest_path = write_manifest(tmp_path, manifest)
+
+    result = run_validator(
+        manifest_path,
+        "--evidence-root",
+        str(tmp_path),
+        "--check-evidence-files",
+    )
+
+    assert result.returncode == 0
+    payload = json.loads(result.stdout)
+    incomplete = payload["incompleteRealAssets"]
+    assert incomplete
+    assert any("preview image appears blank" in issue for issue in incomplete[0]["issues"])

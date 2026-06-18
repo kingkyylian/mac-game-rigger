@@ -5,8 +5,10 @@ import argparse
 from collections import Counter
 import json
 from pathlib import Path
+import struct
 import sys
 from typing import Any
+import zlib
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -122,6 +124,132 @@ def evidence_file_issues(
     return issues
 
 
+def _png_channel_info(color_type: int) -> tuple[int, tuple[int, ...]]:
+    if color_type == 0:
+        return 1, (0,)
+    if color_type == 2:
+        return 3, (0, 1, 2)
+    if color_type == 4:
+        return 2, (0,)
+    if color_type == 6:
+        return 4, (0, 1, 2)
+    raise ValueError(f"unsupported PNG color type {color_type}")
+
+
+def _unfilter_png_row(filter_type: int, row: bytes, previous: bytes, bpp: int) -> bytes:
+    result = bytearray(row)
+    for index, value in enumerate(row):
+        left = result[index - bpp] if index >= bpp else 0
+        up = previous[index] if previous else 0
+        up_left = previous[index - bpp] if previous and index >= bpp else 0
+        if filter_type == 0:
+            predictor = 0
+        elif filter_type == 1:
+            predictor = left
+        elif filter_type == 2:
+            predictor = up
+        elif filter_type == 3:
+            predictor = (left + up) // 2
+        elif filter_type == 4:
+            pa = abs(up - up_left)
+            pb = abs(left - up_left)
+            pc = abs(left + up - (2 * up_left))
+            if pa <= pb and pa <= pc:
+                predictor = left
+            elif pb <= pc:
+                predictor = up
+            else:
+                predictor = up_left
+        else:
+            raise ValueError(f"unsupported PNG filter type {filter_type}")
+        result[index] = (value + predictor) & 0xFF
+    return bytes(result)
+
+
+def png_luma_stats(path: Path) -> dict[str, float | tuple[int, int]]:
+    data = path.read_bytes()
+    if not data.startswith(b"\x89PNG\r\n\x1a\n"):
+        raise ValueError("not a PNG file")
+
+    width = height = bit_depth = color_type = None
+    compressed = bytearray()
+    offset = 8
+    while offset < len(data):
+        if offset + 8 > len(data):
+            raise ValueError("truncated PNG chunk")
+        length = struct.unpack(">I", data[offset : offset + 4])[0]
+        kind = data[offset + 4 : offset + 8]
+        payload_start = offset + 8
+        payload_end = payload_start + length
+        payload = data[payload_start:payload_end]
+        if kind == b"IHDR":
+            width, height, bit_depth, color_type, compression, filter_method, interlace = struct.unpack(
+                ">IIBBBBB", payload
+            )
+            if bit_depth != 8 or compression != 0 or filter_method != 0 or interlace != 0:
+                raise ValueError("unsupported PNG encoding")
+        elif kind == b"IDAT":
+            compressed.extend(payload)
+        elif kind == b"IEND":
+            break
+        offset = payload_end + 4
+
+    if width is None or height is None or bit_depth is None or color_type is None:
+        raise ValueError("missing PNG header")
+    channels, luma_channels = _png_channel_info(color_type)
+    row_length = width * channels
+    raw = zlib.decompress(bytes(compressed))
+    expected_length = height * (1 + row_length)
+    if len(raw) != expected_length:
+        raise ValueError("unexpected PNG data length")
+
+    values: list[int] = []
+    previous = b"\x00" * row_length
+    offset = 0
+    for _ in range(height):
+        filter_type = raw[offset]
+        offset += 1
+        row = _unfilter_png_row(filter_type, raw[offset : offset + row_length], previous, channels)
+        offset += row_length
+        previous = row
+        for pixel_start in range(0, row_length, channels):
+            samples = [row[pixel_start + channel] for channel in luma_channels]
+            values.append(sum(samples) // len(samples))
+
+    minimum = min(values)
+    maximum = max(values)
+    mean = sum(values) / len(values)
+    variance = sum((value - mean) ** 2 for value in values) / len(values)
+    return {
+        "extrema": (minimum, maximum),
+        "stddev": variance ** 0.5,
+    }
+
+
+def preview_image_issues(
+    slot_id: str,
+    evidence: dict[str, Any],
+    evidence_root: Path,
+) -> list[str]:
+    issues: list[str] = []
+    for reference in evidence_references(evidence, ("previewNeutral", "previewPose", "previewPath")):
+        path_value = reference.get("path")
+        if not path_value or not path_value.lower().endswith(".png"):
+            continue
+        path = Path(path_value)
+        resolved_path = path if path.is_absolute() else evidence_root / path
+        if not resolved_path.exists():
+            continue
+        try:
+            stats = png_luma_stats(resolved_path)
+        except (OSError, ValueError, zlib.error) as exc:
+            issues.append(f"{slot_id}: preview image unreadable: {path_value} ({exc})")
+            continue
+        if stats["stddev"] < 1.0:
+            issues.append(f"{slot_id}: preview image appears blank: {path_value}")
+    return issues
+
+
 def validate_base_slot(slot: dict[str, Any], index: int, seen_ids: set[str]) -> list[str]:
     issues: list[str] = []
     slot_id = slot.get("id")
@@ -231,6 +359,7 @@ def validate_evidence(
                 evidence_root,
             )
         )
+        issues.extend(preview_image_issues(slot_id, evidence, evidence_root))
         issues.extend(
             evidence_file_issues(
                 slot_id,

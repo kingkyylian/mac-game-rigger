@@ -40,15 +40,18 @@ QA result: 0 unweighted vertices, 0 over-limit vertices, no warnings, no errors.
 Unity FBX export: `evidence/H-006/export-unity.fbx`
 Pose preview operator: `pose_arm_raise`; 4 pose bones changed before rendering `preview-pose.png`.
 
-Deformation score: 1
+Preview framing fix: refreshed after dynamic camera reframe and dynamic camera
+clip-end handling. Neutral and pose previews are now visually readable.
+Deformation score: 2
 Unity import status: blocked; Unity Editor is not installed/discoverable locally.
 Unreal import status: blocked; Unreal Editor is not installed/discoverable locally.
-Manual cleanup required: yes, preview/deformation evidence is not visually usable after workflow.
+Manual cleanup required: yes, arm raise/deformation quality is still too weak
+for game-ready use.
 Failure type: deformation quality issue
 
-Registration status: H-006 is complete as failure evidence for the low-poly
-humanoid slot. It should not be counted as quality success until camera,
-orientation, and deformation output are fixed.
+Registration status: H-006 is complete as low-quality evidence for the
+low-poly humanoid slot. It should not be counted as quality success until
+orientation and deformation output are improved.
 
 ## Register Command
 
@@ -64,7 +67,7 @@ scripts/register_asset_evidence.py \
   --preview-pose evidence/H-006/preview-pose.png \
   --export-unity-fbx evidence/H-006/export-unity.fbx \
   --notes evidence/H-006/notes.md \
-  --deformation-score 1 \
+  --deformation-score 2 \
   --unity-status blocked \
   --unreal-status blocked \
   --failure-type "deformation quality issue" \

@@ -44,7 +44,7 @@ The initial production-trial set is:
 | `H-001` | Quaternius Animated Man Pack - `Animated Human.fbx` | Baseline normal humanoid; downloaded locally and passed Blender import smoke. |
 | `H-002` | Quaternius Ultimate Animated Character Pack | Stylized/short-limb candidate if available. |
 | `H-003` | Quaternius Modular Character Outfits - Fantasy or RPG Character Pack | Armored humanoid stress case. |
-| `H-006` | Quaternius Animated Woman Pack - `Animated Woman.fbx` | Low-poly humanoid; registered as complete failure evidence with deformation score 1. |
+| `H-006` | Quaternius Animated Woman Pack - `Animated Woman.fbx` | Low-poly humanoid; registered as complete low-quality evidence with deformation score 2. |
 | `H-009` | Quaternius Ultimate Modular Men Pack or Ultimate Animated Character Pack | Wide-shoulder/bulky stress case. |
 | `H-010` | Quaternius Ultimate Animated Character Pack | Thin-limb stress case if available. |
 | `Q-001` | Quaternius Ultimate Animated Animal Pack or Farm Animal Pack | Baseline dog-like quadruped. |
@@ -96,19 +96,21 @@ deformation score 2 and engine import blockers.
 5. Generate `evidence/H-006/qa-report.json`, preview PNGs, and Unity FBX.
 6. Register H-006 with `scripts/register_asset_evidence.py`.
 
-H-006 is registered as complete failure evidence. It proves the pipeline can
-ingest and process a second real asset, but it also confirms a product gap:
-preview framing/orientation and deformation evidence are not yet visually
-usable. It must not be counted as quality success until those issues are fixed.
+H-006 is registered as complete low-quality evidence. It proves the pipeline can
+ingest and process a second real asset, and preview framing is now readable
+after the dynamic camera clipping fix. It still confirms a product gap:
+orientation and deformation quality are not game-ready. It must not be counted
+as quality success until those issues are fixed.
 
 ## Next Execution Step
 
 Do not simply add more humanoid evidence before fixing the evidence quality
-loop. The next productive step is to make preview rendering and deformation
-inspection reliable, then continue the remaining slots in batches:
+loop. Preview rendering is no longer blank, but orientation normalization and
+deformation inspection still need work. The next productive step is to improve
+those areas, then continue the remaining slots in batches:
 
-1. Fix camera framing/orientation and produce visually readable neutral/pose
-   evidence.
+1. Fix orientation normalization and produce consistently upright/front-facing
+   neutral/pose evidence.
 2. Improve humanoid deformation enough to reach score 3+ on at least one
    already-registered source.
 3. Add the next category-spread assets: Q-001, Q-002, C-001, and P-001.

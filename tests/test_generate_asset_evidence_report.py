@@ -2,6 +2,8 @@ import copy
 import json
 from pathlib import Path
 import subprocess
+import struct
+import zlib
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -26,6 +28,34 @@ def write_manifest(tmp_path, manifest):
     return path
 
 
+def write_test_png(path):
+    rows = [
+        [30, 30, 30, 220],
+        [30, 220, 220, 30],
+        [30, 220, 220, 30],
+        [30, 30, 30, 220],
+    ]
+    height = len(rows)
+    width = len(rows[0])
+    raw = b"".join(b"\x00" + bytes(row) for row in rows)
+
+    def chunk(kind, payload):
+        return (
+            struct.pack(">I", len(payload))
+            + kind
+            + payload
+            + struct.pack(">I", zlib.crc32(kind + payload) & 0xFFFFFFFF)
+        )
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(
+        b"\x89PNG\r\n\x1a\n"
+        + chunk(b"IHDR", struct.pack(">IIBBBBB", width, height, 8, 0, 0, 0, 0))
+        + chunk(b"IDAT", zlib.compress(raw))
+        + chunk(b"IEND", b"")
+    )
+
+
 def mark_complete(slot, evidence_root, *, score=4, unity="pass", unreal="blocked"):
     slot["realAsset"] = {
         "sourceName": f"{slot['id']} sample",
@@ -43,10 +73,11 @@ def mark_complete(slot, evidence_root, *, score=4, unity="pass", unreal="blocked
         "unityImport": {"status": unity},
         "unrealImport": {"status": unreal},
     }
-    for key in ("qaReport", "previewNeutral", "exportUnityFbx", "notes"):
+    for key in ("qaReport", "exportUnityFbx", "notes"):
         path = evidence_root / evidence[key]
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(key, encoding="utf-8")
+    write_test_png(evidence_root / evidence["previewNeutral"])
     slot["evidence"] = evidence
 
 

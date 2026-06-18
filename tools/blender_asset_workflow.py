@@ -95,6 +95,7 @@ def camera_plan_from_bbox(
         "target": target,
         "keyLightLocation": key_light_location,
         "orthographicScale": max(height * 1.8, width * 2.0, 1.0),
+        "clipEnd": (distance * 2.0) + max(height, width, depth),
     }
 
 
@@ -229,12 +230,24 @@ def apply_preview_material(bpy_module) -> None:
         obj.data.materials.append(material)
 
 
-def setup_camera_and_light(bpy_module, bbox: dict[str, float], *, axis: str) -> None:
+def remove_existing_preview_camera_and_light(bpy_module) -> None:
+    for obj in list(bpy_module.context.scene.objects):
+        if obj.name.startswith(("MGR_Workflow_Camera", "MGR_Workflow_Key_Light")):
+            bpy_module.data.objects.remove(obj, do_unlink=True)
+
+
+def setup_camera_and_light(
+    bpy_module,
+    bbox: dict[str, float],
+    *,
+    axis: str,
+) -> dict[str, tuple[float, float, float] | float]:
     from mathutils import Vector
 
     plan = camera_plan_from_bbox(bbox, axis=axis)
     height = max(bbox["max_z"] - bbox["min_z"], 0.1)
     target = Vector(plan["target"])
+    remove_existing_preview_camera_and_light(bpy_module)
 
     world = bpy_module.context.scene.world
     if world is not None:
@@ -251,10 +264,11 @@ def setup_camera_and_light(bpy_module, bbox: dict[str, float], *, axis: str) -> 
     camera.name = "MGR_Workflow_Camera"
     camera.data.type = "ORTHO"
     camera.data.ortho_scale = plan["orthographicScale"]
-    camera.data.clip_end = 1000
+    camera.data.clip_end = plan["clipEnd"]
     direction = target - camera.location
     camera.rotation_euler = direction.to_track_quat("-Z", "Y").to_euler()
     bpy_module.context.scene.camera = camera
+    return plan
 
 
 def run_operator(label: str, operator_call) -> str:
@@ -264,12 +278,28 @@ def run_operator(label: str, operator_call) -> str:
     return "FINISHED"
 
 
-def run_pose_preview(bpy_module, preview_pose_path: Path) -> str:
+def render_preview_frame(
+    bpy_module,
+    preview_path: Path,
+    *,
+    axis: str,
+) -> dict[str, Any]:
+    current_bbox = mesh_bbox(bpy_module)
+    camera_plan = setup_camera_and_light(bpy_module, current_bbox, axis=axis)
+    bpy_module.context.scene.mgr_preview_output_path = str(preview_path)
+    run_operator("render_front_preview", bpy_module.ops.mgr.render_front_preview)
+    return {
+        "bbox": current_bbox,
+        "camera": camera_plan,
+    }
+
+
+def run_pose_preview(bpy_module, preview_pose_path: Path, *, axis: str) -> dict[str, Any]:
     operator_name = pose_preview_operator_name()
     run_operator(operator_name, getattr(bpy_module.ops.mgr, operator_name))
-    bpy_module.context.scene.mgr_preview_output_path = str(preview_pose_path)
-    run_operator("render_pose_preview_frame", bpy_module.ops.mgr.render_front_preview)
-    return operator_name
+    frame = render_preview_frame(bpy_module, preview_pose_path, axis=axis)
+    frame["operator"] = operator_name
+    return frame
 
 
 def main() -> int:
@@ -314,9 +344,16 @@ def main() -> int:
         bpy.context.scene.mgr_qa_report_path = str(qa_path)
         run_operator("write_qa_report", bpy.ops.mgr.write_qa_report)
 
-        bpy.context.scene.mgr_preview_output_path = str(preview_neutral_path)
-        run_operator("render_front_preview", bpy.ops.mgr.render_front_preview)
-        pose_operator = run_pose_preview(bpy, preview_pose_path)
+        neutral_preview = render_preview_frame(
+            bpy,
+            preview_neutral_path,
+            axis=args.camera_axis,
+        )
+        pose_preview = run_pose_preview(
+            bpy,
+            preview_pose_path,
+            axis=args.camera_axis,
+        )
         run_operator("reset_pose", bpy.ops.mgr.reset_pose)
 
         select_meshes(bpy)
@@ -340,10 +377,14 @@ def main() -> int:
                 "exportQaReport": str(export_qa_path),
             },
             "posePreview": {
-                "operator": pose_operator,
+                "operator": pose_preview["operator"],
             },
             "camera": {
                 "axis": args.camera_axis,
+            },
+            "previewFrames": {
+                "neutral": neutral_preview,
+                "pose": pose_preview,
             },
             "qa": qa_payload,
         }

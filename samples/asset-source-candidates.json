@@ -44,7 +44,7 @@
       "sourceUrl": "https://quaternius.com/packs/animatedwoman.html",
       "license": "CC0",
       "targetUse": "low-poly humanoid",
-      "selectionNotes": "Selected and registered as complete failure evidence. Blender import and MGR workflow pass, but preview/deformation output is not visually usable; manifest score is 1 with failureType deformation quality issue."
+      "selectionNotes": "Selected and registered as complete low-quality evidence. Blender import and MGR workflow pass, preview framing is now readable, but arm/deformation output is still not production-ready; manifest score is 2 with failureType deformation quality issue."
     },
     {
       "slotId": "H-009",
@@ -96,5 +96,5 @@
     }
   ],
   "registrationRule": "A candidate becomes a realAsset only after the binary is downloaded, license/source is recorded, and local asset path or storage reference is known.",
-  "nextAction": "Continue with H-002, H-003, H-009, H-010, Q-001, Q-002, C-001, and P-001 candidates, but prioritize fixing preview framing/orientation and deformation quality before treating any additional humanoid slot as a quality success."
+  "nextAction": "Continue with H-002, H-003, H-009, H-010, Q-001, Q-002, C-001, and P-001 candidates, but prioritize orientation normalization and deformation quality before treating any additional humanoid slot as a quality success."
 }
