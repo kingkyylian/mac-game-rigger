@@ -38,14 +38,15 @@ Source rig stripping: 1 armature, 1 armature modifier, and 34 vertex groups remo
 Capsule weighting: 791 vertices weighted.
 QA result: 0 unweighted vertices, 0 over-limit vertices, no warnings, no errors.
 Unity FBX export: `evidence/H-001/export-unity.fbx`
-Pose preview operator: `pose_arm_raise`; 4 pose bones changed before rendering `preview-pose.png`.
+Pose preview operator: `pose_humanoid_stress`; 10 pose bones changed before
+rendering `preview-pose.png`.
 
 Orientation normalization: applied Y-up to Z-up mesh rotation before source rig
 stripping. Neutral and pose previews are now upright/front-facing.
 Deformation score: 2
 Unity import status: blocked; Unity Editor is not installed/discoverable locally.
 Unreal import status: blocked; Unreal Editor is not installed/discoverable locally.
-Manual cleanup required: yes, pose stress and arm deformation still need tuning
+Manual cleanup required: yes, shoulder/elbow/leg deformation still needs tuning
 before quality claim.
 Failure type: deformation quality issue
 

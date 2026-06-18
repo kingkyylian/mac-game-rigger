@@ -31,6 +31,7 @@ class MGR_PT_main_panel(bpy.types.Panel):
         layout.operator("mgr.pose_arm_raise", text="Pose Arm Raise")
         layout.operator("mgr.pose_knee_bend", text="Pose Knee Bend")
         layout.operator("mgr.pose_neck_turn", text="Pose Neck Turn")
+        layout.operator("mgr.pose_humanoid_stress", text="Pose Humanoid Stress")
         layout.separator()
         layout.prop(context.scene, "mgr_qa_report_path")
         layout.operator("mgr.write_qa_report", text="Write QA Report")

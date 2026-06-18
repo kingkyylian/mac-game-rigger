@@ -25,7 +25,7 @@
     "exportQaReport": "/Users/kyylian/mac-game-rigger/evidence/H-006/export-unity.qa.json"
   },
   "posePreview": {
-    "operator": "pose_arm_raise"
+    "operator": "pose_humanoid_stress"
   },
   "camera": {
     "axis": "x"
@@ -62,33 +62,33 @@
     },
     "pose": {
       "bbox": {
-        "min_x": -53.442298889160156,
-        "max_x": 44.56039810180664,
+        "min_x": -258.49517822265625,
+        "max_x": 42.856727600097656,
         "min_y": -240.91246032714844,
         "max_y": 240.91253662109375,
         "min_z": -44.196083068847656,
-        "max_z": 528.5285034179688
+        "max_z": 481.66009521484375
       },
       "camera": {
         "cameraLocation": [
-          -1498.9172897338867,
+          -1703.9701690673828,
           3.814697265625e-05,
-          242.16621017456055
+          218.73200607299805
         ],
         "target": [
-          -4.440950393676758,
+          -107.8192253112793,
           3.814697265625e-05,
-          242.16621017456055
+          218.73200607299805
         ],
         "keyLightLocation": [
-          -920.7272933959961,
+          -1125.7801727294923,
           3.814697265625e-05,
-          814.890796661377
+          744.5881843566895
         ],
-        "orthographicScale": 1030.9042556762695,
-        "clipEnd": 3463.6745681762695
+        "orthographicScale": 946.5411209106445,
+        "clipEnd": 3416.8061599731445
       },
-      "operator": "pose_arm_raise"
+      "operator": "pose_humanoid_stress"
     }
   },
   "qa": {

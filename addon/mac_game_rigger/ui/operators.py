@@ -9,6 +9,7 @@ from ..core.landmarks import Landmark, mirror_landmark, missing_landmarks
 from ..core.pose_tests import (
     apply_humanoid_arm_raise,
     apply_humanoid_knee_bend,
+    apply_humanoid_stress_pose,
     apply_neck_turn,
     reset_pose,
 )
@@ -345,6 +346,20 @@ class MGR_OT_pose_neck_turn(bpy.types.Operator):
         )
 
 
+class MGR_OT_pose_humanoid_stress(bpy.types.Operator):
+    bl_idname = "mgr.pose_humanoid_stress"
+    bl_label = "Pose Humanoid Stress"
+    bl_options = {"REGISTER", "UNDO"}
+
+    def execute(self, context):
+        return _execute_pose_test(
+            context,
+            self,
+            apply_humanoid_stress_pose,
+            "Humanoid stress",
+        )
+
+
 class MGR_OT_write_qa_report(bpy.types.Operator):
     bl_idname = "mgr.write_qa_report"
     bl_label = "Write QA Report"
@@ -631,6 +646,7 @@ classes = [
     MGR_OT_pose_arm_raise,
     MGR_OT_pose_knee_bend,
     MGR_OT_pose_neck_turn,
+    MGR_OT_pose_humanoid_stress,
     MGR_OT_write_qa_report,
     MGR_OT_render_front_preview,
     MGR_OT_render_pose_preview,

@@ -38,15 +38,16 @@ Source rig stripping: 1 armature, 1 armature modifier, and 34 vertex groups remo
 Capsule weighting: 954 vertices weighted.
 QA result: 0 unweighted vertices, 0 over-limit vertices, no warnings, no errors.
 Unity FBX export: `evidence/H-006/export-unity.fbx`
-Pose preview operator: `pose_arm_raise`; 4 pose bones changed before rendering `preview-pose.png`.
+Pose preview operator: `pose_humanoid_stress`; 10 pose bones changed before
+rendering `preview-pose.png`.
 
 Preview framing fix: refreshed after dynamic camera reframe and dynamic camera
 clip-end handling. Neutral and pose previews are now visually readable.
 Deformation score: 2
 Unity import status: blocked; Unity Editor is not installed/discoverable locally.
 Unreal import status: blocked; Unreal Editor is not installed/discoverable locally.
-Manual cleanup required: yes, arm raise/deformation quality is still too weak
-for game-ready use.
+Manual cleanup required: yes, shoulder/elbow/leg deformation quality is still
+too weak for game-ready use.
 Failure type: deformation quality issue
 
 Registration status: H-006 is complete as low-quality evidence for the

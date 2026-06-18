@@ -53,6 +53,24 @@ def apply_neck_turn(armature) -> PoseTestResult:
     )
 
 
+def apply_humanoid_stress_pose(armature) -> PoseTestResult:
+    return _apply_pose_rotations(
+        armature,
+        {
+            "UpperArm.L": (0.0, 0.0, 1.1),
+            "UpperArm.R": (0.0, 0.0, -1.1),
+            "LowerArm.L": (0.0, 0.0, 0.35),
+            "LowerArm.R": (0.0, 0.0, -0.35),
+            "UpperLeg.L": (-0.25, 0.0, 0.0),
+            "UpperLeg.R": (-0.25, 0.0, 0.0),
+            "LowerLeg.L": (0.75, 0.0, 0.0),
+            "LowerLeg.R": (0.75, 0.0, 0.0),
+            "Neck": (0.0, 0.0, 0.45),
+            "Head": (0.0, 0.0, 0.2),
+        },
+    )
+
+
 def _apply_pose_rotations(armature, rotations: dict[str, tuple[float, float, float]]) -> PoseTestResult:
     changed_bones = 0
     missing_bones = []

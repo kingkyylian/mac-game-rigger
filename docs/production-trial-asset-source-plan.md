@@ -99,20 +99,20 @@ orientation is normalized and front-facing now. It still has deformation score
 
 H-006 is registered as complete low-quality evidence. It proves the pipeline can
 ingest and process a second real asset, and preview framing/orientation is now
-readable after the dynamic camera clipping and normalization work. It still
-confirms a product gap: pose stress and deformation quality are not game-ready.
-It must not be counted as quality success until those issues are fixed.
+readable after the dynamic camera clipping and normalization work. The workflow
+now uses a stronger humanoid stress pose, but the result still confirms a
+product gap: deformation quality is not game-ready. It must not be counted as
+quality success until those issues are fixed.
 
 ## Next Execution Step
 
 Do not simply add more humanoid evidence before fixing the evidence quality
 loop. Preview rendering is no longer blank and current humanoids render
-front/upright, but pose stress and deformation inspection still need work. The
-next productive step is to improve those areas, then continue the remaining
-slots in batches:
+front/upright, and humanoid stress pose evidence now covers arms, legs, and
+neck. The next productive step is to improve deformation quality, then continue
+the remaining slots in batches:
 
-1. Add stronger humanoid stress poses that make shoulder, elbow, hip, and knee
-   deformation failures visible.
-2. Improve humanoid deformation enough to reach score 3+ on at least one
+1. Improve humanoid deformation enough to reach score 3+ on at least one
    already-registered source.
-3. Add the next category-spread assets: Q-001, Q-002, C-001, and P-001.
+2. Add the next category-spread assets: Q-001, Q-002, C-001, and P-001.
+3. Install/configure Unity if local engine import pass evidence is required.

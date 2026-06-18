@@ -51,8 +51,8 @@ def test_humanoid_landmarks_from_bbox_contains_required_template_points():
     assert landmarks["head"][2] > landmarks["chest"][2] > landmarks["hips"][2]
 
 
-def test_pose_preview_uses_visible_arm_raise_pose():
-    assert blender_asset_workflow.pose_preview_operator_name() == "pose_arm_raise"
+def test_pose_preview_uses_visible_humanoid_stress_pose():
+    assert blender_asset_workflow.pose_preview_operator_name() == "pose_humanoid_stress"
 
 
 def test_orientation_plan_rotates_y_up_mesh_to_z_up():

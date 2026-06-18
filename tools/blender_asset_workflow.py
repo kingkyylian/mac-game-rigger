@@ -63,7 +63,7 @@ def humanoid_landmarks_from_bbox(bbox: dict[str, float]) -> dict[str, tuple[floa
 
 
 def pose_preview_operator_name() -> str:
-    return "pose_arm_raise"
+    return "pose_humanoid_stress"
 
 
 def preview_material_name() -> str:
