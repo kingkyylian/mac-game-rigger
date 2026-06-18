@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 from pathlib import Path
 import sys
 from typing import Any
@@ -69,6 +70,19 @@ def preview_material_name() -> str:
     return "MGR_Evidence_Preview_Material"
 
 
+def orientation_normalization_plan_from_dimensions(
+    dimensions: tuple[float, float, float],
+) -> dict[str, str | float] | None:
+    width_x, depth_y, height_z = dimensions
+    if depth_y > height_z and depth_y > width_x:
+        return {
+            "sourceUpAxis": "y",
+            "rotationAxis": "X",
+            "rotationRadians": math.pi / 2,
+        }
+    return None
+
+
 def camera_plan_from_bbox(
     bbox: dict[str, float],
     *,
@@ -106,7 +120,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--asset", required=True, help="Source FBX, GLB/GLTF, OBJ, or BLEND path.")
     parser.add_argument("--evidence-dir", required=True, help="Evidence output directory.")
     parser.add_argument("--summary", required=True, help="Workflow summary JSON path.")
-    parser.add_argument("--camera-axis", choices=("x", "y"), default="y", help="Axis used for evidence previews.")
+    parser.add_argument("--camera-axis", choices=("x", "y"), default="x", help="Axis used for evidence previews.")
     return parser.parse_args(argv)
 
 
@@ -188,6 +202,35 @@ def strip_source_rig(bpy_module) -> dict[str, int]:
         "removedArmatureModifiers": removed_modifiers,
         "removedVertexGroups": removed_groups,
     }
+
+
+def normalize_mesh_orientation(bpy_module) -> list[dict[str, Any]]:
+    applied: list[dict[str, Any]] = []
+    if bpy_module.ops.object.mode_set.poll():
+        bpy_module.ops.object.mode_set(mode="OBJECT")
+
+    for obj in bpy_module.context.scene.objects:
+        if obj.type != "MESH":
+            continue
+        plan = orientation_normalization_plan_from_dimensions(tuple(obj.dimensions))
+        if plan is None:
+            continue
+        bpy_module.ops.object.select_all(action="DESELECT")
+        obj.select_set(True)
+        bpy_module.context.view_layer.objects.active = obj
+        obj.rotation_euler.rotate_axis(plan["rotationAxis"], plan["rotationRadians"])
+        bpy_module.ops.object.transform_apply(location=False, rotation=True, scale=False)
+        obj.select_set(False)
+        applied.append(
+            {
+                "objectName": obj.name,
+                "sourceUpAxis": plan["sourceUpAxis"],
+                "rotationAxis": plan["rotationAxis"],
+                "rotationRadians": plan["rotationRadians"],
+            }
+        )
+
+    return applied
 
 
 def add_landmarks(bpy_module, landmarks: dict[str, tuple[float, float, float]]) -> None:
@@ -324,8 +367,9 @@ def main() -> int:
 
     reset_scene(bpy)
     import_asset(bpy, asset_path)
-    imported_bbox = mesh_bbox(bpy)
+    orientation_result = normalize_mesh_orientation(bpy)
     strip_result = strip_source_rig(bpy)
+    imported_bbox = mesh_bbox(bpy)
     apply_preview_material(bpy)
     setup_camera_and_light(bpy, imported_bbox, axis=args.camera_axis)
 
@@ -367,6 +411,7 @@ def main() -> int:
             "status": "pass",
             "assetPath": str(asset_path),
             "stripSourceRig": strip_result,
+            "orientationNormalization": orientation_result,
             "meshCount": len(meshes),
             "bbox": imported_bbox,
             "artifacts": {

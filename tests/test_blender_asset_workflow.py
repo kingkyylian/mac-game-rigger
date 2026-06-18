@@ -1,4 +1,5 @@
 import importlib.util
+import math
 from pathlib import Path
 
 
@@ -52,6 +53,42 @@ def test_humanoid_landmarks_from_bbox_contains_required_template_points():
 
 def test_pose_preview_uses_visible_arm_raise_pose():
     assert blender_asset_workflow.pose_preview_operator_name() == "pose_arm_raise"
+
+
+def test_orientation_plan_rotates_y_up_mesh_to_z_up():
+    plan = blender_asset_workflow.orientation_normalization_plan_from_dimensions(
+        (2.3, 5.3, 2.2)
+    )
+
+    assert plan == {
+        "sourceUpAxis": "y",
+        "rotationAxis": "X",
+        "rotationRadians": math.pi / 2,
+    }
+
+
+def test_orientation_plan_leaves_z_up_mesh_unchanged():
+    assert (
+        blender_asset_workflow.orientation_normalization_plan_from_dimensions(
+            (2.1, 1.2, 5.2)
+        )
+        is None
+    )
+
+
+def test_default_camera_axis_is_front_view_after_orientation_normalization():
+    args = blender_asset_workflow.parse_args(
+        [
+            "--asset",
+            "asset.fbx",
+            "--evidence-dir",
+            "evidence",
+            "--summary",
+            "summary.json",
+        ]
+    )
+
+    assert args.camera_axis == "x"
 
 
 def test_camera_plan_uses_orthographic_scale_from_asset_height():

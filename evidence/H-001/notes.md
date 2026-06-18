@@ -40,10 +40,13 @@ QA result: 0 unweighted vertices, 0 over-limit vertices, no warnings, no errors.
 Unity FBX export: `evidence/H-001/export-unity.fbx`
 Pose preview operator: `pose_arm_raise`; 4 pose bones changed before rendering `preview-pose.png`.
 
+Orientation normalization: applied Y-up to Z-up mesh rotation before source rig
+stripping. Neutral and pose previews are now upright/front-facing.
 Deformation score: 2
 Unity import status: blocked; Unity Editor is not installed/discoverable locally.
 Unreal import status: blocked; Unreal Editor is not installed/discoverable locally.
-Manual cleanup required: yes, landmark/camera alignment and arm deformation need tuning before quality claim.
+Manual cleanup required: yes, pose stress and arm deformation still need tuning
+before quality claim.
 Failure type: deformation quality issue
 
 Registration status: H-001 may be registered as complete evidence, but it should

@@ -50,8 +50,8 @@ for game-ready use.
 Failure type: deformation quality issue
 
 Registration status: H-006 is complete as low-quality evidence for the
-low-poly humanoid slot. It should not be counted as quality success until
-orientation and deformation output are improved.
+low-poly humanoid slot. It should not be counted as quality success until pose
+stress and deformation output are improved.
 
 ## Register Command
 
