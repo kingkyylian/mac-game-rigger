@@ -69,3 +69,21 @@ When a row is tested, fill the columns like this:
 | quadruped | 3 of 5 usable with cleanup <= 35 minutes. |
 | tail/wing creature | Useful first-pass result or clear failure report. |
 | prop | 4 of 5 usable with cleanup <= 20 minutes. |
+
+## Performance Benchmark
+
+Use the deterministic capsule weight-binding benchmark to track core math
+runtime independently from Blender UI, preview rendering, and FBX export:
+
+```bash
+scripts/run_performance_benchmark.py \
+  --vertex-count 10000 \
+  --vertex-count 50000 \
+  --vertex-count 100000 \
+  --output build/performance-benchmark.json
+```
+
+The local alpha smoke gate runs a smaller 1k vertex benchmark as a regression
+check. Product-level performance evidence still needs end-to-end Blender timing
+for mesh analysis, landmark workflow, armature generation, binding, cleanup,
+preview, and export.

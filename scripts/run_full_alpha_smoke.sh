@@ -66,6 +66,12 @@ scripts/validate_asset_evidence.py --manifest samples/manifest.json --quiet
 log_step "Run Python unit tests"
 python3 -m pytest tests -q
 
+log_step "Run quick performance benchmark"
+python3 scripts/run_performance_benchmark.py \
+  --vertex-count 1000 \
+  --max-seconds-per-case 10 \
+  --output build/performance-smoke.json
+
 log_step "Run compileall"
 python3 -m compileall addon/mac_game_rigger tests
 python3 -m py_compile scripts/run_blender_compat_matrix.py
@@ -73,6 +79,7 @@ python3 -m py_compile scripts/validate_asset_evidence.py
 python3 -m py_compile scripts/register_asset_evidence.py
 python3 -m py_compile scripts/create_evidence_skeleton.py
 python3 -m py_compile scripts/generate_asset_evidence_report.py
+python3 -m py_compile scripts/run_performance_benchmark.py
 python3 -m py_compile tools/unreal_import_check/MacGameRiggerFbxImportCheck.py
 
 if [ "$SKIP_BLENDER" -eq 0 ]; then
@@ -114,6 +121,7 @@ required_package_paths=(
   "scripts/register_asset_evidence.py"
   "scripts/create_evidence_skeleton.py"
   "scripts/generate_asset_evidence_report.py"
+  "scripts/run_performance_benchmark.py"
   "scripts/run_blender_compat_matrix.py"
   "scripts/verify_unreal_fbx_import.sh"
   "tools/unreal_import_check/MacGameRiggerFbxImportCheck.py"

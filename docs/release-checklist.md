@@ -21,6 +21,7 @@ Release: Mac Game Rigger Alpha 0.1.0
 | Blender compatibility matrix | partial | `scripts/run_blender_compat_matrix.py` passed 15 Blender headless tests on local Blender 4.5.10 LTS outside the sandbox; Blender 4.2 target evidence is still required before beta. |
 | Real asset evidence gate | pass | `scripts/validate_asset_evidence.py --manifest samples/manifest.json --evidence-root . --check-evidence-files --require-production-trial --quiet` passes with 12 complete real asset evidence entries. |
 | CI smoke gate | blocked | `.github/workflows/ci.yml` runs `scripts/run_full_alpha_smoke.sh --skip-blender` and uploads `dist/MacGameRigger-0.1.0.zip`; remote GitHub run `28246102354` failed before starting because private-repo Actions billing/spending limit needs attention. |
+| Performance smoke gate | pass | `scripts/run_full_alpha_smoke.sh --skip-blender` runs `scripts/run_performance_benchmark.py --vertex-count 1000 --max-seconds-per-case 10`; `docs/performance-benchmarks.md` records the 10k/50k/100k capsule weight-binding baseline. |
 | Strict humanoid Animator gate | blocked | `docs/asset-evidence-progress.md` shows `configuredAnimatorSmokeForHumanoidScore3` blocked for H-003, H-004, H-005, H-009, and H-010. |
 
 ## Verification Commands
@@ -29,6 +30,7 @@ Release: Mac Game Rigger Alpha 0.1.0
 python3 -m pytest tests -q
 scripts/validate_asset_evidence.py --manifest samples/manifest.json
 scripts/validate_asset_evidence.py --manifest samples/manifest.json --evidence-root . --check-evidence-files --require-production-trial --quiet
+scripts/run_performance_benchmark.py --vertex-count 10000 --vertex-count 50000 --vertex-count 100000 --output build/performance-benchmark.json
 scripts/run_blender_compat_matrix.py --discover --skip-tests
 blender --background --factory-startup --python blender_tests/test_generate_armature_operator.py
 blender --background --factory-startup --python blender_tests/test_capsule_weights_operator.py
@@ -59,7 +61,7 @@ scripts/validate_asset_evidence.py --manifest samples/manifest.json --evidence-r
 - Unreal engine import validation is not complete: prepare-only workspace creation and unattended runner orchestration are implemented, but `UnrealEditor` is not on `PATH` and no real Unreal Editor import pass has been captured.
 - Blender 4.2 target compatibility is not yet proven locally; current discovered Blender is 4.5.10 LTS.
 - Production trial evidence is present and passes, but the stricter game-ready configured Animator gate is not closed.
-- Full rig workflow timings still need a formal performance benchmark across 10k / 50k / 100k vertex meshes.
+- Full Blender rig workflow timings still need a formal end-to-end benchmark across 10k / 50k / 100k vertex meshes; current performance benchmark covers deterministic capsule weight-binding math only.
 - Wing-specific rig helpers are still experimental; prop hinge and tail creature helpers are present but need more real asset evidence.
 - Finger rigging, cloth/skirt deformation, and advanced tail/wing controls remain out of V1 scope.
 - QA report has structural, weight, preview, and pose deformation evidence, but still does not replace artist visual approval.
