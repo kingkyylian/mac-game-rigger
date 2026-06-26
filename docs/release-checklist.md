@@ -25,7 +25,7 @@ Release: Mac Game Rigger Alpha 0.1.0
 | Blender workflow benchmark | pass | `scripts/run_blender_workflow_benchmark.py --blender blender --asset local_assets/H-006/H-006-quaternius-animated-woman.fbx --template humanoid --evidence-root build/blender-workflow-benchmark --output build/blender-workflow-benchmark.json --timeout-seconds 300 --max-seconds-per-case 120` passed outside the sandbox in 3.142040s with QA pass, pose deformation pass, preview renders, and Unity FBX export. |
 | Synthetic workflow scaling | pass | `scripts/run_blender_workflow_benchmark.py --blender blender --synthetic-humanoid-vertices 10000 --synthetic-humanoid-vertices 50000 --synthetic-humanoid-vertices 100000 --evidence-root build/blender-workflow-synthetic-benchmark --output build/blender-workflow-synthetic-benchmark.json --timeout-seconds 600 --max-seconds-per-case 180` passed outside the sandbox; 10k in 3.195480s, 50k in 5.995934s, 100k in 10.817145s, with clean structural QA, pose deformation pass, and Unity FBX export. |
 | Template-family workflow scaling | pass | `scripts/run_blender_workflow_benchmark.py --blender blender --synthetic-multimesh-humanoid-vertices 10000 --synthetic-quadruped-vertices 10000 --synthetic-tail-creature-vertices 10000 --synthetic-prop-hinge-vertices 10000 --evidence-root build/blender-workflow-template-family-benchmark --output build/blender-workflow-template-family-benchmark.json --timeout-seconds 600 --max-seconds-per-case 180` passed outside the sandbox; structural QA, pose deformation, and Unity FBX export pass for all four cases. |
-| Strict humanoid Animator gate | blocked | `docs/asset-evidence-progress.md` shows `configuredAnimatorSmokeForHumanoidScore3` blocked for H-003, H-004, H-005, H-009, and H-010. |
+| Strict humanoid Animator gate | blocked | `docs/asset-evidence-progress.md` shows `configuredAnimatorSmokeForHumanoidScore3` blocked for H-003, H-004, H-005, H-009, and H-010. `scripts/plan_unity_animator_smoke_migration.py --json` lists exactly those five migration commands. `scripts/check_unity_batchmode_health.py --output build/unity-batchmode-health.json --timeout-seconds 90` currently times out with Unity Licensing Client/bootstrap failure before asset import starts. |
 
 ## Verification Commands
 
@@ -37,6 +37,9 @@ scripts/run_performance_benchmark.py --vertex-count 10000 --vertex-count 50000 -
 scripts/run_blender_workflow_benchmark.py --blender blender --asset local_assets/H-006/H-006-quaternius-animated-woman.fbx --template humanoid --evidence-root build/blender-workflow-benchmark --output build/blender-workflow-benchmark.json --timeout-seconds 300 --max-seconds-per-case 120
 scripts/run_blender_workflow_benchmark.py --blender blender --synthetic-humanoid-vertices 10000 --synthetic-humanoid-vertices 50000 --synthetic-humanoid-vertices 100000 --evidence-root build/blender-workflow-synthetic-benchmark --output build/blender-workflow-synthetic-benchmark.json --timeout-seconds 600 --max-seconds-per-case 180
 scripts/run_blender_workflow_benchmark.py --blender blender --synthetic-multimesh-humanoid-vertices 10000 --synthetic-quadruped-vertices 10000 --synthetic-tail-creature-vertices 10000 --synthetic-prop-hinge-vertices 10000 --evidence-root build/blender-workflow-template-family-benchmark --output build/blender-workflow-template-family-benchmark.json --timeout-seconds 600 --max-seconds-per-case 180
+scripts/plan_unity_animator_smoke_migration.py --manifest samples/manifest.json --evidence-root . --json
+scripts/run_unity_animator_smoke_migration.py --manifest samples/manifest.json --evidence-root . --dry-run
+scripts/check_unity_batchmode_health.py --output build/unity-batchmode-health.json --timeout-seconds 90
 scripts/run_blender_compat_matrix.py --discover --skip-tests
 blender --background --factory-startup --python blender_tests/test_generate_armature_operator.py
 blender --background --factory-startup --python blender_tests/test_capsule_weights_operator.py
@@ -61,7 +64,7 @@ scripts/validate_asset_evidence.py --manifest samples/manifest.json --evidence-r
 
 ## Known issues
 
-- Unity import validation passes outside the sandbox after restarting a stale Unity Licensing Client process. Sandboxed Unity batchmode still fails with Package Manager `listen EPERM`, so engine import verification must run outside the sandbox.
+- Unity import validation has previous outside-sandbox passes, but the current configured Animator migration preflight times out before import because Unity Licensing Client/bootstrap fails. Latest health report path: `build/unity-batchmode-health.json`; the emitted hint says to open Unity Hub or the Unity Editor once to refresh licensing, then rerun outside the sandbox. Sandboxed Unity batchmode still fails with Package Manager `listen EPERM`, so engine import verification must run outside the sandbox.
 - Blender full workflow benchmark passes outside the sandbox, but Blender 4.5.10 crashed inside the Codex sandbox with exit code 139 before producing a workflow summary.
 - GitHub Actions CI is configured, but the first remote run did not start because the private repository hit an account billing/spending-limit restriction. Keep using `scripts/run_full_alpha_smoke.sh --skip-blender` locally until billing is fixed or the repo visibility is intentionally changed.
 - Strict configured Animator smoke is still incomplete for five score >= 3 Unity-pass humanoids: H-003, H-004, H-005, H-009, and H-010. H-006 has passing configured Animator evidence.

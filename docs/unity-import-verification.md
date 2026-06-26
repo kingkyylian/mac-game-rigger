@@ -54,9 +54,11 @@ scripts/run_unity_animator_smoke_migration.py \
 
 Use `--dry-run` first to list commands without starting Unity. The batch runner
 automatically runs the same Unity batchmode health check before recorder
-commands, then stops on the first recorder failure so later evidence files are
-not touched after a licensing or import problem. Use `--skip-preflight` only
-when Unity batchmode health was already checked in the same terminal session.
+commands, writes `build/unity-batchmode-health.json`, then stops on the first
+recorder failure so later evidence files are not touched after a licensing or
+import problem. Pass `--preflight-output <path>` to write that health report
+somewhere else. Use `--skip-preflight` only when Unity batchmode health was
+already checked in the same terminal session.
 
 To audit the future strict gate before flipping it into the default production
 trial path, run:
@@ -172,7 +174,7 @@ once to refresh licensing, then rerun `scripts/record_unity_import_evidence.py`
 outside the sandbox. The recorder preserves existing evidence on this failure.
 
 For repeatable preflight evidence, write a machine-readable health report before
-running the migration batch:
+running individual recorder commands:
 
 ```bash
 scripts/check_unity_batchmode_health.py \
@@ -184,6 +186,8 @@ scripts/check_unity_batchmode_health.py \
 The JSON report records `status`, `exitCode`, `timedOut`, `unity`,
 `timeoutSeconds`, `hint`, `stderr`, and the Unity `logTail`. This keeps the
 licensing/bootstrap blocker auditable without overwriting asset import evidence.
+The migration batch writes the same report automatically at
+`build/unity-batchmode-health.json`.
 
 ## Alpha Evidence
 

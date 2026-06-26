@@ -30,13 +30,21 @@ def build_recorder_command(
     ]
 
 
-def build_health_command(*, health_checker: str, unity: str, timeout_seconds: int) -> list[str]:
+def build_health_command(
+    *,
+    health_checker: str,
+    unity: str,
+    timeout_seconds: int,
+    output: str,
+) -> list[str]:
     return [
         health_checker,
         "--unity",
         unity,
         "--timeout-seconds",
         str(timeout_seconds),
+        "--output",
+        output,
     ]
 
 
@@ -51,6 +59,11 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--recorder", default="scripts/record_unity_import_evidence.py")
     parser.add_argument("--health-checker", default="scripts/check_unity_batchmode_health.py")
     parser.add_argument("--preflight-timeout-seconds", type=int, default=90)
+    parser.add_argument(
+        "--preflight-output",
+        default="build/unity-batchmode-health.json",
+        help="Path where Unity batchmode health JSON should be written.",
+    )
     parser.add_argument("--skip-preflight", action="store_true", help="Skip Unity batchmode health check.")
     parser.add_argument("--dry-run", action="store_true", help="List commands without running them.")
     return parser.parse_args(argv)
@@ -93,6 +106,7 @@ def main(argv: list[str] | None = None) -> int:
             health_checker=args.health_checker,
             unity=args.unity,
             timeout_seconds=args.preflight_timeout_seconds,
+            output=args.preflight_output,
         )
         print(f"Unity preflight: {shlex.join(health_command)}")
         health_result = subprocess.run(health_command, text=True, capture_output=True, check=False)

@@ -236,8 +236,66 @@ echo "record:$*" >> {calls_path}
 
     assert result.returncode == 0, result.stderr
     calls = calls_path.read_text(encoding="utf-8").strip().splitlines()
-    assert calls[0] == "health:--unity /Fake/Unity --timeout-seconds 7"
+    assert calls[0] == (
+        "health:--unity /Fake/Unity --timeout-seconds 7 "
+        "--output build/unity-batchmode-health.json"
+    )
     assert calls[1].startswith("record:--fbx evidence/H-003/export-unity.fbx")
+
+
+def test_cli_allows_custom_preflight_output_path(tmp_path):
+    load_module()
+    manifest_path = write_manifest(tmp_path)
+    write_unity_import_without_configured_smoke(tmp_path, "H-003")
+    fake_recorder = tmp_path / "fake-recorder"
+    fake_health = tmp_path / "fake-health"
+    calls_path = tmp_path / "calls.txt"
+    fake_health.write_text(
+        f"""#!/usr/bin/env bash
+set -euo pipefail
+echo "health:$*" >> {calls_path}
+""",
+        encoding="utf-8",
+    )
+    fake_recorder.write_text(
+        f"""#!/usr/bin/env bash
+set -euo pipefail
+echo "record:$*" >> {calls_path}
+""",
+        encoding="utf-8",
+    )
+    fake_health.chmod(0o755)
+    fake_recorder.chmod(0o755)
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(SCRIPT_PATH),
+            "--manifest",
+            str(manifest_path),
+            "--evidence-root",
+            str(tmp_path),
+            "--unity",
+            "/Fake/Unity",
+            "--recorder",
+            str(fake_recorder),
+            "--health-checker",
+            str(fake_health),
+            "--preflight-output",
+            "reports/unity-health.json",
+        ],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    calls = calls_path.read_text(encoding="utf-8").strip().splitlines()
+    assert calls[0] == (
+        "health:--unity /Fake/Unity --timeout-seconds 90 "
+        "--output reports/unity-health.json"
+    )
 
 
 def test_cli_stops_before_recorders_when_preflight_fails(tmp_path):
