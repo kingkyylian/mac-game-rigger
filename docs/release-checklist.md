@@ -29,6 +29,7 @@ Release: Mac Game Rigger Alpha 0.1.0
 | Strict humanoid Animator gate | blocked | `docs/asset-evidence-progress.md` shows `configuredAnimatorSmokeForHumanoidScore3` blocked for H-003, H-004, H-005, H-009, and H-010. `scripts/plan_unity_animator_smoke_migration.py --json` lists exactly those five migration commands. `scripts/check_unity_batchmode_health.py --output build/unity-batchmode-health.json --timeout-seconds 90` currently times out with Unity Licensing Client/bootstrap failure before asset import starts. |
 | Strict separate-mesh humanoid gate | blocked | `docs/asset-evidence-progress.md` shows `realSeparateMeshHumanoidEvidence` blocked for H-003, H-004, H-005, H-006, H-009, and H-010. Current complete score >= 3 real humanoids report source import mesh count 1 and rig workflow mesh count 1, so no real separate-mesh hair/accessory/clothing humanoid evidence exists yet. |
 | Split-mesh humanoid intake plan | pass | `scripts/plan_split_mesh_humanoid_intake.py --manifest samples/manifest.json --json` reports H-002, H-007, and H-008 as open humanoid slots and recommends H-002. When an asset path is provided, it emits source import smoke, Blender workflow, manifest registration, and report regeneration commands. |
+| Split-mesh humanoid verifier | blocked | `scripts/verify_split_mesh_humanoid_evidence.py --manifest samples/manifest.json --evidence-root . --json` is wired and currently blocks because no score >= 3 real humanoid has both source import mesh count > 1 and rig workflow mesh count > 1. |
 
 ## Verification Commands
 
@@ -46,6 +47,7 @@ scripts/plan_unity_animator_smoke_migration.py --manifest samples/manifest.json 
 scripts/run_unity_animator_smoke_migration.py --manifest samples/manifest.json --evidence-root . --dry-run
 scripts/check_unity_batchmode_health.py --output build/unity-batchmode-health.json --timeout-seconds 90
 scripts/plan_split_mesh_humanoid_intake.py --manifest samples/manifest.json --json
+scripts/verify_split_mesh_humanoid_evidence.py --manifest samples/manifest.json --evidence-root . --json
 scripts/run_blender_compat_matrix.py --discover --skip-tests
 scripts/run_blender_compat_matrix.py --discover --skip-tests --require-version-prefix "Blender 4.2" --output build/blender-compat-target-4.2.json --quiet
 scripts/run_blender_compat_matrix.py --blender /opt/homebrew/bin/blender --output build/blender-compat-4.5-full.json --quiet
