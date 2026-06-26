@@ -18,7 +18,7 @@ Release: Mac Game Rigger Alpha 0.1.0
 | Export | pass | `blender_tests/test_unity_fbx_export_operator.py` and `test_unreal_fbx_export_operator.py` create FBX files and QA JSON. |
 | Package | pass | `scripts/package_addon.sh` creates `dist/MacGameRigger-0.1.0.zip`. |
 | Smoke benchmark | pass | `docs/alpha-smoke-results.md` has 5 generated full-workflow proxy rows, 5 real glTF sample asset import rows, and one Unity batchmode import verifier pass for `mac_game_rigger_unity_export.fbx`. |
-| Blender compatibility matrix | partial | `scripts/run_blender_compat_matrix.py` passed 15 Blender headless tests on local Blender 4.5.10 LTS outside the sandbox; Blender 4.2 target evidence is still required before beta. |
+| Blender compatibility matrix | partial | `scripts/run_blender_compat_matrix.py --blender /opt/homebrew/bin/blender --output build/blender-compat-4.5-full.json --quiet` passed 15 Blender headless tests on local Blender 4.5.10 LTS outside the sandbox. `scripts/run_blender_compat_matrix.py --discover --skip-tests --require-version-prefix "Blender 4.2" --output build/blender-compat-target-4.2.json --quiet` is blocked with `required_blender_version_not_found`; discovered versions are only Blender 4.5.10 LTS. |
 | Real asset evidence gate | pass | `scripts/validate_asset_evidence.py --manifest samples/manifest.json --evidence-root . --check-evidence-files --require-production-trial --quiet` passes with 12 complete real asset evidence entries. |
 | CI smoke gate | blocked | `.github/workflows/ci.yml` runs `scripts/run_full_alpha_smoke.sh --skip-blender` and uploads `dist/MacGameRigger-0.1.0.zip`; remote GitHub run `28247801894` failed before starting because private-repo Actions billing/spending limit needs attention. |
 | Performance smoke gate | pass | `scripts/run_full_alpha_smoke.sh --skip-blender` runs `scripts/run_performance_benchmark.py --vertex-count 1000 --max-seconds-per-case 10`; `docs/performance-benchmarks.md` records the 10k/50k/100k capsule weight-binding baseline. |
@@ -43,6 +43,8 @@ scripts/plan_unity_animator_smoke_migration.py --manifest samples/manifest.json 
 scripts/run_unity_animator_smoke_migration.py --manifest samples/manifest.json --evidence-root . --dry-run
 scripts/check_unity_batchmode_health.py --output build/unity-batchmode-health.json --timeout-seconds 90
 scripts/run_blender_compat_matrix.py --discover --skip-tests
+scripts/run_blender_compat_matrix.py --discover --skip-tests --require-version-prefix "Blender 4.2" --output build/blender-compat-target-4.2.json --quiet
+scripts/run_blender_compat_matrix.py --blender /opt/homebrew/bin/blender --output build/blender-compat-4.5-full.json --quiet
 blender --background --factory-startup --python blender_tests/test_generate_armature_operator.py
 blender --background --factory-startup --python blender_tests/test_capsule_weights_operator.py
 blender --background --factory-startup --python blender_tests/test_weight_cleanup_operator.py
@@ -71,7 +73,7 @@ scripts/validate_asset_evidence.py --manifest samples/manifest.json --evidence-r
 - GitHub Actions CI is configured, but the first remote run did not start because the private repository hit an account billing/spending-limit restriction. Keep using `scripts/run_full_alpha_smoke.sh --skip-blender` locally until billing is fixed or the repo visibility is intentionally changed.
 - Strict configured Animator smoke is still incomplete for five score >= 3 Unity-pass humanoids: H-003, H-004, H-005, H-009, and H-010. H-006 has passing configured Animator evidence.
 - Unreal engine import validation is not complete: prepare-only workspace creation and unattended runner orchestration are implemented, but `UnrealEditor` is not on `PATH` and no real Unreal Editor import pass has been captured.
-- Blender 4.2 target compatibility is not yet proven locally; current discovered Blender is 4.5.10 LTS.
+- Blender 4.2 target compatibility is not yet proven locally; the target gate now reports `required_blender_version_not_found` and current discovered Blender versions are only 4.5.10 LTS.
 - Production trial evidence is present and passes, but the stricter game-ready configured Animator gate is not closed.
 - Full Blender rig workflow timing now has one real H-006 baseline, a 10-slot real asset family benchmark, synthetic 10k / 50k / 100k scalability baselines, and synthetic template-family timing; real separate-mesh hair/accessory humanoids and Blender 4.2 timing still need evidence.
 - Wing-specific rig helpers are still experimental; prop hinge and tail creature helpers are present but need more real asset evidence.

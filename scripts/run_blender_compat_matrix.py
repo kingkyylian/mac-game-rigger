@@ -37,6 +37,15 @@ def parse_args() -> argparse.Namespace:
         help="Only collect Blender version metadata.",
     )
     parser.add_argument(
+        "--require-version-prefix",
+        action="append",
+        default=[],
+        help=(
+            "Require at least one passing Blender version line to start with this "
+            "prefix, e.g. 'Blender 4.2'. May be passed multiple times."
+        ),
+    )
+    parser.add_argument(
         "--test-glob",
         default=DEFAULT_TEST_GLOB,
         help=f"Glob of Blender Python tests to run. Default: {DEFAULT_TEST_GLOB}",
@@ -180,6 +189,7 @@ def run_matrix(args: argparse.Namespace) -> tuple[int, dict[str, object]]:
         "repoRoot": str(REPO_ROOT),
         "testGlob": args.test_glob,
         "skipTests": args.skip_tests,
+        "requiredVersionPrefixes": args.require_version_prefix,
         "blenders": [],
     }
 
@@ -216,6 +226,22 @@ def run_matrix(args: argparse.Namespace) -> tuple[int, dict[str, object]]:
                 "tests": test_results,
             }
         )
+
+    discovered_version_lines = [
+        str(result.get("version", {}).get("versionLine") or "")
+        for result in blender_results
+        if isinstance(result.get("version"), dict)
+    ]
+    if args.require_version_prefix and not any(
+        version_line.startswith(prefix)
+        for version_line in discovered_version_lines
+        for prefix in args.require_version_prefix
+    ):
+        matrix["status"] = "blocked"
+        matrix["reason"] = "required_blender_version_not_found"
+        matrix["discoveredVersionLines"] = discovered_version_lines
+        matrix["blenders"] = blender_results
+        return 2, matrix
 
     matrix["status"] = overall_status
     matrix["blenders"] = blender_results

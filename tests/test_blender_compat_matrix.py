@@ -7,14 +7,19 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_PATH = REPO_ROOT / "scripts" / "run_blender_compat_matrix.py"
 
 
-def write_fake_blender(path: Path, *, fail_tests: bool = False) -> None:
+def write_fake_blender(
+    path: Path,
+    *,
+    fail_tests: bool = False,
+    version_line: str = "Blender 4.2.11 LTS",
+) -> None:
     test_exit = "exit 7" if fail_tests else "exit 0"
     path.write_text(
         f"""#!/usr/bin/env bash
 set -euo pipefail
 if [ "${{1:-}}" = "--version" ]; then
   cat <<'VERSION'
-Blender 4.2.11 LTS
+{version_line}
 \tbuild platform: Darwin
 VERSION
   exit 0
@@ -74,6 +79,58 @@ def test_blender_compat_matrix_collects_version_without_tests(tmp_path):
     assert payload["blenders"][0]["version"]["versionLine"] == "Blender 4.2.11 LTS"
     assert payload["blenders"][0]["version"]["platformLine"] == "build platform: Darwin"
     assert payload["blenders"][0]["tests"] == []
+
+
+def test_blender_compat_matrix_blocks_when_required_version_prefix_is_missing(tmp_path):
+    fake_blender = tmp_path / "fake-blender"
+    write_fake_blender(fake_blender, version_line="Blender 4.5.10 LTS")
+
+    result = subprocess.run(
+        [
+            str(SCRIPT_PATH),
+            "--blender",
+            str(fake_blender),
+            "--skip-tests",
+            "--require-version-prefix",
+            "Blender 4.2",
+        ],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert result.returncode == 2
+    payload = json.loads(result.stdout)
+    assert payload["status"] == "blocked"
+    assert payload["reason"] == "required_blender_version_not_found"
+    assert payload["requiredVersionPrefixes"] == ["Blender 4.2"]
+    assert payload["discoveredVersionLines"] == ["Blender 4.5.10 LTS"]
+
+
+def test_blender_compat_matrix_passes_when_required_version_prefix_is_present(tmp_path):
+    fake_blender = tmp_path / "fake-blender"
+    write_fake_blender(fake_blender, version_line="Blender 4.2.11 LTS")
+
+    result = subprocess.run(
+        [
+            str(SCRIPT_PATH),
+            "--blender",
+            str(fake_blender),
+            "--skip-tests",
+            "--require-version-prefix",
+            "Blender 4.2",
+        ],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert result.returncode == 0
+    payload = json.loads(result.stdout)
+    assert payload["status"] == "pass"
+    assert payload["requiredVersionPrefixes"] == ["Blender 4.2"]
 
 
 def test_blender_compat_matrix_runs_requested_tests(tmp_path):
