@@ -378,12 +378,15 @@ def render_report(report: dict[str, object]) -> str:
             "",
             "## Slot Status",
             "",
-            "| Slot | Category | Real Asset | Evidence | Score | Pose QA | Visual | Unity | Unreal | Preview | Weight | Warnings | Issues |",
-            "|---|---|---|---|---:|---|---|---|---|---|---|---|---|",
+            "| Slot | Category | Real Asset | Evidence | Score | Meshes | Pose QA | Visual | Unity | Unreal | Preview | Weight | Warnings | Issues |",
+            "|---|---|---|---|---:|---:|---|---|---|---|---|---|---|---|",
         ]
     )
     pose_deformation_by_slot = report.get("poseDeformationBySlot", {})
     weight_diagnostics_by_slot = report.get("weightDiagnosticsBySlot", {})
+    mesh_count_by_slot = report.get("meshCountBySlot", {})
+    if not isinstance(mesh_count_by_slot, dict):
+        mesh_count_by_slot = {}
     for slot in report["slots"]:
         issues = "; ".join(slot["issues"]) if slot["issues"] else ""
         warnings = "; ".join(slot.get("warnings", [])) if slot.get("warnings") else ""
@@ -394,6 +397,7 @@ def render_report(report: dict[str, object]) -> str:
             f"{checkbox(bool(slot['hasRealAsset']))} | "
             f"{checkbox(bool(slot['evidenceComplete']))} | "
             f"{table_cell(slot['deformationScore'])} | "
+            f"{table_cell(mesh_count_by_slot.get(slot['id'], ''))} | "
             f"{table_cell(pose_deformation_by_slot.get(slot['id'], ''))} | "
             f"{table_cell(slot['visualReviewStatus'])} | "
             f"{table_cell(slot['unityImportStatus'])} | "

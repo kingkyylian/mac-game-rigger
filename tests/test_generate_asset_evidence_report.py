@@ -256,7 +256,7 @@ def test_generate_asset_evidence_report_shows_complete_slot_and_file_check(tmp_p
 
     assert result.returncode == 0
     assert "Evidence file check: **enabled**" in result.stdout
-    assert "| H-001 | humanoid | pass | pass | 4 | pass 1.8x |  | pass | blocked |" in result.stdout
+    assert "| H-001 | humanoid | pass | pass | 4 |  | pass 1.8x |  | pass | blocked |" in result.stdout
     assert "- Real assets registered: 1" in result.stdout
     assert "- Complete evidence entries: 1" in result.stdout
 
@@ -276,8 +276,8 @@ def test_generate_asset_evidence_report_shows_pose_deformation_summary(tmp_path)
     result = run_report(manifest_path, tmp_path, "--check-evidence-files")
 
     assert result.returncode == 0
-    assert "| Slot | Category | Real Asset | Evidence | Score | Pose QA | Visual | Unity | Unreal | Preview | Weight | Warnings | Issues |" in result.stdout
-    assert "| H-001 | humanoid | pass | pass | 2 | fail 4.25x x | fail | pass | blocked |" in result.stdout
+    assert "| Slot | Category | Real Asset | Evidence | Score | Meshes | Pose QA | Visual | Unity | Unreal | Preview | Weight | Warnings | Issues |" in result.stdout
+    assert "| H-001 | humanoid | pass | pass | 2 |  | fail 4.25x x | fail | pass | blocked |" in result.stdout
 
 
 def test_generate_asset_evidence_report_shows_allowed_pose_expansion_axes(tmp_path):
@@ -301,7 +301,7 @@ def test_generate_asset_evidence_report_shows_allowed_pose_expansion_axes(tmp_pa
     result = run_report(manifest_path, tmp_path, "--check-evidence-files")
 
     assert result.returncode == 0
-    assert "| P-001 | prop | pass | pass | 3 | pass 4.4073x allowed:y | pass | pass | blocked |" in result.stdout
+    assert "| P-001 | prop | pass | pass | 3 |  | pass 4.4073x allowed:y | pass | pass | blocked |" in result.stdout
 
 
 def test_generate_asset_evidence_report_shows_preview_silhouette_summary(tmp_path):
@@ -319,8 +319,8 @@ def test_generate_asset_evidence_report_shows_preview_silhouette_summary(tmp_pat
     result = run_report(manifest_path, tmp_path, "--check-evidence-files")
 
     assert result.returncode == 0
-    assert "| Slot | Category | Real Asset | Evidence | Score | Pose QA | Visual | Unity | Unreal | Preview | Weight | Warnings | Issues |" in result.stdout
-    assert "| H-001 | humanoid | pass | pass | 2 | fail 4.25x x | fail | pass | blocked | fg 37.5% fill 50.0% |" in result.stdout
+    assert "| Slot | Category | Real Asset | Evidence | Score | Meshes | Pose QA | Visual | Unity | Unreal | Preview | Weight | Warnings | Issues |" in result.stdout
+    assert "| H-001 | humanoid | pass | pass | 2 |  | fail 4.25x x | fail | pass | blocked | fg 37.5% fill 50.0% |" in result.stdout
 
 
 def test_generate_asset_evidence_report_shows_side_preview_lean_summary(tmp_path):
@@ -382,7 +382,7 @@ def test_generate_asset_evidence_report_shows_weight_region_summary(tmp_path):
     result = run_report(manifest_path, tmp_path, "--check-evidence-files")
 
     assert result.returncode == 0
-    assert "| Slot | Category | Real Asset | Evidence | Score | Pose QA | Visual | Unity | Unreal | Preview | Weight | Warnings | Issues |" in result.stdout
+    assert "| Slot | Category | Real Asset | Evidence | Score | Meshes | Pose QA | Visual | Unity | Unreal | Preview | Weight | Warnings | Issues |" in result.stdout
     assert "core 20 neck 3 arm 14 leg 19 foot 2" in result.stdout
 
 
@@ -408,7 +408,7 @@ def test_generate_asset_evidence_report_shows_unity_scale_warnings(tmp_path):
 
     assert result.returncode == 0
     assert "Unity import maxDimension 20 exceeds humanoid warning limit" in result.stdout
-    assert "| H-001 | humanoid | pass | pass | 3 | pass 4.25x | pass | pass | blocked |" in result.stdout
+    assert "| H-001 | humanoid | pass | pass | 3 |  | pass 4.25x | pass | pass | blocked |" in result.stdout
 
 
 def test_generate_asset_evidence_report_shows_missing_configured_animator_smoke_warning(tmp_path):
@@ -432,7 +432,7 @@ def test_generate_asset_evidence_report_shows_missing_configured_animator_smoke_
 
     assert result.returncode == 0
     assert "Unity import configuredAnimatorSmoke is not recorded yet" in result.stdout
-    assert "| H-001 | humanoid | pass | pass | 3 | pass 4.25x | pass | pass | blocked |" in result.stdout
+    assert "| H-001 | humanoid | pass | pass | 3 |  | pass 4.25x | pass | pass | blocked |" in result.stdout
 
 
 def test_generate_asset_evidence_report_shows_configured_animator_strict_gate(tmp_path):
@@ -481,6 +481,11 @@ def test_generate_asset_evidence_report_blocks_missing_real_separate_mesh_humano
 
     assert result.returncode == 0
     assert "| `realSeparateMeshHumanoidEvidence` | blocked | H-001 |" in result.stdout
+    assert (
+        "| Slot | Category | Real Asset | Evidence | Score | Meshes | Pose QA | Visual | "
+        "Unity | Unreal | Preview | Weight | Warnings | Issues |"
+    ) in result.stdout
+    assert "| H-001 | humanoid | pass | pass | 3 | 1 | pass" in result.stdout
 
 
 def test_generate_asset_evidence_report_passes_real_separate_mesh_humanoid_gate(tmp_path):
@@ -505,6 +510,7 @@ def test_generate_asset_evidence_report_passes_real_separate_mesh_humanoid_gate(
 
     assert result.returncode == 0
     assert "| `realSeparateMeshHumanoidEvidence` | pass |  |" in result.stdout
+    assert "| H-001 | humanoid | pass | pass | 3 | 2 | pass" in result.stdout
 
 
 def test_generate_asset_evidence_report_strict_gate_blocks_failed_configured_animator_smoke(tmp_path):
