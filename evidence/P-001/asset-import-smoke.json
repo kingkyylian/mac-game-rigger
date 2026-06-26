@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "status": "pass",
+  "slotId": "P-001",
+  "source": {
+    "name": "Internal local asset pipeline - wooden_door.fbx",
+    "url": "file:///Users/kyylian/Developer/blender-egitim/asset-pipeline/assets/_done/E001_wooden_door.json",
+    "license": "internal-local",
+    "localPath": "/Users/kyylian/mac-game-rigger/local_assets/P-001/P-001-local-wooden-door.fbx"
+  },
+  "metrics": {
+    "meshCount": 1,
+    "armatureCount": 0,
+    "boneCount": 0,
+    "materialCount": 1,
+    "vertexCount": 360,
+    "faceCount": 378,
+    "actionCount": 0,
+    "bbox": {
+      "width": 0.7025,
+      "depth": 0.0668,
+      "height": 1.1375
+    },
+    "hasArmature": false,
+    "suggestedCategory": "prop",
+    "meshNames": [
+      "wooden_door"
+    ],
+    "armatureNames": []
+  }
+}

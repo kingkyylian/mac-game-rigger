@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "status": "pass",
+  "slotId": "H-003",
+  "source": {
+    "name": "Quaternius Ultimate Animated Character Pack - Knight_Male.fbx",
+    "url": "https://quaternius.com/packs/ultimatedanimatedcharacter.html",
+    "license": "CC0",
+    "localPath": "/Users/kyylian/mac-game-rigger/local_assets/H-003/H-003-quaternius-knight-male.fbx"
+  },
+  "metrics": {
+    "meshCount": 1,
+    "armatureCount": 1,
+    "boneCount": 32,
+    "materialCount": 5,
+    "vertexCount": 1484,
+    "faceCount": 1493,
+    "actionCount": 17,
+    "bbox": {
+      "width": 1.4946,
+      "depth": 1.4262,
+      "height": 3.5263
+    },
+    "hasArmature": true,
+    "suggestedCategory": "humanoid",
+    "meshNames": [
+      "Body"
+    ],
+    "armatureNames": [
+      "CharacterArmature"
+    ]
+  }
+}

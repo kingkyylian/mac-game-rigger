@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "status": "pass",
+  "slotId": "C-001",
+  "source": {
+    "name": "Quaternius Animated Dinosaur Pack - Apatosaurus.fbx",
+    "url": "https://quaternius.com/packs/animateddinosaurs.html",
+    "license": "CC0",
+    "localPath": "/Users/kyylian/mac-game-rigger/local_assets/C-001/C-001-quaternius-apatosaurus.fbx"
+  },
+  "metrics": {
+    "meshCount": 1,
+    "armatureCount": 1,
+    "boneCount": 39,
+    "materialCount": 4,
+    "vertexCount": 723,
+    "faceCount": 714,
+    "actionCount": 6,
+    "bbox": {
+      "width": 5.6161,
+      "depth": 41.3526,
+      "height": 18.2538
+    },
+    "hasArmature": true,
+    "suggestedCategory": "quadruped",
+    "meshNames": [
+      "Cylinder"
+    ],
+    "armatureNames": [
+      "Armature"
+    ]
+  }
+}

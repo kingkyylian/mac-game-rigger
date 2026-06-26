@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "status": "pass",
+  "slotId": "P-002",
+  "source": {
+    "name": "Internal local asset pipeline - treasure_chest.fbx",
+    "url": "file:///Users/kyylian/Developer/blender-egitim/mehmet-repo/asset-pipeline/assets/_done/F013_treasure_chest.json",
+    "license": "internal-local",
+    "localPath": "/Users/kyylian/mac-game-rigger/local_assets/P-002/P-002-local-treasure-chest.fbx"
+  },
+  "metrics": {
+    "meshCount": 1,
+    "armatureCount": 0,
+    "boneCount": 0,
+    "materialCount": 3,
+    "vertexCount": 118,
+    "faceCount": 108,
+    "actionCount": 0,
+    "bbox": {
+      "width": 0.6,
+      "depth": 0.428,
+      "height": 0.4725
+    },
+    "hasArmature": false,
+    "suggestedCategory": "prop",
+    "meshNames": [
+      "treasure_chest"
+    ],
+    "armatureNames": []
+  }
+}

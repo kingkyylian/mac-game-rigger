@@ -27,6 +27,8 @@ def write_evidence_files(root, slot_id="H-001"):
     paths = {
         "qa": f"evidence/{slot_id}/qa-report.json",
         "preview": f"evidence/{slot_id}/preview-neutral.png",
+        "preview_side": f"evidence/{slot_id}/preview-neutral-side.png",
+        "pose_side": f"evidence/{slot_id}/preview-pose-side.png",
         "fbx": f"evidence/{slot_id}/export-unity.fbx",
         "notes": f"evidence/{slot_id}/notes.md",
     }
@@ -38,7 +40,7 @@ def write_evidence_files(root, slot_id="H-001"):
 
 
 def register_command(manifest_path, evidence_root, paths, *extra):
-    return [
+    command = [
         str(REGISTER_SCRIPT),
         "--manifest",
         str(manifest_path),
@@ -68,8 +70,13 @@ def register_command(manifest_path, evidence_root, paths, *extra):
         "blocked",
         "--evidence-root",
         str(evidence_root),
-        *extra,
     ]
+    if "preview_side" in paths:
+        command.extend(["--preview-neutral-side", paths["preview_side"]])
+    if "pose_side" in paths:
+        command.extend(["--preview-pose-side", paths["pose_side"]])
+    command.extend(extra)
+    return command
 
 
 def test_register_asset_evidence_updates_manifest_and_validates_files(tmp_path):
@@ -92,6 +99,8 @@ def test_register_asset_evidence_updates_manifest_and_validates_files(tmp_path):
     assert slot["realAsset"]["sourceName"] == "Internal Hero"
     assert slot["realAsset"]["canCommitBinary"] is False
     assert slot["evidence"]["deformationScore"] == 4
+    assert slot["evidence"]["previewNeutralSide"] == "evidence/H-001/preview-neutral-side.png"
+    assert slot["evidence"]["previewPoseSide"] == "evidence/H-001/preview-pose-side.png"
     assert slot["evidence"]["unityImport"]["status"] == "pass"
     assert slot["evidence"]["unrealImport"]["status"] == "blocked"
 
@@ -110,6 +119,36 @@ def test_register_asset_evidence_updates_manifest_and_validates_files(tmp_path):
         check=False,
     )
     assert validation.returncode == 0
+
+
+def test_register_asset_evidence_records_visual_review_status(tmp_path):
+    manifest_path = copy_manifest(tmp_path)
+    paths = write_evidence_files(tmp_path)
+    command = register_command(
+        manifest_path,
+        tmp_path,
+        paths,
+        "--unity-status",
+        "blocked",
+        "--visual-review-status",
+        "pass",
+        "--visual-review-notes",
+        "front and side pose previews are acceptable",
+    )
+
+    result = subprocess.run(
+        command,
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert result.returncode == 0
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    slot = next(slot for slot in manifest["slots"] if slot["id"] == "H-001")
+    assert slot["evidence"]["visualReview"]["status"] == "pass"
+    assert slot["evidence"]["visualReview"]["notes"] == "front and side pose previews are acceptable"
 
 
 def test_register_asset_evidence_dry_run_does_not_modify_manifest(tmp_path):

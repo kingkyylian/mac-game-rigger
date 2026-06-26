@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "status": "pass",
+  "checkedOn": "2026-06-20",
+  "unityEditor": "/Applications/Unity/Hub/Editor/6000.4.1f1/Unity.app/Contents/MacOS/Unity",
+  "fbx": "evidence/C-001/export-unity.fbx",
+  "verificationCommand": "scripts/verify_unity_fbx_import.sh --fbx evidence/C-001/export-unity.fbx --unity /Applications/Unity/Hub/Editor/6000.4.1f1/Unity.app/Contents/MacOS/Unity --timeout-seconds 240",
+  "result": {
+    "status": "pass",
+    "assetPath": "Assets/MacGameRiggerImportCandidate/export-unity.fbx",
+    "assetName": "export-unity",
+    "instantiated": true,
+    "childCount": 28,
+    "rendererCount": 1,
+    "skinnedMeshRendererCount": 1,
+    "meshFilterCount": 0,
+    "animatorCount": 0,
+    "boundsSmoke": {
+      "passed": true,
+      "boundsCenter": {"x": 0.0000000596046448, "y": 1.42968321, "z": 1.91789579},
+      "boundsSize": {"x": 1.87105858, "y": 17.4333878, "z": 13.2295437},
+      "boundsHeight": 17.4333878,
+      "maxDimension": 17.4333878
+    },
+    "boneTransformSmoke": {
+      "passed": true,
+      "boneCandidateCount": 25,
+      "testedBone": "Pelvis",
+      "rotationDeltaDegrees": 4.99981356
+    },
+    "animationClipSmoke": {
+      "passed": true,
+      "sampledBone": "Pelvis",
+      "sampledBonePath": "MGR_Armature/Pelvis",
+      "sampledRotationDeltaDegrees": 175.668243
+    },
+    "modelImporter": {
+      "available": true,
+      "animationType": "Generic",
+      "importAnimation": true,
+      "globalScale": 1
+    }
+  }
+}

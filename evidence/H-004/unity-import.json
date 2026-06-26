@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "status": "pass",
+  "checkedOn": "2026-06-20",
+  "unityEditor": "/Applications/Unity/Hub/Editor/6000.4.1f1/Unity.app/Contents/MacOS/Unity",
+  "fbx": "evidence/H-004/export-unity.fbx",
+  "verificationCommand": "scripts/verify_unity_fbx_import.sh --fbx evidence/H-004/export-unity.fbx --unity /Applications/Unity/Hub/Editor/6000.4.1f1/Unity.app/Contents/MacOS/Unity --timeout-seconds 240",
+  "result": {
+    "status": "pass",
+    "assetPath": "Assets/MacGameRiggerImportCandidate/export-unity.fbx",
+    "assetName": "export-unity",
+    "instantiated": true,
+    "childCount": 20,
+    "rendererCount": 1,
+    "skinnedMeshRendererCount": 1,
+    "meshFilterCount": 0,
+    "animatorCount": 0,
+    "boundsSmoke": {
+      "passed": true,
+      "boundsCenter": {"x": 0, "y": 2.02954221, "z": -0.000000238418579},
+      "boundsSize": {"x": 3.46421552, "y": 4.096265, "z": 1.72992718},
+      "boundsHeight": 4.096265,
+      "maxDimension": 4.096265
+    },
+    "boneTransformSmoke": {
+      "passed": true,
+      "boneCandidateCount": 17,
+      "testedBone": "Hips",
+      "rotationDeltaDegrees": 4.99997
+    },
+    "animationClipSmoke": {
+      "passed": true,
+      "sampledBone": "Hips",
+      "sampledBonePath": "MGR_Armature/Hips",
+      "sampledRotationDeltaDegrees": 90.2450943
+    },
+    "modelImporter": {
+      "available": true,
+      "animationType": "Generic",
+      "importAnimation": true,
+      "globalScale": 1
+    }
+  }
+}

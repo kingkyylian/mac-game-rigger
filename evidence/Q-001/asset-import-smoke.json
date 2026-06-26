@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "status": "pass",
+  "slotId": "Q-001",
+  "source": {
+    "name": "Quaternius Ultimate Animated Animal Pack - Husky.fbx",
+    "url": "https://quaternius.com/packs/ultimateanimatedanimals.html",
+    "license": "CC0",
+    "localPath": "/Users/kyylian/mac-game-rigger/local_assets/Q-001/Q-001-quaternius-husky.fbx"
+  },
+  "metrics": {
+    "meshCount": 1,
+    "armatureCount": 1,
+    "boneCount": 65,
+    "materialCount": 6,
+    "vertexCount": 962,
+    "faceCount": 990,
+    "actionCount": 12,
+    "bbox": {
+      "width": 0.99,
+      "depth": 3.8892,
+      "height": 3.1825
+    },
+    "hasArmature": true,
+    "suggestedCategory": "quadruped",
+    "meshNames": [
+      "Cube"
+    ],
+    "armatureNames": [
+      "AnimalArmature"
+    ]
+  }
+}

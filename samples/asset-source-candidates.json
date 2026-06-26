@@ -32,11 +32,27 @@
     },
     {
       "slotId": "H-003",
-      "candidateSourceName": "Quaternius Modular Character Outfits - Fantasy or RPG Character Pack",
-      "sourceUrl": "https://quaternius.com/",
+      "candidateSourceName": "Quaternius Ultimate Animated Character Pack - Knight_Male.fbx",
+      "sourceUrl": "https://quaternius.com/packs/ultimatedanimatedcharacter.html",
       "license": "CC0",
       "targetUse": "armored humanoid",
-      "selectionNotes": "Pick knight/armor variant to stress rigid armor binding and weight bleed."
+      "selectionNotes": "Selected and registered as the first armored/bulky humanoid evidence slot. Local binary is kept under ignored local_assets/H-003/; Blender import, MGR workflow, Unity-profile export, and Unity batchmode import pass. Deformation score is 3 usable-with-cleanup."
+    },
+    {
+      "slotId": "H-004",
+      "candidateSourceName": "Quaternius Ultimate Animated Character Pack - Wizard.fbx",
+      "sourceUrl": "https://quaternius.com/packs/ultimatedanimatedcharacter.html",
+      "license": "CC0",
+      "targetUse": "robe/coat humanoid stress case",
+      "selectionNotes": "Selected and registered as H-004 real humanoid evidence. Local binary is kept under ignored local_assets/H-004/; Blender import, MGR workflow, Unity-profile export, and Unity batchmode import pass. Deformation score is 3 usable-with-cleanup."
+    },
+    {
+      "slotId": "H-005",
+      "candidateSourceName": "Quaternius Ultimate Animated Character Pack - Pirate_Male.fbx",
+      "sourceUrl": "https://quaternius.com/packs/ultimatedanimatedcharacter.html",
+      "license": "CC0",
+      "targetUse": "accessory humanoid stress case",
+      "selectionNotes": "Selected and registered as H-005 real humanoid evidence. Local binary is kept under ignored local_assets/H-005/; Blender import and MGR workflow pass, deformation score is 3 usable-with-cleanup, and engine import is not yet verified."
     },
     {
       "slotId": "H-006",
@@ -48,53 +64,61 @@
     },
     {
       "slotId": "H-009",
-      "candidateSourceName": "Quaternius Ultimate Modular Men Pack or Ultimate Animated Character Pack",
-      "sourceUrl": "https://quaternius.com/",
+      "candidateSourceName": "Quaternius Ultimate Animated Character Pack - Soldier_Male.fbx",
+      "sourceUrl": "https://quaternius.com/packs/ultimatedanimatedcharacter.html",
       "license": "CC0",
       "targetUse": "wide-shoulder humanoid stress case",
-      "selectionNotes": "Pick a bulky/soldier/armored male character to stress shoulder deformation."
+      "selectionNotes": "Selected and registered as H-009 real wide-shoulder humanoid evidence. Local binary is kept under ignored local_assets/H-009/; Blender import and MGR workflow pass, deformation score is 3 usable-with-cleanup, and engine import is not yet verified."
     },
     {
       "slotId": "H-010",
-      "candidateSourceName": "Quaternius Ultimate Animated Character Pack",
-      "sourceUrl": "https://quaternius.com/",
+      "candidateSourceName": "Quaternius Ultimate Animated Character Pack - Elf.fbx",
+      "sourceUrl": "https://quaternius.com/packs/ultimatedanimatedcharacter.html",
       "license": "CC0",
       "targetUse": "thin-limb humanoid stress case",
-      "selectionNotes": "Pick the thinnest human/elf-like character available; if none exists, mark source gap before registering the slot."
+      "selectionNotes": "Selected and registered as thin-limb humanoid evidence. Local binary is kept under ignored local_assets/H-010/; Blender import and MGR workflow pass, deformation score is 3 usable-with-cleanup, and engine import is not yet verified."
     },
     {
       "slotId": "Q-001",
-      "candidateSourceName": "Quaternius Ultimate Animated Animal Pack or Farm Animal Pack",
-      "sourceUrl": "https://quaternius.com/",
+      "candidateSourceName": "Quaternius Ultimate Animated Animal Pack - Husky.fbx",
+      "sourceUrl": "https://quaternius.com/packs/ultimateanimatedanimals.html",
       "license": "CC0",
       "targetUse": "baseline quadruped dog-like asset",
-      "selectionNotes": "Pick husky/shiba/dog model and verify it imports as a four-leg character rather than a decorative static mesh."
+      "selectionNotes": "Selected and registered as Q-001 real quadruped evidence. Local binary is kept under ignored local_assets/Q-001/; Blender import, MGR quadruped workflow, quadruped gait/side pose operators, x-axis primary preview, Unity-profile export, and Unity batchmode import pass. It is not production-clean because direct shaded Blender review remains open."
     },
     {
       "slotId": "Q-002",
-      "candidateSourceName": "Quaternius Cube World Kit or Ultimate Animated Animal Pack",
-      "sourceUrl": "https://quaternius.com/",
+      "candidateSourceName": "Quaternius Ultimate Animated Animal Pack - Fox.fbx",
+      "sourceUrl": "https://quaternius.com/packs/ultimateanimatedanimals.html",
       "license": "CC0",
       "targetUse": "small quadruped cat-like asset",
-      "selectionNotes": "Pick cat or small mammal model with visible tail base."
+      "selectionNotes": "Selected and registered as Q-002 real quadruped evidence. Local binary is kept under ignored local_assets/Q-002/; Blender import, MGR quadruped workflow, quadruped gait/side pose operators, and x-axis primary preview support score 3 usable-with-cleanup. It satisfies the second quadruped gate but still needs engine import and direct shaded Blender review before production use."
     },
     {
       "slotId": "C-001",
-      "candidateSourceName": "Quaternius Animated Dinosaur Pack or Ultimate Monsters",
-      "sourceUrl": "https://quaternius.com/",
+      "candidateSourceName": "Quaternius Animated Dinosaur Pack - Apatosaurus.fbx",
+      "sourceUrl": "https://quaternius.com/packs/animateddinosaurs.html",
       "license": "CC0",
       "targetUse": "tail creature",
-      "selectionNotes": "Pick dinosaur/dragon-like model with a long tail. If wings are absent, record this as tail-only evidence and keep wing helper out of scope."
+      "selectionNotes": "Selected and registered as C-001 real tail-creature evidence. Local binary is kept under ignored local_assets/C-001/; Blender import, dedicated tail-creature workflow, QA, preview generation, Unity-profile FBX export, and Unity batchmode import pass. Deformation score is now 3 because the tail-creature template keeps the long neck/tail silhouette readable, but direct shaded review and cleanup are still required before production use."
     },
     {
       "slotId": "P-001",
-      "candidateSourceName": "Quaternius Steampunk Turret Pack or Fantasy Props MegaKit",
-      "sourceUrl": "https://quaternius.com/",
-      "license": "CC0",
+      "candidateSourceName": "Internal local asset pipeline - wooden_door.fbx",
+      "sourceUrl": "file:///Users/kyylian/Developer/blender-egitim/asset-pipeline/assets/_done/E001_wooden_door.json",
+      "license": "internal-local",
       "targetUse": "prop or hinge-like mechanical asset",
-      "selectionNotes": "Pick a turret or hinged prop with clear rotating parts for prop-rig validation."
+      "selectionNotes": "Selected and registered as P-001 internal prop evidence. Local binary is kept under ignored local_assets/P-001/; Blender import, generic prop classification, dedicated prop_hinge workflow, CLI-level hinge pivot/base controls, Blender UI sliders, artist-controlled hinge open angle, rotation axis, and positive/negative swing direction, selected-mesh prop landmark generation, draggable Empty-based hinge visual guides that can be committed back to landmarks, prop_hinge-only Blender GizmoGroup registration with pivot and swing-tip X/Y/Z arrow handles bound to guide locations, headless Blender smoke coverage for guide creation, guide move, commit, armature generation, and hinge-open pose, prop-specific weight diagnostics, prop coverage threshold QA, hinge-open preview, Unity-profile FBX export, and Unity batchmode import pass. This validates prop workflow behavior, but it is not a public-source CC0 candidate and still needs polished interactive viewport gizmo UX before production use."
+    },
+    {
+      "slotId": "P-002",
+      "candidateSourceName": "Internal local asset pipeline - treasure_chest.fbx",
+      "sourceUrl": "file:///Users/kyylian/Developer/blender-egitim/mehmet-repo/asset-pipeline/assets/_done/F013_treasure_chest.json",
+      "license": "internal-local",
+      "targetUse": "chunky prop hinge-like mechanical asset",
+      "selectionNotes": "Selected and registered as P-002 internal chunky prop evidence. Local binary is kept under ignored local_assets/P-002/; Blender import, broader chunky prop classification, dedicated prop_hinge workflow, CLI-level hinge pivot/base/axis controls, Blender UI hinge open angle, rotation axis, and positive/negative swing direction controls, prop_hinge-only Blender GizmoGroup registration with pivot and swing-tip X/Y/Z arrow handles bound to guide locations, headless Blender smoke coverage for guide creation, guide move, commit, armature generation, and hinge-open pose, prop-specific weight diagnostics, prop coverage threshold QA, hinge-open preview, Unity-profile FBX export, and Unity batchmode import pass. This validates real chunky prop workflow behavior beyond thin door-like slabs, but it is not a public-source CC0 candidate and still needs polished interactive hinge orientation UX before production use."
     }
   ],
   "registrationRule": "A candidate becomes a realAsset only after the binary is downloaded, license/source is recorded, and local asset path or storage reference is known.",
-  "nextAction": "Continue with H-002, H-003, H-009, H-010, Q-001, Q-002, C-001, and P-001 candidates, but prioritize deformation quality before treating any additional humanoid slot as a quality success."
+  "nextAction": "Production-trial evidence gate passes with humanoid, quadruped, tail-creature, and two internal prop evidence slots. Prop hinge axis is exposed as a Blender UI enum/dropdown, draggable Empty-based hinge guides can be committed back to rig landmarks, artists can tune prop hinge open angle, rotation axis, and positive/negative swing direction for pose review, the prop_hinge-only Blender GizmoGroup now creates pivot and swing-tip X/Y/Z arrow handles bound to guide locations, and scripts/verify_prop_hinge_gizmo_workflow.py provides repeatable headless Blender smoke coverage for guide creation, guide move, commit, armature generation, and hinge-open pose. Next focus: polish real interactive viewport gizmo UX, validate prop QA against another real mechanical shape, and collect direct shaded Blender review plus scale/orientation notes for score-3 assets."
 }

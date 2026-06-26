@@ -32,6 +32,28 @@ FAILURE_TYPES = {
     "performance issue",
     "out of scope asset type",
 }
+VISUAL_REVIEW_STATUSES = {"pass", "fail", "not reviewed"}
+PREVIEW_EVIDENCE_KEYS = (
+    "previewNeutral",
+    "previewPose",
+    "previewNeutralSide",
+    "previewPoseSide",
+    "previewPath",
+)
+UNITY_MAX_DIMENSION_WARNING_LIMITS = {
+    "humanoid": 10,
+    "quadruped": 12,
+    "tail creature": 30,
+    "wing creature": 30,
+    "prop": 5,
+}
+UNITY_MAX_DIMENSION_SEVERE_LIMITS = {
+    "humanoid": 100,
+    "quadruped": 120,
+    "tail creature": 300,
+    "wing creature": 300,
+    "prop": 50,
+}
 
 
 def parse_args() -> argparse.Namespace:
@@ -55,6 +77,11 @@ def parse_args() -> argparse.Namespace:
         "--require-production-trial",
         action="store_true",
         help="Exit non-zero unless the production trial gate is satisfied.",
+    )
+    parser.add_argument(
+        "--require-configured-animator-smoke",
+        action="store_true",
+        help="Block humanoid score >=3 Unity-pass evidence missing configuredAnimatorSmoke.",
     )
     return parser.parse_args()
 
@@ -166,7 +193,7 @@ def _unfilter_png_row(filter_type: int, row: bytes, previous: bytes, bpp: int) -
     return bytes(result)
 
 
-def png_luma_stats(path: Path) -> dict[str, float | tuple[int, int]]:
+def _png_luma_values(path: Path) -> tuple[int, int, list[int]]:
     data = path.read_bytes()
     if not data.startswith(b"\x89PNG\r\n\x1a\n"):
         raise ValueError("not a PNG file")
@@ -215,7 +242,11 @@ def png_luma_stats(path: Path) -> dict[str, float | tuple[int, int]]:
         for pixel_start in range(0, row_length, channels):
             samples = [row[pixel_start + channel] for channel in luma_channels]
             values.append(sum(samples) // len(samples))
+    return width, height, values
 
+
+def png_luma_stats(path: Path) -> dict[str, float | tuple[int, int]]:
+    _, _, values = _png_luma_values(path)
     minimum = min(values)
     maximum = max(values)
     mean = sum(values) / len(values)
@@ -226,13 +257,88 @@ def png_luma_stats(path: Path) -> dict[str, float | tuple[int, int]]:
     }
 
 
+def png_foreground_stats(path: Path, *, threshold: int = 128) -> dict[str, Any]:
+    width, height, values = _png_luma_values(path)
+    foreground_points: list[tuple[int, int]] = []
+    for index, value in enumerate(values):
+        if value >= threshold:
+            foreground_points.append((index % width, index // width))
+
+    total_pixels = width * height
+    if not foreground_points:
+        return {
+            "imageSize": {"width": width, "height": height},
+            "foregroundPixelRatio": 0.0,
+            "foregroundBounds": None,
+            "foregroundFillRatio": 0.0,
+        }
+
+    min_x = min(point[0] for point in foreground_points)
+    max_x = max(point[0] for point in foreground_points)
+    min_y = min(point[1] for point in foreground_points)
+    max_y = max(point[1] for point in foreground_points)
+    bounds_width = max_x - min_x + 1
+    bounds_height = max_y - min_y + 1
+    bounds_area = bounds_width * bounds_height
+    foreground_count = len(foreground_points)
+    top_center_x = _band_center_x(
+        foreground_points,
+        min_y=min_y,
+        max_y=max_y,
+        band="top",
+    )
+    bottom_center_x = _band_center_x(
+        foreground_points,
+        min_y=min_y,
+        max_y=max_y,
+        band="bottom",
+    )
+    vertical_center_shift_ratio = 0.0
+    if top_center_x is not None and bottom_center_x is not None:
+        vertical_center_shift_ratio = abs(top_center_x - bottom_center_x) / bounds_height
+    return {
+        "imageSize": {"width": width, "height": height},
+        "foregroundPixelRatio": round(foreground_count / total_pixels, 4),
+        "foregroundBounds": {
+            "x": min_x,
+            "y": min_y,
+            "width": bounds_width,
+            "height": bounds_height,
+        },
+        "foregroundFillRatio": round(foreground_count / bounds_area, 4),
+        "verticalCenterShiftRatio": round(vertical_center_shift_ratio, 4),
+    }
+
+
+def _band_center_x(
+    points: list[tuple[int, int]],
+    *,
+    min_y: int,
+    max_y: int,
+    band: str,
+) -> float | None:
+    height = max_y - min_y + 1
+    band_height = max(1, round(height * 0.25))
+    if band == "top":
+        y_limit = min_y + band_height - 1
+        band_points = [point for point in points if point[1] <= y_limit]
+    elif band == "bottom":
+        y_limit = max_y - band_height + 1
+        band_points = [point for point in points if point[1] >= y_limit]
+    else:
+        raise ValueError(f"unsupported band: {band}")
+    if not band_points:
+        return None
+    return sum(point[0] for point in band_points) / len(band_points)
+
+
 def preview_image_issues(
     slot_id: str,
     evidence: dict[str, Any],
     evidence_root: Path,
 ) -> list[str]:
     issues: list[str] = []
-    for reference in evidence_references(evidence, ("previewNeutral", "previewPose", "previewPath")):
+    for reference in evidence_references(evidence, PREVIEW_EVIDENCE_KEYS):
         path_value = reference.get("path")
         if not path_value or not path_value.lower().endswith(".png"):
             continue
@@ -248,6 +354,299 @@ def preview_image_issues(
         if stats["stddev"] < 1.0:
             issues.append(f"{slot_id}: preview image appears blank: {path_value}")
     return issues
+
+
+def preview_image_diagnostics(
+    evidence: dict[str, Any],
+    evidence_root: Path,
+) -> dict[str, Any]:
+    diagnostics: dict[str, Any] = {}
+    for reference in evidence_references(evidence, PREVIEW_EVIDENCE_KEYS):
+        key = reference["key"]
+        path_value = reference.get("path")
+        if not path_value or not path_value.lower().endswith(".png"):
+            continue
+        path = Path(path_value)
+        resolved_path = path if path.is_absolute() else evidence_root / path
+        if not resolved_path.exists():
+            continue
+        try:
+            diagnostics[key] = png_foreground_stats(resolved_path)
+        except (OSError, ValueError, zlib.error):
+            continue
+    return diagnostics
+
+
+def pose_quality_issues(
+    slot_id: str,
+    category: Any,
+    score: Any,
+    evidence_root: Path,
+) -> list[str]:
+    if not isinstance(score, int) or score < 3:
+        return []
+
+    summary_path = evidence_root / "evidence" / slot_id / "workflow-summary.json"
+    if not summary_path.exists():
+        return [f"{slot_id}: workflow summary with poseDeformation is required for score >=3"]
+    try:
+        summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        return [f"{slot_id}: workflow summary unreadable: {summary_path} ({exc})"]
+
+    pose_deformation = summary.get("poseDeformation")
+    if not isinstance(pose_deformation, dict):
+        return [f"{slot_id}: poseDeformation summary is required for score >=3"]
+    status = pose_deformation.get("status")
+    if status == "fail":
+        max_ratio = pose_deformation.get("maxAxisExpansionRatio")
+        expanded_axes = pose_deformation.get("expandedAxes")
+        suffix_parts = []
+        if isinstance(max_ratio, (int, float)):
+            suffix_parts.append(f"maxAxisExpansionRatio={max_ratio:g}")
+        if isinstance(expanded_axes, list) and expanded_axes:
+            suffix_parts.append(f"expandedAxes={','.join(str(axis) for axis in expanded_axes)}")
+        suffix = f" ({'; '.join(suffix_parts)})" if suffix_parts else ""
+        return [f"{slot_id}: poseDeformation.status=fail is not allowed for score >=3{suffix}"]
+    if status not in {"pass", "warn"}:
+        return [f"{slot_id}: poseDeformation.status must be pass or warn for score >=3"]
+    humanoid_diagnostic_issue = humanoid_quality_issue_for_score(
+        slot_id,
+        category,
+        summary.get("humanoidDiagnostics"),
+    )
+    if humanoid_diagnostic_issue:
+        return [humanoid_diagnostic_issue]
+    return []
+
+
+def unity_import_quality_issues(
+    slot_id: str,
+    category: Any,
+    score: Any,
+    evidence: dict[str, Any],
+    evidence_root: Path,
+    *,
+    require_configured_animator_smoke: bool = False,
+) -> list[str]:
+    if evidence_status(evidence.get("unityImport")) != "pass":
+        return []
+
+    unity_import_path = evidence_root / "evidence" / slot_id / "unity-import.json"
+    if not unity_import_path.is_file():
+        return [f"{slot_id}: Unity import pass requires evidence/{slot_id}/unity-import.json"]
+
+    try:
+        payload = json.loads(unity_import_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        return [f"{slot_id}: Unity import evidence unreadable: {unity_import_path} ({exc})"]
+
+    issues: list[str] = []
+    if payload.get("status") != "pass":
+        issues.append(f"{slot_id}: Unity import evidence status must be pass")
+
+    result = payload.get("result")
+    if not isinstance(result, dict):
+        issues.append(f"{slot_id}: Unity import evidence result object is required")
+        return issues
+
+    if result.get("instantiated") is not True:
+        issues.append(f"{slot_id}: Unity import instantiated must be true")
+
+    if isinstance(score, int) and score >= 3:
+        skinned_count = result.get("skinnedMeshRendererCount")
+        if not isinstance(skinned_count, int) or skinned_count < 1:
+            issues.append(f"{slot_id}: Unity import skinnedMeshRendererCount must be >= 1 for score >=3")
+
+        bone_transform_smoke = result.get("boneTransformSmoke")
+        if not isinstance(bone_transform_smoke, dict) or bone_transform_smoke.get("passed") is not True:
+            issues.append(f"{slot_id}: Unity import boneTransformSmoke.passed must be true for score >=3")
+        else:
+            bone_candidate_count = bone_transform_smoke.get("boneCandidateCount")
+            if not isinstance(bone_candidate_count, int) or bone_candidate_count < 1:
+                issues.append(f"{slot_id}: Unity import boneCandidateCount must be >= 1 for score >=3")
+            rotation_delta = bone_transform_smoke.get("rotationDeltaDegrees")
+            if not isinstance(rotation_delta, (int, float)) or rotation_delta <= 0:
+                issues.append(f"{slot_id}: Unity import rotationDeltaDegrees must be > 0 for score >=3")
+
+        animation_clip_smoke = result.get("animationClipSmoke")
+        if not isinstance(animation_clip_smoke, dict) or animation_clip_smoke.get("passed") is not True:
+            issues.append(f"{slot_id}: Unity import animationClipSmoke.passed must be true for score >=3")
+        else:
+            sampled_bone = animation_clip_smoke.get("sampledBone")
+            if not non_empty_string(sampled_bone):
+                issues.append(f"{slot_id}: Unity import sampledBone is required for score >=3")
+            sampled_rotation_delta = animation_clip_smoke.get("sampledRotationDeltaDegrees")
+            if not isinstance(sampled_rotation_delta, (int, float)) or sampled_rotation_delta <= 0:
+                issues.append(f"{slot_id}: Unity import sampledRotationDeltaDegrees must be > 0 for score >=3")
+
+        configured_animator_smoke = result.get("configuredAnimatorSmoke")
+        if (
+            category == "humanoid"
+            and configured_animator_smoke is None
+            and require_configured_animator_smoke
+        ):
+            issues.append(f"{slot_id}: Unity import configuredAnimatorSmoke is required for humanoid score >=3")
+        if category == "humanoid" and configured_animator_smoke is not None:
+            if not isinstance(configured_animator_smoke, dict) or configured_animator_smoke.get("passed") is not True:
+                issues.append(f"{slot_id}: Unity import configuredAnimatorSmoke.passed must be true for humanoid score >=3")
+            else:
+                animator_count = configured_animator_smoke.get("animatorCount")
+                if not isinstance(animator_count, int) or animator_count < 1:
+                    issues.append(f"{slot_id}: Unity import configured animatorCount must be >= 1 for humanoid score >=3")
+                if configured_animator_smoke.get("controllerAssigned") is not True:
+                    issues.append(f"{slot_id}: Unity import configured Animator controllerAssigned must be true for humanoid score >=3")
+                state_count = configured_animator_smoke.get("stateCount")
+                if not isinstance(state_count, int) or state_count < 1:
+                    issues.append(f"{slot_id}: Unity import configured Animator stateCount must be >= 1 for humanoid score >=3")
+                sampled_bone = configured_animator_smoke.get("sampledBone")
+                if not non_empty_string(sampled_bone):
+                    issues.append(f"{slot_id}: Unity import configured Animator sampledBone is required for humanoid score >=3")
+                sampled_rotation_delta = configured_animator_smoke.get("sampledRotationDeltaDegrees")
+                if not isinstance(sampled_rotation_delta, (int, float)) or sampled_rotation_delta <= 0:
+                    issues.append(
+                        f"{slot_id}: Unity import configured Animator sampledRotationDeltaDegrees must be > 0 for humanoid score >=3"
+                    )
+
+        bounds_smoke = result.get("boundsSmoke")
+        if not isinstance(bounds_smoke, dict) or bounds_smoke.get("passed") is not True:
+            issues.append(f"{slot_id}: Unity import boundsSmoke.passed must be true for score >=3")
+        else:
+            max_dimension = bounds_smoke.get("maxDimension")
+            if not isinstance(max_dimension, (int, float)) or max_dimension <= 0:
+                issues.append(f"{slot_id}: Unity import maxDimension must be > 0 for score >=3")
+            else:
+                severe_limit = UNITY_MAX_DIMENSION_SEVERE_LIMITS.get(category)
+                if severe_limit is not None and max_dimension > severe_limit:
+                    issues.append(
+                        f"{slot_id}: Unity import maxDimension {max_dimension:g} exceeds {category} severe limit {severe_limit:g}"
+                    )
+            bounds_height = bounds_smoke.get("boundsHeight")
+            if not isinstance(bounds_height, (int, float)) or bounds_height <= 0:
+                issues.append(f"{slot_id}: Unity import boundsHeight must be > 0 for score >=3")
+
+    model_importer = result.get("modelImporter")
+    if not isinstance(model_importer, dict) or model_importer.get("available") is not True:
+        issues.append(f"{slot_id}: Unity ModelImporter metadata must be available")
+
+    return issues
+
+
+def unity_import_scale_warnings(
+    slot_id: str,
+    category: Any,
+    evidence: dict[str, Any],
+    evidence_root: Path,
+) -> list[str]:
+    if evidence_status(evidence.get("unityImport")) != "pass":
+        return []
+    if not isinstance(category, str):
+        return []
+
+    warning_limit = UNITY_MAX_DIMENSION_WARNING_LIMITS.get(category)
+    if warning_limit is None:
+        return []
+
+    unity_import_path = evidence_root / "evidence" / slot_id / "unity-import.json"
+    if not unity_import_path.is_file():
+        return []
+
+    try:
+        payload = json.loads(unity_import_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return []
+
+    result = payload.get("result")
+    if not isinstance(result, dict):
+        return []
+    bounds_smoke = result.get("boundsSmoke")
+    if not isinstance(bounds_smoke, dict):
+        return []
+    max_dimension = bounds_smoke.get("maxDimension")
+    if not isinstance(max_dimension, (int, float)):
+        return []
+    if max_dimension <= warning_limit:
+        return []
+
+    return [
+        f"{slot_id}: Unity import maxDimension {max_dimension:g} exceeds {category} warning limit {warning_limit:g}"
+    ]
+
+
+def unity_import_animator_migration_warnings(
+    slot_id: str,
+    category: Any,
+    score: Any,
+    evidence: dict[str, Any],
+    evidence_root: Path,
+) -> list[str]:
+    if category != "humanoid":
+        return []
+    if not isinstance(score, int) or score < 3:
+        return []
+    if evidence_status(evidence.get("unityImport")) != "pass":
+        return []
+
+    unity_import_path = evidence_root / "evidence" / slot_id / "unity-import.json"
+    if not unity_import_path.is_file():
+        return []
+
+    try:
+        payload = json.loads(unity_import_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return []
+
+    result = payload.get("result")
+    if not isinstance(result, dict):
+        return []
+    if "configuredAnimatorSmoke" in result:
+        return []
+    return [f"{slot_id}: Unity import configuredAnimatorSmoke is not recorded yet"]
+
+
+def humanoid_quality_issue_for_score(
+    slot_id: str,
+    category: Any,
+    humanoid_diagnostics: object,
+) -> str | None:
+    if category != "humanoid":
+        return None
+    if not isinstance(humanoid_diagnostics, dict):
+        return f"{slot_id}: humanoidDiagnostics summary is required for humanoid score >=3"
+    status = humanoid_diagnostics.get("status")
+    if status == "pass":
+        return None
+    warnings = humanoid_diagnostics.get("warnings")
+    warning_suffix = ""
+    if isinstance(warnings, list) and warnings:
+        warning_suffix = f" ({','.join(str(warning) for warning in warnings)})"
+    if status in {"warn", "fail"}:
+        return f"{slot_id}: humanoidDiagnostics.status={status} is not allowed for score >=3{warning_suffix}"
+    return f"{slot_id}: humanoidDiagnostics.status must be pass for humanoid score >=3"
+
+
+def score_quality_support_issues(
+    slot_id: str,
+    score: Any,
+    evidence: dict[str, Any],
+) -> list[str]:
+    if not isinstance(score, int) or score < 3:
+        return []
+
+    if evidence_status(evidence.get("unityImport")) == "pass" or evidence_status(evidence.get("unrealImport")) == "pass":
+        return []
+    if evidence_status(evidence.get("visualReview")) == "pass":
+        visual_review = evidence.get("visualReview")
+        notes = visual_review.get("notes") if isinstance(visual_review, dict) else None
+        if not non_empty_string(notes):
+            return [f"{slot_id}: visualReview.notes is required when visualReview.status=pass supports score >=3"]
+        if not (
+            has_non_empty_evidence(evidence, ("previewNeutralSide",))
+            and has_non_empty_evidence(evidence, ("previewPoseSide",))
+        ):
+            return [f"{slot_id}: side preview evidence is required when visualReview.status=pass supports score >=3"]
+        return []
+    return [f"{slot_id}: visualReview.status=pass or engine import pass is required for score >=3"]
 
 
 def validate_base_slot(slot: dict[str, Any], index: int, seen_ids: set[str]) -> list[str]:
@@ -315,6 +714,7 @@ def validate_evidence(
     *,
     evidence_root: Path,
     check_files: bool,
+    require_configured_animator_smoke: bool = False,
 ) -> tuple[bool, list[str]]:
     slot_id = slot["id"]
     real_asset = slot.get("realAsset")
@@ -329,7 +729,7 @@ def validate_evidence(
 
     if not has_non_empty_evidence(evidence, ("qaReport", "qaReportPath")):
         issues.append(f"{slot_id}: QA report evidence is required")
-    if not has_non_empty_evidence(evidence, ("previewNeutral", "previewPose", "previewPath")):
+    if not has_non_empty_evidence(evidence, PREVIEW_EVIDENCE_KEYS):
         issues.append(f"{slot_id}: preview evidence is required")
     if not has_non_empty_evidence(evidence, ("exportUnityFbx", "exportUnrealFbx", "exportFbx")):
         issues.append(f"{slot_id}: exported FBX evidence is required")
@@ -339,6 +739,10 @@ def validate_evidence(
     failure_type = evidence.get("failureType")
     if failure_type is not None and failure_type not in FAILURE_TYPES:
         issues.append(f"{slot_id}: invalid failureType {failure_type!r}")
+    visual_review_status = evidence_status(evidence.get("visualReview"))
+    if visual_review_status is not None and visual_review_status not in VISUAL_REVIEW_STATUSES:
+        issues.append(f"{slot_id}: invalid visualReview.status {visual_review_status!r}")
+    issues.extend(score_quality_support_issues(slot_id, score, evidence))
 
     if check_files:
         issues.extend(
@@ -354,7 +758,7 @@ def validate_evidence(
             evidence_file_issues(
                 slot_id,
                 evidence,
-                ("previewNeutral", "previewPose", "previewPath"),
+                PREVIEW_EVIDENCE_KEYS,
                 "preview",
                 evidence_root,
             )
@@ -378,30 +782,68 @@ def validate_evidence(
                 evidence_root,
             )
         )
+        issues.extend(pose_quality_issues(slot_id, slot.get("category"), score, evidence_root))
+        issues.extend(
+            unity_import_quality_issues(
+                slot_id,
+                slot.get("category"),
+                score,
+                evidence,
+                evidence_root,
+                require_configured_animator_smoke=require_configured_animator_smoke,
+            )
+        )
 
     return not issues, issues
 
 
-def classify_slot(slot: dict[str, Any], *, evidence_root: Path, check_files: bool) -> dict[str, Any]:
+def classify_slot(
+    slot: dict[str, Any],
+    *,
+    evidence_root: Path,
+    check_files: bool,
+    require_configured_animator_smoke: bool = False,
+) -> dict[str, Any]:
     complete, evidence_issues = validate_evidence(
         slot,
         evidence_root=evidence_root,
         check_files=check_files,
+        require_configured_animator_smoke=require_configured_animator_smoke,
     )
     evidence = slot.get("evidence", {})
     score = evidence.get("deformationScore")
+    visual_review_status = evidence_status(evidence.get("visualReview"))
     unity_status = evidence_status(evidence.get("unityImport"))
     unreal_status = evidence_status(evidence.get("unrealImport"))
-    return {
+    warnings: list[str] = []
+    if check_files:
+        warnings.extend(unity_import_scale_warnings(slot["id"], slot.get("category"), evidence, evidence_root))
+        warnings.extend(
+            unity_import_animator_migration_warnings(
+                slot["id"],
+                slot.get("category"),
+                score,
+                evidence,
+                evidence_root,
+            )
+        )
+    classified = {
         "id": slot["id"],
         "category": slot["category"],
         "hasRealAsset": slot.get("realAsset") is not None,
         "evidenceComplete": complete,
         "deformationScore": score if isinstance(score, int) else None,
+        "visualReviewStatus": visual_review_status,
         "unityImportStatus": unity_status,
         "unrealImportStatus": unreal_status,
         "issues": evidence_issues,
+        "warnings": warnings,
     }
+    if check_files:
+        diagnostics = preview_image_diagnostics(evidence, evidence_root)
+        if diagnostics:
+            classified["previewDiagnostics"] = diagnostics
+    return classified
 
 
 def production_trial_gate(classified_slots: list[dict[str, Any]]) -> dict[str, Any]:
@@ -450,6 +892,7 @@ def validate_manifest(
     *,
     evidence_root: Path,
     check_files: bool,
+    require_configured_animator_smoke: bool = False,
 ) -> dict[str, Any]:
     structural_issues: list[str] = []
     if manifest.get("schemaVersion") != 1:
@@ -476,7 +919,12 @@ def validate_manifest(
         structural_issues.extend(real_asset_issues)
         if not base_issues and not real_asset_issues:
             classified_slots.append(
-                classify_slot(slot, evidence_root=evidence_root, check_files=check_files)
+                classify_slot(
+                    slot,
+                    evidence_root=evidence_root,
+                    check_files=check_files,
+                    require_configured_animator_smoke=require_configured_animator_smoke,
+                )
             )
 
     real_asset_slots = [slot for slot in classified_slots if slot["hasRealAsset"]]
@@ -503,12 +951,17 @@ def main() -> int:
     args = parse_args()
     manifest_path = Path(args.manifest)
     evidence_root = Path(args.evidence_root)
-    check_files = bool(args.check_evidence_files or args.require_production_trial)
+    check_files = bool(
+        args.check_evidence_files
+        or args.require_production_trial
+        or args.require_configured_animator_smoke
+    )
     try:
         report = validate_manifest(
             load_manifest(manifest_path),
             evidence_root=evidence_root,
             check_files=check_files,
+            require_configured_animator_smoke=args.require_configured_animator_smoke,
         )
     except (OSError, json.JSONDecodeError) as exc:
         print(f"Failed to read manifest: {exc}", file=sys.stderr)
@@ -524,6 +977,15 @@ def main() -> int:
         return 1
     if args.require_production_trial and report["productionTrialGate"]["status"] != "pass":
         return 1
+    if args.require_configured_animator_smoke:
+        strict_issues = [
+            issue
+            for slot in report["slots"]
+            for issue in slot.get("issues", [])
+            if "configuredAnimatorSmoke is required" in issue
+        ]
+        if strict_issues:
+            return 1
     return 0
 
 

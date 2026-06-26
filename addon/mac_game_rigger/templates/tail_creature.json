@@ -1,0 +1,192 @@
+{
+  "name": "Tail Creature",
+  "category": "tail creature",
+  "required_landmarks": [
+    "pelvis",
+    "spine",
+    "chest",
+    "neck_base",
+    "neck_mid",
+    "head",
+    "muzzle",
+    "front_leg.L",
+    "front_knee.L",
+    "front_ankle.L",
+    "front_paw.L",
+    "front_leg.R",
+    "front_knee.R",
+    "front_ankle.R",
+    "front_paw.R",
+    "rear_leg.L",
+    "rear_knee.L",
+    "rear_ankle.L",
+    "rear_paw.L",
+    "rear_leg.R",
+    "rear_knee.R",
+    "rear_ankle.R",
+    "rear_paw.R",
+    "tail_base",
+    "tail_mid",
+    "tail_tip"
+  ],
+  "mirror_pairs": {
+    "FrontUpperLeg.L": "FrontUpperLeg.R",
+    "FrontLowerLeg.L": "FrontLowerLeg.R",
+    "FrontPaw.L": "FrontPaw.R",
+    "RearUpperLeg.L": "RearUpperLeg.R",
+    "RearLowerLeg.L": "RearLowerLeg.R",
+    "RearPaw.L": "RearPaw.R"
+  },
+  "bones": [
+    {
+      "name": "Pelvis",
+      "parent": null,
+      "head_landmark": "pelvis",
+      "tail_landmark": "spine"
+    },
+    {
+      "name": "Spine",
+      "parent": "Pelvis",
+      "head_landmark": "spine",
+      "tail_landmark": "chest"
+    },
+    {
+      "name": "Chest",
+      "parent": "Spine",
+      "head_landmark": "chest",
+      "tail_landmark": "neck_base"
+    },
+    {
+      "name": "Neck.001",
+      "parent": "Chest",
+      "head_landmark": "neck_base",
+      "tail_landmark": "neck_mid"
+    },
+    {
+      "name": "Neck.002",
+      "parent": "Neck.001",
+      "head_landmark": "neck_mid",
+      "tail_landmark": "head"
+    },
+    {
+      "name": "Head",
+      "parent": "Neck.002",
+      "head_landmark": "head",
+      "tail_landmark": "muzzle"
+    },
+    {
+      "name": "FrontUpperLeg.L",
+      "parent": "Chest",
+      "head_landmark": "chest",
+      "tail_landmark": "front_leg.L"
+    },
+    {
+      "name": "FrontLowerLeg.L",
+      "parent": "FrontUpperLeg.L",
+      "head_landmark": "front_leg.L",
+      "tail_landmark": "front_knee.L"
+    },
+    {
+      "name": "FrontAnkle.L",
+      "parent": "FrontLowerLeg.L",
+      "head_landmark": "front_knee.L",
+      "tail_landmark": "front_ankle.L"
+    },
+    {
+      "name": "FrontPaw.L",
+      "parent": "FrontAnkle.L",
+      "head_landmark": "front_ankle.L",
+      "tail_landmark": "front_paw.L"
+    },
+    {
+      "name": "FrontUpperLeg.R",
+      "parent": "Chest",
+      "head_landmark": "chest",
+      "tail_landmark": "front_leg.R"
+    },
+    {
+      "name": "FrontLowerLeg.R",
+      "parent": "FrontUpperLeg.R",
+      "head_landmark": "front_leg.R",
+      "tail_landmark": "front_knee.R"
+    },
+    {
+      "name": "FrontAnkle.R",
+      "parent": "FrontLowerLeg.R",
+      "head_landmark": "front_knee.R",
+      "tail_landmark": "front_ankle.R"
+    },
+    {
+      "name": "FrontPaw.R",
+      "parent": "FrontAnkle.R",
+      "head_landmark": "front_ankle.R",
+      "tail_landmark": "front_paw.R"
+    },
+    {
+      "name": "RearUpperLeg.L",
+      "parent": "Pelvis",
+      "head_landmark": "pelvis",
+      "tail_landmark": "rear_leg.L"
+    },
+    {
+      "name": "RearLowerLeg.L",
+      "parent": "RearUpperLeg.L",
+      "head_landmark": "rear_leg.L",
+      "tail_landmark": "rear_knee.L"
+    },
+    {
+      "name": "RearAnkle.L",
+      "parent": "RearLowerLeg.L",
+      "head_landmark": "rear_knee.L",
+      "tail_landmark": "rear_ankle.L"
+    },
+    {
+      "name": "RearPaw.L",
+      "parent": "RearAnkle.L",
+      "head_landmark": "rear_ankle.L",
+      "tail_landmark": "rear_paw.L"
+    },
+    {
+      "name": "RearUpperLeg.R",
+      "parent": "Pelvis",
+      "head_landmark": "pelvis",
+      "tail_landmark": "rear_leg.R"
+    },
+    {
+      "name": "RearLowerLeg.R",
+      "parent": "RearUpperLeg.R",
+      "head_landmark": "rear_leg.R",
+      "tail_landmark": "rear_knee.R"
+    },
+    {
+      "name": "RearAnkle.R",
+      "parent": "RearLowerLeg.R",
+      "head_landmark": "rear_knee.R",
+      "tail_landmark": "rear_ankle.R"
+    },
+    {
+      "name": "RearPaw.R",
+      "parent": "RearAnkle.R",
+      "head_landmark": "rear_ankle.R",
+      "tail_landmark": "rear_paw.R"
+    },
+    {
+      "name": "Tail.001",
+      "parent": "Pelvis",
+      "head_landmark": "tail_base",
+      "tail_landmark": "tail_mid"
+    },
+    {
+      "name": "Tail.002",
+      "parent": "Tail.001",
+      "head_landmark": "tail_mid",
+      "tail_landmark": "tail_tip"
+    },
+    {
+      "name": "Tail.003",
+      "parent": "Tail.002",
+      "head_landmark": "tail_mid",
+      "tail_landmark": "tail_tip"
+    }
+  ]
+}

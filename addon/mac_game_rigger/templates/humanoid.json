@@ -7,6 +7,8 @@
     "chest",
     "neck",
     "head",
+    "hip.L",
+    "hip.R",
     "shoulder.L",
     "upper_arm.L",
     "lower_arm.L",
@@ -102,7 +104,7 @@
     {
       "name": "UpperLeg.L",
       "parent": "Hips",
-      "head_landmark": "hips",
+      "head_landmark": "hip.L",
       "tail_landmark": "upper_leg.L"
     },
     {
@@ -120,7 +122,7 @@
     {
       "name": "UpperLeg.R",
       "parent": "Hips",
-      "head_landmark": "hips",
+      "head_landmark": "hip.R",
       "tail_landmark": "upper_leg.R"
     },
     {

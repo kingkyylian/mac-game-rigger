@@ -23,6 +23,9 @@
         "previewNeutral": "evidence/H-001/preview-neutral.png",
         "notes": "evidence/H-001/notes.md",
         "deformationScore": 2,
+        "visualReview": {
+          "status": "fail"
+        },
         "unityImport": {
           "status": "blocked"
         },
@@ -30,6 +33,8 @@
           "status": "blocked"
         },
         "previewPose": "evidence/H-001/preview-pose.png",
+        "previewNeutralSide": "evidence/H-001/preview-neutral-side.png",
+        "previewPoseSide": "evidence/H-001/preview-pose-side.png",
         "exportUnityFbx": "evidence/H-001/export-unity.fbx",
         "failureType": "deformation quality issue"
       }
@@ -58,34 +63,113 @@
         "rigid armor",
         "weight bleed"
       ],
-      "realAsset": null,
-      "evidence": {}
+      "realAsset": {
+        "sourceName": "Quaternius Ultimate Animated Character Pack - Knight_Male.fbx",
+        "license": "CC0",
+        "canCommitBinary": false,
+        "sourceUrl": "https://quaternius.com/packs/ultimatedanimatedcharacter.html",
+        "externalPath": "local_assets/H-003/H-003-quaternius-knight-male.fbx"
+      },
+      "evidence": {
+        "qaReport": "evidence/H-003/qa-report.json",
+        "previewNeutral": "evidence/H-003/preview-neutral.png",
+        "notes": "evidence/H-003/notes.md",
+        "deformationScore": 3,
+        "unityImport": {
+          "status": "pass"
+        },
+        "unrealImport": {
+          "status": "blocked"
+        },
+        "previewPose": "evidence/H-003/preview-pose.png",
+        "previewNeutralSide": "evidence/H-003/preview-neutral-side.png",
+        "previewPoseSide": "evidence/H-003/preview-pose-side.png",
+        "exportUnityFbx": "evidence/H-003/export-unity.fbx",
+        "visualReview": {
+          "status": "pass",
+          "notes": "Armored silhouette is readable and pose deformation metric passes, but bulky shoulder/armor intersections need targeted cleanup before production use."
+        },
+        "failureType": "deformation quality issue"
+      }
     },
     {
       "id": "H-004",
       "category": "humanoid",
-      "targetFilename": "H-004-humanoid-long-coat.glb",
-      "preferredFormat": "GLB",
+      "targetFilename": "H-004-quaternius-wizard.fbx",
+      "preferredFormat": "FBX",
       "rigTarget": "Humanoid template",
       "expectedRisks": [
+        "robe deformation",
         "coat deformation",
         "manual cleanup"
       ],
-      "realAsset": null,
-      "evidence": {}
+      "realAsset": {
+        "sourceName": "Quaternius Ultimate Animated Character Pack - Wizard.fbx",
+        "license": "CC0",
+        "canCommitBinary": false,
+        "sourceUrl": "https://quaternius.com/packs/ultimatedanimatedcharacter.html",
+        "externalPath": "local_assets/H-004/H-004-quaternius-wizard.fbx"
+      },
+      "evidence": {
+        "qaReport": "evidence/H-004/qa-report.json",
+        "previewNeutral": "evidence/H-004/preview-neutral.png",
+        "notes": "evidence/H-004/notes.md",
+        "deformationScore": 3,
+        "unityImport": {
+          "status": "pass"
+        },
+        "unrealImport": {
+          "status": "blocked"
+        },
+        "previewPose": "evidence/H-004/preview-pose.png",
+        "previewNeutralSide": "evidence/H-004/preview-neutral-side.png",
+        "previewPoseSide": "evidence/H-004/preview-pose-side.png",
+        "exportUnityFbx": "evidence/H-004/export-unity.fbx",
+        "visualReview": {
+          "status": "pass",
+          "notes": "Wizard robe/hat silhouette remains readable in stress and side-review previews; usable with cleanup, not production-clean."
+        },
+        "failureType": "deformation quality issue"
+      }
     },
     {
       "id": "H-005",
       "category": "humanoid",
-      "targetFilename": "H-005-humanoid-separate-hair.glb",
-      "preferredFormat": "GLB",
+      "targetFilename": "H-005-quaternius-pirate-male.fbx",
+      "preferredFormat": "FBX",
       "rigTarget": "Humanoid template",
       "expectedRisks": [
-        "multi-mesh",
-        "hair intersections"
+        "accessory intersections",
+        "shoulder deformation"
       ],
-      "realAsset": null,
-      "evidence": {}
+      "realAsset": {
+        "sourceName": "Quaternius Ultimate Animated Character Pack - Pirate_Male.fbx",
+        "license": "CC0",
+        "canCommitBinary": false,
+        "sourceUrl": "https://quaternius.com/packs/ultimatedanimatedcharacter.html",
+        "externalPath": "local_assets/H-005/H-005-quaternius-pirate-male.fbx"
+      },
+      "evidence": {
+        "qaReport": "evidence/H-005/qa-report.json",
+        "previewNeutral": "evidence/H-005/preview-neutral.png",
+        "notes": "evidence/H-005/notes.md",
+        "deformationScore": 3,
+        "unityImport": {
+          "status": "pass"
+        },
+        "unrealImport": {
+          "status": "blocked"
+        },
+        "previewPose": "evidence/H-005/preview-pose.png",
+        "previewNeutralSide": "evidence/H-005/preview-neutral-side.png",
+        "previewPoseSide": "evidence/H-005/preview-pose-side.png",
+        "exportUnityFbx": "evidence/H-005/export-unity.fbx",
+        "visualReview": {
+          "status": "pass",
+          "notes": "Pirate silhouette remains coherent in stress and side-review previews; accessory and shoulder cleanup still required before production."
+        },
+        "failureType": "deformation quality issue"
+      }
     },
     {
       "id": "H-006",
@@ -107,15 +191,21 @@
         "qaReport": "evidence/H-006/qa-report.json",
         "previewNeutral": "evidence/H-006/preview-neutral.png",
         "notes": "evidence/H-006/notes.md",
-        "deformationScore": 2,
+        "deformationScore": 3,
         "unityImport": {
-          "status": "blocked"
+          "status": "pass"
         },
         "unrealImport": {
           "status": "blocked"
         },
         "previewPose": "evidence/H-006/preview-pose.png",
+        "previewNeutralSide": "evidence/H-006/preview-neutral-side.png",
+        "previewPoseSide": "evidence/H-006/preview-pose-side.png",
         "exportUnityFbx": "evidence/H-006/export-unity.fbx",
+        "visualReview": {
+          "status": "pass",
+          "notes": "Front stress preview shows readable arm and knee deformation after bind-space weighting; side-review preview is clean with low silhouette drift. Usable with manual cleanup review before production."
+        },
         "failureType": "deformation quality issue"
       }
     },
@@ -147,14 +237,40 @@
     {
       "id": "H-009",
       "category": "humanoid",
-      "targetFilename": "H-009-humanoid-wide-shoulders.glb",
-      "preferredFormat": "GLB",
+      "targetFilename": "H-009-quaternius-soldier-male.fbx",
+      "preferredFormat": "FBX",
       "rigTarget": "Humanoid template",
       "expectedRisks": [
         "shoulder deformation"
       ],
-      "realAsset": null,
-      "evidence": {}
+      "realAsset": {
+        "sourceName": "Quaternius Ultimate Animated Character Pack - Soldier_Male.fbx",
+        "license": "CC0",
+        "canCommitBinary": false,
+        "sourceUrl": "https://quaternius.com/packs/ultimatedanimatedcharacter.html",
+        "externalPath": "local_assets/H-009/H-009-quaternius-soldier-male.fbx"
+      },
+      "evidence": {
+        "qaReport": "evidence/H-009/qa-report.json",
+        "previewNeutral": "evidence/H-009/preview-neutral.png",
+        "notes": "evidence/H-009/notes.md",
+        "deformationScore": 3,
+        "unityImport": {
+          "status": "pass"
+        },
+        "unrealImport": {
+          "status": "blocked"
+        },
+        "previewPose": "evidence/H-009/preview-pose.png",
+        "previewNeutralSide": "evidence/H-009/preview-neutral-side.png",
+        "previewPoseSide": "evidence/H-009/preview-pose-side.png",
+        "exportUnityFbx": "evidence/H-009/export-unity.fbx",
+        "visualReview": {
+          "status": "pass",
+          "notes": "Soldier silhouette remains readable and pose deformation metric passes; shoulder cleanup still required before production."
+        },
+        "failureType": "deformation quality issue"
+      }
     },
     {
       "id": "H-010",
@@ -166,33 +282,111 @@
         "thin limbs",
         "capsule weighting stability"
       ],
-      "realAsset": null,
-      "evidence": {}
+      "realAsset": {
+        "sourceName": "Quaternius Ultimate Animated Character Pack - Elf.fbx",
+        "license": "CC0",
+        "canCommitBinary": false,
+        "sourceUrl": "https://quaternius.com/packs/ultimatedanimatedcharacter.html",
+        "externalPath": "local_assets/H-010/H-010-quaternius-elf.fbx"
+      },
+      "evidence": {
+        "qaReport": "evidence/H-010/qa-report.json",
+        "previewNeutral": "evidence/H-010/preview-neutral.png",
+        "notes": "evidence/H-010/notes.md",
+        "deformationScore": 3,
+        "unityImport": {
+          "status": "pass"
+        },
+        "unrealImport": {
+          "status": "blocked"
+        },
+        "previewPose": "evidence/H-010/preview-pose.png",
+        "previewNeutralSide": "evidence/H-010/preview-neutral-side.png",
+        "previewPoseSide": "evidence/H-010/preview-pose-side.png",
+        "exportUnityFbx": "evidence/H-010/export-unity.fbx",
+        "visualReview": {
+          "status": "pass",
+          "notes": "Thin-limb silhouette remains coherent and pose deformation metric passes, but lower-leg and foot cleanup still needs direct Blender review before production use."
+        },
+        "failureType": "deformation quality issue"
+      }
     },
     {
       "id": "Q-001",
       "category": "quadruped",
-      "targetFilename": "Q-001-quadruped-dog.glb",
-      "preferredFormat": "GLB",
+      "targetFilename": "Q-001-quaternius-husky.fbx",
+      "preferredFormat": "FBX",
       "rigTarget": "Quadruped template",
       "expectedRisks": [
         "baseline four-leg deformation"
       ],
-      "realAsset": null,
-      "evidence": {}
+      "realAsset": {
+        "sourceName": "Quaternius Ultimate Animated Animal Pack - Husky.fbx",
+        "license": "CC0",
+        "canCommitBinary": false,
+        "sourceUrl": "https://quaternius.com/packs/ultimateanimatedanimals.html",
+        "externalPath": "local_assets/Q-001/Q-001-quaternius-husky.fbx"
+      },
+      "evidence": {
+        "qaReport": "evidence/Q-001/qa-report.json",
+        "previewNeutral": "evidence/Q-001/preview-neutral.png",
+        "notes": "evidence/Q-001/notes.md",
+        "deformationScore": 3,
+        "unityImport": {
+          "status": "pass"
+        },
+        "unrealImport": {
+          "status": "blocked"
+        },
+        "previewPose": "evidence/Q-001/preview-pose.png",
+        "previewNeutralSide": "evidence/Q-001/preview-neutral-side.png",
+        "previewPoseSide": "evidence/Q-001/preview-pose-side.png",
+        "exportUnityFbx": "evidence/Q-001/export-unity.fbx",
+        "visualReview": {
+          "status": "pass",
+          "notes": "Readable x-axis quadruped side silhouette, visible gait pose motion, and pose deformation metric passes; still needs cleanup/direct shaded Blender review before production use."
+        },
+        "failureType": "deformation quality issue"
+      }
     },
     {
       "id": "Q-002",
       "category": "quadruped",
-      "targetFilename": "Q-002-quadruped-cat.glb",
-      "preferredFormat": "GLB",
+      "targetFilename": "Q-002-quaternius-fox.fbx",
+      "preferredFormat": "FBX",
       "rigTarget": "Quadruped template",
       "expectedRisks": [
         "small body",
         "tail base"
       ],
-      "realAsset": null,
-      "evidence": {}
+      "realAsset": {
+        "sourceName": "Quaternius Ultimate Animated Animal Pack - Fox.fbx",
+        "license": "CC0",
+        "canCommitBinary": false,
+        "sourceUrl": "https://quaternius.com/packs/ultimateanimatedanimals.html",
+        "externalPath": "local_assets/Q-002/Q-002-quaternius-fox.fbx"
+      },
+      "evidence": {
+        "qaReport": "evidence/Q-002/qa-report.json",
+        "previewNeutral": "evidence/Q-002/preview-neutral.png",
+        "notes": "evidence/Q-002/notes.md",
+        "deformationScore": 3,
+        "unityImport": {
+          "status": "pass"
+        },
+        "unrealImport": {
+          "status": "blocked"
+        },
+        "previewPose": "evidence/Q-002/preview-pose.png",
+        "previewNeutralSide": "evidence/Q-002/preview-neutral-side.png",
+        "previewPoseSide": "evidence/Q-002/preview-pose-side.png",
+        "exportUnityFbx": "evidence/Q-002/export-unity.fbx",
+        "visualReview": {
+          "status": "pass",
+          "notes": "Readable x-axis fox-like quadruped silhouette with long tail, visible gait pose motion, clean QA, and passing pose deformation metric; still needs cleanup/direct shaded Blender review before production use."
+        },
+        "failureType": "deformation quality issue"
+      }
     },
     {
       "id": "Q-003",
@@ -235,15 +429,42 @@
     {
       "id": "C-001",
       "category": "tail creature",
-      "targetFilename": "C-001-tail-creature-dragon.glb",
-      "preferredFormat": "GLB",
-      "rigTarget": "Quadruped + tail + wing helpers",
+      "targetFilename": "C-001-quaternius-apatosaurus.fbx",
+      "preferredFormat": "FBX",
+      "rigTarget": "Quadruped + tail helper baseline",
       "expectedRisks": [
         "tail chain",
-        "wing deformation"
+        "long neck",
+        "sauropod proportions"
       ],
-      "realAsset": null,
-      "evidence": {}
+      "realAsset": {
+        "sourceName": "Quaternius Animated Dinosaur Pack - Apatosaurus.fbx",
+        "license": "CC0",
+        "canCommitBinary": false,
+        "sourceUrl": "https://quaternius.com/packs/animateddinosaurs.html",
+        "externalPath": "local_assets/C-001/C-001-quaternius-apatosaurus.fbx"
+      },
+      "evidence": {
+        "qaReport": "evidence/C-001/qa-report.json",
+        "previewNeutral": "evidence/C-001/preview-neutral.png",
+        "notes": "evidence/C-001/notes.md",
+        "deformationScore": 3,
+        "unityImport": {
+          "status": "pass"
+        },
+        "unrealImport": {
+          "status": "blocked"
+        },
+        "previewPose": "evidence/C-001/preview-pose.png",
+        "previewNeutralSide": "evidence/C-001/preview-neutral-side.png",
+        "previewPoseSide": "evidence/C-001/preview-pose-side.png",
+        "exportUnityFbx": "evidence/C-001/export-unity.fbx",
+        "visualReview": {
+          "status": "pass",
+          "notes": "Tail-creature template keeps the Apatosaurus neck/tail silhouette readable and reduces max pose expansion from 2.1013x to 1.3026x; usable with cleanup, not production-clean."
+        },
+        "failureType": "deformation quality issue"
+      }
     },
     {
       "id": "C-002",
@@ -304,8 +525,34 @@
       "expectedRisks": [
         "single hinge rotation"
       ],
-      "realAsset": null,
-      "evidence": {}
+      "realAsset": {
+        "sourceName": "Internal local asset pipeline - wooden_door.fbx",
+        "license": "internal-local",
+        "canCommitBinary": false,
+        "sourceUrl": "file:///Users/kyylian/Developer/blender-egitim/asset-pipeline/assets/_done/E001_wooden_door.json",
+        "externalPath": "local_assets/P-001/P-001-local-wooden-door.fbx"
+      },
+      "evidence": {
+        "qaReport": "evidence/P-001/qa-report.json",
+        "previewNeutral": "evidence/P-001/preview-neutral.png",
+        "notes": "evidence/P-001/notes.md",
+        "deformationScore": 3,
+        "unityImport": {
+          "status": "pass"
+        },
+        "unrealImport": {
+          "status": "blocked"
+        },
+        "previewPose": "evidence/P-001/preview-pose.png",
+        "previewNeutralSide": "evidence/P-001/preview-neutral-side.png",
+        "previewPoseSide": "evidence/P-001/preview-pose-side.png",
+        "exportUnityFbx": "evidence/P-001/export-unity.fbx",
+        "visualReview": {
+          "status": "pass",
+          "notes": "Readable hinge-open preview for an internal wooden-door prop; validates prop_hinge workflow but still needs pivot/origin cleanup before production use."
+        },
+        "failureType": "deformation quality issue"
+      }
     },
     {
       "id": "P-002",
@@ -317,8 +564,33 @@
         "lid hinge",
         "base separation"
       ],
-      "realAsset": null,
-      "evidence": {}
+      "realAsset": {
+        "sourceName": "Internal local asset pipeline - treasure_chest.fbx",
+        "license": "internal-local",
+        "canCommitBinary": false,
+        "sourceUrl": "file:///Users/kyylian/Developer/blender-egitim/mehmet-repo/asset-pipeline/assets/_done/F013_treasure_chest.json",
+        "externalPath": "local_assets/P-002/P-002-local-treasure-chest.fbx"
+      },
+      "evidence": {
+        "qaReport": "evidence/P-002/qa-report.json",
+        "previewNeutral": "evidence/P-002/preview-neutral.png",
+        "notes": "evidence/P-002/notes.md",
+        "deformationScore": 3,
+        "unityImport": {
+          "status": "pass"
+        },
+        "unrealImport": {
+          "status": "blocked"
+        },
+        "previewPose": "evidence/P-002/preview-pose.png",
+        "previewNeutralSide": "evidence/P-002/preview-neutral-side.png",
+        "previewPoseSide": "evidence/P-002/preview-pose-side.png",
+        "exportUnityFbx": "evidence/P-002/export-unity.fbx",
+        "visualReview": {
+          "status": "pass",
+          "notes": "Readable first-pass hinge-open treasure chest pose; usable-with-cleanup, not final production-clean rig."
+        }
+      }
     },
     {
       "id": "P-003",

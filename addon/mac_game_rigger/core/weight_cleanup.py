@@ -14,6 +14,7 @@ class WeightCleanupResult:
     unweighted_vertices: int
     over_limit_vertices: int
     removed_empty_groups: int
+    removed_empty_group_names: tuple[str, ...]
     pruned_weights: int
     normalized_vertices: int
 
@@ -39,17 +40,21 @@ def find_vertices_over_influence_limit(
     ]
 
 
-def remove_empty_vertex_groups(mesh) -> int:
-    empty_group_names = [
+def find_empty_vertex_group_names(mesh) -> tuple[str, ...]:
+    return tuple(
         vertex_group.name
         for vertex_group in mesh.vertex_groups
         if not _vertex_group_has_positive_weights(mesh, vertex_group.index)
-    ]
+    )
+
+
+def remove_empty_vertex_groups(mesh) -> tuple[str, ...]:
+    empty_group_names = find_empty_vertex_group_names(mesh)
     for group_name in empty_group_names:
         vertex_group = mesh.vertex_groups.get(group_name)
         if vertex_group is not None:
             mesh.vertex_groups.remove(vertex_group)
-    return len(empty_group_names)
+    return empty_group_names
 
 
 def prune_small_weights(
@@ -99,7 +104,7 @@ def cleanup_mesh_weights(
 ) -> WeightCleanupResult:
     unweighted_vertices = len(find_unweighted_vertices(mesh))
     over_limit_vertices = len(find_vertices_over_influence_limit(mesh, influence_limit))
-    removed_empty_groups = remove_empty_vertex_groups(mesh)
+    removed_empty_group_names = remove_empty_vertex_groups(mesh)
     pruned_weights = prune_small_weights(mesh, prune_threshold)
     normalized_vertices = normalize_mesh_weights(mesh)
 
@@ -107,7 +112,8 @@ def cleanup_mesh_weights(
         mesh_name=mesh.name,
         unweighted_vertices=unweighted_vertices,
         over_limit_vertices=over_limit_vertices,
-        removed_empty_groups=removed_empty_groups,
+        removed_empty_groups=len(removed_empty_group_names),
+        removed_empty_group_names=removed_empty_group_names,
         pruned_weights=pruned_weights,
         normalized_vertices=normalized_vertices,
     )

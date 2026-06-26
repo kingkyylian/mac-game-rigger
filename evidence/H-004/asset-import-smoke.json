@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "status": "pass",
+  "slotId": "H-004",
+  "source": {
+    "name": "Quaternius Ultimate Animated Character Pack - Wizard.fbx",
+    "url": "https://quaternius.com/packs/ultimatedanimatedcharacter.html",
+    "license": "CC0",
+    "localPath": "/Users/kyylian/mac-game-rigger/local_assets/H-004/H-004-quaternius-wizard.fbx"
+  },
+  "metrics": {
+    "meshCount": 1,
+    "armatureCount": 1,
+    "boneCount": 32,
+    "materialCount": 7,
+    "vertexCount": 3366,
+    "faceCount": 3319,
+    "actionCount": 17,
+    "bbox": {
+      "width": 1.7299,
+      "depth": 1.7239,
+      "height": 4.0331
+    },
+    "hasArmature": true,
+    "suggestedCategory": "humanoid",
+    "meshNames": [
+      "Body"
+    ],
+    "armatureNames": [
+      "CharacterArmature"
+    ]
+  }
+}

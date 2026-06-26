@@ -1,0 +1,875 @@
+{
+  "schemaVersion": 1,
+  "status": "pass",
+  "assetPath": "/Users/kyylian/mac-game-rigger/local_assets/P-001/P-001-local-wooden-door.fbx",
+  "template": "prop_hinge",
+  "workflowControls": {
+    "propHinge": {
+      "pivotX": 0.08,
+      "baseX": 0.18,
+      "axis": "x"
+    }
+  },
+  "stripSourceRig": {
+    "removedArmatures": 0,
+    "removedArmatureModifiers": 0,
+    "removedVertexGroups": 0
+  },
+  "orientationNormalization": [],
+  "meshCount": 1,
+  "bbox": {
+    "min_x": -0.3700000047683716,
+    "max_x": 0.33250001072883606,
+    "min_y": -0.034330081194639206,
+    "max_y": 0.03250022977590561,
+    "min_z": 0.2875000238418579,
+    "max_z": 1.4249999523162842
+  },
+  "artifacts": {
+    "qaReport": "/Users/kyylian/mac-game-rigger/evidence/P-001/qa-report.json",
+    "previewNeutral": "/Users/kyylian/mac-game-rigger/evidence/P-001/preview-neutral.png",
+    "previewPose": "/Users/kyylian/mac-game-rigger/evidence/P-001/preview-pose.png",
+    "previewNeutralSide": "/Users/kyylian/mac-game-rigger/evidence/P-001/preview-neutral-side.png",
+    "previewPoseSide": "/Users/kyylian/mac-game-rigger/evidence/P-001/preview-pose-side.png",
+    "exportUnityFbx": "/Users/kyylian/mac-game-rigger/evidence/P-001/export-unity.fbx",
+    "exportQaReport": "/Users/kyylian/mac-game-rigger/evidence/P-001/export-unity.qa.json"
+  },
+  "posePreview": {
+    "operator": "pose_prop_hinge_open"
+  },
+  "camera": {
+    "axis": "x"
+  },
+  "previewFrames": {
+    "neutral": {
+      "bbox": {
+        "min_x": -0.3700000047683716,
+        "max_x": 0.33250001072883606,
+        "min_y": -0.034330081194639206,
+        "max_y": 0.03250023350119591,
+        "min_z": 0.2875000238418579,
+        "max_z": 1.4249999523162842
+      },
+      "camera": {
+        "cameraLocation": [
+          -6.370000004768372,
+          -0.0009149238467216492,
+          0.856249988079071
+        ],
+        "target": [
+          -0.01874999701976776,
+          -0.0009149238467216492,
+          0.856249988079071
+        ],
+        "keyLightLocation": [
+          -3.9700000047683712,
+          -0.0009149238467216492,
+          1.9937499165534973
+        ],
+        "orthographicScale": 2.0474998712539674,
+        "clipEnd": 13.137499928474426
+      }
+    },
+    "neutralSide": {
+      "bbox": {
+        "min_x": -0.3700000047683716,
+        "max_x": 0.33250001072883606,
+        "min_y": -0.034330081194639206,
+        "max_y": 0.03250023350119591,
+        "min_z": 0.2875000238418579,
+        "max_z": 1.4249999523162842
+      },
+      "camera": {
+        "cameraLocation": [
+          -0.01874999701976776,
+          -6.034330081194639,
+          0.856249988079071
+        ],
+        "target": [
+          -0.01874999701976776,
+          -0.0009149238467216492,
+          0.856249988079071
+        ],
+        "keyLightLocation": [
+          -0.01874999701976776,
+          -3.634330081194639,
+          1.9937499165534973
+        ],
+        "orthographicScale": 2.0474998712539674,
+        "clipEnd": 13.137499928474426
+      }
+    },
+    "pose": {
+      "bbox": {
+        "min_x": -0.3700000047683716,
+        "max_x": 0.18250001966953278,
+        "min_y": -0.02749994955956936,
+        "max_y": 0.4472513496875763,
+        "min_z": 0.28749996423721313,
+        "max_z": 1.4249999523162842
+      },
+      "camera": {
+        "cameraLocation": [
+          -6.370000004768372,
+          0.20987570006400347,
+          0.8562499582767487
+        ],
+        "target": [
+          -0.0937499925494194,
+          0.20987570006400347,
+          0.8562499582767487
+        ],
+        "keyLightLocation": [
+          -3.9700000047683712,
+          0.20987570006400347,
+          1.9937499463558197
+        ],
+        "orthographicScale": 2.047499978542328,
+        "clipEnd": 13.137499988079071
+      },
+      "operator": "pose_prop_hinge_open"
+    },
+    "poseSide": {
+      "bbox": {
+        "min_x": -0.3700000047683716,
+        "max_x": 0.29560890793800354,
+        "min_y": -0.02749994955956936,
+        "max_y": 0.23012623190879822,
+        "min_z": 0.2874999940395355,
+        "max_z": 1.4249999523162842
+      },
+      "camera": {
+        "cameraLocation": [
+          -0.03719554841518402,
+          -6.027499949559569,
+          0.8562499731779099
+        ],
+        "target": [
+          -0.03719554841518402,
+          0.10131314117461443,
+          0.8562499731779099
+        ],
+        "keyLightLocation": [
+          -0.03719554841518402,
+          -3.627499949559569,
+          1.9937499314546585
+        ],
+        "orthographicScale": 2.0474999248981476,
+        "clipEnd": 13.137499958276749
+      },
+      "operator": "pose_prop_hinge_side_review"
+    }
+  },
+  "poseDeformation": {
+    "status": "pass",
+    "axisExpansionRatios": {
+      "x": 0.7865,
+      "y": 4.7475,
+      "z": 1.0
+    },
+    "maxAxisExpansionRatio": 4.7475,
+    "expandedAxes": [],
+    "warningAxes": [],
+    "allowedExpandedAxes": [
+      "y"
+    ]
+  },
+  "cleanup": {
+    "unweightedVertices": 0,
+    "overLimitVertices": 0,
+    "removedEmptyGroups": 0,
+    "removedEmptyGroupNames": [],
+    "prunedWeights": 0,
+    "normalizedVertices": 0
+  },
+  "weightDiagnostics": {
+    "meshCount": 1,
+    "vertexCount": 360,
+    "regions": {
+      "propBase": {
+        "influencedVertices": 156,
+        "dominantVertices": 156,
+        "averageWeight": 0.995
+      },
+      "propHinge": {
+        "influencedVertices": 8,
+        "dominantVertices": 0,
+        "averageWeight": 0.1304
+      },
+      "propMovingPart": {
+        "influencedVertices": 204,
+        "dominantVertices": 204,
+        "averageWeight": 0.9987
+      }
+    },
+    "heightBands": {
+      "lower": {
+        "vertexCount": 108,
+        "dominantRegions": {
+          "propBase": 96,
+          "propMovingPart": 12
+        },
+        "minZ": 0.2875,
+        "maxZ": 0.4524
+      },
+      "torso": {
+        "vertexCount": 144,
+        "dominantRegions": {
+          "propMovingPart": 144
+        },
+        "minZ": 0.8562,
+        "maxZ": 0.9438
+      },
+      "upper": {
+        "vertexCount": 108,
+        "dominantRegions": {
+          "propBase": 60,
+          "propMovingPart": 48
+        },
+        "minZ": 1.1875,
+        "maxZ": 1.425
+      }
+    },
+    "topBones": [
+      {
+        "bone": "MovingPart",
+        "totalWeight": 203.7391
+      },
+      {
+        "bone": "PropBase",
+        "totalWeight": 155.2174
+      },
+      {
+        "bone": "Hinge",
+        "totalWeight": 1.0435
+      }
+    ]
+  },
+  "boneWeightDiagnostics": {
+    "meshCount": 1,
+    "vertexCount": 360,
+    "bones": {
+      "Hinge": {
+        "region": "propHinge",
+        "influencedVertices": 8,
+        "dominantVertices": 0,
+        "totalWeight": 1.0435,
+        "averageWeight": 0.1304,
+        "influencedBounds": {
+          "minX": -0.1825,
+          "maxX": -0.0301,
+          "minY": -0.0076,
+          "maxY": 0.0076,
+          "minZ": 1.3476,
+          "maxZ": 1.35
+        },
+        "dominantBounds": null,
+        "topWeightedVertices": [
+          {
+            "mesh": "wooden_door",
+            "index": 28,
+            "weight": 0.1304,
+            "world": [
+              -0.1801,
+              -0.0076,
+              1.35
+            ]
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 29,
+            "weight": 0.1304,
+            "world": [
+              -0.1825,
+              -0.0076,
+              1.3476
+            ]
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 35,
+            "weight": 0.1304,
+            "world": [
+              -0.1825,
+              0.0076,
+              1.3476
+            ]
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 39,
+            "weight": 0.1304,
+            "world": [
+              -0.1199,
+              -0.0076,
+              1.35
+            ]
+          }
+        ]
+      },
+      "MovingPart": {
+        "region": "propMovingPart",
+        "influencedVertices": 204,
+        "dominantVertices": 204,
+        "totalWeight": 203.7391,
+        "averageWeight": 0.9987,
+        "influencedBounds": {
+          "minX": -0.0325,
+          "maxX": 0.3325,
+          "minY": -0.0343,
+          "maxY": 0.0325,
+          "minZ": 0.45,
+          "maxZ": 1.425
+        },
+        "dominantBounds": {
+          "minX": -0.0325,
+          "maxX": 0.3325,
+          "minY": -0.0343,
+          "maxY": 0.0325,
+          "minZ": 0.45,
+          "maxZ": 1.425
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "wooden_door",
+            "index": 51,
+            "weight": 1.0,
+            "world": [
+              -0.0301,
+              -0.01,
+              1.3476
+            ]
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 57,
+            "weight": 1.0,
+            "world": [
+              -0.0301,
+              0.0076,
+              1.35
+            ]
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 58,
+            "weight": 1.0,
+            "world": [
+              -0.0301,
+              0.01,
+              1.3476
+            ]
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 59,
+            "weight": 1.0,
+            "world": [
+              -0.0325,
+              0.0076,
+              1.3476
+            ]
+          }
+        ]
+      },
+      "PropBase": {
+        "region": "propBase",
+        "influencedVertices": 156,
+        "dominantVertices": 156,
+        "totalWeight": 155.2174,
+        "averageWeight": 0.995,
+        "influencedBounds": {
+          "minX": -0.37,
+          "maxX": 0.1825,
+          "minY": -0.0275,
+          "maxY": 0.0325,
+          "minZ": 0.2875,
+          "maxZ": 1.425
+        },
+        "dominantBounds": {
+          "minX": -0.37,
+          "maxX": 0.1825,
+          "minY": -0.0275,
+          "maxY": 0.0325,
+          "minZ": 0.2875,
+          "maxZ": 1.425
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "wooden_door",
+            "index": 0,
+            "weight": 1.0,
+            "world": [
+              -0.3301,
+              -0.0076,
+              0.45
+            ]
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 1,
+            "weight": 1.0,
+            "world": [
+              -0.3301,
+              -0.01,
+              0.4524
+            ]
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 2,
+            "weight": 1.0,
+            "world": [
+              -0.3325,
+              -0.0076,
+              0.4524
+            ]
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 3,
+            "weight": 1.0,
+            "world": [
+              -0.3301,
+              -0.01,
+              1.3476
+            ]
+          }
+        ]
+      }
+    },
+    "topBones": [
+      {
+        "bone": "MovingPart",
+        "totalWeight": 203.7391
+      },
+      {
+        "bone": "PropBase",
+        "totalWeight": 155.2174
+      },
+      {
+        "bone": "Hinge",
+        "totalWeight": 1.0435
+      }
+    ]
+  },
+  "capsuleBindWeightDiagnostics": {
+    "space": "capsuleBind",
+    "targetBounds": {
+      "minX": -0.5496,
+      "maxX": 0.4744,
+      "minY": -0.2367,
+      "maxY": 0.2349,
+      "minZ": 0.2337,
+      "maxZ": 1.092
+    },
+    "meshCount": 1,
+    "vertexCount": 360,
+    "bones": {
+      "Hinge": {
+        "region": "propHinge",
+        "influencedVertices": 8,
+        "dominantVertices": 0,
+        "totalWeight": 1.0435,
+        "averageWeight": 0.1304,
+        "influencedBounds": {
+          "minX": -0.2763,
+          "maxX": -0.0541,
+          "minY": -0.048,
+          "maxY": 0.0591,
+          "minZ": 1.0336,
+          "maxZ": 1.0354
+        },
+        "dominantBounds": null,
+        "topWeightedVertices": [
+          {
+            "mesh": "wooden_door",
+            "index": 28,
+            "weight": 0.1304,
+            "bind": [
+              -0.2728,
+              -0.048,
+              1.0354
+            ]
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 29,
+            "weight": 0.1304,
+            "bind": [
+              -0.2763,
+              -0.048,
+              1.0336
+            ]
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 35,
+            "weight": 0.1304,
+            "bind": [
+              -0.2763,
+              0.0591,
+              1.0336
+            ]
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 39,
+            "weight": 0.1304,
+            "bind": [
+              -0.1851,
+              -0.048,
+              1.0354
+            ]
+          }
+        ]
+      },
+      "MovingPart": {
+        "region": "propMovingPart",
+        "influencedVertices": 204,
+        "dominantVertices": 204,
+        "totalWeight": 203.7391,
+        "averageWeight": 0.9987,
+        "influencedBounds": {
+          "minX": -0.0576,
+          "maxX": 0.4744,
+          "minY": -0.2367,
+          "maxY": 0.2349,
+          "minZ": 0.3563,
+          "maxZ": 1.092
+        },
+        "dominantBounds": {
+          "minX": -0.0576,
+          "maxX": 0.4744,
+          "minY": -0.2367,
+          "maxY": 0.2349,
+          "minZ": 0.3563,
+          "maxZ": 1.092
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "wooden_door",
+            "index": 51,
+            "weight": 1.0,
+            "bind": [
+              -0.0541,
+              -0.065,
+              1.0336
+            ]
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 57,
+            "weight": 1.0,
+            "bind": [
+              -0.0541,
+              0.0591,
+              1.0354
+            ]
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 58,
+            "weight": 1.0,
+            "bind": [
+              -0.0541,
+              0.0761,
+              1.0336
+            ]
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 59,
+            "weight": 1.0,
+            "bind": [
+              -0.0576,
+              0.0591,
+              1.0336
+            ]
+          }
+        ]
+      },
+      "PropBase": {
+        "region": "propBase",
+        "influencedVertices": 156,
+        "dominantVertices": 156,
+        "totalWeight": 155.2174,
+        "averageWeight": 0.995,
+        "influencedBounds": {
+          "minX": -0.5496,
+          "maxX": 0.2558,
+          "minY": -0.1885,
+          "maxY": 0.2349,
+          "minZ": 0.2337,
+          "maxZ": 1.092
+        },
+        "dominantBounds": {
+          "minX": -0.5496,
+          "maxX": 0.2558,
+          "minY": -0.1885,
+          "maxY": 0.2349,
+          "minZ": 0.2337,
+          "maxZ": 1.092
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "wooden_door",
+            "index": 0,
+            "weight": 1.0,
+            "bind": [
+              -0.4914,
+              -0.048,
+              0.3563
+            ]
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 1,
+            "weight": 1.0,
+            "bind": [
+              -0.4914,
+              -0.065,
+              0.3581
+            ]
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 2,
+            "weight": 1.0,
+            "bind": [
+              -0.4949,
+              -0.048,
+              0.3581
+            ]
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 3,
+            "weight": 1.0,
+            "bind": [
+              -0.4914,
+              -0.065,
+              1.0336
+            ]
+          }
+        ]
+      }
+    },
+    "topBones": [
+      {
+        "bone": "MovingPart",
+        "totalWeight": 203.7391
+      },
+      {
+        "bone": "PropBase",
+        "totalWeight": 155.2174
+      },
+      {
+        "bone": "Hinge",
+        "totalWeight": 1.0435
+      }
+    ]
+  },
+  "capsuleAssignmentDiagnostics": {
+    "space": "capsuleBind",
+    "meshCount": 1,
+    "vertexCount": 360,
+    "targetBounds": {
+      "minX": -0.5496,
+      "maxX": 0.4744,
+      "minY": -0.2367,
+      "maxY": 0.2349,
+      "minZ": 0.2337,
+      "maxZ": 1.092
+    },
+    "capsuleAssignedVertices": 72,
+    "nearestFallbackVertices": 288,
+    "fallbackByBone": {
+      "MovingPart": {
+        "region": "other",
+        "vertexCount": 180,
+        "averageDistanceRatio": 1.4104,
+        "maxDistanceRatio": 2.7269,
+        "samples": [
+          {
+            "mesh": "wooden_door",
+            "index": 115,
+            "bind": [
+              0.4709,
+              0.0761,
+              0.3581
+            ],
+            "distance": 0.5403,
+            "distanceRatio": 2.7269
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 114,
+            "bind": [
+              0.4709,
+              0.0591,
+              0.3563
+            ],
+            "distance": 0.5398,
+            "distanceRatio": 2.7245
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 116,
+            "bind": [
+              0.4744,
+              0.0591,
+              0.3581
+            ],
+            "distance": 0.5394,
+            "distanceRatio": 2.7225
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 110,
+            "bind": [
+              0.4709,
+              -0.065,
+              0.3581
+            ],
+            "distance": 0.5386,
+            "distanceRatio": 2.7184
+          }
+        ]
+      },
+      "PropBase": {
+        "region": "other",
+        "vertexCount": 108,
+        "averageDistanceRatio": 1.511,
+        "maxDistanceRatio": 2.395,
+        "samples": [
+          {
+            "mesh": "wooden_door",
+            "index": 139,
+            "bind": [
+              0.2413,
+              0.2349,
+              0.3015
+            ],
+            "distance": 0.5648,
+            "distanceRatio": 2.395
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 140,
+            "bind": [
+              0.2448,
+              0.2179,
+              0.3015
+            ],
+            "distance": 0.5609,
+            "distanceRatio": 2.3787
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 138,
+            "bind": [
+              0.2413,
+              0.2179,
+              0.2997
+            ],
+            "distance": 0.5584,
+            "distanceRatio": 2.3681
+          },
+          {
+            "mesh": "wooden_door",
+            "index": 143,
+            "bind": [
+              0.2413,
+              0.2349,
+              0.3356
+            ],
+            "distance": 0.5556,
+            "distanceRatio": 2.356
+          }
+        ]
+      }
+    }
+  },
+  "propDiagnostics": {
+    "status": "fail",
+    "coverageRatios": {
+      "propBase": 0.4333,
+      "propHinge": 0.0,
+      "propMovingPart": 0.5667
+    },
+    "warnings": [
+      "missingPropHingeCoverage"
+    ]
+  },
+  "humanoidDiagnostics": {},
+  "capsuleDiagnostics": [
+    {
+      "name": "PropBase",
+      "head": [
+        -0.2436,
+        -0.0009,
+        0.4695
+      ],
+      "tail": [
+        -0.3138,
+        -0.0009,
+        0.8562
+      ],
+      "radius": 0.2358,
+      "verticalMin": 0.4695,
+      "verticalMax": 0.8562
+    },
+    {
+      "name": "Hinge",
+      "head": [
+        -0.3138,
+        -0.0009,
+        0.8562
+      ],
+      "tail": [
+        -0.0539,
+        -0.0009,
+        0.8562
+      ],
+      "radius": 0.1559,
+      "verticalMin": 0.8562,
+      "verticalMax": 0.8562
+    },
+    {
+      "name": "MovingPart",
+      "head": [
+        -0.0539,
+        -0.0009,
+        0.8562
+      ],
+      "tail": [
+        0.2763,
+        -0.0009,
+        0.8562
+      ],
+      "radius": 0.1981,
+      "verticalMin": 0.8562,
+      "verticalMax": 0.8562
+    }
+  ],
+  "bindSpaceDiagnostics": [
+    {
+      "mesh": "wooden_door",
+      "rawMinZ": 0.2875,
+      "rawMaxZ": 1.425,
+      "bindMinZ": 0.2875,
+      "bindMaxZ": 1.425
+    }
+  ],
+  "qa": {
+    "mesh_count": 1,
+    "vertex_count": 360,
+    "bone_count": 3,
+    "unweighted_vertices": 0,
+    "over_limit_vertices": 0,
+    "export_profile": null,
+    "warnings": [],
+    "errors": []
+  }
+}

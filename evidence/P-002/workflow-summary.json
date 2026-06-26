@@ -1,0 +1,876 @@
+{
+  "schemaVersion": 1,
+  "status": "pass",
+  "assetPath": "/Users/kyylian/mac-game-rigger/local_assets/P-002/P-002-local-treasure-chest.fbx",
+  "template": "prop_hinge",
+  "workflowControls": {
+    "propHinge": {
+      "pivotX": 0.1,
+      "baseX": 0.22,
+      "axis": "y"
+    }
+  },
+  "stripSourceRig": {
+    "removedArmatures": 0,
+    "removedArmatureModifiers": 0,
+    "removedVertexGroups": 0
+  },
+  "orientationNormalization": [],
+  "meshCount": 1,
+  "bbox": {
+    "min_x": -0.30000001192092896,
+    "max_x": 0.30000001192092896,
+    "min_y": -0.21699997782707214,
+    "max_y": 0.21100008487701416,
+    "min_z": 0.07749996334314346,
+    "max_z": 0.5500000715255737
+  },
+  "artifacts": {
+    "qaReport": "/Users/kyylian/mac-game-rigger/evidence/P-002/qa-report.json",
+    "previewNeutral": "/Users/kyylian/mac-game-rigger/evidence/P-002/preview-neutral.png",
+    "previewPose": "/Users/kyylian/mac-game-rigger/evidence/P-002/preview-pose.png",
+    "previewNeutralSide": "/Users/kyylian/mac-game-rigger/evidence/P-002/preview-neutral-side.png",
+    "previewPoseSide": "/Users/kyylian/mac-game-rigger/evidence/P-002/preview-pose-side.png",
+    "exportUnityFbx": "/Users/kyylian/mac-game-rigger/evidence/P-002/export-unity.fbx",
+    "exportQaReport": "/Users/kyylian/mac-game-rigger/evidence/P-002/export-unity.qa.json"
+  },
+  "posePreview": {
+    "operator": "pose_prop_hinge_open"
+  },
+  "camera": {
+    "axis": "y"
+  },
+  "previewFrames": {
+    "neutral": {
+      "bbox": {
+        "min_x": -0.30000001192092896,
+        "max_x": 0.30000001192092896,
+        "min_y": -0.21699999272823334,
+        "max_y": 0.21100008487701416,
+        "min_z": 0.07749993354082108,
+        "max_z": 0.550000011920929
+      },
+      "camera": {
+        "cameraLocation": [
+          0.0,
+          -6.216999992728233,
+          0.313749972730875
+        ],
+        "target": [
+          0.0,
+          -0.0029999539256095886,
+          0.313749972730875
+        ],
+        "keyLightLocation": [
+          0.0,
+          -3.816999992728233,
+          0.7862500511109829
+        ],
+        "orthographicScale": 1.2000000476837158,
+        "clipEnd": 12.600000023841858
+      }
+    },
+    "neutralSide": {
+      "bbox": {
+        "min_x": -0.30000001192092896,
+        "max_x": 0.30000001192092896,
+        "min_y": -0.21699999272823334,
+        "max_y": 0.21100008487701416,
+        "min_z": 0.07749993354082108,
+        "max_z": 0.550000011920929
+      },
+      "camera": {
+        "cameraLocation": [
+          -6.300000011920929,
+          -0.0029999539256095886,
+          0.313749972730875
+        ],
+        "target": [
+          0.0,
+          -0.0029999539256095886,
+          0.313749972730875
+        ],
+        "keyLightLocation": [
+          -3.9000000119209286,
+          -0.0029999539256095886,
+          0.7862500511109829
+        ],
+        "orthographicScale": 1.2000000476837158,
+        "clipEnd": 12.600000023841858
+      }
+    },
+    "pose": {
+      "bbox": {
+        "min_x": -0.45871153473854065,
+        "max_x": 0.30000001192092896,
+        "min_y": -0.32734668254852295,
+        "max_y": 0.3178749084472656,
+        "min_z": 0.0774998813867569,
+        "max_z": 0.550000011920929
+      },
+      "camera": {
+        "cameraLocation": [
+          -0.07935576140880585,
+          -6.327346682548523,
+          0.3137499466538429
+        ],
+        "target": [
+          -0.07935576140880585,
+          -0.004735887050628662,
+          0.3137499466538429
+        ],
+        "keyLightLocation": [
+          -0.07935576140880585,
+          -3.9273466825485226,
+          0.786250077188015
+        ],
+        "orthographicScale": 1.5174230933189392,
+        "clipEnd": 12.75871154665947
+      },
+      "operator": "pose_prop_hinge_open"
+    },
+    "poseSide": {
+      "bbox": {
+        "min_x": -0.4101242423057556,
+        "max_x": 0.30000001192092896,
+        "min_y": -0.21699999272823334,
+        "max_y": 0.28018271923065186,
+        "min_z": 0.07749991118907928,
+        "max_z": 0.550000011920929
+      },
+      "camera": {
+        "cameraLocation": [
+          -6.410124242305756,
+          0.03159136325120926,
+          0.3137499615550041
+        ],
+        "target": [
+          -0.05506211519241333,
+          0.03159136325120926,
+          0.3137499615550041
+        ],
+        "keyLightLocation": [
+          -4.010124242305755,
+          0.03159136325120926,
+          0.7862500622868538
+        ],
+        "orthographicScale": 1.4202485084533691,
+        "clipEnd": 12.710124254226685
+      },
+      "operator": "pose_prop_hinge_side_review"
+    }
+  },
+  "poseDeformation": {
+    "status": "pass",
+    "axisExpansionRatios": {
+      "x": 1.2645,
+      "y": 1.5075,
+      "z": 1.0
+    },
+    "maxAxisExpansionRatio": 1.5075,
+    "expandedAxes": [],
+    "warningAxes": [],
+    "allowedExpandedAxes": [
+      "y"
+    ]
+  },
+  "cleanup": {
+    "unweightedVertices": 0,
+    "overLimitVertices": 0,
+    "removedEmptyGroups": 0,
+    "removedEmptyGroupNames": [],
+    "prunedWeights": 0,
+    "normalizedVertices": 0
+  },
+  "weightDiagnostics": {
+    "meshCount": 1,
+    "vertexCount": 118,
+    "regions": {
+      "propMovingPart": {
+        "influencedVertices": 54,
+        "dominantVertices": 54,
+        "averageWeight": 1.0
+      },
+      "propBase": {
+        "influencedVertices": 64,
+        "dominantVertices": 64,
+        "averageWeight": 0.9837
+      },
+      "propHinge": {
+        "influencedVertices": 8,
+        "dominantVertices": 0,
+        "averageWeight": 0.1304
+      }
+    },
+    "heightBands": {
+      "lower": {
+        "vertexCount": 42,
+        "dominantRegions": {
+          "propMovingPart": 28,
+          "propBase": 14
+        },
+        "minZ": 0.0775,
+        "maxZ": 0.2277
+      },
+      "torso": {
+        "vertexCount": 66,
+        "dominantRegions": {
+          "propMovingPart": 18,
+          "propBase": 48
+        },
+        "minZ": 0.235,
+        "maxZ": 0.362
+      },
+      "upper": {
+        "vertexCount": 10,
+        "dominantRegions": {
+          "propBase": 2,
+          "propMovingPart": 8
+        },
+        "minZ": 0.45,
+        "maxZ": 0.55
+      }
+    },
+    "topBones": [
+      {
+        "bone": "PropBase",
+        "totalWeight": 62.9565
+      },
+      {
+        "bone": "MovingPart",
+        "totalWeight": 54.0
+      },
+      {
+        "bone": "Hinge",
+        "totalWeight": 1.0435
+      }
+    ]
+  },
+  "boneWeightDiagnostics": {
+    "meshCount": 1,
+    "vertexCount": 118,
+    "bones": {
+      "Hinge": {
+        "region": "propHinge",
+        "influencedVertices": 8,
+        "dominantVertices": 0,
+        "totalWeight": 1.0435,
+        "averageWeight": 0.1304,
+        "influencedBounds": {
+          "minX": -0.165,
+          "maxX": 0.165,
+          "minY": -0.1965,
+          "maxY": -0.193,
+          "minZ": 0.3415,
+          "maxZ": 0.3585
+        },
+        "dominantBounds": null,
+        "topWeightedVertices": [
+          {
+            "mesh": "treasure_chest",
+            "index": 86,
+            "weight": 0.1304,
+            "world": [
+              -0.165,
+              -0.193,
+              0.35
+            ]
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 87,
+            "weight": 0.1304,
+            "world": [
+              -0.135,
+              -0.193,
+              0.35
+            ]
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 89,
+            "weight": 0.1304,
+            "world": [
+              -0.135,
+              -0.1965,
+              0.3415
+            ]
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 101,
+            "weight": 0.1304,
+            "world": [
+              -0.135,
+              -0.1965,
+              0.3585
+            ]
+          }
+        ]
+      },
+      "MovingPart": {
+        "region": "propMovingPart",
+        "influencedVertices": 54,
+        "dominantVertices": 54,
+        "totalWeight": 54.0,
+        "averageWeight": 1.0,
+        "influencedBounds": {
+          "minX": -0.3,
+          "maxX": 0.3,
+          "minY": -0.1,
+          "maxY": 0.211,
+          "minZ": 0.0775,
+          "maxZ": 0.55
+        },
+        "dominantBounds": {
+          "minX": -0.3,
+          "maxX": 0.3,
+          "minY": -0.1,
+          "maxY": 0.211,
+          "minZ": 0.0775,
+          "maxZ": 0.55
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "treasure_chest",
+            "index": 0,
+            "weight": 1.0,
+            "world": [
+              -0.19,
+              0.2013,
+              0.0775
+            ]
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 1,
+            "weight": 1.0,
+            "world": [
+              -0.19,
+              0.2013,
+              0.2725
+            ]
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 2,
+            "weight": 1.0,
+            "world": [
+              -0.19,
+              0.2038,
+              0.0775
+            ]
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 3,
+            "weight": 1.0,
+            "world": [
+              -0.19,
+              0.2038,
+              0.2725
+            ]
+          }
+        ]
+      },
+      "PropBase": {
+        "region": "propBase",
+        "influencedVertices": 64,
+        "dominantVertices": 64,
+        "totalWeight": 62.9565,
+        "averageWeight": 0.9837,
+        "influencedBounds": {
+          "minX": -0.3,
+          "maxX": 0.3,
+          "minY": -0.217,
+          "maxY": -0.1,
+          "minZ": 0.0775,
+          "maxZ": 0.45
+        },
+        "dominantBounds": {
+          "minX": -0.3,
+          "maxX": 0.3,
+          "minY": -0.217,
+          "maxY": -0.1,
+          "minZ": 0.0775,
+          "maxZ": 0.45
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "treasure_chest",
+            "index": 8,
+            "weight": 1.0,
+            "world": [
+              -0.19,
+              -0.2037,
+              0.0775
+            ]
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 9,
+            "weight": 1.0,
+            "world": [
+              -0.19,
+              -0.2037,
+              0.2725
+            ]
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 10,
+            "weight": 1.0,
+            "world": [
+              -0.19,
+              -0.2012,
+              0.0775
+            ]
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 11,
+            "weight": 1.0,
+            "world": [
+              -0.19,
+              -0.2012,
+              0.2725
+            ]
+          }
+        ]
+      }
+    },
+    "topBones": [
+      {
+        "bone": "PropBase",
+        "totalWeight": 62.9565
+      },
+      {
+        "bone": "MovingPart",
+        "totalWeight": 54.0
+      },
+      {
+        "bone": "Hinge",
+        "totalWeight": 1.0435
+      }
+    ]
+  },
+  "capsuleBindWeightDiagnostics": {
+    "space": "capsuleBind",
+    "targetBounds": {
+      "minX": -0.1207,
+      "maxX": 0.1207,
+      "minY": -0.2754,
+      "maxY": 0.2975,
+      "minZ": 0.0519,
+      "maxZ": 0.4345
+    },
+    "meshCount": 1,
+    "vertexCount": 118,
+    "bones": {
+      "Hinge": {
+        "region": "propHinge",
+        "influencedVertices": 8,
+        "dominantVertices": 0,
+        "totalWeight": 1.0435,
+        "averageWeight": 0.1304,
+        "influencedBounds": {
+          "minX": -0.0664,
+          "maxX": 0.0664,
+          "minY": -0.248,
+          "maxY": -0.2433,
+          "minZ": 0.2657,
+          "maxZ": 0.2794
+        },
+        "dominantBounds": null,
+        "topWeightedVertices": [
+          {
+            "mesh": "treasure_chest",
+            "index": 86,
+            "weight": 0.1304,
+            "bind": [
+              -0.0664,
+              -0.2433,
+              0.2726
+            ]
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 87,
+            "weight": 0.1304,
+            "bind": [
+              -0.0543,
+              -0.2433,
+              0.2726
+            ]
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 89,
+            "weight": 0.1304,
+            "bind": [
+              -0.0543,
+              -0.248,
+              0.2657
+            ]
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 101,
+            "weight": 0.1304,
+            "bind": [
+              -0.0543,
+              -0.248,
+              0.2794
+            ]
+          }
+        ]
+      },
+      "MovingPart": {
+        "region": "propMovingPart",
+        "influencedVertices": 54,
+        "dominantVertices": 54,
+        "totalWeight": 54.0,
+        "averageWeight": 1.0,
+        "influencedBounds": {
+          "minX": -0.1207,
+          "maxX": 0.1207,
+          "minY": -0.1188,
+          "maxY": 0.2975,
+          "minZ": 0.0519,
+          "maxZ": 0.4345
+        },
+        "dominantBounds": {
+          "minX": -0.1207,
+          "maxX": 0.1207,
+          "minY": -0.1188,
+          "maxY": 0.2975,
+          "minZ": 0.0519,
+          "maxZ": 0.4345
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "treasure_chest",
+            "index": 0,
+            "weight": 1.0,
+            "bind": [
+              -0.0765,
+              0.2845,
+              0.0519
+            ]
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 1,
+            "weight": 1.0,
+            "bind": [
+              -0.0765,
+              0.2845,
+              0.2098
+            ]
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 2,
+            "weight": 1.0,
+            "bind": [
+              -0.0765,
+              0.2878,
+              0.0519
+            ]
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 3,
+            "weight": 1.0,
+            "bind": [
+              -0.0765,
+              0.2878,
+              0.2098
+            ]
+          }
+        ]
+      },
+      "PropBase": {
+        "region": "propBase",
+        "influencedVertices": 64,
+        "dominantVertices": 64,
+        "totalWeight": 62.9565,
+        "averageWeight": 0.9837,
+        "influencedBounds": {
+          "minX": -0.1207,
+          "maxX": 0.1207,
+          "minY": -0.2754,
+          "maxY": -0.1188,
+          "minZ": 0.0519,
+          "maxZ": 0.3535
+        },
+        "dominantBounds": {
+          "minX": -0.1207,
+          "maxX": 0.1207,
+          "minY": -0.2754,
+          "maxY": -0.1188,
+          "minZ": 0.0519,
+          "maxZ": 0.3535
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "treasure_chest",
+            "index": 8,
+            "weight": 1.0,
+            "bind": [
+              -0.0765,
+              -0.2577,
+              0.0519
+            ]
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 9,
+            "weight": 1.0,
+            "bind": [
+              -0.0765,
+              -0.2577,
+              0.2098
+            ]
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 10,
+            "weight": 1.0,
+            "bind": [
+              -0.0765,
+              -0.2543,
+              0.0519
+            ]
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 11,
+            "weight": 1.0,
+            "bind": [
+              -0.0765,
+              -0.2543,
+              0.2098
+            ]
+          }
+        ]
+      }
+    },
+    "topBones": [
+      {
+        "bone": "PropBase",
+        "totalWeight": 62.9565
+      },
+      {
+        "bone": "MovingPart",
+        "totalWeight": 54.0
+      },
+      {
+        "bone": "Hinge",
+        "totalWeight": 1.0435
+      }
+    ]
+  },
+  "capsuleAssignmentDiagnostics": {
+    "space": "capsuleBind",
+    "meshCount": 1,
+    "vertexCount": 118,
+    "targetBounds": {
+      "minX": -0.1207,
+      "maxX": 0.1207,
+      "minY": -0.2754,
+      "maxY": 0.2975,
+      "minZ": 0.0519,
+      "maxZ": 0.4345
+    },
+    "capsuleAssignedVertices": 8,
+    "nearestFallbackVertices": 110,
+    "fallbackByBone": {
+      "MovingPart": {
+        "region": "other",
+        "vertexCount": 54,
+        "averageDistanceRatio": 1.6751,
+        "maxDistanceRatio": 2.4402,
+        "samples": [
+          {
+            "mesh": "treasure_chest",
+            "index": 2,
+            "bind": [
+              -0.0765,
+              0.2878,
+              0.0519
+            ],
+            "distance": 0.2946,
+            "distanceRatio": 2.4402
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 38,
+            "bind": [
+              0.0765,
+              0.2878,
+              0.0519
+            ],
+            "distance": 0.2946,
+            "distanceRatio": 2.4402
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 0,
+            "bind": [
+              -0.0765,
+              0.2845,
+              0.0519
+            ],
+            "distance": 0.2933,
+            "distanceRatio": 2.4299
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 36,
+            "bind": [
+              0.0765,
+              0.2845,
+              0.0519
+            ],
+            "distance": 0.2933,
+            "distanceRatio": 2.4299
+          }
+        ]
+      },
+      "PropBase": {
+        "region": "other",
+        "vertexCount": 56,
+        "averageDistanceRatio": 1.3044,
+        "maxDistanceRatio": 1.8292,
+        "samples": [
+          {
+            "mesh": "treasure_chest",
+            "index": 8,
+            "bind": [
+              -0.0765,
+              -0.2577,
+              0.0519
+            ],
+            "distance": 0.1852,
+            "distanceRatio": 1.8292
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 44,
+            "bind": [
+              0.0765,
+              -0.2577,
+              0.0519
+            ],
+            "distance": 0.1852,
+            "distanceRatio": 1.8292
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 10,
+            "bind": [
+              -0.0765,
+              -0.2543,
+              0.0519
+            ],
+            "distance": 0.1828,
+            "distanceRatio": 1.8053
+          },
+          {
+            "mesh": "treasure_chest",
+            "index": 46,
+            "bind": [
+              0.0765,
+              -0.2543,
+              0.0519
+            ],
+            "distance": 0.1828,
+            "distanceRatio": 1.8053
+          }
+        ]
+      }
+    }
+  },
+  "propDiagnostics": {
+    "status": "fail",
+    "coverageRatios": {
+      "propBase": 0.5424,
+      "propHinge": 0.0,
+      "propMovingPart": 0.4576
+    },
+    "warnings": [
+      "missingPropHingeCoverage"
+    ]
+  },
+  "humanoidDiagnostics": {},
+  "capsuleDiagnostics": [
+    {
+      "name": "PropBase",
+      "head": [
+        0.0,
+        -0.1228,
+        0.1531
+      ],
+      "tail": [
+        0.0,
+        -0.1742,
+        0.3138
+      ],
+      "radius": 0.1012,
+      "verticalMin": 0.1531,
+      "verticalMax": 0.3138
+    },
+    {
+      "name": "Hinge",
+      "head": [
+        0.0,
+        -0.1742,
+        0.3138
+      ],
+      "tail": [
+        0.0,
+        -0.0244,
+        0.3138
+      ],
+      "radius": 0.0899,
+      "verticalMin": 0.3138,
+      "verticalMax": 0.3138
+    },
+    {
+      "name": "MovingPart",
+      "head": [
+        0.0,
+        -0.0244,
+        0.3138
+      ],
+      "tail": [
+        0.0,
+        0.1768,
+        0.3138
+      ],
+      "radius": 0.1207,
+      "verticalMin": 0.3138,
+      "verticalMax": 0.3138
+    }
+  ],
+  "bindSpaceDiagnostics": [
+    {
+      "mesh": "treasure_chest",
+      "rawMinZ": 0.0775,
+      "rawMaxZ": 0.55,
+      "bindMinZ": 0.0775,
+      "bindMaxZ": 0.55
+    }
+  ],
+  "qa": {
+    "mesh_count": 1,
+    "vertex_count": 118,
+    "bone_count": 3,
+    "unweighted_vertices": 0,
+    "over_limit_vertices": 0,
+    "export_profile": null,
+    "warnings": [],
+    "errors": []
+  }
+}

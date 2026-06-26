@@ -1,0 +1,10 @@
+{
+  "mesh_count": 1,
+  "vertex_count": 360,
+  "bone_count": 3,
+  "unweighted_vertices": 0,
+  "over_limit_vertices": 0,
+  "export_profile": "unity_fbx",
+  "warnings": [],
+  "errors": []
+}

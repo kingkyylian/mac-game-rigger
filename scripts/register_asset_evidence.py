@@ -12,6 +12,7 @@ from typing import Any
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = REPO_ROOT / "samples" / "manifest.json"
 VALID_IMPORT_STATUSES = {"pass", "fail", "blocked", "not tested"}
+VALID_VISUAL_REVIEW_STATUSES = {"pass", "fail", "not reviewed"}
 
 
 def parse_args() -> argparse.Namespace:
@@ -34,6 +35,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--qa-report", required=True, help="QA report path or storage reference.")
     parser.add_argument("--preview-neutral", required=True, help="Neutral preview path or storage ref.")
     parser.add_argument("--preview-pose", help="Pose preview path or storage ref.")
+    parser.add_argument("--preview-neutral-side", help="Side neutral preview path or storage ref.")
+    parser.add_argument("--preview-pose-side", help="Side pose preview path or storage ref.")
     parser.add_argument("--export-fbx", help="Generic exported FBX path or storage ref.")
     parser.add_argument("--export-unity-fbx", help="Unity exported FBX path or storage ref.")
     parser.add_argument("--export-unreal-fbx", help="Unreal exported FBX path or storage ref.")
@@ -41,6 +44,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--deformation-score", required=True, type=int, help="Integer score 1-5.")
     parser.add_argument("--unity-status", choices=sorted(VALID_IMPORT_STATUSES), default="not tested")
     parser.add_argument("--unreal-status", choices=sorted(VALID_IMPORT_STATUSES), default="not tested")
+    parser.add_argument("--visual-review-status", choices=sorted(VALID_VISUAL_REVIEW_STATUSES))
+    parser.add_argument("--visual-review-notes", help="Short manual review note for visual quality claims.")
     parser.add_argument("--failure-type", help="Optional failure classification from the protocol.")
     parser.add_argument(
         "--evidence-root",
@@ -147,12 +152,20 @@ def build_evidence(args: argparse.Namespace) -> dict[str, Any]:
     }
     if non_empty(args.preview_pose):
         evidence["previewPose"] = evidence_value(args.preview_pose)
+    if non_empty(args.preview_neutral_side):
+        evidence["previewNeutralSide"] = evidence_value(args.preview_neutral_side)
+    if non_empty(args.preview_pose_side):
+        evidence["previewPoseSide"] = evidence_value(args.preview_pose_side)
     if non_empty(args.export_fbx):
         evidence["exportFbx"] = evidence_value(args.export_fbx)
     if non_empty(args.export_unity_fbx):
         evidence["exportUnityFbx"] = evidence_value(args.export_unity_fbx)
     if non_empty(args.export_unreal_fbx):
         evidence["exportUnrealFbx"] = evidence_value(args.export_unreal_fbx)
+    if non_empty(args.visual_review_status):
+        evidence["visualReview"] = {"status": args.visual_review_status}
+        if non_empty(args.visual_review_notes):
+            evidence["visualReview"]["notes"] = args.visual_review_notes
     if non_empty(args.failure_type):
         evidence["failureType"] = args.failure_type
     return evidence
@@ -193,6 +206,8 @@ def main() -> int:
         ("qaReport", args.qa_report),
         ("previewNeutral", args.preview_neutral),
         ("previewPose", args.preview_pose),
+        ("previewNeutralSide", args.preview_neutral_side),
+        ("previewPoseSide", args.preview_pose_side),
         ("exportFbx", args.export_fbx),
         ("exportUnityFbx", args.export_unity_fbx),
         ("exportUnrealFbx", args.export_unreal_fbx),

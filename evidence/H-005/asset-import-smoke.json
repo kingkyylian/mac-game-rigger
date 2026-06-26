@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "status": "pass",
+  "slotId": "H-005",
+  "source": {
+    "name": "Quaternius Ultimate Animated Character Pack - Pirate_Male.fbx",
+    "url": "https://quaternius.com/packs/ultimatedanimatedcharacter.html",
+    "license": "CC0",
+    "localPath": "/Users/kyylian/mac-game-rigger/local_assets/H-005/H-005-quaternius-pirate-male.fbx"
+  },
+  "metrics": {
+    "meshCount": 1,
+    "armatureCount": 1,
+    "boneCount": 32,
+    "materialCount": 8,
+    "vertexCount": 1383,
+    "faceCount": 1384,
+    "actionCount": 17,
+    "bbox": {
+      "width": 1.5287,
+      "depth": 1.3439,
+      "height": 3.7753
+    },
+    "hasArmature": true,
+    "suggestedCategory": "humanoid",
+    "meshNames": [
+      "Body"
+    ],
+    "armatureNames": [
+      "CharacterArmature"
+    ]
+  }
+}

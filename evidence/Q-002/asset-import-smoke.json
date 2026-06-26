@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "status": "pass",
+  "slotId": "Q-002",
+  "source": {
+    "name": "Quaternius Ultimate Animated Animal Pack - Fox.fbx",
+    "url": "https://quaternius.com/packs/ultimateanimatedanimals.html",
+    "license": "CC0",
+    "localPath": "/Users/kyylian/mac-game-rigger/local_assets/Q-002/Q-002-quaternius-fox.fbx"
+  },
+  "metrics": {
+    "meshCount": 1,
+    "armatureCount": 1,
+    "boneCount": 67,
+    "materialCount": 5,
+    "vertexCount": 926,
+    "faceCount": 952,
+    "actionCount": 12,
+    "bbox": {
+      "width": 1.0543,
+      "depth": 5.5997,
+      "height": 2.6666
+    },
+    "hasArmature": true,
+    "suggestedCategory": "quadruped",
+    "meshNames": [
+      "Fox"
+    ],
+    "armatureNames": [
+      "AnimalArmature"
+    ]
+  }
+}

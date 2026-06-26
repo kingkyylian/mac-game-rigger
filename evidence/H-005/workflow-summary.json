@@ -1,0 +1,3237 @@
+{
+  "schemaVersion": 1,
+  "status": "pass",
+  "assetPath": "/Users/kyylian/mac-game-rigger/local_assets/H-005/H-005-quaternius-pirate-male.fbx",
+  "template": "humanoid",
+  "workflowControls": {},
+  "stripSourceRig": {
+    "removedArmatures": 1,
+    "removedArmatureModifiers": 1,
+    "removedVertexGroups": 19
+  },
+  "orientationNormalization": [],
+  "meshCount": 1,
+  "bbox": {
+    "min_x": -1.619834065437317,
+    "max_x": 1.619834065437317,
+    "min_y": -0.6430295705795288,
+    "max_y": 0.6942498683929443,
+    "min_z": -0.018590731546282768,
+    "max_z": 3.7709362506866455
+  },
+  "artifacts": {
+    "qaReport": "/Users/kyylian/mac-game-rigger/evidence/H-005/qa-report.json",
+    "previewNeutral": "/Users/kyylian/mac-game-rigger/evidence/H-005/preview-neutral.png",
+    "previewPose": "/Users/kyylian/mac-game-rigger/evidence/H-005/preview-pose.png",
+    "previewNeutralSide": "/Users/kyylian/mac-game-rigger/evidence/H-005/preview-neutral-side.png",
+    "previewPoseSide": "/Users/kyylian/mac-game-rigger/evidence/H-005/preview-pose-side.png",
+    "exportUnityFbx": "/Users/kyylian/mac-game-rigger/evidence/H-005/export-unity.fbx",
+    "exportQaReport": "/Users/kyylian/mac-game-rigger/evidence/H-005/export-unity.qa.json"
+  },
+  "posePreview": {
+    "operator": "pose_humanoid_stress"
+  },
+  "camera": {
+    "axis": "y"
+  },
+  "previewFrames": {
+    "neutral": {
+      "bbox": {
+        "min_x": -1.619834065437317,
+        "max_x": 1.619834065437317,
+        "min_y": -0.643029510974884,
+        "max_y": 0.6942492723464966,
+        "min_z": -0.018590589985251427,
+        "max_z": 3.7709362506866455
+      },
+      "camera": {
+        "cameraLocation": [
+          0.0,
+          -8.742199838161469,
+          1.876172830350697
+        ],
+        "target": [
+          0.0,
+          0.025609880685806274,
+          1.876172830350697
+        ],
+        "keyLightLocation": [
+          0.0,
+          -5.502531707286835,
+          5.665699671022594
+        ],
+        "orthographicScale": 6.821148313209415,
+        "clipEnd": 19.987867495045066
+      }
+    },
+    "neutralSide": {
+      "bbox": {
+        "min_x": -1.619834065437317,
+        "max_x": 1.619834065437317,
+        "min_y": -0.643029510974884,
+        "max_y": 0.6942492723464966,
+        "min_z": -0.018590589985251427,
+        "max_z": 3.7709362506866455
+      },
+      "camera": {
+        "cameraLocation": [
+          -9.719004392623901,
+          0.025609880685806274,
+          1.876172830350697
+        ],
+        "target": [
+          0.0,
+          0.025609880685806274,
+          1.876172830350697
+        ],
+        "keyLightLocation": [
+          -6.479336261749268,
+          0.025609880685806274,
+          5.665699671022594
+        ],
+        "orthographicScale": 6.821148313209415,
+        "clipEnd": 19.987867495045066
+      }
+    },
+    "pose": {
+      "bbox": {
+        "min_x": -1.619834065437317,
+        "max_x": 1.619834065437317,
+        "min_y": -0.643029510974884,
+        "max_y": 0.6966038942337036,
+        "min_z": -0.002046426525339484,
+        "max_z": 3.7709362506866455
+      },
+      "camera": {
+        "cameraLocation": [
+          0.0,
+          -8.742199838161469,
+          1.884444912080653
+        ],
+        "target": [
+          0.0,
+          0.02678719162940979,
+          1.884444912080653
+        ],
+        "keyLightLocation": [
+          0.0,
+          -5.502531707286835,
+          5.657427589292638
+        ],
+        "orthographicScale": 6.7913688189815735,
+        "clipEnd": 19.971323331585154
+      },
+      "operator": "pose_humanoid_stress"
+    },
+    "poseSide": {
+      "bbox": {
+        "min_x": -1.619834065437317,
+        "max_x": 1.619834065437317,
+        "min_y": -0.643029510974884,
+        "max_y": 0.6966038942337036,
+        "min_z": -0.002046426525339484,
+        "max_z": 3.7709362506866455
+      },
+      "camera": {
+        "cameraLocation": [
+          -9.719004392623901,
+          0.02678719162940979,
+          1.884444912080653
+        ],
+        "target": [
+          0.0,
+          0.02678719162940979,
+          1.884444912080653
+        ],
+        "keyLightLocation": [
+          -6.479336261749268,
+          0.02678719162940979,
+          5.657427589292638
+        ],
+        "orthographicScale": 6.7913688189815735,
+        "clipEnd": 19.971323331585154
+      },
+      "operator": "pose_humanoid_side_review"
+    }
+  },
+  "poseDeformation": {
+    "status": "pass",
+    "axisExpansionRatios": {
+      "x": 1.0,
+      "y": 1.0018,
+      "z": 0.9956
+    },
+    "maxAxisExpansionRatio": 1.0018,
+    "expandedAxes": [],
+    "warningAxes": [],
+    "allowedExpandedAxes": []
+  },
+  "cleanup": {
+    "unweightedVertices": 0,
+    "overLimitVertices": 0,
+    "removedEmptyGroups": 0,
+    "removedEmptyGroupNames": [],
+    "prunedWeights": 0,
+    "normalizedVertices": 0
+  },
+  "weightDiagnostics": {
+    "meshCount": 1,
+    "vertexCount": 1383,
+    "regions": {
+      "core": {
+        "influencedVertices": 1214,
+        "dominantVertices": 1175,
+        "averageWeight": 0.9648
+      },
+      "upperLeg": {
+        "influencedVertices": 108,
+        "dominantVertices": 54,
+        "averageWeight": 0.6019
+      },
+      "hand": {
+        "influencedVertices": 36,
+        "dominantVertices": 36,
+        "averageWeight": 0.6667
+      },
+      "lowerLeg": {
+        "influencedVertices": 121,
+        "dominantVertices": 81,
+        "averageWeight": 0.7748
+      },
+      "foot": {
+        "influencedVertices": 36,
+        "dominantVertices": 36,
+        "averageWeight": 0.6667
+      },
+      "lowerArm": {
+        "influencedVertices": 8,
+        "dominantVertices": 0,
+        "averageWeight": 0.1304
+      },
+      "neckHead": {
+        "influencedVertices": 10,
+        "dominantVertices": 1,
+        "averageWeight": 0.2854
+      },
+      "upperArm": {
+        "influencedVertices": 8,
+        "dominantVertices": 0,
+        "averageWeight": 0.1304
+      }
+    },
+    "heightBands": {
+      "lower": {
+        "vertexCount": 303,
+        "dominantRegions": {
+          "core": 144,
+          "lowerLeg": 81,
+          "foot": 36,
+          "upperLeg": 42
+        },
+        "minZ": -0.0186,
+        "maxZ": 1.2268
+      },
+      "torso": {
+        "vertexCount": 821,
+        "dominantRegions": {
+          "core": 773,
+          "upperLeg": 12,
+          "hand": 36
+        },
+        "minZ": 1.2361,
+        "maxZ": 2.6324
+      },
+      "upper": {
+        "vertexCount": 259,
+        "dominantRegions": {
+          "core": 258,
+          "neckHead": 1
+        },
+        "minZ": 2.636,
+        "maxZ": 3.7709
+      }
+    },
+    "topBones": [
+      {
+        "bone": "Chest",
+        "totalWeight": 691.9235
+      },
+      {
+        "bone": "Hips",
+        "totalWeight": 249.5029
+      },
+      {
+        "bone": "Spine",
+        "totalWeight": 229.876
+      },
+      {
+        "bone": "LowerLeg.L",
+        "totalWeight": 62.374
+      },
+      {
+        "bone": "UpperLeg.L",
+        "totalWeight": 32.5043
+      },
+      {
+        "bone": "UpperLeg.R",
+        "totalWeight": 32.5043
+      },
+      {
+        "bone": "LowerLeg.R",
+        "totalWeight": 31.374
+      },
+      {
+        "bone": "Foot.L",
+        "totalWeight": 12.0
+      },
+      {
+        "bone": "Foot.R",
+        "totalWeight": 12.0
+      },
+      {
+        "bone": "Hand.L",
+        "totalWeight": 12.0
+      },
+      {
+        "bone": "Hand.R",
+        "totalWeight": 12.0
+      },
+      {
+        "bone": "Head",
+        "totalWeight": 1.427
+      }
+    ]
+  },
+  "boneWeightDiagnostics": {
+    "meshCount": 1,
+    "vertexCount": 1383,
+    "bones": {
+      "Chest": {
+        "region": "core",
+        "influencedVertices": 901,
+        "dominantVertices": 714,
+        "totalWeight": 691.9235,
+        "averageWeight": 0.768,
+        "influencedBounds": {
+          "minX": -1.6198,
+          "maxX": 1.6198,
+          "minY": -0.643,
+          "maxY": 0.6942,
+          "minZ": 1.6925,
+          "maxZ": 3.7709
+        },
+        "dominantBounds": {
+          "minX": -1.6198,
+          "maxX": 1.6198,
+          "minY": -0.643,
+          "maxY": 0.6942,
+          "minZ": 1.6925,
+          "maxZ": 3.7709
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 15,
+            "weight": 1.0,
+            "world": [
+              1.4921,
+              -0.0231,
+              1.7452
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 23,
+            "weight": 1.0,
+            "world": [
+              1.5613,
+              0.0142,
+              1.7575
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 24,
+            "weight": 1.0,
+            "world": [
+              1.588,
+              0.0708,
+              1.8812
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 26,
+            "weight": 1.0,
+            "world": [
+              1.4957,
+              0.0656,
+              1.746
+            ]
+          }
+        ]
+      },
+      "Foot.L": {
+        "region": "foot",
+        "influencedVertices": 18,
+        "dominantVertices": 18,
+        "totalWeight": 12.0,
+        "averageWeight": 0.6667,
+        "influencedBounds": {
+          "minX": 0.3549,
+          "maxX": 0.3832,
+          "minY": -0.048,
+          "maxY": 0.1149,
+          "minZ": 0.4361,
+          "maxZ": 0.6049
+        },
+        "dominantBounds": {
+          "minX": 0.3549,
+          "maxX": 0.3832,
+          "minY": -0.048,
+          "maxY": 0.1149,
+          "minZ": 0.4361,
+          "maxZ": 0.6049
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 34,
+            "weight": 0.6667,
+            "world": [
+              0.368,
+              0.0319,
+              0.4702
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 133,
+            "weight": 0.6667,
+            "world": [
+              0.3549,
+              0.1045,
+              0.4702
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 175,
+            "weight": 0.6667,
+            "world": [
+              0.3586,
+              -0.0368,
+              0.4702
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 184,
+            "weight": 0.6667,
+            "world": [
+              0.3767,
+              0.0288,
+              0.6049
+            ]
+          }
+        ]
+      },
+      "Foot.R": {
+        "region": "foot",
+        "influencedVertices": 18,
+        "dominantVertices": 18,
+        "totalWeight": 12.0,
+        "averageWeight": 0.6667,
+        "influencedBounds": {
+          "minX": -0.3767,
+          "maxX": -0.3089,
+          "minY": -0.0904,
+          "maxY": 0.1497,
+          "minZ": 0.0556,
+          "maxZ": 0.6049
+        },
+        "dominantBounds": {
+          "minX": -0.3767,
+          "maxX": -0.3089,
+          "minY": -0.0904,
+          "maxY": 0.1497,
+          "minZ": 0.0556,
+          "maxZ": 0.6049
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 436,
+            "weight": 0.6667,
+            "world": [
+              -0.3327,
+              0.0028,
+              0.0592
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 440,
+            "weight": 0.6667,
+            "world": [
+              -0.3174,
+              0.1497,
+              0.4702
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 441,
+            "weight": 0.6667,
+            "world": [
+              -0.3198,
+              -0.0825,
+              0.4702
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 443,
+            "weight": 0.6667,
+            "world": [
+              -0.368,
+              0.0319,
+              0.4702
+            ]
+          }
+        ]
+      },
+      "Hand.L": {
+        "region": "hand",
+        "influencedVertices": 18,
+        "dominantVertices": 18,
+        "totalWeight": 12.0,
+        "averageWeight": 0.6667,
+        "influencedBounds": {
+          "minX": 1.2411,
+          "maxX": 1.5928,
+          "minY": -0.0731,
+          "maxY": 0.0627,
+          "minZ": 2.0188,
+          "maxZ": 2.0812
+        },
+        "dominantBounds": {
+          "minX": 1.2411,
+          "maxX": 1.5928,
+          "minY": -0.0731,
+          "maxY": 0.0627,
+          "minZ": 2.0188,
+          "maxZ": 2.0812
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 11,
+            "weight": 0.6667,
+            "world": [
+              1.5283,
+              -0.0529,
+              2.0274
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 25,
+            "weight": 0.6667,
+            "world": [
+              1.512,
+              0.0618,
+              2.0188
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 45,
+            "weight": 0.6667,
+            "world": [
+              1.3686,
+              0.0328,
+              2.0537
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 47,
+            "weight": 0.6667,
+            "world": [
+              1.3781,
+              -0.0465,
+              2.0596
+            ]
+          }
+        ]
+      },
+      "Hand.R": {
+        "region": "hand",
+        "influencedVertices": 18,
+        "dominantVertices": 18,
+        "totalWeight": 12.0,
+        "averageWeight": 0.6667,
+        "influencedBounds": {
+          "minX": -1.5928,
+          "maxX": -1.2411,
+          "minY": -0.0731,
+          "maxY": 0.0627,
+          "minZ": 2.0188,
+          "maxZ": 2.0812
+        },
+        "dominantBounds": {
+          "minX": -1.5928,
+          "maxX": -1.2411,
+          "minY": -0.0731,
+          "maxY": 0.0627,
+          "minZ": 2.0188,
+          "maxZ": 2.0812
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 412,
+            "weight": 0.6667,
+            "world": [
+              -1.5283,
+              -0.0529,
+              2.0274
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 426,
+            "weight": 0.6667,
+            "world": [
+              -1.512,
+              0.0618,
+              2.0188
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 454,
+            "weight": 0.6667,
+            "world": [
+              -1.3686,
+              0.0328,
+              2.0537
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 456,
+            "weight": 0.6667,
+            "world": [
+              -1.3781,
+              -0.0465,
+              2.0596
+            ]
+          }
+        ]
+      },
+      "Head": {
+        "region": "neckHead",
+        "influencedVertices": 10,
+        "dominantVertices": 0,
+        "totalWeight": 1.427,
+        "averageWeight": 0.1427,
+        "influencedBounds": {
+          "minX": -0.2217,
+          "maxX": 0.2435,
+          "minY": -0.1571,
+          "maxY": 0.0911,
+          "minZ": 3.0992,
+          "maxZ": 3.5365
+        },
+        "dominantBounds": null,
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 1352,
+            "weight": 0.2802,
+            "world": [
+              0.0033,
+              0.0911,
+              3.5365
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1063,
+            "weight": 0.2478,
+            "world": [
+              -0.0035,
+              0.0,
+              3.1281
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1290,
+            "weight": 0.2457,
+            "world": [
+              0.0047,
+              -0.0924,
+              3.5013
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1355,
+            "weight": 0.1697,
+            "world": [
+              -0.1671,
+              0.0911,
+              3.5013
+            ]
+          }
+        ]
+      },
+      "Hips": {
+        "region": "core",
+        "influencedVertices": 378,
+        "dominantVertices": 218,
+        "totalWeight": 249.5029,
+        "averageWeight": 0.6601,
+        "influencedBounds": {
+          "minX": -0.4712,
+          "maxX": 0.4712,
+          "minY": -0.4302,
+          "maxY": 0.3976,
+          "minZ": -0.002,
+          "maxZ": 2.3293
+        },
+        "dominantBounds": {
+          "minX": -0.3951,
+          "maxX": 0.3951,
+          "minY": -0.2158,
+          "maxY": 0.3976,
+          "minZ": -0.002,
+          "maxZ": 1.9429
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 1,
+            "weight": 1.0,
+            "world": [
+              0.061,
+              -0.0844,
+              0.9574
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 5,
+            "weight": 1.0,
+            "world": [
+              0.0706,
+              0.0967,
+              0.907
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 8,
+            "weight": 1.0,
+            "world": [
+              0.1555,
+              -0.2074,
+              1.225
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 10,
+            "weight": 1.0,
+            "world": [
+              0.1509,
+              0.3329,
+              1.0939
+            ]
+          }
+        ]
+      },
+      "LowerArm.L": {
+        "region": "lowerArm",
+        "influencedVertices": 4,
+        "dominantVertices": 0,
+        "totalWeight": 0.5217,
+        "averageWeight": 0.1304,
+        "influencedBounds": {
+          "minX": 0.4723,
+          "maxX": 0.5204,
+          "minY": -0.1999,
+          "maxY": 0.2178,
+          "minZ": 2.4568,
+          "maxZ": 2.5941
+        },
+        "dominantBounds": null,
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 968,
+            "weight": 0.1304,
+            "world": [
+              0.4723,
+              0.2178,
+              2.4568
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1024,
+            "weight": 0.1304,
+            "world": [
+              0.4728,
+              0.2178,
+              2.5941
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1380,
+            "weight": 0.1304,
+            "world": [
+              0.4794,
+              -0.1944,
+              2.4936
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1382,
+            "weight": 0.1304,
+            "world": [
+              0.5204,
+              -0.1999,
+              2.5038
+            ]
+          }
+        ]
+      },
+      "LowerArm.R": {
+        "region": "lowerArm",
+        "influencedVertices": 4,
+        "dominantVertices": 0,
+        "totalWeight": 0.5217,
+        "averageWeight": 0.1304,
+        "influencedBounds": {
+          "minX": -0.473,
+          "maxX": -0.4723,
+          "minY": -0.2178,
+          "maxY": 0.2178,
+          "minZ": 2.4568,
+          "maxZ": 2.7863
+        },
+        "dominantBounds": null,
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 951,
+            "weight": 0.1304,
+            "world": [
+              -0.473,
+              0.2178,
+              2.7863
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 974,
+            "weight": 0.1304,
+            "world": [
+              -0.4723,
+              0.2178,
+              2.4568
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1023,
+            "weight": 0.1304,
+            "world": [
+              -0.4728,
+              -0.2178,
+              2.5941
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1030,
+            "weight": 0.1304,
+            "world": [
+              -0.4728,
+              0.2178,
+              2.5941
+            ]
+          }
+        ]
+      },
+      "LowerLeg.L": {
+        "region": "lowerLeg",
+        "influencedVertices": 76,
+        "dominantVertices": 56,
+        "totalWeight": 62.374,
+        "averageWeight": 0.8207,
+        "influencedBounds": {
+          "minX": 0.2207,
+          "maxX": 0.4981,
+          "minY": -0.1029,
+          "maxY": 0.1667,
+          "minZ": -0.0025,
+          "maxZ": 0.8838
+        },
+        "dominantBounds": {
+          "minX": 0.2207,
+          "maxX": 0.3281,
+          "minY": -0.1029,
+          "maxY": 0.1667,
+          "minZ": -0.0025,
+          "maxZ": 0.6049
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 31,
+            "weight": 1.0,
+            "world": [
+              0.3174,
+              0.1497,
+              0.4702
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 32,
+            "weight": 1.0,
+            "world": [
+              0.3198,
+              -0.0825,
+              0.4702
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 134,
+            "weight": 1.0,
+            "world": [
+              0.2447,
+              -0.0859,
+              0.4702
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 135,
+            "weight": 1.0,
+            "world": [
+              0.2536,
+              0.1365,
+              0.4702
+            ]
+          }
+        ]
+      },
+      "LowerLeg.R": {
+        "region": "lowerLeg",
+        "influencedVertices": 45,
+        "dominantVertices": 25,
+        "totalWeight": 31.374,
+        "averageWeight": 0.6972,
+        "influencedBounds": {
+          "minX": -0.4981,
+          "maxX": -0.1942,
+          "minY": -0.0982,
+          "maxY": 0.1622,
+          "minZ": -0.0186,
+          "maxZ": 0.8838
+        },
+        "dominantBounds": {
+          "minX": -0.3354,
+          "maxX": -0.1942,
+          "minY": -0.0982,
+          "maxY": 0.1622,
+          "minZ": -0.0186,
+          "maxZ": 0.6049
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 430,
+            "weight": 1.0,
+            "world": [
+              -0.2656,
+              0.0752,
+              -0.0186
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 435,
+            "weight": 1.0,
+            "world": [
+              -0.265,
+              0.0069,
+              -0.0186
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 437,
+            "weight": 1.0,
+            "world": [
+              -0.2597,
+              0.1073,
+              0.0569
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 438,
+            "weight": 1.0,
+            "world": [
+              -0.2582,
+              -0.0332,
+              0.0601
+            ]
+          }
+        ]
+      },
+      "Neck": {
+        "region": "neckHead",
+        "influencedVertices": 10,
+        "dominantVertices": 0,
+        "totalWeight": 1.427,
+        "averageWeight": 0.1427,
+        "influencedBounds": {
+          "minX": -0.2217,
+          "maxX": 0.2435,
+          "minY": -0.1571,
+          "maxY": 0.0911,
+          "minZ": 3.0992,
+          "maxZ": 3.5365
+        },
+        "dominantBounds": null,
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 1352,
+            "weight": 0.2802,
+            "world": [
+              0.0033,
+              0.0911,
+              3.5365
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1063,
+            "weight": 0.2478,
+            "world": [
+              -0.0035,
+              0.0,
+              3.1281
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1290,
+            "weight": 0.2457,
+            "world": [
+              0.0047,
+              -0.0924,
+              3.5013
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1355,
+            "weight": 0.1697,
+            "world": [
+              -0.1671,
+              0.0911,
+              3.5013
+            ]
+          }
+        ]
+      },
+      "Spine": {
+        "region": "core",
+        "influencedVertices": 522,
+        "dominantVertices": 234,
+        "totalWeight": 229.876,
+        "averageWeight": 0.4404,
+        "influencedBounds": {
+          "minX": -1.0052,
+          "maxX": 1.0052,
+          "minY": -0.4998,
+          "maxY": 0.4916,
+          "minZ": 1.5532,
+          "maxZ": 3.1281
+        },
+        "dominantBounds": {
+          "minX": -1.0052,
+          "maxX": 1.0052,
+          "minY": -0.4302,
+          "maxY": 0.3611,
+          "minZ": 1.7136,
+          "maxZ": 2.2573
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 280,
+            "weight": 1.0,
+            "world": [
+              0.7223,
+              0.1215,
+              1.8604
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 281,
+            "weight": 1.0,
+            "world": [
+              0.7577,
+              -0.1083,
+              1.8592
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 283,
+            "weight": 1.0,
+            "world": [
+              0.7577,
+              0.0546,
+              1.9959
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 284,
+            "weight": 1.0,
+            "world": [
+              0.7577,
+              -0.0572,
+              1.7569
+            ]
+          }
+        ]
+      },
+      "UpperArm.L": {
+        "region": "upperArm",
+        "influencedVertices": 4,
+        "dominantVertices": 0,
+        "totalWeight": 0.5217,
+        "averageWeight": 0.1304,
+        "influencedBounds": {
+          "minX": 0.4909,
+          "maxX": 0.5341,
+          "minY": 0.0,
+          "maxY": 0.1041,
+          "minZ": 2.4479,
+          "maxZ": 2.8187
+        },
+        "dominantBounds": null,
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 1021,
+            "weight": 0.1304,
+            "world": [
+              0.4916,
+              0.0,
+              2.804
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1036,
+            "weight": 0.1304,
+            "world": [
+              0.4909,
+              0.0,
+              2.4479
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1071,
+            "weight": 0.1304,
+            "world": [
+              0.4914,
+              0.0,
+              2.5963
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1372,
+            "weight": 0.1304,
+            "world": [
+              0.5341,
+              0.1041,
+              2.8187
+            ]
+          }
+        ]
+      },
+      "UpperArm.R": {
+        "region": "upperArm",
+        "influencedVertices": 4,
+        "dominantVertices": 0,
+        "totalWeight": 0.5217,
+        "averageWeight": 0.1304,
+        "influencedBounds": {
+          "minX": -0.5274,
+          "maxX": -0.4909,
+          "minY": 0.0,
+          "maxY": 0.1041,
+          "minZ": 2.4479,
+          "maxZ": 2.8187
+        },
+        "dominantBounds": null,
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 1022,
+            "weight": 0.1304,
+            "world": [
+              -0.4916,
+              0.0,
+              2.804
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1037,
+            "weight": 0.1304,
+            "world": [
+              -0.4909,
+              0.0,
+              2.4479
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1072,
+            "weight": 0.1304,
+            "world": [
+              -0.4914,
+              0.0,
+              2.5963
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1370,
+            "weight": 0.1304,
+            "world": [
+              -0.5274,
+              0.1041,
+              2.8187
+            ]
+          }
+        ]
+      },
+      "UpperLeg.L": {
+        "region": "upperLeg",
+        "influencedVertices": 54,
+        "dominantVertices": 32,
+        "totalWeight": 32.5043,
+        "averageWeight": 0.6019,
+        "influencedBounds": {
+          "minX": 0.2269,
+          "maxX": 0.7577,
+          "minY": -0.1937,
+          "maxY": 0.2756,
+          "minZ": 0.8337,
+          "maxZ": 1.9575
+        },
+        "dominantBounds": {
+          "minX": 0.3025,
+          "maxX": 0.7577,
+          "minY": -0.1937,
+          "maxY": 0.2756,
+          "minZ": 0.8337,
+          "maxZ": 1.768
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 7,
+            "weight": 1.0,
+            "world": [
+              0.3394,
+              0.1147,
+              1.2533
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 9,
+            "weight": 1.0,
+            "world": [
+              0.3475,
+              -0.0989,
+              1.2361
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 55,
+            "weight": 1.0,
+            "world": [
+              0.3772,
+              -0.0691,
+              0.8565
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 58,
+            "weight": 1.0,
+            "world": [
+              0.3742,
+              0.131,
+              0.8516
+            ]
+          }
+        ]
+      },
+      "UpperLeg.R": {
+        "region": "upperLeg",
+        "influencedVertices": 54,
+        "dominantVertices": 32,
+        "totalWeight": 32.5043,
+        "averageWeight": 0.6019,
+        "influencedBounds": {
+          "minX": -0.7577,
+          "maxX": -0.2269,
+          "minY": -0.1937,
+          "maxY": 0.2756,
+          "minZ": 0.8337,
+          "maxZ": 1.9575
+        },
+        "dominantBounds": {
+          "minX": -0.7577,
+          "maxX": -0.3025,
+          "minY": -0.1937,
+          "maxY": 0.2756,
+          "minZ": 0.8337,
+          "maxZ": 1.768
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 408,
+            "weight": 1.0,
+            "world": [
+              -0.3394,
+              0.1147,
+              1.2533
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 410,
+            "weight": 1.0,
+            "world": [
+              -0.3475,
+              -0.0989,
+              1.2361
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 464,
+            "weight": 1.0,
+            "world": [
+              -0.3772,
+              -0.0691,
+              0.8565
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 467,
+            "weight": 1.0,
+            "world": [
+              -0.3742,
+              0.131,
+              0.8516
+            ]
+          }
+        ]
+      }
+    },
+    "topBones": [
+      {
+        "bone": "Chest",
+        "totalWeight": 691.9235
+      },
+      {
+        "bone": "Hips",
+        "totalWeight": 249.5029
+      },
+      {
+        "bone": "Spine",
+        "totalWeight": 229.876
+      },
+      {
+        "bone": "LowerLeg.L",
+        "totalWeight": 62.374
+      },
+      {
+        "bone": "UpperLeg.L",
+        "totalWeight": 32.5043
+      },
+      {
+        "bone": "UpperLeg.R",
+        "totalWeight": 32.5043
+      },
+      {
+        "bone": "LowerLeg.R",
+        "totalWeight": 31.374
+      },
+      {
+        "bone": "Foot.L",
+        "totalWeight": 12.0
+      },
+      {
+        "bone": "Foot.R",
+        "totalWeight": 12.0
+      },
+      {
+        "bone": "Hand.L",
+        "totalWeight": 12.0
+      },
+      {
+        "bone": "Hand.R",
+        "totalWeight": 12.0
+      },
+      {
+        "bone": "Head",
+        "totalWeight": 1.427
+      }
+    ]
+  },
+  "capsuleBindWeightDiagnostics": {
+    "space": "capsuleBind",
+    "targetBounds": {
+      "minX": -1.6464,
+      "maxX": 1.6464,
+      "minY": -0.7702,
+      "maxY": 0.8214,
+      "minZ": -0.03,
+      "maxZ": 3.9604
+    },
+    "meshCount": 1,
+    "vertexCount": 1383,
+    "bones": {
+      "Chest": {
+        "region": "core",
+        "influencedVertices": 901,
+        "dominantVertices": 714,
+        "totalWeight": 691.9235,
+        "averageWeight": 0.768,
+        "influencedBounds": {
+          "minX": -1.6464,
+          "maxX": 1.6464,
+          "minY": -0.7702,
+          "maxY": 0.8214,
+          "minZ": 1.7718,
+          "maxZ": 3.9604
+        },
+        "dominantBounds": {
+          "minX": -1.6464,
+          "maxX": 1.6464,
+          "minY": -0.7702,
+          "maxY": 0.8214,
+          "minZ": 1.7718,
+          "maxZ": 3.9604
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 15,
+            "weight": 1.0,
+            "bind": [
+              1.5166,
+              -0.0323,
+              1.8273
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 23,
+            "weight": 1.0,
+            "bind": [
+              1.5868,
+              0.0121,
+              1.8403
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 24,
+            "weight": 1.0,
+            "bind": [
+              1.614,
+              0.0794,
+              1.9705
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 26,
+            "weight": 1.0,
+            "bind": [
+              1.5202,
+              0.0732,
+              1.8281
+            ]
+          }
+        ]
+      },
+      "Foot.L": {
+        "region": "foot",
+        "influencedVertices": 18,
+        "dominantVertices": 18,
+        "totalWeight": 12.0,
+        "averageWeight": 0.6667,
+        "influencedBounds": {
+          "minX": 0.3607,
+          "maxX": 0.3894,
+          "minY": -0.062,
+          "maxY": 0.1319,
+          "minZ": 0.4489,
+          "maxZ": 0.6266
+        },
+        "dominantBounds": {
+          "minX": 0.3607,
+          "maxX": 0.3894,
+          "minY": -0.062,
+          "maxY": 0.1319,
+          "minZ": 0.4489,
+          "maxZ": 0.6266
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 34,
+            "weight": 0.6667,
+            "bind": [
+              0.374,
+              0.0331,
+              0.4847
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 133,
+            "weight": 0.6667,
+            "bind": [
+              0.3607,
+              0.1195,
+              0.4847
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 175,
+            "weight": 0.6667,
+            "bind": [
+              0.3645,
+              -0.0487,
+              0.4847
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 184,
+            "weight": 0.6667,
+            "bind": [
+              0.3829,
+              0.0294,
+              0.6266
+            ]
+          }
+        ]
+      },
+      "Foot.R": {
+        "region": "foot",
+        "influencedVertices": 18,
+        "dominantVertices": 18,
+        "totalWeight": 12.0,
+        "averageWeight": 0.6667,
+        "influencedBounds": {
+          "minX": -0.3829,
+          "maxX": -0.3139,
+          "minY": -0.1124,
+          "maxY": 0.1733,
+          "minZ": 0.0482,
+          "maxZ": 0.6266
+        },
+        "dominantBounds": {
+          "minX": -0.3829,
+          "maxX": -0.3139,
+          "minY": -0.1124,
+          "maxY": 0.1733,
+          "minZ": 0.0482,
+          "maxZ": 0.6266
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 436,
+            "weight": 0.6667,
+            "bind": [
+              -0.3381,
+              -0.0016,
+              0.0519
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 440,
+            "weight": 0.6667,
+            "bind": [
+              -0.3226,
+              0.1733,
+              0.4847
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 441,
+            "weight": 0.6667,
+            "bind": [
+              -0.3251,
+              -0.1031,
+              0.4847
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 443,
+            "weight": 0.6667,
+            "bind": [
+              -0.374,
+              0.0331,
+              0.4847
+            ]
+          }
+        ]
+      },
+      "Hand.L": {
+        "region": "hand",
+        "influencedVertices": 18,
+        "dominantVertices": 18,
+        "totalWeight": 12.0,
+        "averageWeight": 0.6667,
+        "influencedBounds": {
+          "minX": 1.2614,
+          "maxX": 1.6189,
+          "minY": -0.0918,
+          "maxY": 0.0698,
+          "minZ": 2.1154,
+          "maxZ": 2.1811
+        },
+        "dominantBounds": {
+          "minX": 1.2614,
+          "maxX": 1.6189,
+          "minY": -0.0918,
+          "maxY": 0.0698,
+          "minZ": 2.1154,
+          "maxZ": 2.1811
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 11,
+            "weight": 0.6667,
+            "bind": [
+              1.5534,
+              -0.0679,
+              2.1244
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 25,
+            "weight": 0.6667,
+            "bind": [
+              1.5367,
+              0.0687,
+              2.1154
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 45,
+            "weight": 0.6667,
+            "bind": [
+              1.3911,
+              0.0341,
+              2.1522
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 47,
+            "weight": 0.6667,
+            "bind": [
+              1.4006,
+              -0.0603,
+              2.1584
+            ]
+          }
+        ]
+      },
+      "Hand.R": {
+        "region": "hand",
+        "influencedVertices": 18,
+        "dominantVertices": 18,
+        "totalWeight": 12.0,
+        "averageWeight": 0.6667,
+        "influencedBounds": {
+          "minX": -1.6189,
+          "maxX": -1.2614,
+          "minY": -0.0918,
+          "maxY": 0.0698,
+          "minZ": 2.1154,
+          "maxZ": 2.1811
+        },
+        "dominantBounds": {
+          "minX": -1.6189,
+          "maxX": -1.2614,
+          "minY": -0.0918,
+          "maxY": 0.0698,
+          "minZ": 2.1154,
+          "maxZ": 2.1811
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 412,
+            "weight": 0.6667,
+            "bind": [
+              -1.5534,
+              -0.0679,
+              2.1244
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 426,
+            "weight": 0.6667,
+            "bind": [
+              -1.5367,
+              0.0687,
+              2.1154
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 454,
+            "weight": 0.6667,
+            "bind": [
+              -1.3911,
+              0.0341,
+              2.1522
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 456,
+            "weight": 0.6667,
+            "bind": [
+              -1.4006,
+              -0.0603,
+              2.1584
+            ]
+          }
+        ]
+      },
+      "Head": {
+        "region": "neckHead",
+        "influencedVertices": 10,
+        "dominantVertices": 0,
+        "totalWeight": 1.427,
+        "averageWeight": 0.1427,
+        "influencedBounds": {
+          "minX": -0.2253,
+          "maxX": 0.2475,
+          "minY": -0.1918,
+          "maxY": 0.1036,
+          "minZ": 3.2531,
+          "maxZ": 3.7136
+        },
+        "dominantBounds": null,
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 1352,
+            "weight": 0.2802,
+            "bind": [
+              0.0034,
+              0.1036,
+              3.7136
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1063,
+            "weight": 0.2478,
+            "bind": [
+              -0.0035,
+              -0.0049,
+              3.2835
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1290,
+            "weight": 0.2457,
+            "bind": [
+              0.0048,
+              -0.1148,
+              3.6764
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1355,
+            "weight": 0.1697,
+            "bind": [
+              -0.1698,
+              0.1036,
+              3.6764
+            ]
+          }
+        ]
+      },
+      "Hips": {
+        "region": "core",
+        "influencedVertices": 378,
+        "dominantVertices": 218,
+        "totalWeight": 249.5029,
+        "averageWeight": 0.6601,
+        "influencedBounds": {
+          "minX": -0.4789,
+          "maxX": 0.4789,
+          "minY": -0.5168,
+          "maxY": 0.4683,
+          "minZ": -0.0126,
+          "maxZ": 2.4423
+        },
+        "dominantBounds": {
+          "minX": -0.4016,
+          "maxX": 0.4016,
+          "minY": -0.2618,
+          "maxY": 0.4683,
+          "minZ": -0.0126,
+          "maxZ": 2.0355
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 1,
+            "weight": 1.0,
+            "bind": [
+              0.062,
+              -0.1053,
+              0.9978
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 5,
+            "weight": 1.0,
+            "bind": [
+              0.0717,
+              0.1102,
+              0.9447
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 8,
+            "weight": 1.0,
+            "bind": [
+              0.158,
+              -0.2517,
+              1.2795
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 10,
+            "weight": 1.0,
+            "bind": [
+              0.1534,
+              0.3914,
+              1.1415
+            ]
+          }
+        ]
+      },
+      "LowerArm.L": {
+        "region": "lowerArm",
+        "influencedVertices": 4,
+        "dominantVertices": 0,
+        "totalWeight": 0.5217,
+        "averageWeight": 0.1304,
+        "influencedBounds": {
+          "minX": 0.48,
+          "maxX": 0.529,
+          "minY": -0.2427,
+          "maxY": 0.2544,
+          "minZ": 2.5766,
+          "maxZ": 2.7212
+        },
+        "dominantBounds": null,
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 968,
+            "weight": 0.1304,
+            "bind": [
+              0.48,
+              0.2544,
+              2.5766
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1024,
+            "weight": 0.1304,
+            "bind": [
+              0.4805,
+              0.2544,
+              2.7212
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1380,
+            "weight": 0.1304,
+            "bind": [
+              0.4873,
+              -0.2363,
+              2.6154
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1382,
+            "weight": 0.1304,
+            "bind": [
+              0.529,
+              -0.2427,
+              2.6261
+            ]
+          }
+        ]
+      },
+      "LowerArm.R": {
+        "region": "lowerArm",
+        "influencedVertices": 4,
+        "dominantVertices": 0,
+        "totalWeight": 0.5217,
+        "averageWeight": 0.1304,
+        "influencedBounds": {
+          "minX": -0.4807,
+          "maxX": -0.48,
+          "minY": -0.2641,
+          "maxY": 0.2544,
+          "minZ": 2.5766,
+          "maxZ": 2.9236
+        },
+        "dominantBounds": null,
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 951,
+            "weight": 0.1304,
+            "bind": [
+              -0.4807,
+              0.2544,
+              2.9236
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 974,
+            "weight": 0.1304,
+            "bind": [
+              -0.48,
+              0.2544,
+              2.5766
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1023,
+            "weight": 0.1304,
+            "bind": [
+              -0.4805,
+              -0.2641,
+              2.7212
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1030,
+            "weight": 0.1304,
+            "bind": [
+              -0.4805,
+              0.2544,
+              2.7212
+            ]
+          }
+        ]
+      },
+      "LowerLeg.L": {
+        "region": "lowerLeg",
+        "influencedVertices": 76,
+        "dominantVertices": 56,
+        "totalWeight": 62.374,
+        "averageWeight": 0.8207,
+        "influencedBounds": {
+          "minX": 0.2244,
+          "maxX": 0.5062,
+          "minY": -0.1273,
+          "maxY": 0.1935,
+          "minZ": -0.013,
+          "maxZ": 0.9203
+        },
+        "dominantBounds": {
+          "minX": 0.2244,
+          "maxX": 0.3335,
+          "minY": -0.1273,
+          "maxY": 0.1935,
+          "minZ": -0.013,
+          "maxZ": 0.6266
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 31,
+            "weight": 1.0,
+            "bind": [
+              0.3226,
+              0.1733,
+              0.4847
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 32,
+            "weight": 1.0,
+            "bind": [
+              0.3251,
+              -0.1031,
+              0.4847
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 134,
+            "weight": 1.0,
+            "bind": [
+              0.2487,
+              -0.1071,
+              0.4847
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 135,
+            "weight": 1.0,
+            "bind": [
+              0.2577,
+              0.1575,
+              0.4847
+            ]
+          }
+        ]
+      },
+      "LowerLeg.R": {
+        "region": "lowerLeg",
+        "influencedVertices": 45,
+        "dominantVertices": 25,
+        "totalWeight": 31.374,
+        "averageWeight": 0.6972,
+        "influencedBounds": {
+          "minX": -0.5062,
+          "maxX": -0.1974,
+          "minY": -0.1218,
+          "maxY": 0.1882,
+          "minZ": -0.03,
+          "maxZ": 0.9203
+        },
+        "dominantBounds": {
+          "minX": -0.3409,
+          "maxX": -0.1974,
+          "minY": -0.1218,
+          "maxY": 0.1882,
+          "minZ": -0.03,
+          "maxZ": 0.6266
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 430,
+            "weight": 1.0,
+            "bind": [
+              -0.2699,
+              0.0846,
+              -0.03
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 435,
+            "weight": 1.0,
+            "bind": [
+              -0.2694,
+              0.0033,
+              -0.03
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 437,
+            "weight": 1.0,
+            "bind": [
+              -0.264,
+              0.1228,
+              0.0495
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 438,
+            "weight": 1.0,
+            "bind": [
+              -0.2624,
+              -0.0444,
+              0.0529
+            ]
+          }
+        ]
+      },
+      "Neck": {
+        "region": "neckHead",
+        "influencedVertices": 10,
+        "dominantVertices": 0,
+        "totalWeight": 1.427,
+        "averageWeight": 0.1427,
+        "influencedBounds": {
+          "minX": -0.2253,
+          "maxX": 0.2475,
+          "minY": -0.1918,
+          "maxY": 0.1036,
+          "minZ": 3.2531,
+          "maxZ": 3.7136
+        },
+        "dominantBounds": null,
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 1352,
+            "weight": 0.2802,
+            "bind": [
+              0.0034,
+              0.1036,
+              3.7136
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1063,
+            "weight": 0.2478,
+            "bind": [
+              -0.0035,
+              -0.0049,
+              3.2835
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1290,
+            "weight": 0.2457,
+            "bind": [
+              0.0048,
+              -0.1148,
+              3.6764
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1355,
+            "weight": 0.1697,
+            "bind": [
+              -0.1698,
+              0.1036,
+              3.6764
+            ]
+          }
+        ]
+      },
+      "Spine": {
+        "region": "core",
+        "influencedVertices": 522,
+        "dominantVertices": 234,
+        "totalWeight": 229.876,
+        "averageWeight": 0.4404,
+        "influencedBounds": {
+          "minX": -1.0217,
+          "maxX": 1.0217,
+          "minY": -0.5998,
+          "maxY": 0.5802,
+          "minZ": 1.6252,
+          "maxZ": 3.2835
+        },
+        "dominantBounds": {
+          "minX": -1.0217,
+          "maxX": 1.0217,
+          "minY": -0.5168,
+          "maxY": 0.4249,
+          "minZ": 1.794,
+          "maxZ": 2.3665
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 280,
+            "weight": 1.0,
+            "bind": [
+              0.7341,
+              0.1398,
+              1.9487
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 281,
+            "weight": 1.0,
+            "bind": [
+              0.7701,
+              -0.1338,
+              1.9474
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 283,
+            "weight": 1.0,
+            "bind": [
+              0.7701,
+              0.0601,
+              2.0913
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 284,
+            "weight": 1.0,
+            "bind": [
+              0.7701,
+              -0.0729,
+              1.8397
+            ]
+          }
+        ]
+      },
+      "UpperArm.L": {
+        "region": "upperArm",
+        "influencedVertices": 4,
+        "dominantVertices": 0,
+        "totalWeight": 0.5217,
+        "averageWeight": 0.1304,
+        "influencedBounds": {
+          "minX": 0.4989,
+          "maxX": 0.5428,
+          "minY": -0.0049,
+          "maxY": 0.119,
+          "minZ": 2.5673,
+          "maxZ": 2.9577
+        },
+        "dominantBounds": null,
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 1021,
+            "weight": 0.1304,
+            "bind": [
+              0.4997,
+              -0.0049,
+              2.9423
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1036,
+            "weight": 0.1304,
+            "bind": [
+              0.4989,
+              -0.0049,
+              2.5673
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1071,
+            "weight": 0.1304,
+            "bind": [
+              0.4995,
+              -0.0049,
+              2.7235
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1372,
+            "weight": 0.1304,
+            "bind": [
+              0.5428,
+              0.119,
+              2.9577
+            ]
+          }
+        ]
+      },
+      "UpperArm.R": {
+        "region": "upperArm",
+        "influencedVertices": 4,
+        "dominantVertices": 0,
+        "totalWeight": 0.5217,
+        "averageWeight": 0.1304,
+        "influencedBounds": {
+          "minX": -0.536,
+          "maxX": -0.4989,
+          "minY": -0.0049,
+          "maxY": 0.119,
+          "minZ": 2.5673,
+          "maxZ": 2.9577
+        },
+        "dominantBounds": null,
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 1022,
+            "weight": 0.1304,
+            "bind": [
+              -0.4997,
+              -0.0049,
+              2.9423
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1037,
+            "weight": 0.1304,
+            "bind": [
+              -0.4989,
+              -0.0049,
+              2.5673
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1072,
+            "weight": 0.1304,
+            "bind": [
+              -0.4995,
+              -0.0049,
+              2.7235
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 1370,
+            "weight": 0.1304,
+            "bind": [
+              -0.536,
+              0.119,
+              2.9577
+            ]
+          }
+        ]
+      },
+      "UpperLeg.L": {
+        "region": "upperLeg",
+        "influencedVertices": 54,
+        "dominantVertices": 32,
+        "totalWeight": 32.5043,
+        "averageWeight": 0.6019,
+        "influencedBounds": {
+          "minX": 0.2306,
+          "maxX": 0.7701,
+          "minY": -0.2354,
+          "maxY": 0.3232,
+          "minZ": 0.8675,
+          "maxZ": 2.0509
+        },
+        "dominantBounds": {
+          "minX": 0.3075,
+          "maxX": 0.7701,
+          "minY": -0.2354,
+          "maxY": 0.3232,
+          "minZ": 0.8675,
+          "maxZ": 1.8513
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 7,
+            "weight": 1.0,
+            "bind": [
+              0.3449,
+              0.1317,
+              1.3094
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 9,
+            "weight": 1.0,
+            "bind": [
+              0.3532,
+              -0.1226,
+              1.2912
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 55,
+            "weight": 1.0,
+            "bind": [
+              0.3834,
+              -0.0871,
+              0.8915
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 58,
+            "weight": 1.0,
+            "bind": [
+              0.3803,
+              0.151,
+              0.8863
+            ]
+          }
+        ]
+      },
+      "UpperLeg.R": {
+        "region": "upperLeg",
+        "influencedVertices": 54,
+        "dominantVertices": 32,
+        "totalWeight": 32.5043,
+        "averageWeight": 0.6019,
+        "influencedBounds": {
+          "minX": -0.7701,
+          "maxX": -0.2306,
+          "minY": -0.2354,
+          "maxY": 0.3232,
+          "minZ": 0.8675,
+          "maxZ": 2.0509
+        },
+        "dominantBounds": {
+          "minX": -0.7701,
+          "maxX": -0.3075,
+          "minY": -0.2354,
+          "maxY": 0.3232,
+          "minZ": 0.8675,
+          "maxZ": 1.8513
+        },
+        "topWeightedVertices": [
+          {
+            "mesh": "Body",
+            "index": 408,
+            "weight": 1.0,
+            "bind": [
+              -0.3449,
+              0.1317,
+              1.3094
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 410,
+            "weight": 1.0,
+            "bind": [
+              -0.3532,
+              -0.1226,
+              1.2912
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 464,
+            "weight": 1.0,
+            "bind": [
+              -0.3834,
+              -0.0871,
+              0.8915
+            ]
+          },
+          {
+            "mesh": "Body",
+            "index": 467,
+            "weight": 1.0,
+            "bind": [
+              -0.3803,
+              0.151,
+              0.8863
+            ]
+          }
+        ]
+      }
+    },
+    "topBones": [
+      {
+        "bone": "Chest",
+        "totalWeight": 691.9235
+      },
+      {
+        "bone": "Hips",
+        "totalWeight": 249.5029
+      },
+      {
+        "bone": "Spine",
+        "totalWeight": 229.876
+      },
+      {
+        "bone": "LowerLeg.L",
+        "totalWeight": 62.374
+      },
+      {
+        "bone": "UpperLeg.L",
+        "totalWeight": 32.5043
+      },
+      {
+        "bone": "UpperLeg.R",
+        "totalWeight": 32.5043
+      },
+      {
+        "bone": "LowerLeg.R",
+        "totalWeight": 31.374
+      },
+      {
+        "bone": "Foot.L",
+        "totalWeight": 12.0
+      },
+      {
+        "bone": "Foot.R",
+        "totalWeight": 12.0
+      },
+      {
+        "bone": "Hand.L",
+        "totalWeight": 12.0
+      },
+      {
+        "bone": "Hand.R",
+        "totalWeight": 12.0
+      },
+      {
+        "bone": "Head",
+        "totalWeight": 1.427
+      }
+    ]
+  },
+  "capsuleAssignmentDiagnostics": {
+    "space": "capsuleBind",
+    "meshCount": 1,
+    "vertexCount": 1383,
+    "targetBounds": {
+      "minX": -1.6464,
+      "maxX": 1.6464,
+      "minY": -0.7702,
+      "maxY": 0.8214,
+      "minZ": -0.03,
+      "maxZ": 3.9604
+    },
+    "capsuleAssignedVertices": 612,
+    "nearestFallbackVertices": 771,
+    "fallbackByBone": {
+      "Chest": {
+        "region": "core",
+        "vertexCount": 378,
+        "averageDistanceRatio": 1.8289,
+        "maxDistanceRatio": 2.2315,
+        "samples": [
+          {
+            "mesh": "Body",
+            "index": 115,
+            "bind": [
+              1.5876,
+              0.0401,
+              1.8386
+            ],
+            "distance": 1.7758,
+            "distanceRatio": 2.2315
+          },
+          {
+            "mesh": "Body",
+            "index": 531,
+            "bind": [
+              -1.5876,
+              0.0401,
+              1.8386
+            ],
+            "distance": 1.7758,
+            "distanceRatio": 2.2315
+          },
+          {
+            "mesh": "Body",
+            "index": 69,
+            "bind": [
+              1.5883,
+              0.0654,
+              1.8408
+            ],
+            "distance": 1.7758,
+            "distanceRatio": 2.2314
+          },
+          {
+            "mesh": "Body",
+            "index": 478,
+            "bind": [
+              -1.5883,
+              0.0654,
+              1.8408
+            ],
+            "distance": 1.7758,
+            "distanceRatio": 2.2314
+          }
+        ]
+      },
+      "Hips": {
+        "region": "core",
+        "vertexCount": 148,
+        "averageDistanceRatio": 1.9161,
+        "maxDistanceRatio": 3.2149,
+        "samples": [
+          {
+            "mesh": "Body",
+            "index": 550,
+            "bind": [
+              -0.2245,
+              0.0753,
+              -0.0126
+            ],
+            "distance": 1.8275,
+            "distanceRatio": 3.2149
+          },
+          {
+            "mesh": "Body",
+            "index": 689,
+            "bind": [
+              -0.2223,
+              0.0445,
+              -0.0123
+            ],
+            "distance": 1.8264,
+            "distanceRatio": 3.2131
+          },
+          {
+            "mesh": "Body",
+            "index": 553,
+            "bind": [
+              -0.2195,
+              0.0056,
+              -0.0117
+            ],
+            "distance": 1.8254,
+            "distanceRatio": 3.2114
+          },
+          {
+            "mesh": "Body",
+            "index": 919,
+            "bind": [
+              0.2457,
+              0.0501,
+              -0.0062
+            ],
+            "distance": 1.8234,
+            "distanceRatio": 3.2078
+          }
+        ]
+      },
+      "LowerLeg.L": {
+        "region": "limb",
+        "vertexCount": 74,
+        "averageDistanceRatio": 2.2744,
+        "maxDistanceRatio": 3.2008,
+        "samples": [
+          {
+            "mesh": "Body",
+            "index": 939,
+            "bind": [
+              0.251,
+              0.0309,
+              -0.0026
+            ],
+            "distance": 0.6914,
+            "distanceRatio": 3.2008
+          },
+          {
+            "mesh": "Body",
+            "index": 941,
+            "bind": [
+              0.251,
+              0.0681,
+              0.0008
+            ],
+            "distance": 0.6901,
+            "distanceRatio": 3.1949
+          },
+          {
+            "mesh": "Body",
+            "index": 914,
+            "bind": [
+              0.267,
+              0.0509,
+              -0.013
+            ],
+            "distance": 0.6891,
+            "distanceRatio": 3.1905
+          },
+          {
+            "mesh": "Body",
+            "index": 929,
+            "bind": [
+              0.267,
+              0.0253,
+              -0.0085
+            ],
+            "distance": 0.6852,
+            "distanceRatio": 3.1724
+          }
+        ]
+      },
+      "LowerLeg.R": {
+        "region": "limb",
+        "vertexCount": 43,
+        "averageDistanceRatio": 2.4557,
+        "maxDistanceRatio": 3.2514,
+        "samples": [
+          {
+            "mesh": "Body",
+            "index": 430,
+            "bind": [
+              -0.2699,
+              0.0846,
+              -0.03
+            ],
+            "distance": 0.7023,
+            "distanceRatio": 3.2514
+          },
+          {
+            "mesh": "Body",
+            "index": 435,
+            "bind": [
+              -0.2694,
+              0.0033,
+              -0.03
+            ],
+            "distance": 0.7005,
+            "distanceRatio": 3.2431
+          },
+          {
+            "mesh": "Body",
+            "index": 549,
+            "bind": [
+              -0.2725,
+              0.0463,
+              -0.03
+            ],
+            "distance": 0.6985,
+            "distanceRatio": 3.2338
+          },
+          {
+            "mesh": "Body",
+            "index": 551,
+            "bind": [
+              -0.2658,
+              0.1122,
+              -0.0101
+            ],
+            "distance": 0.6927,
+            "distanceRatio": 3.2068
+          }
+        ]
+      },
+      "Spine": {
+        "region": "core",
+        "vertexCount": 92,
+        "averageDistanceRatio": 1.377,
+        "maxDistanceRatio": 1.5864,
+        "samples": [
+          {
+            "mesh": "Body",
+            "index": 369,
+            "bind": [
+              1.0091,
+              -0.0878,
+              1.8053
+            ],
+            "distance": 1.0821,
+            "distanceRatio": 1.5864
+          },
+          {
+            "mesh": "Body",
+            "index": 839,
+            "bind": [
+              -1.0091,
+              -0.0878,
+              1.8053
+            ],
+            "distance": 1.0821,
+            "distanceRatio": 1.5864
+          },
+          {
+            "mesh": "Body",
+            "index": 374,
+            "bind": [
+              1.0102,
+              -0.145,
+              1.8399
+            ],
+            "distance": 1.0793,
+            "distanceRatio": 1.5822
+          },
+          {
+            "mesh": "Body",
+            "index": 844,
+            "bind": [
+              -1.0102,
+              -0.145,
+              1.8399
+            ],
+            "distance": 1.0793,
+            "distanceRatio": 1.5822
+          }
+        ]
+      },
+      "UpperLeg.L": {
+        "region": "limb",
+        "vertexCount": 18,
+        "averageDistanceRatio": 1.3287,
+        "maxDistanceRatio": 1.6976,
+        "samples": [
+          {
+            "mesh": "Body",
+            "index": 390,
+            "bind": [
+              0.3075,
+              -0.2354,
+              0.9152
+            ],
+            "distance": 0.5093,
+            "distanceRatio": 1.6976
+          },
+          {
+            "mesh": "Body",
+            "index": 180,
+            "bind": [
+              0.333,
+              0.2287,
+              0.8675
+            ],
+            "distance": 0.4803,
+            "distanceRatio": 1.601
+          },
+          {
+            "mesh": "Body",
+            "index": 179,
+            "bind": [
+              0.3332,
+              -0.1604,
+              0.8801
+            ],
+            "distance": 0.4677,
+            "distanceRatio": 1.5589
+          },
+          {
+            "mesh": "Body",
+            "index": 382,
+            "bind": [
+              0.4189,
+              0.3232,
+              0.8895
+            ],
+            "distance": 0.4597,
+            "distanceRatio": 1.5323
+          }
+        ]
+      },
+      "UpperLeg.R": {
+        "region": "limb",
+        "vertexCount": 18,
+        "averageDistanceRatio": 1.3287,
+        "maxDistanceRatio": 1.6976,
+        "samples": [
+          {
+            "mesh": "Body",
+            "index": 861,
+            "bind": [
+              -0.3075,
+              -0.2354,
+              0.9152
+            ],
+            "distance": 0.5093,
+            "distanceRatio": 1.6976
+          },
+          {
+            "mesh": "Body",
+            "index": 615,
+            "bind": [
+              -0.333,
+              0.2287,
+              0.8675
+            ],
+            "distance": 0.4803,
+            "distanceRatio": 1.601
+          },
+          {
+            "mesh": "Body",
+            "index": 614,
+            "bind": [
+              -0.3332,
+              -0.1604,
+              0.8801
+            ],
+            "distance": 0.4677,
+            "distanceRatio": 1.5589
+          },
+          {
+            "mesh": "Body",
+            "index": 853,
+            "bind": [
+              -0.4189,
+              0.3232,
+              0.8895
+            ],
+            "distance": 0.4597,
+            "distanceRatio": 1.5323
+          }
+        ]
+      }
+    }
+  },
+  "propDiagnostics": {},
+  "humanoidDiagnostics": {
+    "status": "pass",
+    "coverageRatios": {
+      "core": 0.8496,
+      "arm": 0.026,
+      "leg": 0.0976,
+      "foot": 0.026
+    },
+    "warnings": []
+  },
+  "capsuleDiagnostics": [
+    {
+      "name": "Hips",
+      "head": [
+        0.0,
+        0.0256,
+        1.8004
+      ],
+      "tail": [
+        0.0,
+        0.0256,
+        2.1793
+      ],
+      "radius": 0.5684,
+      "verticalMin": 1.8004,
+      "verticalMax": 2.1793
+    },
+    {
+      "name": "Spine",
+      "head": [
+        0.0,
+        0.0256,
+        2.1793
+      ],
+      "tail": [
+        0.0,
+        0.0256,
+        2.6341
+      ],
+      "radius": 0.6821,
+      "verticalMin": 2.1793,
+      "verticalMax": 2.6341
+    },
+    {
+      "name": "Chest",
+      "head": [
+        0.0,
+        0.0256,
+        2.6341
+      ],
+      "tail": [
+        0.0,
+        0.0256,
+        3.1646
+      ],
+      "radius": 0.7958,
+      "verticalMin": 2.6341,
+      "verticalMax": 3.1646
+    },
+    {
+      "name": "Neck",
+      "head": [
+        0.0,
+        0.0256,
+        3.1646
+      ],
+      "tail": [
+        0.0,
+        0.0256,
+        3.5815
+      ],
+      "radius": 0.2501,
+      "verticalMin": 3.1646,
+      "verticalMax": 3.5815
+    },
+    {
+      "name": "Head",
+      "head": [
+        0.0,
+        0.0256,
+        3.1646
+      ],
+      "tail": [
+        0.0,
+        0.0256,
+        3.5815
+      ],
+      "radius": 0.2501,
+      "verticalMin": 3.1646,
+      "verticalMax": 3.5815
+    },
+    {
+      "name": "UpperArm.L",
+      "head": [
+        1.1015,
+        0.0256,
+        2.8236
+      ],
+      "tail": [
+        0.7127,
+        0.0256,
+        2.7478
+      ],
+      "radius": 0.1505,
+      "verticalMin": 2.7478,
+      "verticalMax": 2.8236
+    },
+    {
+      "name": "LowerArm.L",
+      "head": [
+        0.7127,
+        0.0256,
+        2.7478
+      ],
+      "tail": [
+        1.2311,
+        0.0256,
+        2.7099
+      ],
+      "radius": 0.1975,
+      "verticalMin": 2.7099,
+      "verticalMax": 2.7478
+    },
+    {
+      "name": "Hand.L",
+      "head": [
+        1.2311,
+        0.0256,
+        2.7099
+      ],
+      "tail": [
+        1.555,
+        0.0256,
+        2.672
+      ],
+      "radius": 0.0913,
+      "verticalMin": 2.672,
+      "verticalMax": 2.7099
+    },
+    {
+      "name": "UpperArm.R",
+      "head": [
+        -1.1015,
+        0.0256,
+        2.8236
+      ],
+      "tail": [
+        -0.7127,
+        0.0256,
+        2.7478
+      ],
+      "radius": 0.1505,
+      "verticalMin": 2.7478,
+      "verticalMax": 2.8236
+    },
+    {
+      "name": "LowerArm.R",
+      "head": [
+        -0.7127,
+        0.0256,
+        2.7478
+      ],
+      "tail": [
+        -1.2311,
+        0.0256,
+        2.7099
+      ],
+      "radius": 0.1975,
+      "verticalMin": 2.7099,
+      "verticalMax": 2.7478
+    },
+    {
+      "name": "Hand.R",
+      "head": [
+        -1.2311,
+        0.0256,
+        2.7099
+      ],
+      "tail": [
+        -1.555,
+        0.0256,
+        2.672
+      ],
+      "radius": 0.0913,
+      "verticalMin": 2.672,
+      "verticalMax": 2.7099
+    },
+    {
+      "name": "UpperLeg.L",
+      "head": [
+        0.3888,
+        0.0256,
+        1.8004
+      ],
+      "tail": [
+        0.7127,
+        0.0256,
+        1.0804
+      ],
+      "radius": 0.3,
+      "verticalMin": 1.0804,
+      "verticalMax": 1.8004
+    },
+    {
+      "name": "LowerLeg.L",
+      "head": [
+        0.7127,
+        0.0256,
+        1.0804
+      ],
+      "tail": [
+        0.7127,
+        0.0256,
+        0.5119
+      ],
+      "radius": 0.216,
+      "verticalMin": 0.5119,
+      "verticalMax": 1.0804
+    },
+    {
+      "name": "Foot.L",
+      "head": [
+        0.7127,
+        0.0256,
+        0.5119
+      ],
+      "tail": [
+        0.7127,
+        -0.1349,
+        0.0951
+      ],
+      "radius": 0.1251,
+      "verticalMin": 0.0951,
+      "verticalMax": 0.5119
+    },
+    {
+      "name": "UpperLeg.R",
+      "head": [
+        -0.3888,
+        0.0256,
+        1.8004
+      ],
+      "tail": [
+        -0.7127,
+        0.0256,
+        1.0804
+      ],
+      "radius": 0.3,
+      "verticalMin": 1.0804,
+      "verticalMax": 1.8004
+    },
+    {
+      "name": "LowerLeg.R",
+      "head": [
+        -0.7127,
+        0.0256,
+        1.0804
+      ],
+      "tail": [
+        -0.7127,
+        0.0256,
+        0.5119
+      ],
+      "radius": 0.216,
+      "verticalMin": 0.5119,
+      "verticalMax": 1.0804
+    },
+    {
+      "name": "Foot.R",
+      "head": [
+        -0.7127,
+        0.0256,
+        0.5119
+      ],
+      "tail": [
+        -0.7127,
+        -0.1349,
+        0.0951
+      ],
+      "radius": 0.1251,
+      "verticalMin": 0.0951,
+      "verticalMax": 0.5119
+    }
+  ],
+  "bindSpaceDiagnostics": [
+    {
+      "mesh": "Body",
+      "rawMinZ": -0.0186,
+      "rawMaxZ": 3.7709,
+      "bindMinZ": -0.0186,
+      "bindMaxZ": 3.7709
+    }
+  ],
+  "qa": {
+    "mesh_count": 1,
+    "vertex_count": 1383,
+    "bone_count": 17,
+    "unweighted_vertices": 0,
+    "over_limit_vertices": 0,
+    "export_profile": null,
+    "warnings": [],
+    "errors": []
+  }
+}

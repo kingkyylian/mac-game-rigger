@@ -1,0 +1,31 @@
+{
+  "name": "Prop Hinge",
+  "category": "prop",
+  "required_landmarks": [
+    "base",
+    "hinge",
+    "moving_part",
+    "moving_tip"
+  ],
+  "mirror_pairs": {},
+  "bones": [
+    {
+      "name": "PropBase",
+      "parent": null,
+      "head_landmark": "base",
+      "tail_landmark": "hinge"
+    },
+    {
+      "name": "Hinge",
+      "parent": "PropBase",
+      "head_landmark": "hinge",
+      "tail_landmark": "moving_part"
+    },
+    {
+      "name": "MovingPart",
+      "parent": "Hinge",
+      "head_landmark": "moving_part",
+      "tail_landmark": "moving_tip"
+    }
+  ]
+}

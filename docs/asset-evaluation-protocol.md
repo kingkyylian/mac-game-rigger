@@ -78,9 +78,16 @@ Example `evidence` entry:
 {
   "qaReport": "evidence/H-001/qa-report.json",
   "previewNeutral": "evidence/H-001/preview-neutral.png",
+  "previewNeutralSide": "evidence/H-001/preview-neutral-side.png",
+  "previewPose": "evidence/H-001/preview-pose.png",
+  "previewPoseSide": "evidence/H-001/preview-pose-side.png",
   "exportUnityFbx": "evidence/H-001/export-unity.fbx",
   "notes": "evidence/H-001/notes.md",
   "deformationScore": 4,
+  "visualReview": {
+    "status": "pass",
+    "notes": "Front and side pose previews show acceptable shoulder, elbow, knee, and wrist deformation."
+  },
   "unityImport": { "status": "pass" },
   "unrealImport": { "status": "blocked" }
 }
@@ -111,6 +118,22 @@ scripts/validate_asset_evidence.py --manifest samples/manifest.json --evidence-r
 
 `--require-production-trial` also checks local evidence file existence. Relative paths are resolved from `--evidence-root`.
 
+When `--check-evidence-files` is enabled, the validator also reports preview
+silhouette diagnostics for readable PNG previews. The current metrics are image
+size, foreground pixel ratio, foreground bounding box, and bounding-box fill
+ratio, plus vertical center-shift ratio between the top and bottom silhouette
+bands. The progress report summarizes this as side-view width expansion
+(`side neutral->pose px ratio`) and `lean` when side previews are present, or
+neutral-view foreground/fill percentages otherwise. These numbers are not a
+replacement for manual deformation review yet; they are a tracking signal for
+pose artifacts, body lean, cropping, blank previews, and side-view expansion
+regressions.
+
+For humanoid workflow evidence, `preview-pose.png` uses the full front-facing
+stress pose, while `preview-pose-side.png` may use the side-review pose. The
+side-review pose intentionally avoids arm swing so the side silhouette can
+catch body, leg, and lean regressions without arm projection hiding the torso.
+
 Generate a Markdown progress report:
 
 ```bash
@@ -135,9 +158,14 @@ scripts/register_asset_evidence.py \
   --external-path /external/assets/H-001-humanoid-clean-neutral.glb \
   --qa-report evidence/H-001/qa-report.json \
   --preview-neutral evidence/H-001/preview-neutral.png \
+  --preview-neutral-side evidence/H-001/preview-neutral-side.png \
+  --preview-pose evidence/H-001/preview-pose.png \
+  --preview-pose-side evidence/H-001/preview-pose-side.png \
   --export-unity-fbx evidence/H-001/export-unity.fbx \
   --notes evidence/H-001/notes.md \
   --deformation-score 4 \
+  --visual-review-status pass \
+  --visual-review-notes "Front and side pose previews show acceptable shoulder, elbow, knee, and wrist deformation." \
   --unity-status pass \
   --unreal-status blocked \
   --evidence-root . \
@@ -147,6 +175,12 @@ scripts/register_asset_evidence.py \
 `create_evidence_skeleton.py` creates only evidence folders and `notes.md` checklists. It does not create fake QA reports, previews, FBX files, or engine import results.
 
 The register script refuses to overwrite an existing slot unless `--force` is passed.
+
+For score 3 or higher, the validator requires quality support beyond the numeric score:
+either `visualReview.status=pass` with non-empty `visualReview.notes` plus both
+side preview artifacts, or a passing Unity/Unreal import result. This keeps
+metric-only `pass`/`warn` outputs or single-view screenshots from being counted
+as production-quality deformation evidence.
 
 ## Standard Workflow
 
@@ -176,7 +210,9 @@ evidence/
   <slot-id>/
     qa-report.json
     preview-neutral.png
+    preview-neutral-side.png
     preview-pose.png
+    preview-pose-side.png
     export-unity.fbx
     export-unreal.fbx
     unity-import.json

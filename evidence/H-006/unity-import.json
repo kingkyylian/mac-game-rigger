@@ -1,9 +1,53 @@
 {
   "schemaVersion": 1,
-  "status": "blocked",
-  "reason": "unity_editor_not_found",
-  "checkedOn": "2026-06-17",
+  "status": "pass",
+  "checkedOn": "2026-06-23",
+  "unityEditor": "/Applications/Unity/Hub/Editor/6000.4.1f1/Unity.app/Contents/MacOS/Unity",
   "fbx": "evidence/H-006/export-unity.fbx",
-  "verificationCommand": "scripts/verify_unity_fbx_import.sh --fbx evidence/H-006/export-unity.fbx",
-  "details": "Unity Editor was not found on PATH or under /Applications/Unity. Install Unity Editor or pass --unity to run the real import check."
+  "verificationCommand": "scripts/verify_unity_fbx_import.sh --fbx evidence/H-006/export-unity.fbx --unity /Applications/Unity/Hub/Editor/6000.4.1f1/Unity.app/Contents/MacOS/Unity --timeout-seconds 240",
+  "result": {
+    "status": "pass",
+    "assetPath": "Assets/MacGameRiggerImportCandidate/export-unity.fbx",
+    "assetName": "export-unity",
+    "instantiated": true,
+    "childCount": 20,
+    "rendererCount": 1,
+    "skinnedMeshRendererCount": 1,
+    "meshFilterCount": 0,
+    "animatorCount": 1,
+    "boundsSmoke": {
+      "passed": true,
+      "boundsCenter": {"x": 0.07612282, "y": 4.63336229, "z": -0.0000238418579},
+      "boundsSize": {"x": 1.76291275, "y": 9.673617, "z": 8.664086},
+      "boundsHeight": 9.673617,
+      "maxDimension": 9.673617
+    },
+    "boneTransformSmoke": {
+      "passed": true,
+      "boneCandidateCount": 17,
+      "testedBone": "Hips",
+      "rotationDeltaDegrees": 4.99997
+    },
+    "animationClipSmoke": {
+      "passed": true,
+      "sampledBone": "Hips",
+      "sampledBonePath": "MGR_Armature/Hips",
+      "sampledRotationDeltaDegrees": 90.2450943
+    },
+    "configuredAnimatorSmoke": {
+      "passed": true,
+      "animatorCount": 1,
+      "controllerAssigned": true,
+      "stateCount": 1,
+      "sampledBone": "Hips",
+      "sampledBonePath": "MGR_Armature/Hips",
+      "sampledRotationDeltaDegrees": 90.2450943
+    },
+    "modelImporter": {
+      "available": true,
+      "animationType": "Generic",
+      "importAnimation": true,
+      "globalScale": 1
+    }
+  }
 }
