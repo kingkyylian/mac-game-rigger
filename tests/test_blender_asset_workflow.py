@@ -530,6 +530,97 @@ def test_mesh_transform_plan_applies_non_unit_scale_for_z_up_mesh():
     }
 
 
+def test_normalize_mesh_orientation_uses_scene_level_plan_for_multimesh_assets(monkeypatch):
+    class FakeEuler:
+        def __init__(self):
+            self.rotations = []
+
+        def rotate_axis(self, axis, radians):
+            self.rotations.append((axis, radians))
+
+    class FakeObject:
+        def __init__(self, name, dimensions):
+            self.name = name
+            self.type = "MESH"
+            self.dimensions = dimensions
+            self.scale = (1.0, 1.0, 1.0)
+            self.rotation_euler = FakeEuler()
+            self.selected = False
+
+        def select_set(self, value):
+            self.selected = value
+
+    torso = FakeObject("torso", (1.0, 4.0, 0.4))
+    arm = FakeObject("arm", (2.4, 0.6, 0.4))
+
+    class FakeObjectOps:
+        applied = []
+
+        @staticmethod
+        def mode_set(*, mode):
+            return None
+
+        @staticmethod
+        def select_all(*, action):
+            for obj in FakeBpy.context.scene.objects:
+                obj.select_set(False)
+
+        @staticmethod
+        def transform_apply(*, location, rotation, scale):
+            FakeObjectOps.applied.append(
+                {
+                    "active": FakeBpy.context.view_layer.objects.active.name,
+                    "rotation": rotation,
+                    "scale": scale,
+                }
+            )
+
+    FakeObjectOps.mode_set.poll = lambda: True
+
+    class FakeViewObjects:
+        active = None
+
+    class FakeViewLayer:
+        objects = FakeViewObjects()
+
+    class FakeScene:
+        objects = [torso, arm]
+
+    class FakeContext:
+        scene = FakeScene()
+        view_layer = FakeViewLayer()
+
+    class FakeOps:
+        object = FakeObjectOps()
+
+    class FakeBpy:
+        context = FakeContext()
+        ops = FakeOps()
+
+    monkeypatch.setattr(
+        blender_asset_workflow,
+        "mesh_bbox",
+        lambda _bpy: {
+            "min_x": -1.2,
+            "max_x": 1.2,
+            "min_y": -2.0,
+            "max_y": 2.0,
+            "min_z": -0.2,
+            "max_z": 0.2,
+        },
+    )
+
+    result = blender_asset_workflow.normalize_mesh_orientation(FakeBpy)
+
+    assert [item["objectName"] for item in result] == ["torso", "arm"]
+    assert torso.rotation_euler.rotations == [("X", math.pi / 2)]
+    assert arm.rotation_euler.rotations == [("X", math.pi / 2)]
+    assert FakeObjectOps.applied == [
+        {"active": "torso", "rotation": True, "scale": False},
+        {"active": "arm", "rotation": True, "scale": False},
+    ]
+
+
 def test_default_camera_axis_is_front_view_after_orientation_normalization():
     args = blender_asset_workflow.parse_args(
         [

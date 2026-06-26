@@ -1140,6 +1140,14 @@ def mesh_transform_normalization_plan(
     }
 
 
+def scene_dimensions_from_bbox(bbox: dict[str, float]) -> tuple[float, float, float]:
+    return (
+        bbox["max_x"] - bbox["min_x"],
+        bbox["max_y"] - bbox["min_y"],
+        bbox["max_z"] - bbox["min_z"],
+    )
+
+
 def camera_plan_from_bbox(
     bbox: dict[str, float],
     *,
@@ -1296,12 +1304,36 @@ def normalize_mesh_orientation(bpy_module) -> list[dict[str, Any]]:
     if bpy_module.ops.object.mode_set.poll():
         bpy_module.ops.object.mode_set(mode="OBJECT")
 
-    for obj in bpy_module.context.scene.objects:
-        if obj.type != "MESH":
+    meshes = [obj for obj in bpy_module.context.scene.objects if obj.type == "MESH"]
+    if not meshes:
+        return applied
+
+    scene_orientation_plan = orientation_normalization_plan_from_dimensions(
+        scene_dimensions_from_bbox(mesh_bbox(bpy_module))
+    )
+
+    for obj in meshes:
+        apply_scale = any(abs(value - 1.0) > 0.0001 for value in tuple(obj.scale))
+        if scene_orientation_plan is None and not apply_scale:
             continue
-        plan = mesh_transform_normalization_plan(tuple(obj.dimensions), tuple(obj.scale))
-        if plan is None:
-            continue
+        plan = {
+            "sourceUpAxis": (
+                None
+                if scene_orientation_plan is None
+                else scene_orientation_plan["sourceUpAxis"]
+            ),
+            "rotationAxis": (
+                None
+                if scene_orientation_plan is None
+                else scene_orientation_plan["rotationAxis"]
+            ),
+            "rotationRadians": (
+                0.0
+                if scene_orientation_plan is None
+                else scene_orientation_plan["rotationRadians"]
+            ),
+            "applyScale": apply_scale,
+        }
         bpy_module.ops.object.select_all(action="DESELECT")
         obj.select_set(True)
         bpy_module.context.view_layer.objects.active = obj

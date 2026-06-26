@@ -210,6 +210,13 @@ def synthetic_humanoid_parts() -> list[dict[str, object]]:
     ]
 
 
+def synthetic_multimesh_humanoid_parts() -> list[dict[str, object]]:
+    return [
+        {**part, "ry": max(float(part["ry"]), 0.72)}
+        for part in synthetic_humanoid_parts()
+    ]
+
+
 def synthetic_quadruped_parts() -> list[dict[str, object]]:
     return [
         {
@@ -445,6 +452,12 @@ def pack_positions(vertices: list[tuple[float, float, float]]) -> bytes:
     return b"".join(struct.pack("<fff", *vertex) for vertex in vertices)
 
 
+def gltf_source_vertex_from_blender_vertex(
+    vertex: tuple[float, float, float],
+) -> tuple[float, float, float]:
+    return (vertex[0], vertex[2], -vertex[1])
+
+
 def pack_indices(faces: list[tuple[int, int, int]]) -> bytes:
     return b"".join(struct.pack("<III", *face) for face in faces)
 
@@ -457,7 +470,7 @@ def bounds_for_vertices(vertices: list[tuple[float, float, float]]) -> tuple[lis
 
 
 def write_synthetic_multimesh_humanoid_gltf(path: Path, vertex_count: int) -> dict[str, Any]:
-    parts = synthetic_humanoid_parts()
+    parts = synthetic_multimesh_humanoid_parts()
     counts = allocate_part_counts(vertex_count, len(parts))
     path.parent.mkdir(parents=True, exist_ok=True)
     buffer = bytearray()
@@ -475,8 +488,9 @@ def write_synthetic_multimesh_humanoid_gltf(path: Path, vertex_count: int) -> di
             count=count,
         )
         faces = synthetic_faces(count)
-        position_view = append_buffer_view(buffer, pack_positions(vertices), buffer_views)
-        min_bounds, max_bounds = bounds_for_vertices(vertices)
+        gltf_vertices = [gltf_source_vertex_from_blender_vertex(vertex) for vertex in vertices]
+        position_view = append_buffer_view(buffer, pack_positions(gltf_vertices), buffer_views)
+        min_bounds, max_bounds = bounds_for_vertices(gltf_vertices)
         position_accessor = len(accessors)
         accessors.append(
             {

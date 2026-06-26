@@ -3,9 +3,20 @@ from pathlib import Path
 import subprocess
 import sys
 
+import importlib.util
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_PATH = REPO_ROOT / "scripts/run_blender_workflow_benchmark.py"
+
+
+def load_benchmark_module():
+    spec = importlib.util.spec_from_file_location("run_blender_workflow_benchmark", SCRIPT_PATH)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
 
 
 def write_fake_blender(path: Path, *, exit_code: int = 0) -> None:
@@ -242,3 +253,22 @@ def test_blender_workflow_benchmark_generates_synthetic_template_family_cases(tm
     for case in cases:
         assert Path(case["asset"]).exists()
         assert case["workflowSummary"]["qa"]["vertex_count"] == case["syntheticSpec"]["vertexCount"]
+
+
+def test_gltf_source_vertex_uses_y_up_coordinates_for_blender_space_vertex():
+    module = load_benchmark_module()
+
+    assert module.gltf_source_vertex_from_blender_vertex((1.0, 2.0, 3.0)) == (
+        1.0,
+        3.0,
+        -2.0,
+    )
+
+
+def test_synthetic_multimesh_humanoid_parts_have_depth_for_pose_stress():
+    module = load_benchmark_module()
+
+    parts = module.synthetic_multimesh_humanoid_parts()
+
+    assert len(parts) == 6
+    assert min(part["ry"] for part in parts) >= 0.72

@@ -99,7 +99,7 @@ scripts/run_blender_workflow_benchmark.py \
   --max-seconds-per-case 120
 ```
 
-Current local H-006 baseline: 2.727215 seconds for a 954-vertex humanoid with
+Current local H-006 baseline: 3.142040 seconds for a 954-vertex humanoid with
 QA pass, pose deformation pass, four preview renders, and Unity FBX export.
 
 Use synthetic humanoid cases to track end-to-end scalability:
@@ -116,10 +116,10 @@ scripts/run_blender_workflow_benchmark.py \
   --max-seconds-per-case 180
 ```
 
-Current synthetic baseline: 10k vertices in 2.321225s, 50k in 5.956758s, and
-100k in 10.666243s. All three cases import the target vertex count, export Unity
-FBX, and report clean structural QA; pose deformation is expected to warn on the
-synthetic geometry and should not be read as visual quality evidence.
+Current synthetic baseline: 10k vertices in 3.195480s, 50k in 5.995934s, and
+100k in 10.817145s. All three cases import the target vertex count, export Unity
+FBX, and report clean structural QA with pose deformation pass. These generated
+assets still should not be read as visual quality evidence.
 
 Use template-family synthetic cases to track broader workflow coverage:
 
@@ -136,8 +136,7 @@ scripts/run_blender_workflow_benchmark.py \
   --max-seconds-per-case 180
 ```
 
-Current template-family baseline: multi-mesh humanoid 10k in 3.329060s,
-quadruped 10k in 2.809406s, tail creature 10k in 2.875646s, and prop hinge 10k
-in 1.785991s. Structural QA and Unity FBX export pass for all four. The
-multi-mesh humanoid pose deformation failure remains a quality gap to fix, not
-a performance blocker.
+Current template-family baseline: multi-mesh humanoid 10k in 2.609815s,
+quadruped 10k in 2.669343s, tail creature 10k in 2.642737s, and prop hinge 10k
+in 1.958864s. Structural QA, pose deformation, and Unity FBX export pass for all
+four generated cases.
