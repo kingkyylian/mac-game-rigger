@@ -120,3 +120,24 @@ Current synthetic baseline: 10k vertices in 2.321225s, 50k in 5.956758s, and
 100k in 10.666243s. All three cases import the target vertex count, export Unity
 FBX, and report clean structural QA; pose deformation is expected to warn on the
 synthetic geometry and should not be read as visual quality evidence.
+
+Use template-family synthetic cases to track broader workflow coverage:
+
+```bash
+scripts/run_blender_workflow_benchmark.py \
+  --blender blender \
+  --synthetic-multimesh-humanoid-vertices 10000 \
+  --synthetic-quadruped-vertices 10000 \
+  --synthetic-tail-creature-vertices 10000 \
+  --synthetic-prop-hinge-vertices 10000 \
+  --evidence-root build/blender-workflow-template-family-benchmark \
+  --output build/blender-workflow-template-family-benchmark.json \
+  --timeout-seconds 600 \
+  --max-seconds-per-case 180
+```
+
+Current template-family baseline: multi-mesh humanoid 10k in 3.329060s,
+quadruped 10k in 2.809406s, tail creature 10k in 2.875646s, and prop hinge 10k
+in 1.785991s. Structural QA and Unity FBX export pass for all four. The
+multi-mesh humanoid pose deformation failure remains a quality gap to fix, not
+a performance blocker.

@@ -2,12 +2,14 @@
 from __future__ import annotations
 
 import argparse
+import base64
 from dataclasses import dataclass
 import json
 import math
 from pathlib import Path
 import re
 import subprocess
+import struct
 import sys
 import time
 from typing import Any
@@ -45,6 +47,38 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         dest="synthetic_humanoid_vertices",
         default=[],
         help="Generate a synthetic humanoid OBJ with this vertex count before benchmarking.",
+    )
+    parser.add_argument(
+        "--synthetic-multimesh-humanoid-vertices",
+        type=int,
+        action="append",
+        dest="synthetic_multimesh_humanoid_vertices",
+        default=[],
+        help="Generate a multi-mesh synthetic humanoid OBJ with this vertex count.",
+    )
+    parser.add_argument(
+        "--synthetic-quadruped-vertices",
+        type=int,
+        action="append",
+        dest="synthetic_quadruped_vertices",
+        default=[],
+        help="Generate a synthetic quadruped OBJ with this vertex count.",
+    )
+    parser.add_argument(
+        "--synthetic-tail-creature-vertices",
+        type=int,
+        action="append",
+        dest="synthetic_tail_creature_vertices",
+        default=[],
+        help="Generate a synthetic tail creature OBJ with this vertex count.",
+    )
+    parser.add_argument(
+        "--synthetic-prop-hinge-vertices",
+        type=int,
+        action="append",
+        dest="synthetic_prop_hinge_vertices",
+        default=[],
+        help="Generate a synthetic prop hinge OBJ with this vertex count.",
     )
     parser.add_argument("--template", default="humanoid")
     parser.add_argument("--camera-axis", choices=("x", "y"), default="x")
@@ -176,6 +210,140 @@ def synthetic_humanoid_parts() -> list[dict[str, object]]:
     ]
 
 
+def synthetic_quadruped_parts() -> list[dict[str, object]]:
+    return [
+        {
+            "name": "body",
+            "start": (-1.55, 0.0, 0.9),
+            "end": (1.3, 0.0, 1.0),
+            "rx": 0.38,
+            "ry": 0.26,
+        },
+        {
+            "name": "neck_head",
+            "start": (1.1, 0.0, 1.05),
+            "end": (2.0, 0.0, 1.45),
+            "rx": 0.22,
+            "ry": 0.18,
+        },
+        {
+            "name": "front_leg_left",
+            "start": (0.85, -0.25, 0.75),
+            "end": (0.95, -0.25, -0.75),
+            "rx": 0.13,
+            "ry": 0.10,
+        },
+        {
+            "name": "front_leg_right",
+            "start": (0.85, 0.25, 0.75),
+            "end": (0.95, 0.25, -0.75),
+            "rx": 0.13,
+            "ry": 0.10,
+        },
+        {
+            "name": "rear_leg_left",
+            "start": (-1.0, -0.25, 0.72),
+            "end": (-1.12, -0.25, -0.78),
+            "rx": 0.15,
+            "ry": 0.11,
+        },
+        {
+            "name": "rear_leg_right",
+            "start": (-1.0, 0.25, 0.72),
+            "end": (-1.12, 0.25, -0.78),
+            "rx": 0.15,
+            "ry": 0.11,
+        },
+        {
+            "name": "tail",
+            "start": (-1.45, 0.0, 0.98),
+            "end": (-2.55, 0.0, 1.28),
+            "rx": 0.12,
+            "ry": 0.09,
+        },
+    ]
+
+
+def synthetic_tail_creature_parts() -> list[dict[str, object]]:
+    return [
+        {
+            "name": "body",
+            "start": (-0.6, 0.0, 0.75),
+            "end": (1.3, 0.0, 1.05),
+            "rx": 0.44,
+            "ry": 0.25,
+        },
+        {
+            "name": "neck_head",
+            "start": (1.1, 0.0, 1.05),
+            "end": (2.25, 0.0, 1.75),
+            "rx": 0.20,
+            "ry": 0.15,
+        },
+        {
+            "name": "tail_base",
+            "start": (-0.65, 0.0, 0.82),
+            "end": (-2.0, 0.0, 0.78),
+            "rx": 0.24,
+            "ry": 0.16,
+        },
+        {
+            "name": "tail_tip",
+            "start": (-2.0, 0.0, 0.78),
+            "end": (-3.35, 0.0, 0.55),
+            "rx": 0.15,
+            "ry": 0.10,
+        },
+        {
+            "name": "front_leg_left",
+            "start": (0.85, -0.22, 0.65),
+            "end": (0.8, -0.22, -0.45),
+            "rx": 0.11,
+            "ry": 0.09,
+        },
+        {
+            "name": "front_leg_right",
+            "start": (0.85, 0.22, 0.65),
+            "end": (0.8, 0.22, -0.45),
+            "rx": 0.11,
+            "ry": 0.09,
+        },
+        {
+            "name": "rear_leg_left",
+            "start": (-0.35, -0.22, 0.55),
+            "end": (-0.45, -0.22, -0.45),
+            "rx": 0.12,
+            "ry": 0.09,
+        },
+        {
+            "name": "rear_leg_right",
+            "start": (-0.35, 0.22, 0.55),
+            "end": (-0.45, 0.22, -0.45),
+            "rx": 0.12,
+            "ry": 0.09,
+        },
+    ]
+
+
+def synthetic_prop_hinge_parts() -> list[dict[str, object]]:
+    return [
+        {
+            "name": "base_panel",
+            "start": (-0.95, 0.0, 0.0),
+            "end": (-0.1, 0.0, 1.55),
+            "rx": 0.18,
+            "ry": 0.08,
+        },
+        {
+            "name": "moving_panel",
+            "start": (0.1, 0.0, 0.0),
+            "end": (1.05, 0.0, 1.55),
+            "rx": 0.18,
+            "ry": 0.08,
+        },
+    ]
+
+
 def synthetic_part_vertices(
     *,
     start: tuple[float, float, float],
@@ -206,18 +374,31 @@ def synthetic_part_vertices(
     return vertices
 
 
-def write_synthetic_humanoid_obj(path: Path, vertex_count: int) -> dict[str, Any]:
-    parts = synthetic_humanoid_parts()
+def synthetic_faces(count: int) -> list[tuple[int, int, int]]:
+    return [(index, index + 1, index + 2) for index in range(0, max(count - 2, 0))]
+
+
+def write_synthetic_obj(
+    path: Path,
+    *,
+    vertex_count: int,
+    parts: list[dict[str, object]],
+    spec_type: str,
+    object_per_part: bool,
+) -> dict[str, Any]:
     counts = allocate_part_counts(vertex_count, len(parts))
     path.parent.mkdir(parents=True, exist_ok=True)
     lines = [
-        "# Mac Game Rigger synthetic humanoid benchmark asset",
+        f"# Mac Game Rigger {spec_type} benchmark asset",
         f"# vertex_count={vertex_count}",
-        "o MGR_Synthetic_Humanoid",
     ]
+    if not object_per_part:
+        lines.append(f"o MGR_{spec_type}")
     faces: list[tuple[int, int, int]] = []
     next_index = 1
     for part, count in zip(parts, counts):
+        if object_per_part:
+            lines.append(f"o MGR_{spec_type}_{part['name']}")
         part_vertices = synthetic_part_vertices(
             start=part["start"],
             end=part["end"],
@@ -227,23 +408,181 @@ def write_synthetic_humanoid_obj(path: Path, vertex_count: int) -> dict[str, Any
         )
         for vertex in part_vertices:
             lines.append(f"v {vertex[0]:.6f} {vertex[1]:.6f} {vertex[2]:.6f}")
-        for local_index in range(0, max(count - 2, 0)):
+        for local_index, local_index_b, local_index_c in synthetic_faces(count):
             faces.append(
                 (
                     next_index + local_index,
-                    next_index + local_index + 1,
-                    next_index + local_index + 2,
+                    next_index + local_index_b,
+                    next_index + local_index_c,
                 )
             )
         next_index += count
     lines.extend(f"f {a} {b} {c}" for a, b, c in faces)
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return {
-        "type": "synthetic_humanoid",
+        "type": spec_type,
         "format": "obj",
         "vertexCount": vertex_count,
         "partCount": len(parts),
+        "meshCount": len(parts) if object_per_part else 1,
     }
+
+
+def align_buffer(buffer: bytearray, alignment: int = 4) -> None:
+    while len(buffer) % alignment:
+        buffer.append(0)
+
+
+def append_buffer_view(buffer: bytearray, payload: bytes, buffer_views: list[dict[str, Any]]) -> int:
+    align_buffer(buffer)
+    offset = len(buffer)
+    buffer.extend(payload)
+    buffer_views.append({"buffer": 0, "byteOffset": offset, "byteLength": len(payload)})
+    return len(buffer_views) - 1
+
+
+def pack_positions(vertices: list[tuple[float, float, float]]) -> bytes:
+    return b"".join(struct.pack("<fff", *vertex) for vertex in vertices)
+
+
+def pack_indices(faces: list[tuple[int, int, int]]) -> bytes:
+    return b"".join(struct.pack("<III", *face) for face in faces)
+
+
+def bounds_for_vertices(vertices: list[tuple[float, float, float]]) -> tuple[list[float], list[float]]:
+    return (
+        [min(vertex[axis] for vertex in vertices) for axis in range(3)],
+        [max(vertex[axis] for vertex in vertices) for axis in range(3)],
+    )
+
+
+def write_synthetic_multimesh_humanoid_gltf(path: Path, vertex_count: int) -> dict[str, Any]:
+    parts = synthetic_humanoid_parts()
+    counts = allocate_part_counts(vertex_count, len(parts))
+    path.parent.mkdir(parents=True, exist_ok=True)
+    buffer = bytearray()
+    buffer_views: list[dict[str, Any]] = []
+    accessors: list[dict[str, Any]] = []
+    meshes: list[dict[str, Any]] = []
+    nodes: list[dict[str, Any]] = []
+
+    for part, count in zip(parts, counts):
+        vertices = synthetic_part_vertices(
+            start=part["start"],
+            end=part["end"],
+            rx=part["rx"],
+            ry=part["ry"],
+            count=count,
+        )
+        faces = synthetic_faces(count)
+        position_view = append_buffer_view(buffer, pack_positions(vertices), buffer_views)
+        min_bounds, max_bounds = bounds_for_vertices(vertices)
+        position_accessor = len(accessors)
+        accessors.append(
+            {
+                "bufferView": position_view,
+                "componentType": 5126,
+                "count": len(vertices),
+                "type": "VEC3",
+                "min": min_bounds,
+                "max": max_bounds,
+            }
+        )
+        index_view = append_buffer_view(buffer, pack_indices(faces), buffer_views)
+        index_accessor = len(accessors)
+        accessors.append(
+            {
+                "bufferView": index_view,
+                "componentType": 5125,
+                "count": len(faces) * 3,
+                "type": "SCALAR",
+                "min": [0],
+                "max": [max(len(vertices) - 1, 0)],
+            }
+        )
+        mesh_index = len(meshes)
+        meshes.append(
+            {
+                "name": f"MGR_{part['name']}",
+                "primitives": [
+                    {
+                        "attributes": {"POSITION": position_accessor},
+                        "indices": index_accessor,
+                        "mode": 4,
+                    }
+                ],
+            }
+        )
+        nodes.append({"name": f"MGR_{part['name']}", "mesh": mesh_index})
+
+    payload = {
+        "asset": {"version": "2.0", "generator": "Mac Game Rigger synthetic benchmark"},
+        "scene": 0,
+        "scenes": [{"nodes": list(range(len(nodes)))}],
+        "nodes": nodes,
+        "meshes": meshes,
+        "buffers": [
+            {
+                "uri": "data:application/octet-stream;base64,"
+                + base64.b64encode(bytes(buffer)).decode("ascii"),
+                "byteLength": len(buffer),
+            }
+        ],
+        "bufferViews": buffer_views,
+        "accessors": accessors,
+    }
+    path.write_text(json.dumps(payload, separators=(",", ":")) + "\n", encoding="utf-8")
+    return {
+        "type": "synthetic_multimesh_humanoid",
+        "format": "gltf",
+        "vertexCount": vertex_count,
+        "partCount": len(parts),
+        "meshCount": len(parts),
+    }
+
+
+def write_synthetic_humanoid_obj(path: Path, vertex_count: int) -> dict[str, Any]:
+    return write_synthetic_obj(
+        path,
+        vertex_count=vertex_count,
+        parts=synthetic_humanoid_parts(),
+        spec_type="synthetic_humanoid",
+        object_per_part=False,
+    )
+
+
+def write_synthetic_multimesh_humanoid_obj(path: Path, vertex_count: int) -> dict[str, Any]:
+    return write_synthetic_multimesh_humanoid_gltf(path, vertex_count)
+
+
+def write_synthetic_quadruped_obj(path: Path, vertex_count: int) -> dict[str, Any]:
+    return write_synthetic_obj(
+        path,
+        vertex_count=vertex_count,
+        parts=synthetic_quadruped_parts(),
+        spec_type="synthetic_quadruped",
+        object_per_part=False,
+    )
+
+
+def write_synthetic_tail_creature_obj(path: Path, vertex_count: int) -> dict[str, Any]:
+    return write_synthetic_obj(
+        path,
+        vertex_count=vertex_count,
+        parts=synthetic_tail_creature_parts(),
+        spec_type="synthetic_tail_creature",
+        object_per_part=False,
+    )
+
+
+def write_synthetic_prop_hinge_obj(path: Path, vertex_count: int) -> dict[str, Any]:
+    return write_synthetic_obj(
+        path,
+        vertex_count=vertex_count,
+        parts=synthetic_prop_hinge_parts(),
+        spec_type="synthetic_prop_hinge",
+        object_per_part=False,
+    )
 
 
 def case_slug(index: int, asset_path: Path, template: str) -> str:
@@ -317,6 +656,30 @@ def prepare_cases(args: argparse.Namespace) -> list[BenchmarkCase]:
         asset_path = synthetic_root / f"synthetic-humanoid-{vertex_count}.obj"
         spec = write_synthetic_humanoid_obj(asset_path, vertex_count)
         cases.append(BenchmarkCase(asset=asset_path, template="humanoid", synthetic_spec=spec))
+    for vertex_count in args.synthetic_multimesh_humanoid_vertices:
+        if vertex_count <= 0:
+            raise ValueError("synthetic multi-mesh humanoid vertex counts must be positive")
+        asset_path = synthetic_root / f"synthetic-multimesh-humanoid-{vertex_count}.gltf"
+        spec = write_synthetic_multimesh_humanoid_obj(asset_path, vertex_count)
+        cases.append(BenchmarkCase(asset=asset_path, template="humanoid", synthetic_spec=spec))
+    for vertex_count in args.synthetic_quadruped_vertices:
+        if vertex_count <= 0:
+            raise ValueError("synthetic quadruped vertex counts must be positive")
+        asset_path = synthetic_root / f"synthetic-quadruped-{vertex_count}.obj"
+        spec = write_synthetic_quadruped_obj(asset_path, vertex_count)
+        cases.append(BenchmarkCase(asset=asset_path, template="quadruped", synthetic_spec=spec))
+    for vertex_count in args.synthetic_tail_creature_vertices:
+        if vertex_count <= 0:
+            raise ValueError("synthetic tail creature vertex counts must be positive")
+        asset_path = synthetic_root / f"synthetic-tail-creature-{vertex_count}.obj"
+        spec = write_synthetic_tail_creature_obj(asset_path, vertex_count)
+        cases.append(BenchmarkCase(asset=asset_path, template="tail_creature", synthetic_spec=spec))
+    for vertex_count in args.synthetic_prop_hinge_vertices:
+        if vertex_count <= 0:
+            raise ValueError("synthetic prop hinge vertex counts must be positive")
+        asset_path = synthetic_root / f"synthetic-prop-hinge-{vertex_count}.obj"
+        spec = write_synthetic_prop_hinge_obj(asset_path, vertex_count)
+        cases.append(BenchmarkCase(asset=asset_path, template="prop_hinge", synthetic_spec=spec))
     return cases
 
 

@@ -24,6 +24,7 @@ Release: Mac Game Rigger Alpha 0.1.0
 | Performance smoke gate | pass | `scripts/run_full_alpha_smoke.sh --skip-blender` runs `scripts/run_performance_benchmark.py --vertex-count 1000 --max-seconds-per-case 10`; `docs/performance-benchmarks.md` records the 10k/50k/100k capsule weight-binding baseline. |
 | Blender workflow benchmark | pass | `scripts/run_blender_workflow_benchmark.py --blender blender --asset local_assets/H-006/H-006-quaternius-animated-woman.fbx --template humanoid --evidence-root build/blender-workflow-benchmark --output build/blender-workflow-benchmark.json --timeout-seconds 300 --max-seconds-per-case 120` passed outside the sandbox in 2.727215s with QA pass, pose deformation pass, preview renders, and Unity FBX export. |
 | Synthetic workflow scaling | pass | `scripts/run_blender_workflow_benchmark.py --blender blender --synthetic-humanoid-vertices 10000 --synthetic-humanoid-vertices 50000 --synthetic-humanoid-vertices 100000 --evidence-root build/blender-workflow-synthetic-benchmark --output build/blender-workflow-synthetic-benchmark.json --timeout-seconds 600 --max-seconds-per-case 180` passed outside the sandbox; 10k in 2.321225s, 50k in 5.956758s, 100k in 10.666243s, with clean structural QA and Unity FBX export. |
+| Template-family workflow scaling | pass | `scripts/run_blender_workflow_benchmark.py --blender blender --synthetic-multimesh-humanoid-vertices 10000 --synthetic-quadruped-vertices 10000 --synthetic-tail-creature-vertices 10000 --synthetic-prop-hinge-vertices 10000 --evidence-root build/blender-workflow-template-family-benchmark --output build/blender-workflow-template-family-benchmark.json --timeout-seconds 600 --max-seconds-per-case 180` passed outside the sandbox; structural QA and Unity FBX export pass for all four cases. Multi-mesh humanoid pose deformation fails and remains a quality gap. |
 | Strict humanoid Animator gate | blocked | `docs/asset-evidence-progress.md` shows `configuredAnimatorSmokeForHumanoidScore3` blocked for H-003, H-004, H-005, H-009, and H-010. |
 
 ## Verification Commands
@@ -35,6 +36,7 @@ scripts/validate_asset_evidence.py --manifest samples/manifest.json --evidence-r
 scripts/run_performance_benchmark.py --vertex-count 10000 --vertex-count 50000 --vertex-count 100000 --output build/performance-benchmark.json
 scripts/run_blender_workflow_benchmark.py --blender blender --asset local_assets/H-006/H-006-quaternius-animated-woman.fbx --template humanoid --evidence-root build/blender-workflow-benchmark --output build/blender-workflow-benchmark.json --timeout-seconds 300 --max-seconds-per-case 120
 scripts/run_blender_workflow_benchmark.py --blender blender --synthetic-humanoid-vertices 10000 --synthetic-humanoid-vertices 50000 --synthetic-humanoid-vertices 100000 --evidence-root build/blender-workflow-synthetic-benchmark --output build/blender-workflow-synthetic-benchmark.json --timeout-seconds 600 --max-seconds-per-case 180
+scripts/run_blender_workflow_benchmark.py --blender blender --synthetic-multimesh-humanoid-vertices 10000 --synthetic-quadruped-vertices 10000 --synthetic-tail-creature-vertices 10000 --synthetic-prop-hinge-vertices 10000 --evidence-root build/blender-workflow-template-family-benchmark --output build/blender-workflow-template-family-benchmark.json --timeout-seconds 600 --max-seconds-per-case 180
 scripts/run_blender_compat_matrix.py --discover --skip-tests
 blender --background --factory-startup --python blender_tests/test_generate_armature_operator.py
 blender --background --factory-startup --python blender_tests/test_capsule_weights_operator.py
@@ -66,7 +68,7 @@ scripts/validate_asset_evidence.py --manifest samples/manifest.json --evidence-r
 - Unreal engine import validation is not complete: prepare-only workspace creation and unattended runner orchestration are implemented, but `UnrealEditor` is not on `PATH` and no real Unreal Editor import pass has been captured.
 - Blender 4.2 target compatibility is not yet proven locally; current discovered Blender is 4.5.10 LTS.
 - Production trial evidence is present and passes, but the stricter game-ready configured Animator gate is not closed.
-- Full Blender rig workflow timing has one real H-006 baseline and synthetic 10k / 50k / 100k scalability baselines; it still needs multi-mesh humanoid, quadruped, tail creature, and prop timing.
+- Full Blender rig workflow timing has one real H-006 baseline, synthetic 10k / 50k / 100k scalability baselines, and synthetic template-family timing; real multi-mesh humanoid, quadruped, tail creature, and prop assets still need timing.
 - Wing-specific rig helpers are still experimental; prop hinge and tail creature helpers are present but need more real asset evidence.
 - Finger rigging, cloth/skirt deformation, and advanced tail/wing controls remain out of V1 scope.
 - QA report has structural, weight, preview, and pose deformation evidence, but still does not replace artist visual approval.

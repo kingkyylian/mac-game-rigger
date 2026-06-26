@@ -96,12 +96,50 @@ Notes:
 - The imported Blender QA vertex count matches the requested target vertex count
   for all three cases.
 
+## Synthetic Template Family Workflow
+
+Command:
+
+```bash
+scripts/run_blender_workflow_benchmark.py \
+  --blender blender \
+  --synthetic-multimesh-humanoid-vertices 10000 \
+  --synthetic-quadruped-vertices 10000 \
+  --synthetic-tail-creature-vertices 10000 \
+  --synthetic-prop-hinge-vertices 10000 \
+  --evidence-root build/blender-workflow-template-family-benchmark \
+  --output build/blender-workflow-template-family-benchmark.json \
+  --timeout-seconds 600 \
+  --max-seconds-per-case 180
+```
+
+Result:
+
+| Synthetic Type | Template | Format | Meshes | Vertices | Bones | Duration Seconds | QA | Pose Deformation | Export |
+|---|---|---|---:|---:|---:|---:|---|---|---|
+| multi-mesh humanoid | humanoid | glTF | 6 | 10,000 | 17 | 3.329060 | 0 unweighted, 0 over-limit, 0 warnings/errors | fail | Unity FBX pass |
+| quadruped | quadruped | OBJ | 1 | 10,000 | 23 | 2.809406 | 0 unweighted, 0 over-limit, 0 warnings/errors | pass | Unity FBX pass |
+| tail creature | tail_creature | OBJ | 1 | 10,000 | 25 | 2.875646 | 0 unweighted, 0 over-limit, 0 warnings/errors | pass | Unity FBX pass |
+| prop hinge | prop_hinge | OBJ | 1 | 10,000 | 3 | 1.785991 | 0 unweighted, 0 over-limit, 0 warnings/errors | pass | Unity FBX pass |
+
+Status: `pass`
+
+Notes:
+
+- The multi-mesh humanoid case imports as six Blender meshes and exercises
+  separated source objects. Its pose deformation failure is a useful quality
+  gap signal; the workflow benchmark still passed because structural QA and
+  export completed.
+- Quadruped, tail creature, and prop hinge cases extend workflow timing beyond
+  humanoids at a consistent 10k vertex target.
+- These generated assets are scalability probes, not substitutes for real
+  artist asset review.
+
 ## Coverage Gap
 
 Product performance still needs measured runtime for larger synthetic and real
 assets:
 
-- multi-mesh humanoids with hair/accessory parts;
-- quadruped and tail creature workflow timing;
-- prop hinge workflow timing;
+- real multi-mesh humanoids with hair/accessory parts;
+- real quadruped, tail creature, and prop hinge timing;
 - Blender 4.2 target version timing, not only Blender 4.5.10 LTS.

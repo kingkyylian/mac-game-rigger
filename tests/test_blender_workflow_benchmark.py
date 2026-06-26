@@ -24,11 +24,19 @@ summary_path = Path(value_after("--summary"))
 asset_path = Path(value_after("--asset"))
 vertex_count = 0
 if asset_path.exists():
-    vertex_count = sum(
-        1
-        for line in asset_path.read_text(encoding="utf-8", errors="ignore").splitlines()
-        if line.startswith("v ")
-    )
+    if asset_path.suffix == ".gltf":
+        payload = json.loads(asset_path.read_text(encoding="utf-8"))
+        vertex_count = sum(
+            accessor["count"]
+            for accessor in payload.get("accessors", [])
+            if accessor.get("type") == "VEC3"
+        )
+    else:
+        vertex_count = sum(
+            1
+            for line in asset_path.read_text(encoding="utf-8", errors="ignore").splitlines()
+            if line.startswith("v ")
+        )
 summary_path.parent.mkdir(parents=True, exist_ok=True)
 summary_path.write_text(json.dumps({{
     "schemaVersion": 1,
@@ -178,4 +186,59 @@ def test_blender_workflow_benchmark_generates_synthetic_humanoid_cases(tmp_path)
         assert asset_path.exists()
         assert asset_path.suffix == ".obj"
         assert case["template"] == "humanoid"
+        assert case["workflowSummary"]["qa"]["vertex_count"] == case["syntheticSpec"]["vertexCount"]
+
+
+def test_blender_workflow_benchmark_generates_synthetic_template_family_cases(tmp_path):
+    fake_blender = tmp_path / "fake_blender.py"
+    write_fake_blender(fake_blender)
+    output_path = tmp_path / "workflow-benchmark.json"
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(SCRIPT_PATH),
+            "--blender",
+            str(fake_blender),
+            "--synthetic-multimesh-humanoid-vertices",
+            "240",
+            "--synthetic-quadruped-vertices",
+            "300",
+            "--synthetic-tail-creature-vertices",
+            "360",
+            "--synthetic-prop-hinge-vertices",
+            "180",
+            "--evidence-root",
+            str(tmp_path / "evidence"),
+            "--output",
+            str(output_path),
+            "--max-seconds-per-case",
+            "10",
+        ],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    payload = json.loads(output_path.read_text(encoding="utf-8"))
+    assert payload["status"] == "pass"
+    cases = payload["cases"]
+    assert [case["template"] for case in cases] == [
+        "humanoid",
+        "quadruped",
+        "tail_creature",
+        "prop_hinge",
+    ]
+    assert [case["syntheticSpec"]["type"] for case in cases] == [
+        "synthetic_multimesh_humanoid",
+        "synthetic_quadruped",
+        "synthetic_tail_creature",
+        "synthetic_prop_hinge",
+    ]
+    assert [case["syntheticSpec"]["vertexCount"] for case in cases] == [240, 300, 360, 180]
+    assert cases[0]["syntheticSpec"]["meshCount"] > 1
+    for case in cases:
+        assert Path(case["asset"]).exists()
         assert case["workflowSummary"]["qa"]["vertex_count"] == case["syntheticSpec"]["vertexCount"]
