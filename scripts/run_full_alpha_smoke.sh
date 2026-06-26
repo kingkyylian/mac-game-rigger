@@ -80,6 +80,7 @@ python3 -m py_compile scripts/register_asset_evidence.py
 python3 -m py_compile scripts/create_evidence_skeleton.py
 python3 -m py_compile scripts/generate_asset_evidence_report.py
 python3 -m py_compile scripts/run_performance_benchmark.py
+python3 -m py_compile scripts/run_blender_workflow_benchmark.py
 python3 -m py_compile tools/unreal_import_check/MacGameRiggerFbxImportCheck.py
 
 if [ "$SKIP_BLENDER" -eq 0 ]; then
@@ -122,6 +123,7 @@ required_package_paths=(
   "scripts/create_evidence_skeleton.py"
   "scripts/generate_asset_evidence_report.py"
   "scripts/run_performance_benchmark.py"
+  "scripts/run_blender_workflow_benchmark.py"
   "scripts/run_blender_compat_matrix.py"
   "scripts/verify_unreal_fbx_import.sh"
   "tools/unreal_import_check/MacGameRiggerFbxImportCheck.py"

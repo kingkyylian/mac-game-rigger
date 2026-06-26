@@ -84,6 +84,22 @@ scripts/run_performance_benchmark.py \
 ```
 
 The local alpha smoke gate runs a smaller 1k vertex benchmark as a regression
-check. Product-level performance evidence still needs end-to-end Blender timing
-for mesh analysis, landmark workflow, armature generation, binding, cleanup,
-preview, and export.
+check.
+
+Use the Blender workflow benchmark to track full import-to-export runtime:
+
+```bash
+scripts/run_blender_workflow_benchmark.py \
+  --blender blender \
+  --asset local_assets/H-006/H-006-quaternius-animated-woman.fbx \
+  --template humanoid \
+  --evidence-root build/blender-workflow-benchmark \
+  --output build/blender-workflow-benchmark.json \
+  --timeout-seconds 300 \
+  --max-seconds-per-case 120
+```
+
+Current local H-006 baseline: 2.727215 seconds for a 954-vertex humanoid with
+QA pass, pose deformation pass, four preview renders, and Unity FBX export. The
+next product-level performance step is scaling this benchmark to 10k / 50k /
+100k end-to-end Blender cases.
