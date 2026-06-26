@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "description": "Candidate sources for real split-mesh humanoid evidence. Every candidate still must pass local source import smoke before it can close product gates.",
+  "candidates": [
+    {
+      "id": "kaykit-adventurers",
+      "sourceName": "KayKit Adventurers",
+      "sourceUrl": "https://kaylousberg.itch.io/kaykit-adventurers",
+      "license": "CC0",
+      "formats": [
+        "FBX",
+        "GLTF",
+        "OBJ",
+        "BLEND"
+      ],
+      "whyCandidate": "Humanoid adventurer characters with hair, clothing, hats, weapons, shields, and backpacks. Use source import smoke to verify mesh separation.",
+      "verificationRequired": [
+        "Downloaded asset must import with source mesh count > 1.",
+        "Rig workflow must preserve rig mesh count > 1.",
+        "H-002 evidence must reach deformation score >= 3."
+      ]
+    },
+    {
+      "id": "quaternius-ultimate-animated-character",
+      "sourceName": "Quaternius Ultimate Animated Character Pack",
+      "sourceUrl": "https://quaternius.com/packs/ultimatedanimatedcharacter.html",
+      "license": "CC0",
+      "formats": [
+        "FBX",
+        "OBJ",
+        "BLEND"
+      ],
+      "whyCandidate": "Large humanoid character pack already used by current evidence; keep as fallback, but current sampled characters import as single mesh.",
+      "verificationRequired": [
+        "Pick a character variant not already measured.",
+        "Downloaded asset must import with source mesh count > 1 before it can be used for the strict gate."
+      ]
+    }
+  ]
+}

@@ -29,6 +29,7 @@ Release: Mac Game Rigger Alpha 0.1.0
 | Strict humanoid Animator gate | blocked | `docs/asset-evidence-progress.md` shows `configuredAnimatorSmokeForHumanoidScore3` blocked for H-003, H-004, H-005, H-009, and H-010. `scripts/plan_unity_animator_smoke_migration.py --json` lists exactly those five migration commands. `scripts/check_unity_batchmode_health.py --output build/unity-batchmode-health.json --timeout-seconds 90` currently times out with Unity Licensing Client/bootstrap failure before asset import starts. |
 | Strict separate-mesh humanoid gate | blocked | `docs/asset-evidence-progress.md` shows `realSeparateMeshHumanoidEvidence` blocked for H-003, H-004, H-005, H-006, H-009, and H-010. Current complete score >= 3 real humanoids report source import mesh count 1 and rig workflow mesh count 1, so no real separate-mesh hair/accessory/clothing humanoid evidence exists yet. |
 | Split-mesh humanoid intake plan | pass | `scripts/plan_split_mesh_humanoid_intake.py --manifest samples/manifest.json --json` reports H-002, H-007, and H-008 as open humanoid slots and recommends H-002. When an asset path is provided, it emits source import smoke, Blender workflow, manifest registration, and report regeneration commands. |
+| Split-mesh source candidate registry | pass | `samples/split_mesh_humanoid_candidates.json` records KayKit Adventurers as the primary H-002 candidate with CC0 license metadata and FBX/GLTF/OBJ/BLEND format notes. The planner supports `--candidate kaykit-adventurers` to prefill source metadata, while still requiring local source import smoke to prove mesh separation. |
 | Split-mesh humanoid verifier | blocked | `scripts/verify_split_mesh_humanoid_evidence.py --manifest samples/manifest.json --evidence-root . --json` is wired and currently blocks because no score >= 3 real humanoid has both source import mesh count > 1 and rig workflow mesh count > 1. |
 
 ## Verification Commands
@@ -47,6 +48,7 @@ scripts/plan_unity_animator_smoke_migration.py --manifest samples/manifest.json 
 scripts/run_unity_animator_smoke_migration.py --manifest samples/manifest.json --evidence-root . --dry-run
 scripts/check_unity_batchmode_health.py --output build/unity-batchmode-health.json --timeout-seconds 90
 scripts/plan_split_mesh_humanoid_intake.py --manifest samples/manifest.json --json
+scripts/plan_split_mesh_humanoid_intake.py --manifest samples/manifest.json --candidate kaykit-adventurers --asset local_assets/H-002/kaykit-adventurer.glb --json
 scripts/verify_split_mesh_humanoid_evidence.py --manifest samples/manifest.json --evidence-root . --json
 scripts/run_blender_compat_matrix.py --discover --skip-tests
 scripts/run_blender_compat_matrix.py --discover --skip-tests --require-version-prefix "Blender 4.2" --output build/blender-compat-target-4.2.json --quiet
@@ -79,7 +81,7 @@ scripts/validate_asset_evidence.py --manifest samples/manifest.json --evidence-r
 - GitHub Actions CI is configured, but the first remote run did not start because the private repository hit an account billing/spending-limit restriction. Keep using `scripts/run_full_alpha_smoke.sh --skip-blender` locally until billing is fixed or the repo visibility is intentionally changed.
 - Strict configured Animator smoke is still incomplete for five score >= 3 Unity-pass humanoids: H-003, H-004, H-005, H-009, and H-010. H-006 has passing configured Animator evidence.
 - Strict separate-mesh humanoid evidence is missing: all complete score >= 3 real humanoids currently report source import mesh count 1 and rig workflow mesh count 1, so hair/accessory/clothing split-mesh behavior is still unproven on real assets.
-- Split-mesh humanoid intake is now planned by script, but it still needs an actual licensed asset file before the strict gate can close.
+- Split-mesh humanoid intake is now planned by script and has KayKit Adventurers as a primary CC0 candidate, but it still needs the actual asset file before the strict gate can close.
 - Unreal engine import validation is not complete: prepare-only workspace creation and unattended runner orchestration are implemented, but `UnrealEditor` is not on `PATH` and no real Unreal Editor import pass has been captured.
 - Blender 4.2 target compatibility is not yet proven locally; the target gate now reports `required_blender_version_not_found` and current discovered Blender versions are only 4.5.10 LTS.
 - Production trial evidence is present and passes, but the stricter game-ready configured Animator and real separate-mesh humanoid gates are not closed.

@@ -11,12 +11,26 @@ from typing import Any
 
 DEFAULT_MANIFEST = "samples/manifest.json"
 DEFAULT_EVIDENCE_ROOT = "."
+DEFAULT_CANDIDATES = "samples/split_mesh_humanoid_candidates.json"
 DEFAULT_BLENDER = "blender"
 DEFAULT_TIMEOUT_SECONDS = 300
 
 
 def load_manifest(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def load_candidate_registry(path: Path) -> list[dict[str, Any]]:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    candidates = payload.get("candidates")
+    return [candidate for candidate in candidates if isinstance(candidate, dict)] if isinstance(candidates, list) else []
+
+
+def find_candidate(candidates: list[dict[str, Any]], candidate_id: str) -> dict[str, Any]:
+    for candidate in candidates:
+        if candidate.get("id") == candidate_id:
+            return candidate
+    raise ValueError(f"Candidate not found: {candidate_id}")
 
 
 def is_empty_slot(slot: dict[str, Any]) -> bool:
@@ -62,6 +76,7 @@ def build_intake_plan(
     manifest_path: str = DEFAULT_MANIFEST,
     evidence_root: Path = Path(DEFAULT_EVIDENCE_ROOT),
     timeout_seconds: int = DEFAULT_TIMEOUT_SECONDS,
+    candidate: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     slot = find_slot(manifest, slot_id)
     if slot.get("category") != "humanoid":
@@ -155,7 +170,7 @@ def build_intake_plan(
         "--output",
         "docs/asset-evidence-progress.md",
     ]
-    return {
+    plan = {
         "slot": slot_id,
         "asset": asset_text,
         "evidenceDir": str(evidence_dir),
@@ -178,6 +193,15 @@ def build_intake_plan(
             "Keep source binary out of git unless its license explicitly allows committing it.",
         ],
     }
+    if candidate is not None:
+        plan["candidate"] = {
+            "id": candidate.get("id"),
+            "sourceName": candidate.get("sourceName"),
+            "sourceUrl": candidate.get("sourceUrl"),
+            "license": candidate.get("license"),
+            "verificationRequired": candidate.get("verificationRequired", []),
+        }
+    return plan
 
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
@@ -185,9 +209,11 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         description="Plan intake commands for a real split-mesh humanoid evidence slot."
     )
     parser.add_argument("--manifest", default=DEFAULT_MANIFEST)
+    parser.add_argument("--candidates", default=DEFAULT_CANDIDATES)
     parser.add_argument("--evidence-root", default=DEFAULT_EVIDENCE_ROOT)
     parser.add_argument("--slot", help="Humanoid manifest slot to use. Defaults to first empty humanoid slot.")
     parser.add_argument("--asset", type=Path, help="Candidate split-mesh humanoid asset path.")
+    parser.add_argument("--candidate", help="Candidate id from samples/split_mesh_humanoid_candidates.json.")
     parser.add_argument("--source-name", default="Split-mesh humanoid candidate")
     parser.add_argument("--source-url", default="manual-intake")
     parser.add_argument("--license", dest="license_name", default="manual-review-required")
@@ -229,8 +255,19 @@ def print_text_payload(payload: dict[str, Any]) -> None:
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(sys.argv[1:] if argv is None else argv)
     manifest = load_manifest(Path(args.manifest))
+    candidate = None
+    source_name = args.source_name
+    source_url = args.source_url
+    license_name = args.license_name
+    if args.candidate:
+        candidate = find_candidate(load_candidate_registry(Path(args.candidates)), args.candidate)
+        source_name = str(candidate.get("sourceName") or source_name)
+        source_url = str(candidate.get("sourceUrl") or source_url)
+        license_name = str(candidate.get("license") or license_name)
     if args.asset is None:
         payload = response_without_asset(manifest)
+        if candidate is not None:
+            payload["candidate"] = candidate
     else:
         open_slots = find_open_humanoid_slots(manifest)
         slot_id = args.slot or (str(open_slots[0]["id"]) if open_slots else "")
@@ -241,13 +278,14 @@ def main(argv: list[str] | None = None) -> int:
             manifest,
             slot_id=slot_id,
             asset=args.asset,
-            source_name=args.source_name,
-            source_url=args.source_url,
-            license_name=args.license_name,
+            source_name=source_name,
+            source_url=source_url,
+            license_name=license_name,
             blender=args.blender,
             manifest_path=args.manifest,
             evidence_root=Path(args.evidence_root),
             timeout_seconds=args.timeout_seconds,
+            candidate=candidate,
         )
         payload["status"] = "ready"
 

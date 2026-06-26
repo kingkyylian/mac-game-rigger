@@ -87,6 +87,48 @@ def test_build_intake_plan_includes_source_smoke_workflow_and_register_commands(
     assert plan["acceptance"]["rigWorkflowMeshCount"] == ">1"
 
 
+def test_load_candidate_registry_and_apply_candidate_defaults():
+    module = load_module()
+
+    candidates = module.load_candidate_registry(REPO_ROOT / "samples/split_mesh_humanoid_candidates.json")
+    candidate = module.find_candidate(candidates, "kaykit-adventurers")
+
+    assert candidate["sourceName"] == "KayKit Adventurers"
+    assert candidate["license"] == "CC0"
+    assert "GLTF" in candidate["formats"]
+
+
+def test_cli_candidate_prefills_source_metadata_for_asset_plan():
+    load_module()
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(SCRIPT_PATH),
+            "--manifest",
+            "samples/manifest.json",
+            "--candidate",
+            "kaykit-adventurers",
+            "--asset",
+            "local_assets/H-002/kaykit-adventurer.glb",
+            "--json",
+        ],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    payload = json.loads(result.stdout)
+    assert payload["status"] == "ready"
+    assert payload["candidate"]["id"] == "kaykit-adventurers"
+    assert "--source-name" in payload["commands"]["sourceImportSmoke"]
+    assert "KayKit Adventurers" in payload["commands"]["sourceImportSmoke"]
+    assert "--license" in payload["commands"]["sourceImportSmoke"]
+    assert "CC0" in payload["commands"]["sourceImportSmoke"]
+
+
 def test_cli_json_reports_current_open_humanoid_slots_without_asset():
     load_module()
 
