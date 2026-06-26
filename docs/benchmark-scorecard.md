@@ -100,6 +100,23 @@ scripts/run_blender_workflow_benchmark.py \
 ```
 
 Current local H-006 baseline: 2.727215 seconds for a 954-vertex humanoid with
-QA pass, pose deformation pass, four preview renders, and Unity FBX export. The
-next product-level performance step is scaling this benchmark to 10k / 50k /
-100k end-to-end Blender cases.
+QA pass, pose deformation pass, four preview renders, and Unity FBX export.
+
+Use synthetic humanoid cases to track end-to-end scalability:
+
+```bash
+scripts/run_blender_workflow_benchmark.py \
+  --blender blender \
+  --synthetic-humanoid-vertices 10000 \
+  --synthetic-humanoid-vertices 50000 \
+  --synthetic-humanoid-vertices 100000 \
+  --evidence-root build/blender-workflow-synthetic-benchmark \
+  --output build/blender-workflow-synthetic-benchmark.json \
+  --timeout-seconds 600 \
+  --max-seconds-per-case 180
+```
+
+Current synthetic baseline: 10k vertices in 2.321225s, 50k in 5.956758s, and
+100k in 10.666243s. All three cases import the target vertex count, export Unity
+FBX, and report clean structural QA; pose deformation is expected to warn on the
+synthetic geometry and should not be read as visual quality evidence.

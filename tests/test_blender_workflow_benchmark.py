@@ -21,6 +21,14 @@ def value_after(flag):
     return script_args[script_args.index(flag) + 1]
 
 summary_path = Path(value_after("--summary"))
+asset_path = Path(value_after("--asset"))
+vertex_count = 0
+if asset_path.exists():
+    vertex_count = sum(
+        1
+        for line in asset_path.read_text(encoding="utf-8", errors="ignore").splitlines()
+        if line.startswith("v ")
+    )
 summary_path.parent.mkdir(parents=True, exist_ok=True)
 summary_path.write_text(json.dumps({{
     "schemaVersion": 1,
@@ -30,6 +38,7 @@ summary_path.write_text(json.dumps({{
     "meshCount": 1,
     "poseDeformation": {{"status": "pass"}},
     "qa": {{
+        "vertex_count": vertex_count,
         "unweighted_vertices": 0,
         "over_limit_vertices": 0,
         "warnings": [],
@@ -124,3 +133,49 @@ def test_blender_workflow_benchmark_fails_when_blender_case_fails(tmp_path):
     assert payload["status"] == "fail"
     assert payload["cases"][0]["status"] == "fail"
     assert payload["cases"][0]["exitCode"] == 9
+
+
+def test_blender_workflow_benchmark_generates_synthetic_humanoid_cases(tmp_path):
+    fake_blender = tmp_path / "fake_blender.py"
+    write_fake_blender(fake_blender)
+    output_path = tmp_path / "workflow-benchmark.json"
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(SCRIPT_PATH),
+            "--blender",
+            str(fake_blender),
+            "--synthetic-humanoid-vertices",
+            "10000",
+            "--synthetic-humanoid-vertices",
+            "50000",
+            "--synthetic-humanoid-vertices",
+            "100000",
+            "--evidence-root",
+            str(tmp_path / "evidence"),
+            "--output",
+            str(output_path),
+            "--max-seconds-per-case",
+            "10",
+        ],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    payload = json.loads(output_path.read_text(encoding="utf-8"))
+    assert payload["status"] == "pass"
+    assert [case["syntheticSpec"]["vertexCount"] for case in payload["cases"]] == [
+        10000,
+        50000,
+        100000,
+    ]
+    for case in payload["cases"]:
+        asset_path = Path(case["asset"])
+        assert asset_path.exists()
+        assert asset_path.suffix == ".obj"
+        assert case["template"] == "humanoid"
+        assert case["workflowSummary"]["qa"]["vertex_count"] == case["syntheticSpec"]["vertexCount"]
