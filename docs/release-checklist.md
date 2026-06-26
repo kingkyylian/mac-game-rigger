@@ -20,7 +20,7 @@ Release: Mac Game Rigger Alpha 0.1.0
 | Smoke benchmark | pass | `docs/alpha-smoke-results.md` has 5 generated full-workflow proxy rows, 5 real glTF sample asset import rows, and one Unity batchmode import verifier pass for `mac_game_rigger_unity_export.fbx`. |
 | Blender compatibility matrix | partial | `scripts/run_blender_compat_matrix.py` passed 15 Blender headless tests on local Blender 4.5.10 LTS outside the sandbox; Blender 4.2 target evidence is still required before beta. |
 | Real asset evidence gate | pass | `scripts/validate_asset_evidence.py --manifest samples/manifest.json --evidence-root . --check-evidence-files --require-production-trial --quiet` passes with 12 complete real asset evidence entries. |
-| CI smoke gate | configured | `.github/workflows/ci.yml` runs `scripts/run_full_alpha_smoke.sh --skip-blender` and uploads `dist/MacGameRigger-0.1.0.zip`. |
+| CI smoke gate | blocked | `.github/workflows/ci.yml` runs `scripts/run_full_alpha_smoke.sh --skip-blender` and uploads `dist/MacGameRigger-0.1.0.zip`; remote GitHub run `28246102354` failed before starting because private-repo Actions billing/spending limit needs attention. |
 | Strict humanoid Animator gate | blocked | `docs/asset-evidence-progress.md` shows `configuredAnimatorSmokeForHumanoidScore3` blocked for H-003, H-004, H-005, H-009, and H-010. |
 
 ## Verification Commands
@@ -54,6 +54,7 @@ scripts/validate_asset_evidence.py --manifest samples/manifest.json --evidence-r
 ## Known issues
 
 - Unity import validation passes outside the sandbox after restarting a stale Unity Licensing Client process. Sandboxed Unity batchmode still fails with Package Manager `listen EPERM`, so engine import verification must run outside the sandbox.
+- GitHub Actions CI is configured, but the first remote run did not start because the private repository hit an account billing/spending-limit restriction. Keep using `scripts/run_full_alpha_smoke.sh --skip-blender` locally until billing is fixed or the repo visibility is intentionally changed.
 - Strict configured Animator smoke is still incomplete for five score >= 3 Unity-pass humanoids: H-003, H-004, H-005, H-009, and H-010. H-006 has passing configured Animator evidence.
 - Unreal engine import validation is not complete: prepare-only workspace creation and unattended runner orchestration are implemented, but `UnrealEditor` is not on `PATH` and no real Unreal Editor import pass has been captured.
 - Blender 4.2 target compatibility is not yet proven locally; current discovered Blender is 4.5.10 LTS.
