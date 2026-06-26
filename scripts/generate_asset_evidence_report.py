@@ -106,6 +106,25 @@ def load_mesh_count_by_slot(evidence_root: Path, slots: list[dict]) -> dict[str,
     return mesh_count_by_slot
 
 
+def load_source_mesh_count_by_slot(evidence_root: Path, slots: list[dict]) -> dict[str, int | str]:
+    mesh_count_by_slot: dict[str, int | str] = {}
+    for slot in slots:
+        slot_id = slot["id"]
+        smoke_path = evidence_root / "evidence" / slot_id / "asset-import-smoke.json"
+        if not smoke_path.exists():
+            mesh_count_by_slot[slot_id] = ""
+            continue
+        try:
+            payload = json.loads(smoke_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            mesh_count_by_slot[slot_id] = "invalid"
+            continue
+        metrics = payload.get("metrics")
+        mesh_count = metrics.get("meshCount") if isinstance(metrics, dict) else None
+        mesh_count_by_slot[slot_id] = mesh_count if isinstance(mesh_count, int) else ""
+    return mesh_count_by_slot
+
+
 def pose_deformation_cell(pose_deformation: object) -> str:
     if not isinstance(pose_deformation, dict):
         return ""
@@ -278,6 +297,9 @@ def configured_animator_strict_gate(report: dict[str, object]) -> dict[str, obje
 
 
 def real_separate_mesh_humanoid_gate(report: dict[str, object]) -> dict[str, object]:
+    source_mesh_count_by_slot = report.get("sourceMeshCountBySlot")
+    if not isinstance(source_mesh_count_by_slot, dict):
+        source_mesh_count_by_slot = {}
     mesh_count_by_slot = report.get("meshCountBySlot")
     if not isinstance(mesh_count_by_slot, dict):
         mesh_count_by_slot = {}
@@ -291,8 +313,14 @@ def real_separate_mesh_humanoid_gate(report: dict[str, object]) -> dict[str, obj
         if not isinstance(score, int) or score < 3:
             continue
         slot_id = str(slot["id"])
+        source_mesh_count = source_mesh_count_by_slot.get(slot_id)
         mesh_count = mesh_count_by_slot.get(slot_id)
-        if isinstance(mesh_count, int) and mesh_count > 1:
+        if (
+            isinstance(source_mesh_count, int)
+            and source_mesh_count > 1
+            and isinstance(mesh_count, int)
+            and mesh_count > 1
+        ):
             return {"status": "pass", "missingSlots": []}
         candidate_slots.append(slot_id)
     return {
@@ -378,12 +406,15 @@ def render_report(report: dict[str, object]) -> str:
             "",
             "## Slot Status",
             "",
-            "| Slot | Category | Real Asset | Evidence | Score | Meshes | Pose QA | Visual | Unity | Unreal | Preview | Weight | Warnings | Issues |",
-            "|---|---|---|---|---:|---:|---|---|---|---|---|---|---|---|",
+            "| Slot | Category | Real Asset | Evidence | Score | Source Meshes | Rig Meshes | Pose QA | Visual | Unity | Unreal | Preview | Weight | Warnings | Issues |",
+            "|---|---|---|---|---:|---:|---:|---|---|---|---|---|---|---|---|",
         ]
     )
     pose_deformation_by_slot = report.get("poseDeformationBySlot", {})
     weight_diagnostics_by_slot = report.get("weightDiagnosticsBySlot", {})
+    source_mesh_count_by_slot = report.get("sourceMeshCountBySlot", {})
+    if not isinstance(source_mesh_count_by_slot, dict):
+        source_mesh_count_by_slot = {}
     mesh_count_by_slot = report.get("meshCountBySlot", {})
     if not isinstance(mesh_count_by_slot, dict):
         mesh_count_by_slot = {}
@@ -397,6 +428,7 @@ def render_report(report: dict[str, object]) -> str:
             f"{checkbox(bool(slot['hasRealAsset']))} | "
             f"{checkbox(bool(slot['evidenceComplete']))} | "
             f"{table_cell(slot['deformationScore'])} | "
+            f"{table_cell(source_mesh_count_by_slot.get(slot['id'], ''))} | "
             f"{table_cell(mesh_count_by_slot.get(slot['id'], ''))} | "
             f"{table_cell(pose_deformation_by_slot.get(slot['id'], ''))} | "
             f"{table_cell(slot['visualReviewStatus'])} | "
@@ -446,6 +478,10 @@ def main() -> int:
             report["slots"],
         )
         report["weightDiagnosticsBySlot"] = load_weight_diagnostics_by_slot(
+            evidence_root,
+            report["slots"],
+        )
+        report["sourceMeshCountBySlot"] = load_source_mesh_count_by_slot(
             evidence_root,
             report["slots"],
         )
