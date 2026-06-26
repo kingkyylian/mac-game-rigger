@@ -34,6 +34,7 @@ Evidence root: `.`
 | Gate | Status | Missing Slots |
 |---|---|---|
 | `configuredAnimatorSmokeForHumanoidScore3` | blocked | H-003, H-004, H-005, H-009, H-010 |
+| `realSeparateMeshHumanoidEvidence` | blocked | H-003, H-004, H-005, H-006, H-009, H-010 |
 
 ## Category Counts
 

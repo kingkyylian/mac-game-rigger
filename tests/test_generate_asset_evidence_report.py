@@ -155,6 +155,7 @@ def write_workflow_summary(
     evidence_root,
     slot_id,
     *,
+    mesh_count=None,
     pose_status="fail",
     max_axis_expansion=4.25,
     allowed_axes=None,
@@ -172,6 +173,9 @@ def write_workflow_summary(
             "warningAxes": [],
         }
     }
+    if mesh_count is not None:
+        payload["meshCount"] = mesh_count
+        payload["qa"] = {"mesh_count": mesh_count}
     if allowed_axes is not None:
         payload["poseDeformation"]["allowedExpandedAxes"] = allowed_axes
     if weight_diagnostics is not None:
@@ -453,6 +457,54 @@ def test_generate_asset_evidence_report_shows_configured_animator_strict_gate(tm
     assert result.returncode == 0
     assert "## Strict Quality Gates" in result.stdout
     assert "| `configuredAnimatorSmokeForHumanoidScore3` | blocked | H-001 |" in result.stdout
+
+
+def test_generate_asset_evidence_report_blocks_missing_real_separate_mesh_humanoid(tmp_path):
+    manifest = clear_registered_assets(load_manifest())
+    slots = []
+    for slot in manifest["slots"]:
+        next_slot = copy.deepcopy(slot)
+        if slot["id"] == "H-001":
+            mark_complete(next_slot, tmp_path, score=3, visual_review="pass")
+            write_workflow_summary(
+                tmp_path,
+                "H-001",
+                mesh_count=1,
+                pose_status="pass",
+                humanoid_diagnostics={"status": "pass", "warnings": []},
+            )
+        slots.append(next_slot)
+    manifest["slots"] = slots
+    manifest_path = write_manifest(tmp_path, manifest)
+
+    result = run_report(manifest_path, tmp_path, "--check-evidence-files")
+
+    assert result.returncode == 0
+    assert "| `realSeparateMeshHumanoidEvidence` | blocked | H-001 |" in result.stdout
+
+
+def test_generate_asset_evidence_report_passes_real_separate_mesh_humanoid_gate(tmp_path):
+    manifest = clear_registered_assets(load_manifest())
+    slots = []
+    for slot in manifest["slots"]:
+        next_slot = copy.deepcopy(slot)
+        if slot["id"] == "H-001":
+            mark_complete(next_slot, tmp_path, score=3, visual_review="pass")
+            write_workflow_summary(
+                tmp_path,
+                "H-001",
+                mesh_count=2,
+                pose_status="pass",
+                humanoid_diagnostics={"status": "pass", "warnings": []},
+            )
+        slots.append(next_slot)
+    manifest["slots"] = slots
+    manifest_path = write_manifest(tmp_path, manifest)
+
+    result = run_report(manifest_path, tmp_path, "--check-evidence-files")
+
+    assert result.returncode == 0
+    assert "| `realSeparateMeshHumanoidEvidence` | pass |  |" in result.stdout
 
 
 def test_generate_asset_evidence_report_strict_gate_blocks_failed_configured_animator_smoke(tmp_path):

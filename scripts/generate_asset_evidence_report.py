@@ -85,6 +85,27 @@ def load_weight_diagnostics_by_slot(evidence_root: Path, slots: list[dict]) -> d
     return weight_by_slot
 
 
+def load_mesh_count_by_slot(evidence_root: Path, slots: list[dict]) -> dict[str, int | str]:
+    mesh_count_by_slot: dict[str, int | str] = {}
+    for slot in slots:
+        slot_id = slot["id"]
+        summary_path = evidence_root / "evidence" / slot_id / "workflow-summary.json"
+        if not summary_path.exists():
+            mesh_count_by_slot[slot_id] = ""
+            continue
+        try:
+            summary = json.loads(summary_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            mesh_count_by_slot[slot_id] = "invalid"
+            continue
+        mesh_count = summary.get("meshCount")
+        qa = summary.get("qa")
+        if not isinstance(mesh_count, int) and isinstance(qa, dict):
+            mesh_count = qa.get("mesh_count")
+        mesh_count_by_slot[slot_id] = mesh_count if isinstance(mesh_count, int) else ""
+    return mesh_count_by_slot
+
+
 def pose_deformation_cell(pose_deformation: object) -> str:
     if not isinstance(pose_deformation, dict):
         return ""
@@ -256,6 +277,30 @@ def configured_animator_strict_gate(report: dict[str, object]) -> dict[str, obje
     }
 
 
+def real_separate_mesh_humanoid_gate(report: dict[str, object]) -> dict[str, object]:
+    mesh_count_by_slot = report.get("meshCountBySlot")
+    if not isinstance(mesh_count_by_slot, dict):
+        mesh_count_by_slot = {}
+    candidate_slots: list[str] = []
+    for slot in report["slots"]:
+        if slot.get("category") != "humanoid":
+            continue
+        if not slot.get("hasRealAsset") or not slot.get("evidenceComplete"):
+            continue
+        score = slot.get("deformationScore")
+        if not isinstance(score, int) or score < 3:
+            continue
+        slot_id = str(slot["id"])
+        mesh_count = mesh_count_by_slot.get(slot_id)
+        if isinstance(mesh_count, int) and mesh_count > 1:
+            return {"status": "pass", "missingSlots": []}
+        candidate_slots.append(slot_id)
+    return {
+        "status": "blocked",
+        "missingSlots": candidate_slots or ["no complete score >= 3 humanoid evidence"],
+    }
+
+
 def render_report(report: dict[str, object]) -> str:
     gate = report["productionTrialGate"]
     requirements = gate["requirements"]
@@ -293,6 +338,9 @@ def render_report(report: dict[str, object]) -> str:
     strict_configured_animator_gate = report.get("strictConfiguredAnimatorGate")
     if not isinstance(strict_configured_animator_gate, dict):
         strict_configured_animator_gate = configured_animator_strict_gate(report)
+    real_separate_mesh_gate = report.get("realSeparateMeshHumanoidGate")
+    if not isinstance(real_separate_mesh_gate, dict):
+        real_separate_mesh_gate = real_separate_mesh_humanoid_gate(report)
     lines.extend(
         [
             "",
@@ -304,6 +352,11 @@ def render_report(report: dict[str, object]) -> str:
                 "| `configuredAnimatorSmokeForHumanoidScore3` | "
                 f"{strict_configured_animator_gate['status']} | "
                 f"{table_cell(', '.join(strict_configured_animator_gate['missingSlots']))} |"
+            ),
+            (
+                "| `realSeparateMeshHumanoidEvidence` | "
+                f"{real_separate_mesh_gate['status']} | "
+                f"{table_cell(', '.join(real_separate_mesh_gate['missingSlots']))} |"
             ),
         ]
     )
@@ -392,6 +445,11 @@ def main() -> int:
             evidence_root,
             report["slots"],
         )
+        report["meshCountBySlot"] = load_mesh_count_by_slot(
+            evidence_root,
+            report["slots"],
+        )
+        report["realSeparateMeshHumanoidGate"] = real_separate_mesh_humanoid_gate(report)
     except Exception as exc:
         print(f"Failed to generate report: {exc}", file=sys.stderr)
         return 1
