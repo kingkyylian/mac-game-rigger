@@ -102,6 +102,33 @@ scripts/run_blender_workflow_benchmark.py \
 Current local H-006 baseline: 3.142040 seconds for a 954-vertex humanoid with
 QA pass, pose deformation pass, four preview renders, and Unity FBX export.
 
+Use manifest slot cases to track real production-trial asset family runtime:
+
+```bash
+scripts/run_blender_workflow_benchmark.py \
+  --blender blender \
+  --manifest samples/manifest.json \
+  --slot H-003 \
+  --slot H-004 \
+  --slot H-005 \
+  --slot H-009 \
+  --slot H-010 \
+  --slot Q-001 \
+  --slot Q-002 \
+  --slot C-001 \
+  --slot P-001 \
+  --slot P-002 \
+  --evidence-root build/blender-workflow-real-asset-family-benchmark \
+  --output build/blender-workflow-real-asset-family-benchmark.json \
+  --timeout-seconds 300 \
+  --max-seconds-per-case 120
+```
+
+Current real asset family baseline: 10 of 10 manifest slots pass structural QA,
+pose deformation, and Unity FBX export. Slowest case is H-004 at 1.901814s;
+fastest case is P-002 at 1.446091s. This is runtime and structural evidence,
+not artist acceptance.
+
 Use synthetic humanoid cases to track end-to-end scalability:
 
 ```bash

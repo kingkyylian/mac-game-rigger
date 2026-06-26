@@ -255,6 +255,88 @@ def test_blender_workflow_benchmark_generates_synthetic_template_family_cases(tm
         assert case["workflowSummary"]["qa"]["vertex_count"] == case["syntheticSpec"]["vertexCount"]
 
 
+def test_blender_workflow_benchmark_runs_manifest_slots_with_inferred_templates(tmp_path):
+    fake_blender = tmp_path / "fake_blender.py"
+    write_fake_blender(fake_blender)
+    humanoid_asset = tmp_path / "local_assets" / "H-003" / "knight.fbx"
+    quadruped_asset = tmp_path / "local_assets" / "Q-001" / "husky.fbx"
+    tail_asset = tmp_path / "local_assets" / "C-001" / "apatosaurus.fbx"
+    humanoid_asset.parent.mkdir(parents=True)
+    quadruped_asset.parent.mkdir(parents=True)
+    tail_asset.parent.mkdir(parents=True)
+    humanoid_asset.write_text("fake humanoid", encoding="utf-8")
+    quadruped_asset.write_text("fake quadruped", encoding="utf-8")
+    tail_asset.write_text("fake tail creature", encoding="utf-8")
+    manifest_path = tmp_path / "manifest.json"
+    manifest_path.write_text(
+        json.dumps(
+            {
+                "slots": [
+                    {
+                        "id": "H-003",
+                        "category": "humanoid",
+                        "realAsset": {"externalPath": str(humanoid_asset)},
+                    },
+                    {
+                        "id": "Q-001",
+                        "category": "quadruped",
+                        "realAsset": {"externalPath": str(quadruped_asset)},
+                    },
+                    {
+                        "id": "C-001",
+                        "category": "tail creature",
+                        "rigTarget": "Quadruped + tail helper baseline",
+                        "realAsset": {"externalPath": str(tail_asset)},
+                    },
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    output_path = tmp_path / "workflow-benchmark.json"
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(SCRIPT_PATH),
+            "--blender",
+            str(fake_blender),
+            "--manifest",
+            str(manifest_path),
+            "--slot",
+            "H-003",
+            "--slot",
+            "Q-001",
+            "--slot",
+            "C-001",
+            "--evidence-root",
+            str(tmp_path / "evidence"),
+            "--output",
+            str(output_path),
+            "--max-seconds-per-case",
+            "10",
+        ],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    payload = json.loads(output_path.read_text(encoding="utf-8"))
+    assert [Path(case["asset"]).name for case in payload["cases"]] == [
+        "knight.fbx",
+        "husky.fbx",
+        "apatosaurus.fbx",
+    ]
+    assert [case["slotId"] for case in payload["cases"]] == ["H-003", "Q-001", "C-001"]
+    assert [case["template"] for case in payload["cases"]] == [
+        "humanoid",
+        "quadruped",
+        "tail_creature",
+    ]
+
+
 def test_gltf_source_vertex_uses_y_up_coordinates_for_blender_space_vertex():
     module = load_benchmark_module()
 

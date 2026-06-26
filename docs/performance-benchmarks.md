@@ -61,6 +61,57 @@ Notes:
   pose deformation check, and Unity FBX export.
 - This is a first real-asset workflow baseline, not a broad scalability proof.
 
+## Real Asset Family Workflow
+
+Command:
+
+```bash
+scripts/run_blender_workflow_benchmark.py \
+  --blender blender \
+  --manifest samples/manifest.json \
+  --slot H-003 \
+  --slot H-004 \
+  --slot H-005 \
+  --slot H-009 \
+  --slot H-010 \
+  --slot Q-001 \
+  --slot Q-002 \
+  --slot C-001 \
+  --slot P-001 \
+  --slot P-002 \
+  --evidence-root build/blender-workflow-real-asset-family-benchmark \
+  --output build/blender-workflow-real-asset-family-benchmark.json \
+  --timeout-seconds 300 \
+  --max-seconds-per-case 120
+```
+
+Result:
+
+| Slot | Asset | Template | Vertices | Bones | Duration Seconds | QA | Pose Deformation | Export |
+|---|---|---|---:|---:|---:|---|---|---|
+| H-003 | `H-003-quaternius-knight-male.fbx` | humanoid | 1,484 | 17 | 1.774947 | 0 unweighted, 0 over-limit, 0 warnings/errors | pass | Unity FBX pass |
+| H-004 | `H-004-quaternius-wizard.fbx` | humanoid | 3,366 | 17 | 1.901814 | 0 unweighted, 0 over-limit, 0 warnings/errors | pass | Unity FBX pass |
+| H-005 | `H-005-quaternius-pirate-male.fbx` | humanoid | 1,383 | 17 | 1.760538 | 0 unweighted, 0 over-limit, 0 warnings/errors | pass | Unity FBX pass |
+| H-009 | `H-009-quaternius-soldier-male.fbx` | humanoid | 1,515 | 17 | 1.771729 | 0 unweighted, 0 over-limit, 0 warnings/errors | pass | Unity FBX pass |
+| H-010 | `H-010-quaternius-elf.fbx` | humanoid | 1,314 | 17 | 1.731110 | 0 unweighted, 0 over-limit, 0 warnings/errors | pass | Unity FBX pass |
+| Q-001 | `Q-001-quaternius-husky.fbx` | quadruped | 962 | 23 | 1.820218 | 0 unweighted, 0 over-limit, 0 warnings/errors | pass | Unity FBX pass |
+| Q-002 | `Q-002-quaternius-fox.fbx` | quadruped | 926 | 23 | 1.855413 | 0 unweighted, 0 over-limit, 0 warnings/errors | pass | Unity FBX pass |
+| C-001 | `C-001-quaternius-apatosaurus.fbx` | tail_creature | 723 | 25 | 1.600824 | 0 unweighted, 0 over-limit, 0 warnings/errors | pass | Unity FBX pass |
+| P-001 | `P-001-local-wooden-door.fbx` | prop_hinge | 360 | 3 | 1.477657 | 0 unweighted, 0 over-limit, 0 warnings/errors | pass | Unity FBX pass |
+| P-002 | `P-002-local-treasure-chest.fbx` | prop_hinge | 118 | 3 | 1.446091 | 0 unweighted, 0 over-limit, 0 warnings/errors | pass | Unity FBX pass |
+
+Status: `pass`
+
+Notes:
+
+- This benchmark uses `samples/manifest.json` slot ids so real asset paths and
+  rig templates are resolved from the canonical production-trial manifest.
+- The run covers bulky/armored humanoids, robe/accessory humanoids, thin-limb
+  humanoids, quadrupeds, one tail creature, and hinge props.
+- These results prove workflow runtime and structural QA on real assets; they
+  still do not replace Unity configured Animator evidence or artist visual
+  approval.
+
 ## Synthetic Blender Workflow Scaling
 
 Command:
@@ -140,5 +191,4 @@ Product performance still needs measured runtime for larger synthetic and real
 assets:
 
 - real multi-mesh humanoids with hair/accessory parts;
-- real quadruped, tail creature, and prop hinge timing;
 - Blender 4.2 target version timing, not only Blender 4.5.10 LTS.

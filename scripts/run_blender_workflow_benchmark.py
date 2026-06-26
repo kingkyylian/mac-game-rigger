@@ -25,6 +25,7 @@ class BenchmarkCase:
     asset: Path
     template: str
     synthetic_spec: dict[str, Any] | None = None
+    slot_id: str | None = None
 
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
@@ -41,6 +42,18 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         help="Asset to process. May be passed multiple times.",
     )
     parser.add_argument(
+        "--manifest",
+        type=Path,
+        help="Sample manifest used by --slot real-asset benchmark cases.",
+    )
+    parser.add_argument(
+        "--slot",
+        action="append",
+        dest="slots",
+        default=[],
+        help="Manifest slot id to process. May be passed multiple times.",
+    )
+    parser.add_argument(
         "--synthetic-humanoid-vertices",
         type=int,
         action="append",
@@ -54,7 +67,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         action="append",
         dest="synthetic_multimesh_humanoid_vertices",
         default=[],
-        help="Generate a multi-mesh synthetic humanoid OBJ with this vertex count.",
+        help="Generate a multi-mesh synthetic humanoid glTF with this vertex count.",
     )
     parser.add_argument(
         "--synthetic-quadruped-vertices",
@@ -99,6 +112,50 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--prop-hinge-base-x", type=float)
     parser.add_argument("--prop-hinge-axis", choices=("x", "y", "z"))
     return parser.parse_args(argv)
+
+
+def template_for_manifest_slot(slot: dict[str, Any]) -> str:
+    category = str(slot.get("category") or "").strip().lower()
+    rig_target = str(slot.get("rigTarget") or "").strip().lower()
+    if category == "humanoid" or "humanoid" in rig_target:
+        return "humanoid"
+    if category in {"tail creature", "wing creature"} or "tail" in rig_target:
+        return "tail_creature"
+    if category == "quadruped" or "quadruped" in rig_target:
+        return "quadruped"
+    if category == "prop" or "prop" in rig_target or "hinge" in rig_target:
+        return "prop_hinge"
+    raise ValueError(f"Cannot infer template for slot {slot.get('id')!r}")
+
+
+def manifest_slot_cases(manifest_path: Path, slot_ids: list[str]) -> list[BenchmarkCase]:
+    if not slot_ids:
+        return []
+    payload = json.loads(manifest_path.read_text(encoding="utf-8"))
+    slots_by_id = {
+        slot.get("id"): slot
+        for slot in payload.get("slots", [])
+        if isinstance(slot, dict) and isinstance(slot.get("id"), str)
+    }
+    cases: list[BenchmarkCase] = []
+    for slot_id in slot_ids:
+        slot = slots_by_id.get(slot_id)
+        if slot is None:
+            raise ValueError(f"Manifest slot not found: {slot_id}")
+        real_asset = slot.get("realAsset")
+        if not isinstance(real_asset, dict):
+            raise ValueError(f"Manifest slot {slot_id} does not define realAsset")
+        external_path = real_asset.get("externalPath")
+        if not isinstance(external_path, str) or not external_path:
+            raise ValueError(f"Manifest slot {slot_id} does not define realAsset.externalPath")
+        cases.append(
+            BenchmarkCase(
+                asset=Path(external_path),
+                template=template_for_manifest_slot(slot),
+                slot_id=slot_id,
+            )
+        )
+    return cases
 
 
 def vector_sub(
@@ -663,6 +720,10 @@ def tail(text: str, limit: int = 4000) -> str:
 
 def prepare_cases(args: argparse.Namespace) -> list[BenchmarkCase]:
     cases = [BenchmarkCase(asset=asset, template=args.template) for asset in args.assets]
+    if args.slots:
+        if args.manifest is None:
+            raise ValueError("--manifest is required when --slot is used")
+        cases.extend(manifest_slot_cases(args.manifest, args.slots))
     synthetic_root = args.evidence_root.expanduser().resolve() / "_synthetic-assets"
     for vertex_count in args.synthetic_humanoid_vertices:
         if vertex_count <= 0:
@@ -743,6 +804,7 @@ def run_case(index: int, benchmark_case: BenchmarkCase, args: argparse.Namespace
         "status": status,
         "asset": str(asset_path),
         "template": benchmark_case.template,
+        "slotId": benchmark_case.slot_id,
         "syntheticSpec": benchmark_case.synthetic_spec,
         "evidenceDir": str(evidence_dir),
         "summary": str(summary_path),
