@@ -74,6 +74,7 @@ def build_runner_plan(
         "evidenceDir": intake["evidenceDir"],
         "candidate": intake.get("candidate"),
         "acceptance": intake["acceptance"],
+        "workflowSummary": str(Path(intake["evidenceDir"]) / "workflow-summary.json"),
         "phases": [
             {"name": "sourceImportSmoke", "command": commands["sourceImportSmoke"]},
             {"name": "candidatePreflight", "command": commands["candidatePreflight"]},
@@ -108,6 +109,43 @@ def run_command(command: list[str]) -> CommandResult:
     return CommandResult(returncode=result.returncode, stdout=result.stdout, stderr=result.stderr)
 
 
+def read_json(path: Path) -> dict[str, Any] | None:
+    if not path.is_file():
+        return None
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    return payload if isinstance(payload, dict) else None
+
+
+def workflow_mesh_count(summary_path: Path) -> int | None:
+    payload = read_json(summary_path)
+    if not isinstance(payload, dict):
+        return None
+    mesh_count = payload.get("meshCount")
+    if isinstance(mesh_count, int):
+        return mesh_count
+    qa = payload.get("qa")
+    mesh_count = qa.get("mesh_count") if isinstance(qa, dict) else None
+    return mesh_count if isinstance(mesh_count, int) else None
+
+
+def validate_workflow_split_mesh(summary_path: Path) -> dict[str, Any]:
+    mesh_count = workflow_mesh_count(summary_path)
+    issues = []
+    if not isinstance(mesh_count, int):
+        issues.append("rig workflow mesh count is missing")
+    elif mesh_count <= 1:
+        issues.append("rig workflow mesh count must be > 1")
+    return {
+        "status": "pass" if not issues else "blocked",
+        "summary": str(summary_path),
+        "rigMeshCount": mesh_count,
+        "issues": issues,
+    }
+
+
 def run_phases(
     plan: dict[str, Any],
     *,
@@ -133,9 +171,21 @@ def run_phases(
                 "registrationCommand": plan["registration"]["command"],
             }
 
+    split_mesh_check = validate_workflow_split_mesh(Path(plan["workflowSummary"]))
+    if split_mesh_check["status"] != "pass":
+        return {
+            "status": "blocked",
+            "failedPhase": "workflowSplitMeshCheck",
+            "completedPhases": completed,
+            "workflowSplitMeshCheck": split_mesh_check,
+            "issues": split_mesh_check["issues"],
+            "registrationCommand": plan["registration"]["command"],
+        }
+
     return {
         "status": "needs_registration_review",
         "completedPhases": completed,
+        "workflowSplitMeshCheck": split_mesh_check,
         "registrationCommand": plan["registration"]["command"],
         "nextCommand": plan["strictVerifier"],
         "notes": [

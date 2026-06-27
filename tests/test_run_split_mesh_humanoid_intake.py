@@ -111,14 +111,17 @@ def test_build_runner_plan_blocks_non_empty_slot():
         raise AssertionError("expected non-empty slot to be blocked")
 
 
-def test_run_phases_stops_before_registration_without_manual_score():
+def test_run_phases_stops_before_registration_without_manual_score(tmp_path):
     module = load_module()
+    summary_path = tmp_path / "workflow-summary.json"
+    summary_path.write_text(json.dumps({"meshCount": 2}), encoding="utf-8")
     plan = {
         "phases": [
             {"name": "sourceImportSmoke", "command": ["fake-source"]},
             {"name": "candidatePreflight", "command": ["fake-preflight"]},
             {"name": "workflow", "command": ["fake-workflow"]},
         ],
+        "workflowSummary": str(summary_path),
         "registration": {
             "status": "manual_review_required",
             "command": ["scripts/register_asset_evidence.py", "--slot", "H-002"],
@@ -137,6 +140,35 @@ def test_run_phases_stops_before_registration_without_manual_score():
     assert result["status"] == "needs_registration_review"
     assert result["registrationCommand"] == ["scripts/register_asset_evidence.py", "--slot", "H-002"]
     assert result["nextCommand"] == ["scripts/verify_split_mesh_humanoid_evidence.py", "--slot", "H-002", "--json"]
+
+
+def test_run_phases_blocks_when_workflow_mesh_count_collapses_to_single_mesh(tmp_path):
+    module = load_module()
+    summary_path = tmp_path / "workflow-summary.json"
+    summary_path.write_text(json.dumps({"meshCount": 1}), encoding="utf-8")
+    plan = {
+        "phases": [
+            {"name": "sourceImportSmoke", "command": ["fake-source"]},
+            {"name": "candidatePreflight", "command": ["fake-preflight"]},
+            {"name": "workflow", "command": ["fake-workflow"]},
+        ],
+        "workflowSummary": str(summary_path),
+        "registration": {
+            "status": "manual_review_required",
+            "command": ["scripts/register_asset_evidence.py", "--slot", "H-002"],
+        },
+        "strictVerifier": ["scripts/verify_split_mesh_humanoid_evidence.py", "--slot", "H-002", "--json"],
+    }
+
+    result = module.run_phases(
+        plan,
+        runner=lambda command: module.CommandResult(returncode=0, stdout="", stderr=""),
+    )
+
+    assert result["status"] == "blocked"
+    assert result["failedPhase"] == "workflowSplitMeshCheck"
+    assert result["issues"] == ["rig workflow mesh count must be > 1"]
+    assert result["registrationCommand"] == ["scripts/register_asset_evidence.py", "--slot", "H-002"]
 
 
 def test_cli_dry_run_json_outputs_runner_plan():
@@ -162,6 +194,7 @@ def test_cli_dry_run_json_outputs_runner_plan():
     assert result.returncode == 0, result.stderr
     payload = json.loads(result.stdout)
     assert payload["status"] == "ready"
+    assert payload["workflowSummary"] == "evidence/H-002/workflow-summary.json"
     assert [phase["name"] for phase in payload["phases"]] == [
         "sourceImportSmoke",
         "candidatePreflight",
