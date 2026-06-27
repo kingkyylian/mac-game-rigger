@@ -123,6 +123,14 @@ def test_cli_candidate_prefills_source_metadata_for_asset_plan():
     payload = json.loads(result.stdout)
     assert payload["status"] == "ready"
     assert payload["candidate"]["id"] == "kaykit-adventurers"
+    assert payload["commands"]["candidatePreflight"] == [
+        "scripts/preflight_split_mesh_candidate.py",
+        "--candidate",
+        "kaykit-adventurers",
+        "--source-smoke",
+        "evidence/H-002/asset-import-smoke.json",
+        "--json",
+    ]
     assert "--source-name" in payload["commands"]["sourceImportSmoke"]
     assert "KayKit Adventurers" in payload["commands"]["sourceImportSmoke"]
     assert "--license" in payload["commands"]["sourceImportSmoke"]

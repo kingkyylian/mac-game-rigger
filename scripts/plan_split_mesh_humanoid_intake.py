@@ -194,6 +194,14 @@ def build_intake_plan(
         ],
     }
     if candidate is not None:
+        plan["commands"]["candidatePreflight"] = [
+            "scripts/preflight_split_mesh_candidate.py",
+            "--candidate",
+            str(candidate.get("id")),
+            "--source-smoke",
+            str(evidence_dir / "asset-import-smoke.json"),
+            "--json",
+        ]
         plan["candidate"] = {
             "id": candidate.get("id"),
             "sourceName": candidate.get("sourceName"),
