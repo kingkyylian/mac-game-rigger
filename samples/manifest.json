@@ -50,8 +50,33 @@
         "short limbs",
         "template scaling"
       ],
-      "realAsset": null,
-      "evidence": {}
+      "realAsset": {
+        "sourceName": "KayKit Adventurers - Ranger.glb",
+        "license": "CC0",
+        "canCommitBinary": false,
+        "sourceUrl": "https://kaylousberg.itch.io/kaykit-adventurers",
+        "externalPath": "local_assets/H-002/KayKit_Adventurers_2.0_FREE/Characters/gltf/Ranger.glb"
+      },
+      "evidence": {
+        "qaReport": "evidence/H-002/qa-report.json",
+        "previewNeutral": "evidence/H-002/preview-neutral.png",
+        "notes": "evidence/H-002/notes.md",
+        "deformationScore": 3,
+        "unityImport": {
+          "status": "not tested"
+        },
+        "unrealImport": {
+          "status": "blocked"
+        },
+        "previewPose": "evidence/H-002/preview-pose.png",
+        "previewNeutralSide": "evidence/H-002/preview-neutral-side.png",
+        "previewPoseSide": "evidence/H-002/preview-pose-side.png",
+        "exportUnityFbx": "evidence/H-002/export-unity.fbx",
+        "visualReview": {
+          "status": "pass",
+          "notes": "Conservative pass: source/workflow preserve 9 split meshes and stress-pose silhouettes remain coherent, but QA still reports 42 unweighted vertices and Unity configured Animator smoke is not recorded."
+        }
+      }
     },
     {
       "id": "H-003",

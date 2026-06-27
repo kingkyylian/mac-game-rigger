@@ -1,0 +1,12 @@
+{
+  "mesh_count": 9,
+  "vertex_count": 7776,
+  "bone_count": 17,
+  "unweighted_vertices": 42,
+  "over_limit_vertices": 0,
+  "export_profile": null,
+  "warnings": [
+    "Unweighted vertices: 42"
+  ],
+  "errors": []
+}

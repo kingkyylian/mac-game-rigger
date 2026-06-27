@@ -72,7 +72,7 @@ def test_verify_slot_blocks_single_mesh_source_even_when_workflow_is_split(tmp_p
     assert result["slotResults"][0]["issues"] == ["source import mesh count must be > 1"]
 
 
-def test_cli_json_blocks_current_manifest_until_real_split_mesh_evidence_exists():
+def test_cli_json_passes_current_manifest_after_real_split_mesh_evidence_exists():
     load_module()
 
     result = subprocess.run(
@@ -91,7 +91,7 @@ def test_cli_json_blocks_current_manifest_until_real_split_mesh_evidence_exists(
         check=False,
     )
 
-    assert result.returncode == 1
+    assert result.returncode == 0
     payload = json.loads(result.stdout)
-    assert payload["status"] == "blocked"
-    assert payload["passingSlots"] == []
+    assert payload["status"] == "pass"
+    assert "H-002" in payload["passingSlots"]

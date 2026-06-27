@@ -128,7 +128,7 @@ def test_cli_candidate_prefills_source_metadata_for_asset_plan():
         "--candidate",
         "kaykit-adventurers",
         "--source-smoke",
-        "evidence/H-002/asset-import-smoke.json",
+        "evidence/H-007/asset-import-smoke.json",
         "--json",
     ]
     assert "--source-name" in payload["commands"]["sourceImportSmoke"]
@@ -157,5 +157,5 @@ def test_cli_json_reports_current_open_humanoid_slots_without_asset():
     assert result.returncode == 0, result.stderr
     payload = json.loads(result.stdout)
     assert payload["status"] == "needs_asset"
-    assert payload["openHumanoidSlots"] == ["H-002", "H-007", "H-008"]
-    assert payload["recommendedSlot"] == "H-002"
+    assert payload["openHumanoidSlots"] == ["H-007", "H-008"]
+    assert payload["recommendedSlot"] == "H-007"

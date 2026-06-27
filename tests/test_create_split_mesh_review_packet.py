@@ -73,6 +73,23 @@ def test_build_review_packet_blocks_single_mesh_workflow(tmp_path):
     assert result["markdown"] is None
 
 
+def test_build_review_packet_uses_workflow_status_when_qa_status_is_missing(tmp_path):
+    module = load_module()
+    source_smoke = tmp_path / "asset-import-smoke.json"
+    workflow_summary = tmp_path / "workflow-summary.json"
+    write_json(source_smoke, {"metrics": {"meshCount": 2, "suggestedCategory": "humanoid"}})
+    write_json(workflow_summary, {"status": "pass", "meshCount": 2, "poseDeformation": {"status": "pass"}})
+
+    result = module.build_review_packet(
+        slot_id="H-002",
+        source_smoke=source_smoke,
+        workflow_summary=workflow_summary,
+    )
+
+    assert result["status"] == "pass"
+    assert "QA status: pass" in result["markdown"]
+
+
 def test_cli_writes_review_packet_without_overwriting(tmp_path):
     source_smoke = tmp_path / "asset-import-smoke.json"
     workflow_summary = tmp_path / "workflow-summary.json"

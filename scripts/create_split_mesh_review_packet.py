@@ -59,6 +59,8 @@ def build_markdown(
     rig_count: int,
 ) -> str:
     qa_status = status_from(workflow_summary, "qa", "status")
+    if qa_status == "unknown":
+        qa_status = status_from(workflow_summary, "status")
     pose_status = status_from(workflow_summary, "poseDeformation", "status")
     suggested_category = nested_dict(source_smoke, "metrics").get("suggestedCategory") or "unknown"
     return "\n".join(

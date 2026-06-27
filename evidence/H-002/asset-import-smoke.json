@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "status": "pass",
+  "slotId": "H-002",
+  "source": {
+    "name": "KayKit Adventurers",
+    "url": "https://kaylousberg.itch.io/kaykit-adventurers",
+    "license": "CC0",
+    "localPath": "/Users/kyylian/mac-game-rigger/local_assets/H-002/KayKit_Adventurers_2.0_FREE/Characters/gltf/Ranger.glb"
+  },
+  "metrics": {
+    "meshCount": 9,
+    "armatureCount": 1,
+    "boneCount": 23,
+    "materialCount": 1,
+    "vertexCount": 7776,
+    "faceCount": 8980,
+    "actionCount": 0,
+    "bbox": {
+      "width": 1.9425,
+      "depth": 2.0,
+      "height": 3.2729
+    },
+    "hasArmature": true,
+    "suggestedCategory": "humanoid",
+    "meshNames": [
+      "Ranger_ArmLeft",
+      "Ranger_ArmRight",
+      "Ranger_Body",
+      "Ranger_Cape",
+      "Ranger_Head",
+      "Ranger_LegLeft",
+      "Ranger_LegRight",
+      "Ranger_Quiver",
+      "Icosphere"
+    ],
+    "armatureNames": [
+      "Rig_Medium"
+    ]
+  }
+}

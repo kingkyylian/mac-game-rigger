@@ -1,48 +1,24 @@
-# H-002 Evidence Notes
+# H-002 Split-Mesh Humanoid Review Packet
 
-Category: humanoid
-Target filename: `H-002-humanoid-stylized-chibi.glb`
-Rig target: Humanoid template
+## Source
 
-## Expected Risks
+- Source name: KayKit Adventurers
+- Source URL: https://kaylousberg.itch.io/kaykit-adventurers
+- License: CC0
+- Source mesh count: 9
+- Suggested category: humanoid
 
-- large head
-- short limbs
-- template scaling
+## Workflow
 
-## Required Artifacts
+- Rig workflow mesh count: 9
+- QA status: pass
+- Pose deformation status: pass
 
-- [ ] `qa-report.json`
-- [ ] `preview-neutral.png`
-- [ ] `preview-pose.png` when relevant
-- [ ] `export-unity.fbx` or `export.fbx`
-- [ ] `unity-import.json` when Unity import is run
-- [ ] `unreal-import.json` when Unreal import is run or blocked
+## Manual Review
 
-## Review
+- Manual review status: pass
+- Deformation score: 3
+- Visual review notes: Split-mesh structure is preserved through source import and rig workflow. Neutral and stress-pose silhouettes remain coherent with no catastrophic mesh explosion or detached body parts.
+- Cleanup limitations: Evidence is accepted as a first production split-mesh humanoid pass, not as final animator-quality output. QA/export still report 42 unweighted vertices, previews are silhouette-only without material/textured inspection, and weight diagnostics show suspicious distal/core fallback assignments on some accessory and limb vertices. Unity configured Animator smoke is not recorded yet.
 
-Deformation score:
-Unity import status:
-Unreal import status:
-Manual cleanup required:
-Failure type:
-
-## Register Command
-
-```bash
-scripts/register_asset_evidence.py \
-  --slot H-002 \
-  --source-name "<source asset name>" \
-  --source-url "<source url or ticket>" \
-  --license "<license>" \
-  --external-path "<source asset path>" \
-  --qa-report evidence/H-002/qa-report.json \
-  --preview-neutral evidence/H-002/preview-neutral.png \
-  --export-unity-fbx evidence/H-002/export-unity.fbx \
-  --notes evidence/H-002/notes.md \
-  --deformation-score <1-5> \
-  --unity-status <pass|fail|blocked|not tested> \
-  --unreal-status <pass|fail|blocked|not tested> \
-  --evidence-root . \
-  --check-files
-```
+Registered conservatively with deformation score 3; use this asset to drive the next cleanup pass rather than treating the current binder as finished.

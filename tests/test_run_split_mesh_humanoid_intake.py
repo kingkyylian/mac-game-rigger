@@ -66,6 +66,7 @@ def test_build_runner_plan_orders_preflight_before_workflow():
         "evidence/H-002/workflow-summary.json",
         "--output",
         "evidence/H-002/notes.md",
+        "--force",
         "--json",
     ]
     assert plan["registration"]["command"][0:3] == [
@@ -240,7 +241,8 @@ def test_cli_dry_run_json_outputs_runner_plan():
     assert result.returncode == 0, result.stderr
     payload = json.loads(result.stdout)
     assert payload["status"] == "ready"
-    assert payload["workflowSummary"] == "evidence/H-002/workflow-summary.json"
+    assert payload["slot"] == "H-007"
+    assert payload["workflowSummary"] == "evidence/H-007/workflow-summary.json"
     assert payload["reviewPacket"][0] == "scripts/create_split_mesh_review_packet.py"
     assert [phase["name"] for phase in payload["phases"]] == [
         "sourceImportSmoke",

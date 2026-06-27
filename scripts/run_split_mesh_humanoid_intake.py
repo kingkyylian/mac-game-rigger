@@ -85,6 +85,7 @@ def build_runner_plan(
             str(Path(intake["evidenceDir"]) / "workflow-summary.json"),
             "--output",
             str(Path(intake["evidenceDir"]) / "notes.md"),
+            "--force",
             "--json",
         ],
         "phases": [

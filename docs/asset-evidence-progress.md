@@ -8,10 +8,10 @@ Evidence root: `.`
 ## Summary
 
 - Slots: 25
-- Real assets registered: 12
-- Complete evidence entries: 12
-- Score >= 3 count: 11
-- Score >= 3 ratio: 0.917
+- Real assets registered: 13
+- Complete evidence entries: 13
+- Score >= 3 count: 12
+- Score >= 3 ratio: 0.923
 
 ## Production Trial Requirements
 
@@ -34,13 +34,13 @@ Evidence root: `.`
 | Gate | Status | Missing Slots |
 |---|---|---|
 | `configuredAnimatorSmokeForHumanoidScore3` | blocked | H-003, H-004, H-005, H-009, H-010 |
-| `realSeparateMeshHumanoidEvidence` | blocked | H-003, H-004, H-005, H-006, H-009, H-010 |
+| `realSeparateMeshHumanoidEvidence` | pass |  |
 
 ## Category Counts
 
 | Category | Complete Evidence Count |
 |---|---:|
-| humanoid | 7 |
+| humanoid | 8 |
 | quadruped | 2 |
 | tail creature | 1 |
 | wing creature | 0 |
@@ -51,7 +51,7 @@ Evidence root: `.`
 | Slot | Category | Real Asset | Evidence | Score | Source Meshes | Rig Meshes | Pose QA | Visual | Unity | Unreal | Preview | Weight | Warnings | Issues |
 |---|---|---|---|---:|---:|---:|---|---|---|---|---|---|---|---|
 | H-001 | humanoid | pass | pass | 2 | 1 | 1 | pass 1.207x | fail | blocked | blocked | side 54->54px 1.00x lean 0.04 | core 615 arm 74 leg 87 foot 15 humanoid qa warn weakHumanoidFootCoverage |  |  |
-| H-002 | humanoid | missing | missing |  |  |  |  |  |  |  |  |  |  |  |
+| H-002 | humanoid | pass | pass | 3 | 9 | 9 | pass 1.0842x | pass | not tested | blocked | side 170->170px 1.00x lean 0.00 | core 4429 neck 5 arm 207 leg 2849 foot 244 humanoid qa pass |  |  |
 | H-003 | humanoid | pass | pass | 3 | 1 | 1 | pass 1x | pass | pass | blocked | side 256->256px 1.00x lean 0.00 | core 1307 neck 5 arm 38 leg 96 foot 38 humanoid qa pass | H-003: Unity import configuredAnimatorSmoke is not recorded yet |  |
 | H-004 | humanoid | pass | pass | 3 | 1 | 1 | pass 1x | pass | pass | blocked | side 120->120px 1.00x lean 0.05 | core 2984 neck 3 arm 86 leg 207 foot 86 humanoid qa pass | H-004: Unity import configuredAnimatorSmoke is not recorded yet |  |
 | H-005 | humanoid | pass | pass | 3 | 1 | 1 | pass 1.0018x | pass | pass | blocked | side 100->102px 1.02x lean 0.05 | core 1175 neck 1 arm 36 leg 135 foot 36 humanoid qa pass | H-005: Unity import configuredAnimatorSmoke is not recorded yet |  |
