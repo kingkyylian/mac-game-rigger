@@ -56,6 +56,18 @@ def test_build_runner_plan_orders_preflight_before_workflow():
         "workflow",
     ]
     assert plan["registration"]["status"] == "manual_review_required"
+    assert plan["reviewPacket"] == [
+        "scripts/create_split_mesh_review_packet.py",
+        "--slot",
+        "H-002",
+        "--source-smoke",
+        "evidence/H-002/asset-import-smoke.json",
+        "--workflow-summary",
+        "evidence/H-002/workflow-summary.json",
+        "--output",
+        "evidence/H-002/notes.md",
+        "--json",
+    ]
     assert plan["registration"]["command"][0:3] == [
         "scripts/register_asset_evidence.py",
         "--slot",
@@ -122,6 +134,7 @@ def test_run_phases_stops_before_registration_without_manual_score(tmp_path):
             {"name": "workflow", "command": ["fake-workflow"]},
         ],
         "workflowSummary": str(summary_path),
+        "reviewPacket": ["fake-review-packet"],
         "registration": {
             "status": "manual_review_required",
             "command": ["scripts/register_asset_evidence.py", "--slot", "H-002"],
@@ -136,8 +149,9 @@ def test_run_phases_stops_before_registration_without_manual_score(tmp_path):
 
     result = module.run_phases(plan, runner=fake_runner)
 
-    assert calls == [["fake-source"], ["fake-preflight"], ["fake-workflow"]]
+    assert calls == [["fake-source"], ["fake-preflight"], ["fake-workflow"], ["fake-review-packet"]]
     assert result["status"] == "needs_registration_review"
+    assert result["reviewPacket"]["returncode"] == 0
     assert result["registrationCommand"] == ["scripts/register_asset_evidence.py", "--slot", "H-002"]
     assert result["nextCommand"] == ["scripts/verify_split_mesh_humanoid_evidence.py", "--slot", "H-002", "--json"]
 
@@ -153,6 +167,7 @@ def test_run_phases_blocks_when_workflow_mesh_count_collapses_to_single_mesh(tmp
             {"name": "workflow", "command": ["fake-workflow"]},
         ],
         "workflowSummary": str(summary_path),
+        "reviewPacket": ["fake-review-packet"],
         "registration": {
             "status": "manual_review_required",
             "command": ["scripts/register_asset_evidence.py", "--slot", "H-002"],
@@ -169,6 +184,37 @@ def test_run_phases_blocks_when_workflow_mesh_count_collapses_to_single_mesh(tmp
     assert result["failedPhase"] == "workflowSplitMeshCheck"
     assert result["issues"] == ["rig workflow mesh count must be > 1"]
     assert result["registrationCommand"] == ["scripts/register_asset_evidence.py", "--slot", "H-002"]
+
+
+def test_run_phases_fails_when_review_packet_generation_fails(tmp_path):
+    module = load_module()
+    summary_path = tmp_path / "workflow-summary.json"
+    summary_path.write_text(json.dumps({"meshCount": 2}), encoding="utf-8")
+    plan = {
+        "phases": [
+            {"name": "sourceImportSmoke", "command": ["fake-source"]},
+            {"name": "candidatePreflight", "command": ["fake-preflight"]},
+            {"name": "workflow", "command": ["fake-workflow"]},
+        ],
+        "workflowSummary": str(summary_path),
+        "reviewPacket": ["fake-review-packet"],
+        "registration": {
+            "status": "manual_review_required",
+            "command": ["scripts/register_asset_evidence.py", "--slot", "H-002"],
+        },
+        "strictVerifier": ["scripts/verify_split_mesh_humanoid_evidence.py", "--slot", "H-002", "--json"],
+    }
+
+    def fake_runner(command):
+        if command == ["fake-review-packet"]:
+            return module.CommandResult(returncode=2, stdout="", stderr="Output already exists")
+        return module.CommandResult(returncode=0, stdout="", stderr="")
+
+    result = module.run_phases(plan, runner=fake_runner)
+
+    assert result["status"] == "failed"
+    assert result["failedPhase"] == "reviewPacket"
+    assert result["reviewPacket"]["stderr"] == "Output already exists"
 
 
 def test_cli_dry_run_json_outputs_runner_plan():
@@ -195,6 +241,7 @@ def test_cli_dry_run_json_outputs_runner_plan():
     payload = json.loads(result.stdout)
     assert payload["status"] == "ready"
     assert payload["workflowSummary"] == "evidence/H-002/workflow-summary.json"
+    assert payload["reviewPacket"][0] == "scripts/create_split_mesh_review_packet.py"
     assert [phase["name"] for phase in payload["phases"]] == [
         "sourceImportSmoke",
         "candidatePreflight",

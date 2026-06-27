@@ -31,7 +31,7 @@ Release: Mac Game Rigger Alpha 0.1.0
 | Split-mesh humanoid intake plan | pass | `scripts/plan_split_mesh_humanoid_intake.py --manifest samples/manifest.json --json` reports H-002, H-007, and H-008 as open humanoid slots and recommends H-002. When an asset path is provided, it emits source import smoke, Blender workflow, manifest registration, and report regeneration commands. |
 | Split-mesh source candidate registry | pass | `samples/split_mesh_humanoid_candidates.json` records KayKit Adventurers as the primary H-002 candidate with CC0 license metadata and FBX/GLTF/OBJ/BLEND format notes. The planner supports `--candidate kaykit-adventurers` to prefill source metadata, while still requiring local source import smoke to prove mesh separation. |
 | Split-mesh candidate preflight | pass | `scripts/preflight_split_mesh_candidate.py --candidate kaykit-adventurers --source-smoke <asset-import-smoke.json> --json` validates source import smoke before workflow intake. It blocks single-mesh source imports; for example H-003 source smoke reports mesh count 1 and is rejected. |
-| Split-mesh intake runner | pass | `scripts/run_split_mesh_humanoid_intake.py --candidate kaykit-adventurers --asset <asset> --dry-run --json` builds the guarded source smoke -> candidate preflight -> Blender workflow sequence. In execute mode it checks `workflow-summary.json` rig mesh count > 1 and stops at `needs_registration_review` instead of auto-registering evidence without manual deformation score and visual review. |
+| Split-mesh intake runner | pass | `scripts/run_split_mesh_humanoid_intake.py --candidate kaykit-adventurers --asset <asset> --dry-run --json` builds the guarded source smoke -> candidate preflight -> Blender workflow -> review packet sequence. In execute mode it checks `workflow-summary.json` rig mesh count > 1, creates `notes.md` with manual review placeholders, and stops at `needs_registration_review` instead of auto-registering evidence without manual deformation score and visual review. |
 | Split-mesh humanoid verifier | blocked | `scripts/verify_split_mesh_humanoid_evidence.py --manifest samples/manifest.json --evidence-root . --json` is wired and currently blocks because no score >= 3 real humanoid has both source import mesh count > 1 and rig workflow mesh count > 1. |
 
 ## Verification Commands
@@ -52,6 +52,7 @@ scripts/check_unity_batchmode_health.py --output build/unity-batchmode-health.js
 scripts/plan_split_mesh_humanoid_intake.py --manifest samples/manifest.json --json
 scripts/plan_split_mesh_humanoid_intake.py --manifest samples/manifest.json --candidate kaykit-adventurers --asset local_assets/H-002/kaykit-adventurer.glb --json
 scripts/run_split_mesh_humanoid_intake.py --manifest samples/manifest.json --candidate kaykit-adventurers --asset local_assets/H-002/kaykit-adventurer.glb --dry-run --json
+scripts/create_split_mesh_review_packet.py --slot H-002 --source-smoke evidence/H-002/asset-import-smoke.json --workflow-summary evidence/H-002/workflow-summary.json --output evidence/H-002/notes.md --json
 scripts/preflight_split_mesh_candidate.py --candidate kaykit-adventurers --source-smoke evidence/H-003/asset-import-smoke.json --json
 scripts/verify_split_mesh_humanoid_evidence.py --manifest samples/manifest.json --evidence-root . --json
 scripts/run_blender_compat_matrix.py --discover --skip-tests

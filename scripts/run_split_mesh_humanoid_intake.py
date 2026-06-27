@@ -75,6 +75,18 @@ def build_runner_plan(
         "candidate": intake.get("candidate"),
         "acceptance": intake["acceptance"],
         "workflowSummary": str(Path(intake["evidenceDir"]) / "workflow-summary.json"),
+        "reviewPacket": [
+            "scripts/create_split_mesh_review_packet.py",
+            "--slot",
+            intake["slot"],
+            "--source-smoke",
+            str(Path(intake["evidenceDir"]) / "asset-import-smoke.json"),
+            "--workflow-summary",
+            str(Path(intake["evidenceDir"]) / "workflow-summary.json"),
+            "--output",
+            str(Path(intake["evidenceDir"]) / "notes.md"),
+            "--json",
+        ],
         "phases": [
             {"name": "sourceImportSmoke", "command": commands["sourceImportSmoke"]},
             {"name": "candidatePreflight", "command": commands["candidatePreflight"]},
@@ -182,10 +194,28 @@ def run_phases(
             "registrationCommand": plan["registration"]["command"],
         }
 
+    review_packet = runner(plan["reviewPacket"])
+    review_packet_result = {
+        "command": plan["reviewPacket"],
+        "returncode": review_packet.returncode,
+        "stdout": review_packet.stdout,
+        "stderr": review_packet.stderr,
+    }
+    if review_packet.returncode != 0:
+        return {
+            "status": "failed",
+            "failedPhase": "reviewPacket",
+            "completedPhases": completed,
+            "workflowSplitMeshCheck": split_mesh_check,
+            "reviewPacket": review_packet_result,
+            "registrationCommand": plan["registration"]["command"],
+        }
+
     return {
         "status": "needs_registration_review",
         "completedPhases": completed,
         "workflowSplitMeshCheck": split_mesh_check,
+        "reviewPacket": review_packet_result,
         "registrationCommand": plan["registration"]["command"],
         "nextCommand": plan["strictVerifier"],
         "notes": [
