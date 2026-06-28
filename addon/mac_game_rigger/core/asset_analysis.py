@@ -29,6 +29,17 @@ def suggest_category(stats: MeshStats) -> str:
     height_to_width = stats.height / max(stats.width, 0.001)
     if height_to_width > 1.6:
         return "humanoid"
+
+    max_horizontal = max(stats.width, stats.depth, 0.001)
+    height_to_horizontal = stats.height / max_horizontal
+    height_to_depth = stats.height / max(stats.depth, 0.001)
+    if (
+        stats.has_armature
+        and stats.mesh_count > 1
+        and height_to_horizontal > 1.1
+        and height_to_depth > 1.5
+    ):
+        return "humanoid"
     return "unknown"
 
 

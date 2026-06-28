@@ -9,17 +9,17 @@
     "localPath": "/Users/kyylian/mac-game-rigger/local_assets/H-002/KayKit_Adventurers_2.0_FREE/Characters/gltf/Ranger.glb"
   },
   "metrics": {
-    "meshCount": 9,
+    "meshCount": 8,
     "armatureCount": 1,
     "boneCount": 23,
     "materialCount": 1,
-    "vertexCount": 7776,
-    "faceCount": 8980,
+    "vertexCount": 7734,
+    "faceCount": 8900,
     "actionCount": 0,
     "bbox": {
       "width": 1.9425,
-      "depth": 2.0,
-      "height": 3.2729
+      "depth": 1.0494,
+      "height": 2.275
     },
     "hasArmature": true,
     "suggestedCategory": "humanoid",
@@ -31,11 +31,16 @@
       "Ranger_Head",
       "Ranger_LegLeft",
       "Ranger_LegRight",
-      "Ranger_Quiver",
-      "Icosphere"
+      "Ranger_Quiver"
     ],
     "armatureNames": [
       "Rig_Medium"
+    ]
+  },
+  "importPrune": {
+    "removedObjects": 1,
+    "removedObjectNames": [
+      "Icosphere"
     ]
   }
 }

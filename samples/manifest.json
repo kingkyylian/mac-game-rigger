@@ -74,7 +74,7 @@
         "exportUnityFbx": "evidence/H-002/export-unity.fbx",
         "visualReview": {
           "status": "pass",
-          "notes": "Conservative pass: source/workflow preserve 9 split meshes and stress-pose silhouettes remain coherent, but QA still reports 42 unweighted vertices and Unity configured Animator smoke is not recorded."
+          "notes": "Conservative pass: source/workflow preserve 8 exportable split meshes after pruning the GLTF glTF_not_exported helper mesh, capsule bind covers all 7734 exportable vertices, and stress-pose silhouettes remain coherent. Unity configured Animator smoke is not recorded."
         }
       }
     },

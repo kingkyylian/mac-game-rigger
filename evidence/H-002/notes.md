@@ -5,12 +5,12 @@
 - Source name: KayKit Adventurers
 - Source URL: https://kaylousberg.itch.io/kaykit-adventurers
 - License: CC0
-- Source mesh count: 9
+- Source mesh count: 8
 - Suggested category: humanoid
 
 ## Workflow
 
-- Rig workflow mesh count: 9
+- Rig workflow mesh count: 8
 - QA status: pass
 - Pose deformation status: pass
 
@@ -18,7 +18,7 @@
 
 - Manual review status: pass
 - Deformation score: 3
-- Visual review notes: Split-mesh structure is preserved through source import and rig workflow. Neutral and stress-pose silhouettes remain coherent with no catastrophic mesh explosion or detached body parts.
-- Cleanup limitations: Evidence is accepted as a first production split-mesh humanoid pass, not as final animator-quality output. QA/export still report 42 unweighted vertices, previews are silhouette-only without material/textured inspection, and weight diagnostics show suspicious distal/core fallback assignments on some accessory and limb vertices. Unity configured Animator smoke is not recorded yet.
+- Visual review notes: Exportable split-mesh structure is preserved through source import, rig workflow, and Unity FBX export. Neutral and stress-pose silhouettes remain coherent with no catastrophic mesh explosion or detached body parts.
+- Cleanup limitations: Evidence is accepted as a first production split-mesh humanoid pass, not as final animator-quality output. The GLTF importer creates a 42-vertex `Icosphere` helper mesh in `glTF_not_exported`; the workflow now prunes that non-exportable helper before source counts, rigging, QA, and FBX export. Exportable QA/export report 8 meshes, 7734 vertices, 0 unweighted vertices, and 0 over-limit vertices. Previews are still silhouette-only without material/textured inspection, and Unity configured Animator smoke is not recorded yet.
 
-Registered conservatively with deformation score 3; use this asset to drive the next cleanup pass rather than treating the current binder as finished.
+Registered conservatively with deformation score 3; use this asset to drive Unity Animator and textured visual QA next rather than treating the current binder as finished.

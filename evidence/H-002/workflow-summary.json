@@ -4,19 +4,25 @@
   "assetPath": "/Users/kyylian/mac-game-rigger/local_assets/H-002/KayKit_Adventurers_2.0_FREE/Characters/gltf/Ranger.glb",
   "template": "humanoid",
   "workflowControls": {},
+  "importPrune": {
+    "removedObjects": 1,
+    "removedObjectNames": [
+      "Icosphere"
+    ]
+  },
   "stripSourceRig": {
     "removedArmatures": 1,
     "removedArmatureModifiers": 8,
     "removedVertexGroups": 184
   },
   "orientationNormalization": [],
-  "meshCount": 9,
+  "meshCount": 8,
   "bbox": {
     "min_x": -0.9712556004524231,
     "max_x": 0.9712556004524231,
-    "min_y": -0.9999999403953552,
-    "max_y": 0.9999999403953552,
-    "min_z": -1.0,
+    "min_y": -0.5350261330604553,
+    "max_y": 0.5143533945083618,
+    "min_z": -0.002025346737354994,
     "max_z": 2.272925853729248
   },
   "artifacts": {
@@ -37,119 +43,119 @@
   "previewFrames": {
     "neutral": {
       "bbox": {
-        "min_x": -0.9712556004524231,
-        "max_x": 0.9712556004524231,
-        "min_y": -0.9999999403953552,
-        "max_y": 0.9999999403953552,
-        "min_z": -1.0,
+        "min_x": -0.9712556600570679,
+        "max_x": 0.9712556600570679,
+        "min_y": -0.5350261330604553,
+        "max_y": 0.5143533945083618,
+        "min_z": -0.002025346737354994,
         "max_z": 2.272925853729248
       },
       "camera": {
         "cameraLocation": [
-          -6.971255600452423,
-          0.0,
-          0.636462926864624
+          -6.971255660057068,
+          -0.010336369276046753,
+          1.1354502534959465
         ],
         "target": [
           0.0,
-          0.0,
-          0.636462926864624
+          -0.010336369276046753,
+          1.1354502534959465
         ],
         "keyLightLocation": [
-          -4.571255600452423,
-          0.0,
-          3.909388780593872
+          -4.5712556600570675,
+          -0.010336369276046753,
+          3.4104014539625496
         ],
-        "orthographicScale": 5.891266536712647,
-        "clipEnd": 15.272925853729248
+        "orthographicScale": 4.094912160839885,
+        "clipEnd": 14.274951200466603
       }
     },
     "neutralSide": {
       "bbox": {
-        "min_x": -0.9712556004524231,
-        "max_x": 0.9712556004524231,
-        "min_y": -0.9999999403953552,
-        "max_y": 0.9999999403953552,
-        "min_z": -1.0,
+        "min_x": -0.9712556600570679,
+        "max_x": 0.9712556600570679,
+        "min_y": -0.5350261330604553,
+        "max_y": 0.5143533945083618,
+        "min_z": -0.002025346737354994,
         "max_z": 2.272925853729248
       },
       "camera": {
         "cameraLocation": [
           0.0,
-          -6.999999940395355,
-          0.636462926864624
+          -6.535026133060455,
+          1.1354502534959465
         ],
         "target": [
           0.0,
-          0.0,
-          0.636462926864624
+          -0.010336369276046753,
+          1.1354502534959465
         ],
         "keyLightLocation": [
           0.0,
-          -4.599999940395355,
-          3.909388780593872
+          -4.135026133060455,
+          3.4104014539625496
         ],
-        "orthographicScale": 5.891266536712647,
-        "clipEnd": 15.272925853729248
+        "orthographicScale": 4.094912160839885,
+        "clipEnd": 14.274951200466603
       }
     },
     "pose": {
       "bbox": {
         "min_x": -0.9712556004524231,
         "max_x": 0.9712556004524231,
-        "min_y": -1.1684967279434204,
-        "max_y": 0.9999999403953552,
-        "min_z": -1.0,
-        "max_z": 2.2661259174346924
+        "min_y": -0.7177625894546509,
+        "max_y": 0.5344472527503967,
+        "min_z": -0.002025346737354994,
+        "max_z": 2.2681994438171387
       },
       "camera": {
         "cameraLocation": [
-          -7.47674560546875,
-          -0.08424839377403259,
-          0.6330629587173462
+          -6.971255600452423,
+          -0.09165766835212708,
+          1.1330870485398918
         ],
         "target": [
           0.0,
-          -0.08424839377403259,
-          0.6330629587173462
+          -0.09165766835212708,
+          1.1330870485398918
         ],
         "keyLightLocation": [
-          -4.874549603462219,
-          -0.08424839377403259,
-          3.8991888761520386
+          -4.571255600452423,
+          -0.09165766835212708,
+          3.4033118390943855
         ],
-        "orthographicScale": 5.879026651382446,
-        "clipEnd": 16.277105927467346
+        "orthographicScale": 4.086404622998089,
+        "clipEnd": 14.270224790554494
       },
       "operator": "pose_humanoid_stress"
     },
     "poseSide": {
       "bbox": {
-        "min_x": -0.9712556004524231,
-        "max_x": 0.9712556004524231,
-        "min_y": -1.1684967279434204,
-        "max_y": 0.9999999403953552,
-        "min_z": -1.0,
+        "min_x": -0.9712556600570679,
+        "max_x": 0.9712556600570679,
+        "min_y": -0.7177625894546509,
+        "max_y": 0.5344472527503967,
+        "min_z": -0.002025346737354994,
         "max_z": 2.272925853729248
       },
       "camera": {
         "cameraLocation": [
           0.0,
-          -7.673986732959747,
-          0.636462926864624
+          -6.717762589454651,
+          1.1354502534959465
         ],
         "target": [
           0.0,
-          -0.08424839377403259,
-          0.636462926864624
+          -0.09165766835212708,
+          1.1354502534959465
         ],
         "keyLightLocation": [
           0.0,
-          -5.071790730953216,
-          3.909388780593872
+          -4.3177625894546505,
+          3.4104014539625496
         ],
-        "orthographicScale": 5.891266536712647,
-        "clipEnd": 16.283905863761902
+        "orthographicScale": 4.094912160839885,
+        "clipEnd": 14.274951200466603
       },
       "operator": "pose_humanoid_side_review"
     }
@@ -158,10 +164,10 @@
     "status": "pass",
     "axisExpansionRatios": {
       "x": 1.0,
-      "y": 1.0842,
+      "y": 1.1933,
       "z": 0.9979
     },
-    "maxAxisExpansionRatio": 1.0842,
+    "maxAxisExpansionRatio": 1.1933,
     "expandedAxes": [],
     "warningAxes": [],
     "allowedExpandedAxes": []
@@ -169,10 +175,24 @@
   "unityScaleNormalization": {
     "applied": false,
     "category": "humanoid",
-    "sourceMaxDimension": 3.2729,
+    "sourceMaxDimension": 2.275,
     "targetMaxDimension": 9.5,
     "scaleFactor": 1.0,
     "reason": "withinSevereLimit"
+  },
+  "capsuleBind": {
+    "meshCount": 8,
+    "weightedVertices": 7734,
+    "meshNames": [
+      "Ranger_ArmLeft",
+      "Ranger_ArmRight",
+      "Ranger_Body",
+      "Ranger_Cape",
+      "Ranger_Head",
+      "Ranger_LegLeft",
+      "Ranger_LegRight",
+      "Ranger_Quiver"
+    ]
   },
   "cleanup": {
     "unweightedVertices": 0,
@@ -183,59 +203,60 @@
     "normalizedVertices": 0
   },
   "weightDiagnostics": {
-    "meshCount": 9,
-    "vertexCount": 7776,
+    "meshCount": 8,
+    "vertexCount": 7734,
     "regions": {
       "upperLeg": {
-        "influencedVertices": 1872,
-        "dominantVertices": 1855,
-        "averageWeight": 0.9847
+        "influencedVertices": 1641,
+        "dominantVertices": 1627,
+        "averageWeight": 0.9856
       },
       "core": {
-        "influencedVertices": 4653,
-        "dominantVertices": 4429,
-        "averageWeight": 0.9592
+        "influencedVertices": 5309,
+        "dominantVertices": 5116,
+        "averageWeight": 0.9701
       },
-      "hand": {
-        "influencedVertices": 202,
-        "dominantVertices": 202,
-        "averageWeight": 0.6667
+      "lowerArm": {
+        "influencedVertices": 77,
+        "dominantVertices": 22,
+        "averageWeight": 0.3844
       },
       "lowerLeg": {
-        "influencedVertices": 1061,
-        "dominantVertices": 994,
-        "averageWeight": 0.9564
+        "influencedVertices": 683,
+        "dominantVertices": 554,
+        "averageWeight": 0.8744
       },
       "upperArm": {
         "influencedVertices": 64,
         "dominantVertices": 0,
-        "averageWeight": 0.1329
-      },
-      "lowerArm": {
-        "influencedVertices": 67,
-        "dominantVertices": 5,
-        "averageWeight": 0.1576
-      },
-      "foot": {
-        "influencedVertices": 246,
-        "dominantVertices": 244,
-        "averageWeight": 0.9599
+        "averageWeight": 0.1362
       },
       "neckHead": {
-        "influencedVertices": 113,
+        "influencedVertices": 111,
         "dominantVertices": 5,
-        "averageWeight": 0.203
+        "averageWeight": 0.1807
+      },
+      "foot": {
+        "influencedVertices": 208,
+        "dominantVertices": 208,
+        "averageWeight": 0.8429
+      },
+      "hand": {
+        "influencedVertices": 202,
+        "dominantVertices": 202,
+        "averageWeight": 0.6707
       }
     },
     "heightBands": {
       "lower": {
         "vertexCount": 4324,
         "dominantRegions": {
-          "foot": 160,
-          "lowerLeg": 771,
-          "core": 1682,
-          "upperLeg": 1668,
-          "hand": 43
+          "foot": 131,
+          "lowerLeg": 396,
+          "core": 2364,
+          "upperLeg": 1385,
+          "hand": 44,
+          "lowerArm": 4
         },
         "minZ": -0.002,
         "maxZ": 0.7436
@@ -243,13 +264,13 @@
       "torso": {
         "vertexCount": 2772,
         "dominantRegions": {
-          "upperLeg": 187,
-          "hand": 129,
-          "core": 2139,
-          "lowerLeg": 223,
-          "foot": 84,
+          "upperLeg": 242,
+          "core": 2148,
+          "lowerLeg": 158,
+          "foot": 77,
+          "hand": 128,
           "neckHead": 5,
-          "lowerArm": 5
+          "lowerArm": 14
         },
         "minZ": 0.7492,
         "maxZ": 1.5871
@@ -257,8 +278,9 @@
       "upper": {
         "vertexCount": 638,
         "dominantRegions": {
-          "core": 608,
-          "hand": 30
+          "core": 604,
+          "hand": 30,
+          "lowerArm": 4
         },
         "minZ": 1.5932,
         "maxZ": 2.2729
@@ -267,70 +289,70 @@
     "topBones": [
       {
         "bone": "Chest",
-        "totalWeight": 1840.1105
+        "totalWeight": 3070.2645
       },
       {
         "bone": "Hips",
-        "totalWeight": 1434.0158
+        "totalWeight": 1210.8094
       },
       {
         "bone": "Spine",
-        "totalWeight": 1189.0642
+        "totalWeight": 869.1307
       },
       {
         "bone": "UpperLeg.L",
-        "totalWeight": 928.0714
+        "totalWeight": 820.8073
       },
       {
         "bone": "UpperLeg.R",
-        "totalWeight": 915.2335
+        "totalWeight": 796.5887
       },
       {
         "bone": "LowerLeg.L",
-        "totalWeight": 517.2766
+        "totalWeight": 306.5115
       },
       {
         "bone": "LowerLeg.R",
-        "totalWeight": 497.4159
-      },
-      {
-        "bone": "Foot.R",
-        "totalWeight": 118.9281
+        "totalWeight": 290.6999
       },
       {
         "bone": "Foot.L",
-        "totalWeight": 117.2123
+        "totalWeight": 88.3333
+      },
+      {
+        "bone": "Foot.R",
+        "totalWeight": 87.0
       },
       {
         "bone": "Hand.L",
-        "totalWeight": 67.3333
+        "totalWeight": 67.7391
       },
       {
         "bone": "Hand.R",
-        "totalWeight": 67.3333
+        "totalWeight": 67.7391
       },
       {
-        "bone": "Head",
-        "totalWeight": 11.4709
+        "bone": "LowerArm.R",
+        "totalWeight": 20.7794
       }
     ]
   },
   "boneWeightDiagnostics": {
-    "meshCount": 9,
-    "vertexCount": 7776,
+    "meshCount": 8,
+    "vertexCount": 7734,
     "bones": {
       "Chest": {
         "region": "core",
-        "influencedVertices": 2131,
-        "dominantVertices": 1839,
-        "totalWeight": 1840.1105,
-        "averageWeight": 0.8635,
+        "influencedVertices": 3302,
+        "dominantVertices": 3058,
+        "totalWeight": 3070.2645,
+        "averageWeight": 0.9298,
         "influencedBounds": {
           "minX": -0.9713,
           "maxX": 0.9713,
           "minY": -0.5273,
           "maxY": 0.478,
-          "minZ": 0.2808,
+          "minZ": -0.0002,
           "maxZ": 2.2729
         },
         "dominantBounds": {
@@ -338,10 +360,20 @@
           "maxX": 0.9713,
           "minY": -0.5273,
           "maxY": 0.478,
-          "minZ": 0.2808,
+          "minZ": -0.0002,
           "maxZ": 2.2729
         },
         "topWeightedVertices": [
+          {
+            "mesh": "Ranger_ArmLeft",
+            "index": 3,
+            "weight": 1.0,
+            "world": [
+              0.787,
+              -0.0765,
+              1.1771
+            ]
+          },
           {
             "mesh": "Ranger_ArmLeft",
             "index": 4,
@@ -371,62 +403,32 @@
               0.0765,
               1.1771
             ]
-          },
-          {
-            "mesh": "Ranger_ArmLeft",
-            "index": 9,
-            "weight": 1.0,
-            "world": [
-              0.787,
-              0.0765,
-              1.1771
-            ]
           }
         ]
       },
       "Foot.L": {
         "region": "foot",
-        "influencedVertices": 123,
-        "dominantVertices": 120,
-        "totalWeight": 117.2123,
-        "averageWeight": 0.9529,
+        "influencedVertices": 104,
+        "dominantVertices": 104,
+        "totalWeight": 88.3333,
+        "averageWeight": 0.8494,
         "influencedBounds": {
-          "minX": -0.3897,
-          "maxX": 0.8557,
+          "minX": -0.382,
+          "maxX": 0.7323,
           "minY": -0.3108,
-          "maxY": 0.3839,
+          "maxY": 0.356,
           "minZ": -0.0019,
-          "maxZ": 1.3844
+          "maxZ": 1.3154
         },
         "dominantBounds": {
-          "minX": -0.3897,
-          "maxX": 0.8557,
+          "minX": -0.382,
+          "maxX": 0.7323,
           "minY": -0.3108,
-          "maxY": 0.3839,
+          "maxY": 0.356,
           "minZ": -0.0019,
-          "maxZ": 1.3844
+          "maxZ": 1.3154
         },
         "topWeightedVertices": [
-          {
-            "mesh": "Ranger_ArmLeft",
-            "index": 94,
-            "weight": 1.0,
-            "world": [
-              0.8557,
-              -0.044,
-              0.9702
-            ]
-          },
-          {
-            "mesh": "Ranger_ArmLeft",
-            "index": 95,
-            "weight": 1.0,
-            "world": [
-              0.8557,
-              -0.044,
-              0.9702
-            ]
-          },
           {
             "mesh": "Ranger_ArmLeft",
             "index": 109,
@@ -446,52 +448,52 @@
               -0.035,
               0.9797
             ]
+          },
+          {
+            "mesh": "Ranger_ArmLeft",
+            "index": 195,
+            "weight": 1.0,
+            "world": [
+              0.6889,
+              -0.035,
+              0.9797
+            ]
+          },
+          {
+            "mesh": "Ranger_ArmLeft",
+            "index": 555,
+            "weight": 1.0,
+            "world": [
+              0.7323,
+              -0.0,
+              0.9804
+            ]
           }
         ]
       },
       "Foot.R": {
         "region": "foot",
-        "influencedVertices": 125,
-        "dominantVertices": 124,
-        "totalWeight": 118.9281,
-        "averageWeight": 0.9514,
+        "influencedVertices": 104,
+        "dominantVertices": 104,
+        "totalWeight": 87.0,
+        "averageWeight": 0.8365,
         "influencedBounds": {
-          "minX": -0.8557,
-          "maxX": 0.3897,
+          "minX": -0.7323,
+          "maxX": 0.382,
           "minY": -0.3108,
-          "maxY": 0.4438,
+          "maxY": 0.4803,
           "minZ": -0.0019,
-          "maxZ": 1.3844
+          "maxZ": 1.3154
         },
         "dominantBounds": {
-          "minX": -0.8557,
-          "maxX": 0.3897,
+          "minX": -0.7323,
+          "maxX": 0.382,
           "minY": -0.3108,
-          "maxY": 0.4438,
+          "maxY": 0.4803,
           "minZ": -0.0019,
-          "maxZ": 1.3844
+          "maxZ": 1.3154
         },
         "topWeightedVertices": [
-          {
-            "mesh": "Ranger_ArmLeft",
-            "index": 327,
-            "weight": 1.0,
-            "world": [
-              0.3897,
-              -0.0406,
-              0.9886
-            ]
-          },
-          {
-            "mesh": "Ranger_ArmLeft",
-            "index": 328,
-            "weight": 1.0,
-            "world": [
-              0.3897,
-              -0.0406,
-              0.9886
-            ]
-          },
           {
             "mesh": "Ranger_ArmLeft",
             "index": 416,
@@ -511,6 +513,26 @@
               -0.0433,
               0.9749
             ]
+          },
+          {
+            "mesh": "Ranger_ArmLeft",
+            "index": 476,
+            "weight": 1.0,
+            "world": [
+              0.3565,
+              -0.047,
+              0.957
+            ]
+          },
+          {
+            "mesh": "Ranger_ArmLeft",
+            "index": 489,
+            "weight": 1.0,
+            "world": [
+              0.3065,
+              -0.0407,
+              0.9779
+            ]
           }
         ]
       },
@@ -518,58 +540,58 @@
         "region": "hand",
         "influencedVertices": 101,
         "dominantVertices": 101,
-        "totalWeight": 67.3333,
-        "averageWeight": 0.6667,
+        "totalWeight": 67.7391,
+        "averageWeight": 0.6707,
         "influencedBounds": {
-          "minX": -0.2688,
-          "maxX": 0.9464,
+          "minX": -0.2128,
+          "maxX": 0.9713,
           "minY": -0.259,
-          "maxY": 0.4185,
-          "minZ": 0.3077,
-          "maxZ": 2.01
+          "maxY": 0.4658,
+          "minZ": 0.3089,
+          "maxZ": 2.0027
         },
         "dominantBounds": {
-          "minX": -0.2688,
-          "maxX": 0.9464,
+          "minX": -0.2128,
+          "maxX": 0.9713,
           "minY": -0.259,
-          "maxY": 0.4185,
-          "minZ": 0.3077,
-          "maxZ": 2.01
+          "maxY": 0.4658,
+          "minZ": 0.3089,
+          "maxZ": 2.0027
         },
         "topWeightedVertices": [
           {
             "mesh": "Ranger_ArmLeft",
-            "index": 2,
-            "weight": 0.6667,
+            "index": 663,
+            "weight": 0.8696,
             "world": [
-              0.787,
-              -0.0765,
-              1.1771
+              0.9713,
+              -0.0,
+              1.1474
             ]
           },
           {
-            "mesh": "Ranger_ArmLeft",
-            "index": 3,
-            "weight": 0.6667,
+            "mesh": "Ranger_ArmRight",
+            "index": 593,
+            "weight": 0.8696,
             "world": [
-              0.787,
-              -0.0765,
-              1.1771
-            ]
-          },
-          {
-            "mesh": "Ranger_ArmLeft",
-            "index": 41,
-            "weight": 0.6667,
-            "world": [
-              0.787,
-              -0.0348,
-              1.1883
+              -0.0888,
+              -0.0,
+              1.1498
             ]
           },
           {
             "mesh": "Ranger_ArmLeft",
             "index": 628,
+            "weight": 0.6667,
+            "world": [
+              0.9464,
+              -0.0362,
+              1.192
+            ]
+          },
+          {
+            "mesh": "Ranger_ArmLeft",
+            "index": 629,
             "weight": 0.6667,
             "world": [
               0.9464,
@@ -583,25 +605,45 @@
         "region": "hand",
         "influencedVertices": 101,
         "dominantVertices": 101,
-        "totalWeight": 67.3333,
-        "averageWeight": 0.6667,
+        "totalWeight": 67.7391,
+        "averageWeight": 0.6707,
         "influencedBounds": {
-          "minX": -0.9464,
-          "maxX": 0.2688,
+          "minX": -0.9713,
+          "maxX": 0.2128,
           "minY": -0.259,
           "maxY": 0.3963,
-          "minZ": 0.3077,
-          "maxZ": 2.01
+          "minZ": 0.3089,
+          "maxZ": 2.0027
         },
         "dominantBounds": {
-          "minX": -0.9464,
-          "maxX": 0.2688,
+          "minX": -0.9713,
+          "maxX": 0.2128,
           "minY": -0.259,
           "maxY": 0.3963,
-          "minZ": 0.3077,
-          "maxZ": 2.01
+          "minZ": 0.3089,
+          "maxZ": 2.0027
         },
         "topWeightedVertices": [
+          {
+            "mesh": "Ranger_ArmLeft",
+            "index": 593,
+            "weight": 0.8696,
+            "world": [
+              0.0888,
+              -0.0,
+              1.1498
+            ]
+          },
+          {
+            "mesh": "Ranger_ArmRight",
+            "index": 663,
+            "weight": 0.8696,
+            "world": [
+              -0.9713,
+              -0.0,
+              1.1474
+            ]
+          },
           {
             "mesh": "Ranger_ArmLeft",
             "index": 366,
@@ -621,41 +663,21 @@
               0.0839,
               1.1888
             ]
-          },
-          {
-            "mesh": "Ranger_ArmLeft",
-            "index": 373,
-            "weight": 0.6667,
-            "world": [
-              0.1567,
-              0.108,
-              1.1505
-            ]
-          },
-          {
-            "mesh": "Ranger_ArmLeft",
-            "index": 377,
-            "weight": 0.6667,
-            "world": [
-              0.1567,
-              -0.108,
-              1.1505
-            ]
           }
         ]
       },
       "Head": {
         "region": "neckHead",
-        "influencedVertices": 77,
+        "influencedVertices": 67,
         "dominantVertices": 0,
-        "totalWeight": 11.4709,
-        "averageWeight": 0.149,
+        "totalWeight": 10.0307,
+        "averageWeight": 0.1497,
         "influencedBounds": {
           "minX": -0.5782,
           "maxX": 0.5782,
           "minY": -0.326,
-          "maxY": 0.366,
-          "minZ": 0.3733,
+          "maxY": 0.4277,
+          "minZ": 0.417,
           "maxZ": 2.2667
         },
         "dominantBounds": null,
@@ -663,7 +685,7 @@
           {
             "mesh": "Ranger_Body",
             "index": 1137,
-            "weight": 0.2974,
+            "weight": 0.2977,
             "world": [
               -0.0,
               0.004,
@@ -673,7 +695,7 @@
           {
             "mesh": "Ranger_Body",
             "index": 1184,
-            "weight": 0.2823,
+            "weight": 0.2818,
             "world": [
               0.0,
               0.0011,
@@ -683,7 +705,7 @@
           {
             "mesh": "Ranger_Body",
             "index": 104,
-            "weight": 0.2776,
+            "weight": 0.2771,
             "world": [
               -0.0,
               -0.0,
@@ -693,7 +715,7 @@
           {
             "mesh": "Ranger_ArmLeft",
             "index": 613,
-            "weight": 0.2644,
+            "weight": 0.264,
             "world": [
               0.5282,
               -0.0,
@@ -704,25 +726,25 @@
       },
       "Hips": {
         "region": "core",
-        "influencedVertices": 1532,
-        "dominantVertices": 1411,
-        "totalWeight": 1434.0158,
-        "averageWeight": 0.936,
+        "influencedVertices": 1280,
+        "dominantVertices": 1189,
+        "totalWeight": 1210.8094,
+        "averageWeight": 0.9459,
         "influencedBounds": {
-          "minX": -0.787,
-          "maxX": 0.787,
+          "minX": -0.6889,
+          "maxX": 0.6889,
           "minY": -0.535,
           "maxY": 0.5144,
           "minZ": -0.002,
           "maxZ": 1.7268
         },
         "dominantBounds": {
-          "minX": -0.787,
-          "maxX": 0.787,
+          "minX": -0.6889,
+          "maxX": 0.6889,
           "minY": -0.535,
           "maxY": 0.5144,
           "minZ": -0.002,
-          "maxZ": 1.715
+          "maxZ": 1.6528
         },
         "topWeightedVertices": [
           {
@@ -770,139 +792,146 @@
       "LowerArm.L": {
         "region": "lowerArm",
         "influencedVertices": 32,
-        "dominantVertices": 0,
-        "totalWeight": 4.1321,
-        "averageWeight": 0.1291,
+        "dominantVertices": 5,
+        "totalWeight": 8.8209,
+        "averageWeight": 0.2757,
         "influencedBounds": {
-          "minX": -0.1724,
+          "minX": -0.1244,
           "maxX": 0.9713,
-          "minY": -0.1849,
-          "maxY": 0.4277,
+          "minY": -0.1454,
+          "maxY": 0.4418,
           "minZ": 0.329,
-          "maxZ": 2.0021
+          "maxZ": 2.0022
         },
-        "dominantBounds": null,
+        "dominantBounds": {
+          "minX": -0.0647,
+          "maxX": 0.4563,
+          "minY": -0.1168,
+          "maxY": 0.0012,
+          "minZ": 0.3733,
+          "maxZ": 2.0022
+        },
         "topWeightedVertices": [
           {
+            "mesh": "Ranger_Body",
+            "index": 324,
+            "weight": 0.8696,
+            "world": [
+              0.2833,
+              -0.0,
+              0.9788
+            ]
+          },
+          {
+            "mesh": "Ranger_Head",
+            "index": 400,
+            "weight": 0.8696,
+            "world": [
+              0.441,
+              -0.1168,
+              2.0022
+            ]
+          },
+          {
+            "mesh": "Ranger_Head",
+            "index": 403,
+            "weight": 0.8696,
+            "world": [
+              0.4563,
+              0.0012,
+              2.0021
+            ]
+          },
+          {
             "mesh": "Ranger_LegLeft",
-            "index": 739,
-            "weight": 0.1369,
+            "index": 745,
+            "weight": 0.8696,
             "world": [
-              0.2495,
-              -0.0809,
-              0.3734
-            ]
-          },
-          {
-            "mesh": "Ranger_LegRight",
-            "index": 744,
-            "weight": 0.1353,
-            "world": [
-              -0.0878,
-              -0.0809,
-              0.3734
-            ]
-          },
-          {
-            "mesh": "Ranger_ArmLeft",
-            "index": 40,
-            "weight": 0.1304,
-            "world": [
-              0.787,
-              -0.0348,
-              1.1883
-            ]
-          },
-          {
-            "mesh": "Ranger_ArmLeft",
-            "index": 639,
-            "weight": 0.1304,
-            "world": [
-              0.9713,
-              -0.0362,
-              1.1474
+              0.2726,
+              -0.0442,
+              0.3733
             ]
           }
         ]
       },
       "LowerArm.R": {
         "region": "lowerArm",
-        "influencedVertices": 35,
-        "dominantVertices": 5,
-        "totalWeight": 6.425,
-        "averageWeight": 0.1836,
+        "influencedVertices": 45,
+        "dominantVertices": 17,
+        "totalWeight": 20.7794,
+        "averageWeight": 0.4618,
         "influencedBounds": {
           "minX": -0.9713,
-          "maxX": 0.1212,
-          "minY": -0.1849,
-          "maxY": 0.3861,
+          "maxX": 0.1244,
+          "minY": -0.1454,
+          "maxY": 0.3963,
           "minZ": 0.329,
-          "maxZ": 2.0021
+          "maxZ": 2.0022
         },
         "dominantBounds": {
-          "minX": -0.3083,
-          "maxX": -0.3083,
-          "minY": 0.375,
-          "maxY": 0.375,
-          "minZ": 1.1166,
-          "maxZ": 1.1166
+          "minX": -0.4563,
+          "maxX": 0.0647,
+          "minY": -0.1168,
+          "maxY": 0.3952,
+          "minZ": 0.3733,
+          "maxZ": 2.0022
         },
         "topWeightedVertices": [
           {
             "mesh": "Ranger_Quiver",
-            "index": 272,
-            "weight": 0.5207,
+            "index": 72,
+            "weight": 1.0,
             "world": [
-              -0.3083,
-              0.375,
-              1.1166
+              -0.3109,
+              0.3952,
+              1.0908
             ]
           },
           {
             "mesh": "Ranger_Quiver",
-            "index": 273,
-            "weight": 0.5207,
+            "index": 73,
+            "weight": 1.0,
             "world": [
-              -0.3083,
-              0.375,
-              1.1166
+              -0.3109,
+              0.3952,
+              1.0908
             ]
           },
           {
             "mesh": "Ranger_Quiver",
-            "index": 274,
-            "weight": 0.5207,
+            "index": 193,
+            "weight": 1.0,
             "world": [
-              -0.3083,
-              0.375,
-              1.1166
+              -0.2919,
+              0.3813,
+              1.0971
             ]
           },
           {
             "mesh": "Ranger_Quiver",
-            "index": 268,
-            "weight": 0.4528,
+            "index": 194,
+            "weight": 1.0,
             "world": [
-              -0.3083,
-              0.375,
-              1.1166
+              -0.2919,
+              0.3813,
+              1.0971
             ]
           }
         ]
       },
       "LowerLeg.L": {
         "region": "lowerLeg",
-        "influencedVertices": 539,
-        "dominantVertices": 507,
-        "totalWeight": 517.2766,
-        "averageWeight": 0.9597,
+        "influencedVertices": 348,
+        "dominantVertices": 285,
+        "totalWeight": 306.5115,
+        "averageWeight": 0.8808,
         "influencedBounds": {
           "minX": -0.4626,
           "maxX": 0.9046,
           "minY": -0.3516,
           "maxY": 0.4687,
           "minZ": 0.001,
-          "maxZ": 1.4129
+          "maxZ": 1.3154
         },
         "dominantBounds": {
           "minX": -0.4626,
@@ -910,7 +939,7 @@
           "minY": -0.3516,
           "maxY": 0.4687,
           "minZ": 0.001,
-          "maxZ": 1.4129
+          "maxZ": 1.3154
         },
         "topWeightedVertices": [
           {
@@ -957,17 +986,17 @@
       },
       "LowerLeg.R": {
         "region": "lowerLeg",
-        "influencedVertices": 522,
-        "dominantVertices": 487,
-        "totalWeight": 497.4159,
-        "averageWeight": 0.9529,
+        "influencedVertices": 335,
+        "dominantVertices": 269,
+        "totalWeight": 290.6999,
+        "averageWeight": 0.8678,
         "influencedBounds": {
           "minX": -0.9046,
           "maxX": 0.4626,
           "minY": -0.3516,
-          "maxY": 0.4363,
+          "maxY": 0.3835,
           "minZ": 0.001,
-          "maxZ": 1.4129
+          "maxZ": 1.3154
         },
         "dominantBounds": {
           "minX": -0.9046,
@@ -975,62 +1004,62 @@
           "minY": -0.3516,
           "maxY": 0.2817,
           "minZ": 0.001,
-          "maxZ": 1.4129
+          "maxZ": 1.3154
         },
         "topWeightedVertices": [
           {
             "mesh": "Ranger_ArmLeft",
-            "index": 64,
+            "index": 325,
             "weight": 1.0,
             "world": [
-              0.4626,
-              0.0353,
-              1.0041
+              0.3897,
+              0.0406,
+              0.9886
             ]
           },
           {
             "mesh": "Ranger_ArmLeft",
-            "index": 65,
+            "index": 326,
             "weight": 1.0,
             "world": [
-              0.4626,
-              0.0353,
-              1.0041
+              0.3897,
+              0.0406,
+              0.9886
             ]
           },
           {
             "mesh": "Ranger_ArmLeft",
-            "index": 66,
+            "index": 327,
             "weight": 1.0,
             "world": [
-              0.4626,
-              -0.0353,
-              1.0041
+              0.3897,
+              -0.0406,
+              0.9886
             ]
           },
           {
             "mesh": "Ranger_ArmLeft",
-            "index": 67,
+            "index": 328,
             "weight": 1.0,
             "world": [
-              0.4626,
-              -0.0353,
-              1.0041
+              0.3897,
+              -0.0406,
+              0.9886
             ]
           }
         ]
       },
       "Neck": {
         "region": "neckHead",
-        "influencedVertices": 77,
+        "influencedVertices": 67,
         "dominantVertices": 0,
-        "totalWeight": 11.4709,
-        "averageWeight": 0.149,
+        "totalWeight": 10.0307,
+        "averageWeight": 0.1497,
         "influencedBounds": {
           "minX": -0.5782,
           "maxX": 0.5782,
           "minY": -0.228,
-          "maxY": 0.4162,
+          "maxY": 0.3917,
           "minZ": 0.3733,
           "maxZ": 2.2729
         },
@@ -1039,7 +1068,7 @@
           {
             "mesh": "Ranger_Body",
             "index": 1137,
-            "weight": 0.2974,
+            "weight": 0.2977,
             "world": [
               -0.0,
               0.004,
@@ -1049,7 +1078,7 @@
           {
             "mesh": "Ranger_Body",
             "index": 1184,
-            "weight": 0.2823,
+            "weight": 0.2818,
             "world": [
               0.0,
               0.0011,
@@ -1059,7 +1088,7 @@
           {
             "mesh": "Ranger_Body",
             "index": 104,
-            "weight": 0.2776,
+            "weight": 0.2771,
             "world": [
               -0.0,
               -0.0,
@@ -1069,7 +1098,7 @@
           {
             "mesh": "Ranger_ArmLeft",
             "index": 613,
-            "weight": 0.2644,
+            "weight": 0.264,
             "world": [
               0.5282,
               -0.0,
@@ -1080,25 +1109,25 @@
       },
       "Spine": {
         "region": "core",
-        "influencedVertices": 1428,
-        "dominantVertices": 1184,
-        "totalWeight": 1189.0642,
-        "averageWeight": 0.8327,
+        "influencedVertices": 1013,
+        "dominantVertices": 874,
+        "totalWeight": 869.1307,
+        "averageWeight": 0.858,
         "influencedBounds": {
-          "minX": -0.9713,
-          "maxX": 0.9713,
+          "minX": -0.8557,
+          "maxX": 0.8557,
           "minY": -0.4621,
           "maxY": 0.5034,
           "minZ": 0.001,
           "maxZ": 1.9767
         },
         "dominantBounds": {
-          "minX": -0.9713,
-          "maxX": 0.9713,
+          "minX": -0.8557,
+          "maxX": 0.8557,
           "minY": -0.4621,
           "maxY": 0.5034,
           "minZ": 0.001,
-          "maxZ": 1.7897
+          "maxZ": 1.7877
         },
         "topWeightedVertices": [
           {
@@ -1123,22 +1152,22 @@
           },
           {
             "mesh": "Ranger_ArmLeft",
-            "index": 22,
+            "index": 48,
             "weight": 1.0,
             "world": [
-              0.8871,
-              0.1126,
-              0.9965
+              0.8557,
+              -0.111,
+              0.998
             ]
           },
           {
             "mesh": "Ranger_ArmLeft",
-            "index": 23,
+            "index": 49,
             "weight": 1.0,
             "world": [
-              0.8871,
-              0.1126,
-              0.9965
+              0.8557,
+              -0.111,
+              0.998
             ]
           }
         ]
@@ -1147,34 +1176,34 @@
         "region": "upperArm",
         "influencedVertices": 32,
         "dominantVertices": 0,
-        "totalWeight": 4.2531,
-        "averageWeight": 0.1329,
+        "totalWeight": 4.2731,
+        "averageWeight": 0.1335,
         "influencedBounds": {
-          "minX": -0.1283,
+          "minX": -0.1244,
           "maxX": 0.787,
           "minY": -0.2061,
-          "maxY": 0.3805,
-          "minZ": 0.329,
+          "maxY": 0.4185,
+          "minZ": 0.3733,
           "maxZ": 2.0022
         },
         "dominantBounds": null,
         "topWeightedVertices": [
           {
-            "mesh": "Ranger_LegLeft",
-            "index": 739,
-            "weight": 0.1703,
+            "mesh": "Ranger_LegRight",
+            "index": 744,
+            "weight": 0.1802,
             "world": [
-              0.2495,
+              -0.0878,
               -0.0809,
               0.3734
             ]
           },
           {
-            "mesh": "Ranger_LegRight",
-            "index": 744,
-            "weight": 0.1697,
+            "mesh": "Ranger_LegLeft",
+            "index": 739,
+            "weight": 0.1798,
             "world": [
-              -0.0878,
+              0.2495,
               -0.0809,
               0.3734
             ]
@@ -1205,32 +1234,42 @@
         "region": "upperArm",
         "influencedVertices": 32,
         "dominantVertices": 0,
-        "totalWeight": 4.2531,
-        "averageWeight": 0.1329,
+        "totalWeight": 4.4416,
+        "averageWeight": 0.1388,
         "influencedBounds": {
           "minX": -0.787,
-          "maxX": 0.1283,
+          "maxX": 0.1244,
           "minY": -0.2061,
           "maxY": 0.3908,
-          "minZ": 0.329,
+          "minZ": 0.3733,
           "maxZ": 2.0022
         },
         "dominantBounds": null,
         "topWeightedVertices": [
           {
-            "mesh": "Ranger_LegRight",
-            "index": 739,
-            "weight": 0.1703,
+            "mesh": "Ranger_Quiver",
+            "index": 191,
+            "weight": 0.2147,
             "world": [
-              -0.2495,
-              -0.0809,
-              0.3734
+              -0.2313,
+              0.3908,
+              1.1598
+            ]
+          },
+          {
+            "mesh": "Ranger_Quiver",
+            "index": 192,
+            "weight": 0.2147,
+            "world": [
+              -0.2313,
+              0.3908,
+              1.1598
             ]
           },
           {
             "mesh": "Ranger_LegLeft",
             "index": 744,
-            "weight": 0.1697,
+            "weight": 0.1802,
             "world": [
               0.0878,
               -0.0809,
@@ -1238,48 +1277,38 @@
             ]
           },
           {
-            "mesh": "Ranger_ArmLeft",
-            "index": 382,
-            "weight": 0.1304,
+            "mesh": "Ranger_LegRight",
+            "index": 739,
+            "weight": 0.1798,
             "world": [
-              0.1109,
-              -0.0363,
-              1.1862
-            ]
-          },
-          {
-            "mesh": "Ranger_ArmLeft",
-            "index": 383,
-            "weight": 0.1304,
-            "world": [
-              0.1109,
-              0.0363,
-              1.1862
+              -0.2495,
+              -0.0809,
+              0.3734
             ]
           }
         ]
       },
       "UpperLeg.L": {
         "region": "upperLeg",
-        "influencedVertices": 940,
-        "dominantVertices": 934,
-        "totalWeight": 928.0714,
-        "averageWeight": 0.9873,
+        "influencedVertices": 830,
+        "dominantVertices": 826,
+        "totalWeight": 820.8073,
+        "averageWeight": 0.9889,
         "influencedBounds": {
           "minX": -0.3942,
           "maxX": 0.9464,
-          "minY": -0.3127,
-          "maxY": 0.4438,
-          "minZ": 0.0846,
-          "maxZ": 1.5742
+          "minY": -0.3808,
+          "maxY": 0.4757,
+          "minZ": 0.0569,
+          "maxZ": 1.5613
         },
         "dominantBounds": {
           "minX": -0.3942,
           "maxX": 0.9464,
-          "minY": -0.3127,
-          "maxY": 0.4438,
-          "minZ": 0.0846,
-          "maxZ": 1.5742
+          "minY": -0.3808,
+          "maxY": 0.4757,
+          "minZ": 0.0569,
+          "maxZ": 1.5613
         },
         "topWeightedVertices": [
           {
@@ -1326,25 +1355,25 @@
       },
       "UpperLeg.R": {
         "region": "upperLeg",
-        "influencedVertices": 932,
-        "dominantVertices": 921,
-        "totalWeight": 915.2335,
-        "averageWeight": 0.982,
+        "influencedVertices": 811,
+        "dominantVertices": 801,
+        "totalWeight": 796.5887,
+        "averageWeight": 0.9822,
         "influencedBounds": {
           "minX": -0.9464,
           "maxX": 0.3942,
-          "minY": -0.3127,
+          "minY": -0.3806,
           "maxY": 0.4216,
-          "minZ": 0.0846,
-          "maxZ": 1.5742
+          "minZ": 0.0569,
+          "maxZ": 1.5613
         },
         "dominantBounds": {
           "minX": -0.9464,
           "maxX": 0.3942,
-          "minY": -0.3127,
-          "maxY": 0.3003,
-          "minZ": 0.0846,
-          "maxZ": 1.5742
+          "minY": -0.3806,
+          "maxY": 0.367,
+          "minZ": 0.0569,
+          "maxZ": 1.5613
         },
         "topWeightedVertices": [
           {
@@ -1393,98 +1422,108 @@
     "topBones": [
       {
         "bone": "Chest",
-        "totalWeight": 1840.1105
+        "totalWeight": 3070.2645
       },
       {
         "bone": "Hips",
-        "totalWeight": 1434.0158
+        "totalWeight": 1210.8094
       },
       {
         "bone": "Spine",
-        "totalWeight": 1189.0642
+        "totalWeight": 869.1307
       },
       {
         "bone": "UpperLeg.L",
-        "totalWeight": 928.0714
+        "totalWeight": 820.8073
       },
       {
         "bone": "UpperLeg.R",
-        "totalWeight": 915.2335
+        "totalWeight": 796.5887
       },
       {
         "bone": "LowerLeg.L",
-        "totalWeight": 517.2766
+        "totalWeight": 306.5115
       },
       {
         "bone": "LowerLeg.R",
-        "totalWeight": 497.4159
-      },
-      {
-        "bone": "Foot.R",
-        "totalWeight": 118.9281
+        "totalWeight": 290.6999
       },
       {
         "bone": "Foot.L",
-        "totalWeight": 117.2123
+        "totalWeight": 88.3333
+      },
+      {
+        "bone": "Foot.R",
+        "totalWeight": 87.0
       },
       {
         "bone": "Hand.L",
-        "totalWeight": 67.3333
+        "totalWeight": 67.7391
       },
       {
         "bone": "Hand.R",
-        "totalWeight": 67.3333
+        "totalWeight": 67.7391
       },
       {
-        "bone": "Head",
-        "totalWeight": 11.4709
+        "bone": "LowerArm.R",
+        "totalWeight": 20.7794
       }
     ]
   },
   "capsuleBindWeightDiagnostics": {
     "space": "capsuleBind",
     "targetBounds": {
-      "minX": -0.9876,
-      "maxX": 0.9876,
-      "minY": -0.6873,
-      "maxY": 0.6873,
-      "minZ": -1.023,
-      "maxZ": 2.4366
+      "minX": -0.9872,
+      "maxX": 0.9872,
+      "minY": -0.4881,
+      "maxY": 0.4674,
+      "minZ": -0.0122,
+      "maxZ": 2.3867
     },
-    "meshCount": 9,
-    "vertexCount": 7776,
+    "meshCount": 8,
+    "vertexCount": 7734,
     "bones": {
       "Chest": {
         "region": "core",
-        "influencedVertices": 2131,
-        "dominantVertices": 1839,
-        "totalWeight": 1840.1105,
-        "averageWeight": 0.8635,
+        "influencedVertices": 3302,
+        "dominantVertices": 3058,
+        "totalWeight": 3070.2645,
+        "averageWeight": 0.9298,
         "influencedBounds": {
-          "minX": -0.9876,
-          "maxX": 0.9876,
-          "minY": -0.6873,
-          "maxY": 0.683,
-          "minZ": 0.6827,
-          "maxZ": 2.4366
+          "minX": -0.9872,
+          "maxX": 0.9872,
+          "minY": -0.4881,
+          "maxY": 0.4662,
+          "minZ": -0.0122,
+          "maxZ": 2.3867
         },
         "dominantBounds": {
-          "minX": -0.9876,
-          "maxX": 0.9876,
-          "minY": -0.6873,
-          "maxY": 0.683,
-          "minZ": 0.6827,
-          "maxZ": 2.4366
+          "minX": -0.9872,
+          "maxX": 0.9872,
+          "minY": -0.4881,
+          "maxY": 0.4662,
+          "minZ": -0.0122,
+          "maxZ": 2.3867
         },
         "topWeightedVertices": [
+          {
+            "mesh": "Ranger_ArmLeft",
+            "index": 3,
+            "weight": 1.0,
+            "bind": [
+              0.5749,
+              -0.2556,
+              1.775
+            ]
+          },
           {
             "mesh": "Ranger_ArmLeft",
             "index": 4,
             "weight": 1.0,
             "bind": [
-              0.5752,
-              -0.3528,
-              1.5544
+              0.5749,
+              -0.2556,
+              1.775
             ]
           },
           {
@@ -1492,9 +1531,9 @@
             "index": 5,
             "weight": 1.0,
             "bind": [
-              0.5752,
-              -0.3528,
-              1.5544
+              0.5749,
+              -0.2556,
+              1.775
             ]
           },
           {
@@ -1502,74 +1541,44 @@
             "index": 8,
             "weight": 1.0,
             "bind": [
-              0.5752,
-              0.3528,
-              1.5544
-            ]
-          },
-          {
-            "mesh": "Ranger_ArmLeft",
-            "index": 9,
-            "weight": 1.0,
-            "bind": [
-              0.5752,
-              0.3528,
-              1.5544
+              0.5749,
+              0.2349,
+              1.775
             ]
           }
         ]
       },
       "Foot.L": {
         "region": "foot",
-        "influencedVertices": 123,
-        "dominantVertices": 120,
-        "totalWeight": 117.2123,
-        "averageWeight": 0.9529,
+        "influencedVertices": 104,
+        "dominantVertices": 104,
+        "totalWeight": 88.3333,
+        "averageWeight": 0.8494,
         "influencedBounds": {
-          "minX": -0.0009,
-          "maxX": 0.7993,
-          "minY": -0.6062,
-          "maxY": 0.6784,
-          "minZ": -1.023,
-          "maxZ": -0.4092
+          "minX": 0.1958,
+          "maxX": 0.7595,
+          "minY": -0.3897,
+          "maxY": 0.3516,
+          "minZ": -0.0122,
+          "maxZ": 0.4207
         },
         "dominantBounds": {
-          "minX": -0.0009,
-          "maxX": 0.7993,
-          "minY": -0.6062,
-          "maxY": 0.6784,
-          "minZ": -1.023,
-          "maxZ": -0.4092
+          "minX": 0.1958,
+          "maxX": 0.7595,
+          "minY": -0.3897,
+          "maxY": 0.3516,
+          "minZ": -0.0122,
+          "maxZ": 0.4207
         },
         "topWeightedVertices": [
-          {
-            "mesh": "Ranger_ArmLeft",
-            "index": 94,
-            "weight": 1.0,
-            "bind": [
-              0.7289,
-              -0.2032,
-              -0.8692
-            ]
-          },
-          {
-            "mesh": "Ranger_ArmLeft",
-            "index": 95,
-            "weight": 1.0,
-            "bind": [
-              0.7289,
-              -0.2032,
-              -0.8692
-            ]
-          },
           {
             "mesh": "Ranger_ArmLeft",
             "index": 109,
             "weight": 1.0,
             "bind": [
-              0.4526,
-              -0.1777,
-              -0.7494
+              0.4524,
+              -0.1339,
+              0.1775
             ]
           },
           {
@@ -1577,64 +1586,64 @@
             "index": 194,
             "weight": 1.0,
             "bind": [
-              0.3555,
-              -0.1613,
-              -0.7575
+              0.3553,
+              -0.1225,
+              0.1718
+            ]
+          },
+          {
+            "mesh": "Ranger_ArmLeft",
+            "index": 195,
+            "weight": 1.0,
+            "bind": [
+              0.3553,
+              -0.1225,
+              0.1718
+            ]
+          },
+          {
+            "mesh": "Ranger_ArmLeft",
+            "index": 555,
+            "weight": 1.0,
+            "bind": [
+              0.4524,
+              -0.0103,
+              0.1774
             ]
           }
         ]
       },
       "Foot.R": {
         "region": "foot",
-        "influencedVertices": 125,
-        "dominantVertices": 124,
-        "totalWeight": 118.9281,
-        "averageWeight": 0.9514,
+        "influencedVertices": 104,
+        "dominantVertices": 104,
+        "totalWeight": 87.0,
+        "averageWeight": 0.8365,
         "influencedBounds": {
-          "minX": -0.7993,
-          "maxX": 0.4222,
-          "minY": -0.6062,
-          "maxY": 0.6783,
-          "minZ": -1.023,
-          "maxZ": -0.1845
+          "minX": -0.6801,
+          "maxX": 0.2944,
+          "minY": -0.3565,
+          "maxY": 0.4612,
+          "minZ": -0.0122,
+          "maxZ": 0.9014
         },
         "dominantBounds": {
-          "minX": -0.7993,
-          "maxX": 0.4222,
-          "minY": -0.6062,
-          "maxY": 0.6783,
-          "minZ": -1.023,
-          "maxZ": -0.1845
+          "minX": -0.6801,
+          "maxX": 0.2944,
+          "minY": -0.3565,
+          "maxY": 0.4612,
+          "minZ": -0.0122,
+          "maxZ": 0.9014
         },
         "topWeightedVertices": [
-          {
-            "mesh": "Ranger_ArmLeft",
-            "index": 327,
-            "weight": 1.0,
-            "bind": [
-              -0.3141,
-              -0.1875,
-              -0.6537
-            ]
-          },
-          {
-            "mesh": "Ranger_ArmLeft",
-            "index": 328,
-            "weight": 1.0,
-            "bind": [
-              -0.3141,
-              -0.1875,
-              -0.6537
-            ]
-          },
           {
             "mesh": "Ranger_ArmLeft",
             "index": 416,
             "weight": 1.0,
             "bind": [
-              -0.3314,
-              -0.1996,
-              -0.814
+              -0.3312,
+              -0.1491,
+              0.1327
             ]
           },
           {
@@ -1642,9 +1651,29 @@
             "index": 417,
             "weight": 1.0,
             "bind": [
-              -0.3314,
-              -0.1996,
-              -0.814
+              -0.3312,
+              -0.1491,
+              0.1327
+            ]
+          },
+          {
+            "mesh": "Ranger_ArmLeft",
+            "index": 476,
+            "weight": 1.0,
+            "bind": [
+              -0.3883,
+              -0.1612,
+              -0.0122
+            ]
+          },
+          {
+            "mesh": "Ranger_ArmLeft",
+            "index": 489,
+            "weight": 1.0,
+            "bind": [
+              -0.5001,
+              -0.1408,
+              0.157
             ]
           }
         ]
@@ -1653,53 +1682,43 @@
         "region": "hand",
         "influencedVertices": 101,
         "dominantVertices": 101,
-        "totalWeight": 67.3333,
-        "averageWeight": 0.6667,
+        "totalWeight": 67.7391,
+        "averageWeight": 0.6707,
         "influencedBounds": {
-          "minX": 0.1209,
-          "maxX": 0.9876,
-          "minY": -0.6873,
-          "maxY": 0.5727,
-          "minZ": 0.3572,
-          "maxZ": 2.3337
+          "minX": -0.0006,
+          "maxX": 0.9872,
+          "minY": -0.4022,
+          "maxY": 0.4674,
+          "minZ": 0.9448,
+          "maxZ": 2.0502
         },
         "dominantBounds": {
-          "minX": 0.1209,
-          "maxX": 0.9876,
-          "minY": -0.6873,
-          "maxY": 0.5727,
-          "minZ": 0.3572,
-          "maxZ": 2.3337
+          "minX": -0.0006,
+          "maxX": 0.9872,
+          "minY": -0.4022,
+          "maxY": 0.4674,
+          "minZ": 0.9448,
+          "maxZ": 2.0502
         },
         "topWeightedVertices": [
           {
             "mesh": "Ranger_ArmLeft",
-            "index": 2,
-            "weight": 0.6667,
+            "index": 663,
+            "weight": 0.8696,
             "bind": [
-              0.5752,
-              -0.3528,
-              1.5544
+              0.9872,
+              -0.0103,
+              1.5335
             ]
           },
           {
-            "mesh": "Ranger_ArmLeft",
-            "index": 3,
-            "weight": 0.6667,
+            "mesh": "Ranger_ArmRight",
+            "index": 593,
+            "weight": 0.8696,
             "bind": [
-              0.5752,
-              -0.3528,
-              1.5544
-            ]
-          },
-          {
-            "mesh": "Ranger_ArmLeft",
-            "index": 41,
-            "weight": 0.6667,
-            "bind": [
-              0.5752,
-              -0.1605,
-              1.6856
+              0.9872,
+              -0.0103,
+              1.5528
             ]
           },
           {
@@ -1707,9 +1726,19 @@
             "index": 628,
             "weight": 0.6667,
             "bind": [
-              0.9319,
-              -0.1671,
-              1.728
+              0.9315,
+              -0.1265,
+              1.8953
+            ]
+          },
+          {
+            "mesh": "Ranger_ArmLeft",
+            "index": 629,
+            "weight": 0.6667,
+            "bind": [
+              0.9315,
+              -0.1265,
+              1.8953
             ]
           }
         ]
@@ -1718,33 +1747,53 @@
         "region": "hand",
         "influencedVertices": 101,
         "dominantVertices": 101,
-        "totalWeight": 67.3333,
-        "averageWeight": 0.6667,
+        "totalWeight": 67.7391,
+        "averageWeight": 0.6707,
         "influencedBounds": {
-          "minX": -0.9598,
-          "maxX": 0.2964,
-          "minY": -0.5637,
-          "maxY": 0.6612,
-          "minZ": -0.2103,
-          "maxZ": 1.8191
+          "minX": -0.9872,
+          "maxX": -0.4061,
+          "minY": -0.4022,
+          "maxY": 0.3815,
+          "minZ": 0.5513,
+          "maxZ": 1.9585
         },
         "dominantBounds": {
-          "minX": -0.9598,
-          "maxX": 0.2964,
-          "minY": -0.5637,
-          "maxY": 0.6612,
-          "minZ": -0.2103,
-          "maxZ": 1.8191
+          "minX": -0.9872,
+          "maxX": -0.4061,
+          "minY": -0.4022,
+          "maxY": 0.3815,
+          "minZ": 0.5513,
+          "maxZ": 1.9585
         },
         "topWeightedVertices": [
+          {
+            "mesh": "Ranger_ArmLeft",
+            "index": 593,
+            "weight": 0.8696,
+            "bind": [
+              -0.9872,
+              -0.0103,
+              1.5528
+            ]
+          },
+          {
+            "mesh": "Ranger_ArmRight",
+            "index": 663,
+            "weight": 0.8696,
+            "bind": [
+              -0.9872,
+              -0.0103,
+              1.5335
+            ]
+          },
           {
             "mesh": "Ranger_ArmLeft",
             "index": 366,
             "weight": 0.6667,
             "bind": [
-              -0.8355,
-              -0.387,
-              1.6908
+              -0.8352,
+              -0.2794,
+              1.8695
             ]
           },
           {
@@ -1752,112 +1801,92 @@
             "index": 367,
             "weight": 0.6667,
             "bind": [
-              -0.8355,
-              0.387,
-              1.6908
-            ]
-          },
-          {
-            "mesh": "Ranger_ArmLeft",
-            "index": 373,
-            "weight": 0.6667,
-            "bind": [
-              -0.8356,
-              0.4983,
-              1.2424
-            ]
-          },
-          {
-            "mesh": "Ranger_ArmLeft",
-            "index": 377,
-            "weight": 0.6667,
-            "bind": [
-              -0.8356,
-              -0.4983,
-              1.2424
+              -0.8352,
+              0.2587,
+              1.8695
             ]
           }
         ]
       },
       "Head": {
         "region": "neckHead",
-        "influencedVertices": 77,
+        "influencedVertices": 67,
         "dominantVertices": 0,
-        "totalWeight": 11.4709,
-        "averageWeight": 0.149,
+        "totalWeight": 10.0307,
+        "averageWeight": 0.1497,
         "influencedBounds": {
-          "minX": -0.7549,
-          "maxX": 0.7542,
-          "minY": -0.5392,
-          "maxY": 0.5522,
-          "minZ": 1.4212,
-          "maxZ": 2.4366
+          "minX": -0.7546,
+          "maxX": 0.7539,
+          "minY": -0.3852,
+          "maxY": 0.3623,
+          "minZ": 1.6468,
+          "maxZ": 2.3867
         },
         "dominantBounds": null,
         "topWeightedVertices": [
           {
             "mesh": "Ranger_Body",
             "index": 1137,
-            "weight": 0.2974,
+            "weight": 0.2977,
             "bind": [
               -0.0,
-              0.012,
-              1.9939
+              -0.002,
+              2.0797
             ]
           },
           {
             "mesh": "Ranger_Body",
             "index": 1184,
-            "weight": 0.2823,
+            "weight": 0.2818,
             "bind": [
               0.0,
-              0.0063,
-              2.2486
+              -0.006,
+              2.2563
             ]
           },
           {
             "mesh": "Ranger_Body",
             "index": 104,
-            "weight": 0.2776,
+            "weight": 0.2771,
             "bind": [
               -0.0,
-              0.004,
-              2.2534
+              -0.0075,
+              2.2597
             ]
           },
           {
             "mesh": "Ranger_ArmLeft",
             "index": 613,
-            "weight": 0.2644,
+            "weight": 0.264,
             "bind": [
               -0.0041,
-              -0.0,
-              1.8596
+              -0.0103,
+              1.9866
             ]
           }
         ]
       },
       "Hips": {
         "region": "core",
-        "influencedVertices": 1532,
-        "dominantVertices": 1411,
-        "totalWeight": 1434.0158,
-        "averageWeight": 0.936,
+        "influencedVertices": 1280,
+        "dominantVertices": 1189,
+        "totalWeight": 1210.8094,
+        "averageWeight": 0.9459,
         "influencedBounds": {
-          "minX": -0.7023,
-          "maxX": 0.7073,
-          "minY": -0.6873,
-          "maxY": 0.6873,
-          "minZ": -1.023,
-          "maxZ": 1.3696
+          "minX": -0.4149,
+          "maxX": 0.4148,
+          "minY": -0.4881,
+          "maxY": 0.4674,
+          "minZ": -0.0122,
+          "maxZ": 1.6468
         },
         "dominantBounds": {
-          "minX": -0.7023,
-          "maxX": 0.7073,
-          "minY": -0.6873,
-          "maxY": 0.6873,
-          "minZ": -1.023,
-          "maxZ": 0.7105
+          "minX": -0.4149,
+          "maxX": 0.4148,
+          "minY": -0.4881,
+          "maxY": 0.4674,
+          "minZ": -0.0122,
+          "maxZ": 1.101
         },
         "topWeightedVertices": [
           {
@@ -1865,9 +1894,9 @@
             "index": 16,
             "weight": 1.0,
             "bind": [
-              -0.1516,
-              0.3628,
-              -0.213
+              -0.1515,
+              0.2418,
+              0.5494
             ]
           },
           {
@@ -1875,9 +1904,9 @@
             "index": 17,
             "weight": 1.0,
             "bind": [
-              -0.1516,
-              0.3628,
-              -0.213
+              -0.1515,
+              0.2418,
+              0.5494
             ]
           },
           {
@@ -1885,9 +1914,9 @@
             "index": 18,
             "weight": 1.0,
             "bind": [
-              -0.1516,
-              -0.3628,
-              -0.213
+              -0.1515,
+              -0.2625,
+              0.5494
             ]
           },
           {
@@ -1895,9 +1924,9 @@
             "index": 19,
             "weight": 1.0,
             "bind": [
-              -0.1516,
-              -0.3628,
-              -0.213
+              -0.1515,
+              -0.2625,
+              0.5494
             ]
           }
         ]
@@ -1905,147 +1934,154 @@
       "LowerArm.L": {
         "region": "lowerArm",
         "influencedVertices": 32,
-        "dominantVertices": 0,
-        "totalWeight": 4.1321,
-        "averageWeight": 0.1291,
+        "dominantVertices": 5,
+        "totalWeight": 8.8209,
+        "averageWeight": 0.2757,
         "influencedBounds": {
-          "minX": -0.3508,
-          "maxX": 0.9876,
-          "minY": -0.328,
-          "maxY": 0.683,
-          "minZ": 0.3572,
-          "maxZ": 1.6856
+          "minX": 0.1208,
+          "maxX": 0.9872,
+          "minY": -0.4881,
+          "maxY": 0.4061,
+          "minZ": 0.9448,
+          "maxZ": 2.3153
         },
-        "dominantBounds": null,
+        "dominantBounds": {
+          "minX": 0.55,
+          "maxX": 0.8393,
+          "minY": -0.0974,
+          "maxY": 0.065,
+          "minZ": 1.573,
+          "maxZ": 1.7855
+        },
         "topWeightedVertices": [
           {
+            "mesh": "Ranger_Body",
+            "index": 324,
+            "weight": 0.8696,
+            "bind": [
+              0.55,
+              -0.0075,
+              1.573
+            ]
+          },
+          {
+            "mesh": "Ranger_Head",
+            "index": 400,
+            "weight": 0.8696,
+            "bind": [
+              0.8023,
+              -0.0974,
+              1.7855
+            ]
+          },
+          {
+            "mesh": "Ranger_Head",
+            "index": 403,
+            "weight": 0.8696,
+            "bind": [
+              0.83,
+              0.0128,
+              1.7853
+            ]
+          },
+          {
             "mesh": "Ranger_LegLeft",
-            "index": 739,
-            "weight": 0.1369,
+            "index": 745,
+            "weight": 0.8696,
             "bind": [
-              0.6535,
-              -0.015,
-              1.4217
-            ]
-          },
-          {
-            "mesh": "Ranger_LegRight",
-            "index": 744,
-            "weight": 0.1353,
-            "bind": [
-              0.65,
-              -0.015,
-              1.4217
-            ]
-          },
-          {
-            "mesh": "Ranger_ArmLeft",
-            "index": 40,
-            "weight": 0.1304,
-            "bind": [
-              0.5752,
-              -0.1605,
-              1.6856
-            ]
-          },
-          {
-            "mesh": "Ranger_ArmLeft",
-            "index": 639,
-            "weight": 0.1304,
-            "bind": [
-              0.9876,
-              -0.1671,
-              1.2062
+              0.8393,
+              0.065,
+              1.6826
             ]
           }
         ]
       },
       "LowerArm.R": {
         "region": "lowerArm",
-        "influencedVertices": 35,
-        "dominantVertices": 5,
-        "totalWeight": 6.425,
-        "averageWeight": 0.1836,
+        "influencedVertices": 45,
+        "dominantVertices": 17,
+        "totalWeight": 20.7794,
+        "averageWeight": 0.4618,
         "influencedBounds": {
-          "minX": -0.9876,
-          "maxX": -0.0006,
-          "minY": -0.328,
-          "maxY": 0.6873,
-          "minZ": 0.3572,
-          "maxZ": 1.6856
+          "minX": -0.9872,
+          "maxX": -0.2962,
+          "minY": -0.4881,
+          "maxY": 0.4492,
+          "minZ": 0.9448,
+          "maxZ": 2.3153
         },
         "dominantBounds": {
-          "minX": -0.6503,
-          "maxX": -0.6503,
-          "minY": -0.0947,
-          "maxY": -0.0947,
-          "minZ": 1.3148,
-          "maxZ": 1.3148
+          "minX": -0.8393,
+          "maxX": -0.4498,
+          "minY": -0.0974,
+          "maxY": 0.065,
+          "minZ": 1.527,
+          "maxZ": 1.7855
         },
         "topWeightedVertices": [
           {
             "mesh": "Ranger_Quiver",
-            "index": 272,
-            "weight": 0.5207,
+            "index": 72,
+            "weight": 1.0,
             "bind": [
-              -0.6503,
-              -0.0947,
-              1.3148
+              -0.6567,
+              0.0026,
+              1.527
             ]
           },
           {
             "mesh": "Ranger_Quiver",
-            "index": 273,
-            "weight": 0.5207,
+            "index": 73,
+            "weight": 1.0,
             "bind": [
-              -0.6503,
-              -0.0947,
-              1.3148
+              -0.6567,
+              0.0026,
+              1.527
             ]
           },
           {
             "mesh": "Ranger_Quiver",
-            "index": 274,
-            "weight": 0.5207,
+            "index": 193,
+            "weight": 1.0,
             "bind": [
-              -0.6503,
-              -0.0947,
-              1.3148
+              -0.6074,
+              -0.0516,
+              1.547
             ]
           },
           {
             "mesh": "Ranger_Quiver",
-            "index": 268,
-            "weight": 0.4528,
+            "index": 194,
+            "weight": 1.0,
             "bind": [
-              -0.6503,
-              -0.0947,
-              1.3148
+              -0.6074,
+              -0.0516,
+              1.547
             ]
           }
         ]
       },
       "LowerLeg.L": {
         "region": "lowerLeg",
-        "influencedVertices": 539,
-        "dominantVertices": 507,
-        "totalWeight": 517.2766,
-        "averageWeight": 0.9597,
+        "influencedVertices": 348,
+        "dominantVertices": 285,
+        "totalWeight": 306.5115,
+        "averageWeight": 0.8808,
         "influencedBounds": {
-          "minX": 0.0,
-          "maxX": 0.9592,
-          "minY": -0.5156,
-          "maxY": 0.6201,
-          "minZ": -1.023,
-          "maxZ": 0.0802
+          "minX": 0.151,
+          "maxX": 0.8598,
+          "minY": -0.3687,
+          "maxY": 0.4155,
+          "minZ": -0.0122,
+          "maxZ": 0.6767
         },
         "dominantBounds": {
-          "minX": 0.0,
-          "maxX": 0.9592,
-          "minY": -0.5156,
-          "maxY": 0.5156,
-          "minZ": -1.023,
-          "maxZ": -0.2726
+          "minX": 0.151,
+          "maxX": 0.838,
+          "minY": -0.3687,
+          "maxY": 0.3481,
+          "minZ": -0.0122,
+          "maxZ": 0.4418
         },
         "topWeightedVertices": [
           {
@@ -2053,9 +2089,9 @@
             "index": 34,
             "weight": 1.0,
             "bind": [
-              0.5752,
-              -0.1607,
-              -0.3682
+              0.5749,
+              -0.122,
+              0.4418
             ]
           },
           {
@@ -2063,9 +2099,9 @@
             "index": 35,
             "weight": 1.0,
             "bind": [
-              0.5752,
-              -0.1607,
-              -0.3682
+              0.5749,
+              -0.122,
+              0.4418
             ]
           },
           {
@@ -2073,9 +2109,9 @@
             "index": 36,
             "weight": 1.0,
             "bind": [
-              0.5752,
-              0.1607,
-              -0.3682
+              0.5749,
+              0.1013,
+              0.4418
             ]
           },
           {
@@ -2083,157 +2119,157 @@
             "index": 37,
             "weight": 1.0,
             "bind": [
-              0.5752,
-              0.1607,
-              -0.3682
+              0.5749,
+              0.1013,
+              0.4418
             ]
           }
         ]
       },
       "LowerLeg.R": {
         "region": "lowerLeg",
-        "influencedVertices": 522,
-        "dominantVertices": 487,
-        "totalWeight": 497.4159,
-        "averageWeight": 0.9529,
+        "influencedVertices": 335,
+        "dominantVertices": 269,
+        "totalWeight": 290.6999,
+        "averageWeight": 0.8678,
         "influencedBounds": {
-          "minX": -0.9592,
-          "maxX": -0.0,
-          "minY": -0.5156,
-          "maxY": 0.6201,
-          "minZ": -1.023,
-          "maxZ": 0.2946
+          "minX": -0.8592,
+          "maxX": -0.0933,
+          "minY": -0.3687,
+          "maxY": 0.4155,
+          "minZ": -0.0122,
+          "maxZ": 0.8204
         },
         "dominantBounds": {
-          "minX": -0.9592,
-          "maxX": -0.0,
-          "minY": -0.5156,
-          "maxY": 0.5156,
-          "minZ": -1.023,
-          "maxZ": -0.2726
+          "minX": -0.838,
+          "maxX": -0.151,
+          "minY": -0.3687,
+          "maxY": 0.3481,
+          "minZ": -0.0122,
+          "maxZ": 0.4418
         },
         "topWeightedVertices": [
           {
             "mesh": "Ranger_ArmLeft",
-            "index": 64,
+            "index": 325,
             "weight": 1.0,
             "bind": [
-              -0.151,
-              0.163,
-              -0.4719
+              -0.3139,
+              0.12,
+              0.2438
             ]
           },
           {
             "mesh": "Ranger_ArmLeft",
-            "index": 65,
+            "index": 326,
             "weight": 1.0,
             "bind": [
-              -0.151,
-              0.163,
-              -0.4719
+              -0.3139,
+              0.12,
+              0.2438
             ]
           },
           {
             "mesh": "Ranger_ArmLeft",
-            "index": 66,
+            "index": 327,
             "weight": 1.0,
             "bind": [
-              -0.151,
-              -0.163,
-              -0.4719
+              -0.3139,
+              -0.1407,
+              0.2438
             ]
           },
           {
             "mesh": "Ranger_ArmLeft",
-            "index": 67,
+            "index": 328,
             "weight": 1.0,
             "bind": [
-              -0.151,
-              -0.163,
-              -0.4719
+              -0.3139,
+              -0.1407,
+              0.2438
             ]
           }
         ]
       },
       "Neck": {
         "region": "neckHead",
-        "influencedVertices": 77,
+        "influencedVertices": 67,
         "dominantVertices": 0,
-        "totalWeight": 11.4709,
-        "averageWeight": 0.149,
+        "totalWeight": 10.0307,
+        "averageWeight": 0.1497,
         "influencedBounds": {
-          "minX": -0.5472,
-          "maxX": 0.5466,
-          "minY": -0.452,
-          "maxY": 0.301,
-          "minZ": 1.4212,
-          "maxZ": 2.4366
+          "minX": -0.3582,
+          "maxX": 0.3552,
+          "minY": -0.3245,
+          "maxY": 0.3735,
+          "minZ": 1.6468,
+          "maxZ": 2.3867
         },
         "dominantBounds": null,
         "topWeightedVertices": [
           {
             "mesh": "Ranger_Body",
             "index": 1137,
-            "weight": 0.2974,
+            "weight": 0.2977,
             "bind": [
               -0.0,
-              0.012,
-              1.9939
+              -0.002,
+              2.0797
             ]
           },
           {
             "mesh": "Ranger_Body",
             "index": 1184,
-            "weight": 0.2823,
+            "weight": 0.2818,
             "bind": [
               0.0,
-              0.0063,
-              2.2486
+              -0.006,
+              2.2563
             ]
           },
           {
             "mesh": "Ranger_Body",
             "index": 104,
-            "weight": 0.2776,
+            "weight": 0.2771,
             "bind": [
               -0.0,
-              0.004,
-              2.2534
+              -0.0075,
+              2.2597
             ]
           },
           {
             "mesh": "Ranger_ArmLeft",
             "index": 613,
-            "weight": 0.2644,
+            "weight": 0.264,
             "bind": [
               -0.0041,
-              -0.0,
-              1.8596
+              -0.0103,
+              1.9866
             ]
           }
         ]
       },
       "Spine": {
         "region": "core",
-        "influencedVertices": 1428,
-        "dominantVertices": 1184,
-        "totalWeight": 1189.0642,
-        "averageWeight": 0.8327,
+        "influencedVertices": 1013,
+        "dominantVertices": 874,
+        "totalWeight": 869.1307,
+        "averageWeight": 0.858,
         "influencedBounds": {
-          "minX": -0.9876,
-          "maxX": 0.9876,
-          "minY": -0.6873,
-          "maxY": 0.6873,
-          "minZ": -1.023,
-          "maxZ": 1.8603
+          "minX": -0.8425,
+          "maxX": 0.8425,
+          "minY": -0.4881,
+          "maxY": 0.4674,
+          "minZ": -0.0122,
+          "maxZ": 1.9866
         },
         "dominantBounds": {
-          "minX": -0.9876,
-          "maxX": 0.9876,
-          "minY": -0.6873,
-          "maxY": 0.6873,
-          "minZ": -1.023,
-          "maxZ": 1.133
+          "minX": -0.8425,
+          "maxX": 0.8425,
+          "minY": -0.4881,
+          "maxY": 0.4674,
+          "minZ": -0.0122,
+          "maxZ": 1.4828
         },
         "topWeightedVertices": [
           {
@@ -2241,9 +2277,9 @@
             "index": 20,
             "weight": 1.0,
             "bind": [
-              0.7289,
-              0.5121,
-              -0.5434
+              0.7286,
+              0.3456,
+              0.3204
             ]
           },
           {
@@ -2251,29 +2287,29 @@
             "index": 21,
             "weight": 1.0,
             "bind": [
-              0.7289,
-              0.5121,
-              -0.5434
+              0.7286,
+              0.3456,
+              0.3204
             ]
           },
           {
             "mesh": "Ranger_ArmLeft",
-            "index": 22,
+            "index": 48,
             "weight": 1.0,
             "bind": [
-              0.7991,
-              0.5195,
-              -0.5606
+              0.7286,
+              -0.3663,
+              0.3204
             ]
           },
           {
             "mesh": "Ranger_ArmLeft",
-            "index": 23,
+            "index": 49,
             "weight": 1.0,
             "bind": [
-              0.7991,
-              0.5195,
-              -0.5606
+              0.7286,
+              -0.3663,
+              0.3204
             ]
           }
         ]
@@ -2282,36 +2318,36 @@
         "region": "upperArm",
         "influencedVertices": 32,
         "dominantVertices": 0,
-        "totalWeight": 4.2531,
-        "averageWeight": 0.1329,
+        "totalWeight": 4.2731,
+        "averageWeight": 0.1335,
         "influencedBounds": {
-          "minX": -0.0539,
-          "maxX": 0.9876,
-          "minY": -0.2452,
-          "maxY": 0.665,
-          "minZ": 0.8846,
-          "maxZ": 1.7061
+          "minX": 0.1208,
+          "maxX": 0.9378,
+          "minY": -0.1808,
+          "maxY": 0.4519,
+          "minZ": 1.2913,
+          "maxZ": 1.8801
         },
         "dominantBounds": null,
         "topWeightedVertices": [
           {
-            "mesh": "Ranger_LegLeft",
-            "index": 739,
-            "weight": 0.1703,
+            "mesh": "Ranger_LegRight",
+            "index": 744,
+            "weight": 0.1802,
             "bind": [
-              0.6535,
-              -0.015,
-              1.4217
+              0.6498,
+              -0.0208,
+              1.683
             ]
           },
           {
-            "mesh": "Ranger_LegRight",
-            "index": 744,
-            "weight": 0.1697,
+            "mesh": "Ranger_LegLeft",
+            "index": 739,
+            "weight": 0.1798,
             "bind": [
-              0.65,
-              -0.015,
-              1.4217
+              0.6533,
+              -0.0208,
+              1.683
             ]
           },
           {
@@ -2319,9 +2355,9 @@
             "index": 38,
             "weight": 0.1304,
             "bind": [
-              0.5752,
-              0.1605,
-              1.6856
+              0.5749,
+              0.1012,
+              1.8659
             ]
           },
           {
@@ -2329,9 +2365,9 @@
             "index": 39,
             "weight": 0.1304,
             "bind": [
-              0.5752,
-              0.1605,
-              1.6856
+              0.5749,
+              0.1012,
+              1.8659
             ]
           }
         ]
@@ -2340,81 +2376,81 @@
         "region": "upperArm",
         "influencedVertices": 32,
         "dominantVertices": 0,
-        "totalWeight": 4.2531,
-        "averageWeight": 0.1329,
+        "totalWeight": 4.4416,
+        "averageWeight": 0.1388,
         "influencedBounds": {
-          "minX": -0.9876,
-          "maxX": -0.3223,
-          "minY": -0.6873,
-          "maxY": 0.5986,
-          "minZ": 0.8846,
-          "maxZ": 2.3337
+          "minX": -0.9602,
+          "maxX": -0.3506,
+          "minY": -0.1808,
+          "maxY": 0.4518,
+          "minZ": 1.3105,
+          "maxZ": 1.8801
         },
         "dominantBounds": null,
         "topWeightedVertices": [
           {
-            "mesh": "Ranger_LegRight",
-            "index": 739,
-            "weight": 0.1703,
+            "mesh": "Ranger_Quiver",
+            "index": 191,
+            "weight": 0.2147,
             "bind": [
-              -0.6535,
-              -0.015,
-              1.4217
+              -0.4498,
+              -0.0146,
+              1.7456
+            ]
+          },
+          {
+            "mesh": "Ranger_Quiver",
+            "index": 192,
+            "weight": 0.2147,
+            "bind": [
+              -0.4498,
+              -0.0146,
+              1.7456
             ]
           },
           {
             "mesh": "Ranger_LegLeft",
             "index": 744,
-            "weight": 0.1697,
+            "weight": 0.1802,
             "bind": [
-              -0.65,
-              -0.015,
-              1.4217
+              -0.6498,
+              -0.0208,
+              1.683
             ]
           },
           {
-            "mesh": "Ranger_ArmLeft",
-            "index": 382,
-            "weight": 0.1304,
+            "mesh": "Ranger_LegRight",
+            "index": 739,
+            "weight": 0.1798,
             "bind": [
-              -0.9382,
-              -0.1675,
-              1.6612
-            ]
-          },
-          {
-            "mesh": "Ranger_ArmLeft",
-            "index": 383,
-            "weight": 0.1304,
-            "bind": [
-              -0.9382,
-              0.1675,
-              1.6612
+              -0.6533,
+              -0.0208,
+              1.683
             ]
           }
         ]
       },
       "UpperLeg.L": {
         "region": "upperLeg",
-        "influencedVertices": 940,
-        "dominantVertices": 934,
-        "totalWeight": 928.0714,
-        "averageWeight": 0.9873,
+        "influencedVertices": 830,
+        "dominantVertices": 826,
+        "totalWeight": 820.8073,
+        "averageWeight": 0.9889,
         "influencedBounds": {
-          "minX": 0.2194,
-          "maxX": 0.9876,
-          "minY": -0.467,
-          "maxY": 0.6277,
-          "minZ": -0.6166,
-          "maxZ": 0.3138
+          "minX": 0.2603,
+          "maxX": 0.9428,
+          "minY": -0.4261,
+          "maxY": 0.4259,
+          "minZ": 0.2482,
+          "maxZ": 0.9147
         },
         "dominantBounds": {
-          "minX": 0.2194,
-          "maxX": 0.9876,
-          "minY": -0.467,
-          "maxY": 0.4637,
-          "minZ": -0.4891,
-          "maxZ": 0.3138
+          "minX": 0.264,
+          "maxX": 0.9428,
+          "minY": -0.4261,
+          "maxY": 0.3737,
+          "minZ": 0.2482,
+          "maxZ": 0.9147
         },
         "topWeightedVertices": [
           {
@@ -2422,9 +2458,9 @@
             "index": 0,
             "weight": 1.0,
             "bind": [
-              0.5752,
-              -0.3523,
-              -0.2348
+              0.5749,
+              -0.2552,
+              0.5343
             ]
           },
           {
@@ -2432,9 +2468,9 @@
             "index": 1,
             "weight": 1.0,
             "bind": [
-              0.5752,
-              -0.3523,
-              -0.2348
+              0.5749,
+              -0.2552,
+              0.5343
             ]
           },
           {
@@ -2442,9 +2478,9 @@
             "index": 6,
             "weight": 1.0,
             "bind": [
-              0.5752,
-              0.3523,
-              -0.2348
+              0.5749,
+              0.2345,
+              0.5343
             ]
           },
           {
@@ -2452,34 +2488,34 @@
             "index": 7,
             "weight": 1.0,
             "bind": [
-              0.5752,
-              0.3523,
-              -0.2348
+              0.5749,
+              0.2345,
+              0.5343
             ]
           }
         ]
       },
       "UpperLeg.R": {
         "region": "upperLeg",
-        "influencedVertices": 932,
-        "dominantVertices": 921,
-        "totalWeight": 915.2335,
-        "averageWeight": 0.982,
+        "influencedVertices": 811,
+        "dominantVertices": 801,
+        "totalWeight": 796.5887,
+        "averageWeight": 0.9822,
         "influencedBounds": {
-          "minX": -0.9876,
-          "maxX": -0.0007,
-          "minY": -0.467,
-          "maxY": 0.6785,
-          "minZ": -0.6166,
-          "maxZ": 0.7105
+          "minX": -0.9428,
+          "maxX": -0.1095,
+          "minY": -0.4261,
+          "maxY": 0.4259,
+          "minZ": 0.2482,
+          "maxZ": 1.1898
         },
         "dominantBounds": {
-          "minX": -0.9876,
-          "maxX": -0.2194,
-          "minY": -0.467,
-          "maxY": 0.4637,
-          "minZ": -0.4891,
-          "maxZ": 0.3138
+          "minX": -0.9428,
+          "maxX": -0.264,
+          "minY": -0.4261,
+          "maxY": 0.3639,
+          "minZ": 0.2482,
+          "maxZ": 0.9147
         },
         "topWeightedVertices": [
           {
@@ -2487,9 +2523,9 @@
             "index": 317,
             "weight": 1.0,
             "bind": [
-              -0.304,
-              0.4185,
-              -0.355
+              -0.3039,
+              0.2806,
+              0.4509
             ]
           },
           {
@@ -2497,9 +2533,9 @@
             "index": 318,
             "weight": 1.0,
             "bind": [
-              -0.304,
-              0.4185,
-              -0.355
+              -0.3039,
+              0.2806,
+              0.4509
             ]
           },
           {
@@ -2507,9 +2543,9 @@
             "index": 319,
             "weight": 1.0,
             "bind": [
-              -0.304,
-              -0.4185,
-              -0.355
+              -0.3039,
+              -0.3012,
+              0.4509
             ]
           },
           {
@@ -2517,9 +2553,9 @@
             "index": 320,
             "weight": 1.0,
             "bind": [
-              -0.304,
-              -0.4185,
-              -0.355
+              -0.3039,
+              -0.3012,
+              0.4509
             ]
           }
         ]
@@ -2528,534 +2564,698 @@
     "topBones": [
       {
         "bone": "Chest",
-        "totalWeight": 1840.1105
+        "totalWeight": 3070.2645
       },
       {
         "bone": "Hips",
-        "totalWeight": 1434.0158
+        "totalWeight": 1210.8094
       },
       {
         "bone": "Spine",
-        "totalWeight": 1189.0642
+        "totalWeight": 869.1307
       },
       {
         "bone": "UpperLeg.L",
-        "totalWeight": 928.0714
+        "totalWeight": 820.8073
       },
       {
         "bone": "UpperLeg.R",
-        "totalWeight": 915.2335
+        "totalWeight": 796.5887
       },
       {
         "bone": "LowerLeg.L",
-        "totalWeight": 517.2766
+        "totalWeight": 306.5115
       },
       {
         "bone": "LowerLeg.R",
-        "totalWeight": 497.4159
-      },
-      {
-        "bone": "Foot.R",
-        "totalWeight": 118.9281
+        "totalWeight": 290.6999
       },
       {
         "bone": "Foot.L",
-        "totalWeight": 117.2123
+        "totalWeight": 88.3333
+      },
+      {
+        "bone": "Foot.R",
+        "totalWeight": 87.0
       },
       {
         "bone": "Hand.L",
-        "totalWeight": 67.3333
+        "totalWeight": 67.7391
       },
       {
         "bone": "Hand.R",
-        "totalWeight": 67.3333
+        "totalWeight": 67.7391
       },
       {
-        "bone": "Head",
-        "totalWeight": 11.4709
+        "bone": "LowerArm.R",
+        "totalWeight": 20.7794
       }
     ]
   },
   "capsuleAssignmentDiagnostics": {
     "space": "capsuleBind",
-    "meshCount": 9,
-    "vertexCount": 7776,
+    "meshCount": 8,
+    "vertexCount": 7734,
     "targetBounds": {
-      "minX": -0.9876,
-      "maxX": 0.9876,
-      "minY": -0.6873,
-      "maxY": 0.6873,
-      "minZ": -1.023,
-      "maxZ": 2.4366
+      "minX": -0.9872,
+      "maxX": 0.9872,
+      "minY": -0.4881,
+      "maxY": 0.4674,
+      "minZ": -0.0122,
+      "maxZ": 2.3867
     },
-    "capsuleAssignedVertices": 1477,
-    "nearestFallbackVertices": 6299,
+    "capsuleAssignedVertices": 989,
+    "nearestFallbackVertices": 6745,
     "fallbackByBone": {
       "Chest": {
         "region": "core",
-        "vertexCount": 986,
-        "averageDistanceRatio": 1.2635,
-        "maxDistanceRatio": 1.7312,
+        "vertexCount": 2503,
+        "averageDistanceRatio": 2.132,
+        "maxDistanceRatio": 3.7888,
         "samples": [
           {
             "mesh": "Ranger_Cape",
-            "index": 29,
+            "index": 48,
             "bind": [
-              -0.9606,
-              0.5725,
-              0.8846
+              0.7595,
+              0.3516,
+              -0.0122
             ],
-            "distance": 1.1899,
-            "distanceRatio": 1.7312
+            "distance": 1.8101,
+            "distanceRatio": 3.7888
           },
           {
             "mesh": "Ranger_Cape",
-            "index": 28,
+            "index": 47,
             "bind": [
-              0.9606,
-              0.5725,
-              0.8846
+              -0.7589,
+              0.3516,
+              -0.0122
             ],
-            "distance": 1.1898,
-            "distanceRatio": 1.7311
+            "distance": 1.8098,
+            "distanceRatio": 3.7883
           },
           {
-            "mesh": "Ranger_ArmLeft",
-            "index": 652,
+            "mesh": "Ranger_Quiver",
+            "index": 111,
             "bind": [
-              0.9319,
-              -0.4212,
-              0.6872
+              0.9314,
+              0.0824,
+              0.0551
             ],
-            "distance": 1.1876,
-            "distanceRatio": 1.728
+            "distance": 1.7982,
+            "distanceRatio": 3.764
           },
           {
-            "mesh": "Ranger_ArmLeft",
-            "index": 653,
+            "mesh": "Ranger_Quiver",
+            "index": 112,
             "bind": [
-              0.9319,
-              0.4212,
-              0.6872
+              0.9314,
+              0.0824,
+              0.0551
             ],
-            "distance": 1.1876,
-            "distanceRatio": 1.728
+            "distance": 1.7982,
+            "distanceRatio": 3.764
           }
         ]
       },
       "Foot.L": {
         "region": "distal",
-        "vertexCount": 98,
-        "averageDistanceRatio": 2.1207,
-        "maxDistanceRatio": 3.453,
+        "vertexCount": 50,
+        "averageDistanceRatio": 1.8347,
+        "maxDistanceRatio": 3.3154,
         "samples": [
           {
-            "mesh": "Ranger_LegRight",
-            "index": 408,
+            "mesh": "Ranger_Body",
+            "index": 455,
             "bind": [
-              0.7548,
-              -0.4945,
-              -0.9563
+              0.3689,
+              -0.3897,
+              0.0658
             ],
-            "distance": 0.4183,
-            "distanceRatio": 3.453
+            "distance": 0.2601,
+            "distanceRatio": 3.3154
           },
           {
-            "mesh": "Ranger_LegRight",
-            "index": 409,
+            "mesh": "Ranger_Body",
+            "index": 459,
             "bind": [
-              0.7548,
-              -0.4945,
-              -0.9563
+              0.3548,
+              -0.3556,
+              0.0383
             ],
-            "distance": 0.4183,
-            "distanceRatio": 3.453
+            "distance": 0.2327,
+            "distanceRatio": 2.9671
           },
           {
-            "mesh": "Ranger_LegLeft",
-            "index": 412,
+            "mesh": "Ranger_Body",
+            "index": 460,
             "bind": [
-              0.7542,
-              -0.4945,
-              -0.9563
+              0.3548,
+              -0.3556,
+              0.0383
             ],
-            "distance": 0.4178,
-            "distanceRatio": 3.4489
+            "distance": 0.2327,
+            "distanceRatio": 2.9671
           },
           {
-            "mesh": "Ranger_LegLeft",
-            "index": 413,
+            "mesh": "Ranger_Body",
+            "index": 461,
             "bind": [
-              0.7542,
-              -0.4945,
-              -0.9563
+              0.3548,
+              -0.3556,
+              0.0383
             ],
-            "distance": 0.4178,
-            "distanceRatio": 3.4489
+            "distance": 0.2327,
+            "distanceRatio": 2.9671
           }
         ]
       },
       "Foot.R": {
         "region": "distal",
-        "vertexCount": 98,
-        "averageDistanceRatio": 2.1795,
-        "maxDistanceRatio": 3.453,
+        "vertexCount": 46,
+        "averageDistanceRatio": 1.8252,
+        "maxDistanceRatio": 2.9871,
         "samples": [
           {
-            "mesh": "Ranger_LegLeft",
-            "index": 408,
+            "mesh": "Ranger_Body",
+            "index": 485,
             "bind": [
-              -0.7548,
-              -0.4945,
-              -0.9563
+              -0.3526,
+              -0.3565,
+              0.0377
             ],
-            "distance": 0.4183,
-            "distanceRatio": 3.453
+            "distance": 0.2343,
+            "distanceRatio": 2.9871
           },
           {
-            "mesh": "Ranger_LegLeft",
-            "index": 409,
+            "mesh": "Ranger_Body",
+            "index": 486,
             "bind": [
-              -0.7548,
-              -0.4945,
-              -0.9563
+              -0.3526,
+              -0.3565,
+              0.0377
             ],
-            "distance": 0.4183,
-            "distanceRatio": 3.453
+            "distance": 0.2343,
+            "distanceRatio": 2.9871
           },
           {
-            "mesh": "Ranger_LegRight",
-            "index": 412,
+            "mesh": "Ranger_Body",
+            "index": 487,
             "bind": [
-              -0.7542,
-              -0.4945,
-              -0.9563
+              -0.3526,
+              -0.3565,
+              0.0377
             ],
-            "distance": 0.4178,
-            "distanceRatio": 3.4489
+            "distance": 0.2343,
+            "distanceRatio": 2.9871
           },
           {
-            "mesh": "Ranger_LegRight",
-            "index": 413,
+            "mesh": "Ranger_Body",
+            "index": 254,
             "bind": [
-              -0.7542,
-              -0.4945,
-              -0.9563
+              -0.5043,
+              -0.3365,
+              0.1034
             ],
-            "distance": 0.4178,
-            "distanceRatio": 3.4489
+            "distance": 0.2177,
+            "distanceRatio": 2.7753
+          }
+        ]
+      },
+      "Hand.L": {
+        "region": "distal",
+        "vertexCount": 2,
+        "averageDistanceRatio": 1.627,
+        "maxDistanceRatio": 1.7653,
+        "samples": [
+          {
+            "mesh": "Ranger_ArmLeft",
+            "index": 663,
+            "bind": [
+              0.9872,
+              -0.0103,
+              1.5335
+            ],
+            "distance": 0.0967,
+            "distanceRatio": 1.7653
+          },
+          {
+            "mesh": "Ranger_ArmRight",
+            "index": 593,
+            "bind": [
+              0.9872,
+              -0.0103,
+              1.5528
+            ],
+            "distance": 0.0815,
+            "distanceRatio": 1.4888
+          }
+        ]
+      },
+      "Hand.R": {
+        "region": "distal",
+        "vertexCount": 2,
+        "averageDistanceRatio": 1.627,
+        "maxDistanceRatio": 1.7653,
+        "samples": [
+          {
+            "mesh": "Ranger_ArmRight",
+            "index": 663,
+            "bind": [
+              -0.9872,
+              -0.0103,
+              1.5335
+            ],
+            "distance": 0.0967,
+            "distanceRatio": 1.7653
+          },
+          {
+            "mesh": "Ranger_ArmLeft",
+            "index": 593,
+            "bind": [
+              -0.9872,
+              -0.0103,
+              1.5528
+            ],
+            "distance": 0.0815,
+            "distanceRatio": 1.4888
           }
         ]
       },
       "Hips": {
         "region": "core",
-        "vertexCount": 1385,
-        "averageDistanceRatio": 1.9454,
-        "maxDistanceRatio": 3.2617,
+        "vertexCount": 1168,
+        "averageDistanceRatio": 1.9796,
+        "maxDistanceRatio": 3.2453,
         "samples": [
           {
             "mesh": "Ranger_LegLeft",
             "index": 295,
             "bind": [
               -0.0005,
-              -0.3208,
-              -0.9978
+              -0.2333,
+              0.0052
             ],
-            "distance": 1.6013,
-            "distanceRatio": 3.2617
+            "distance": 1.1074,
+            "distanceRatio": 3.2453
           },
           {
             "mesh": "Ranger_LegRight",
             "index": 295,
             "bind": [
               0.0005,
-              -0.3208,
-              -0.9978
+              -0.2333,
+              0.0052
             ],
-            "distance": 1.6013,
-            "distanceRatio": 3.2617
+            "distance": 1.1074,
+            "distanceRatio": 3.2453
           },
           {
             "mesh": "Ranger_LegLeft",
             "index": 249,
             "bind": [
               -0.0009,
-              0.2921,
-              -1.0031
+              0.1927,
+              0.0015
             ],
-            "distance": 1.601,
-            "distanceRatio": 3.2611
+            "distance": 1.1072,
+            "distanceRatio": 3.2446
           },
           {
             "mesh": "Ranger_LegRight",
             "index": 249,
             "bind": [
               0.0009,
-              0.2921,
-              -1.0031
+              0.1927,
+              0.0015
             ],
-            "distance": 1.601,
-            "distanceRatio": 3.2611
+            "distance": 1.1072,
+            "distanceRatio": 3.2446
+          }
+        ]
+      },
+      "LowerArm.L": {
+        "region": "limb",
+        "vertexCount": 8,
+        "averageDistanceRatio": 1.4735,
+        "maxDistanceRatio": 1.7218,
+        "samples": [
+          {
+            "mesh": "Ranger_Head",
+            "index": 401,
+            "bind": [
+              0.8246,
+              -0.095,
+              1.4718
+            ],
+            "distance": 0.2039,
+            "distanceRatio": 1.7218
+          },
+          {
+            "mesh": "Ranger_Head",
+            "index": 421,
+            "bind": [
+              0.851,
+              0.0175,
+              1.4698
+            ],
+            "distance": 0.2028,
+            "distanceRatio": 1.7127
+          },
+          {
+            "mesh": "Ranger_Head",
+            "index": 400,
+            "bind": [
+              0.8023,
+              -0.0974,
+              1.7855
+            ],
+            "distance": 0.1845,
+            "distanceRatio": 1.5583
+          },
+          {
+            "mesh": "Ranger_LegRight",
+            "index": 734,
+            "bind": [
+              0.7782,
+              0.0773,
+              1.4828
+            ],
+            "distance": 0.1809,
+            "distanceRatio": 1.5279
+          }
+        ]
+      },
+      "LowerArm.R": {
+        "region": "limb",
+        "vertexCount": 11,
+        "averageDistanceRatio": 1.3847,
+        "maxDistanceRatio": 1.7219,
+        "samples": [
+          {
+            "mesh": "Ranger_Head",
+            "index": 367,
+            "bind": [
+              -0.8246,
+              -0.095,
+              1.4718
+            ],
+            "distance": 0.2039,
+            "distanceRatio": 1.7219
+          },
+          {
+            "mesh": "Ranger_Head",
+            "index": 390,
+            "bind": [
+              -0.8511,
+              0.0175,
+              1.4698
+            ],
+            "distance": 0.2028,
+            "distanceRatio": 1.7128
+          },
+          {
+            "mesh": "Ranger_Head",
+            "index": 366,
+            "bind": [
+              -0.8023,
+              -0.0974,
+              1.7855
+            ],
+            "distance": 0.1845,
+            "distanceRatio": 1.5584
+          },
+          {
+            "mesh": "Ranger_LegLeft",
+            "index": 734,
+            "bind": [
+              -0.7782,
+              0.0773,
+              1.4828
+            ],
+            "distance": 0.1809,
+            "distanceRatio": 1.5279
           }
         ]
       },
       "LowerLeg.L": {
         "region": "limb",
-        "vertexCount": 509,
-        "averageDistanceRatio": 2.1718,
-        "maxDistanceRatio": 3.4731,
+        "vertexCount": 328,
+        "averageDistanceRatio": 2.5195,
+        "maxDistanceRatio": 3.5742,
         "samples": [
           {
-            "mesh": "Ranger_Quiver",
-            "index": 111,
+            "mesh": "Ranger_ArmLeft",
+            "index": 88,
             "bind": [
-              0.9318,
-              0.1334,
-              -0.9259
+              0.7988,
+              0.1329,
+              0.0792
             ],
-            "distance": 0.6479,
-            "distanceRatio": 3.4731
+            "distance": 0.4635,
+            "distanceRatio": 3.5742
           },
           {
-            "mesh": "Ranger_Quiver",
-            "index": 112,
+            "mesh": "Ranger_ArmLeft",
+            "index": 89,
             "bind": [
-              0.9318,
-              0.1334,
-              -0.9259
+              0.7988,
+              0.1329,
+              0.0792
             ],
-            "distance": 0.6479,
-            "distanceRatio": 3.4731
+            "distance": 0.4635,
+            "distanceRatio": 3.5742
           },
           {
-            "mesh": "Ranger_Quiver",
-            "index": 113,
+            "mesh": "Ranger_ArmLeft",
+            "index": 92,
             "bind": [
-              0.9318,
-              0.1334,
-              -0.9259
+              0.7988,
+              -0.1536,
+              0.0792
             ],
-            "distance": 0.6479,
-            "distanceRatio": 3.4731
+            "distance": 0.4635,
+            "distanceRatio": 3.5742
           },
           {
-            "mesh": "Ranger_Quiver",
-            "index": 114,
+            "mesh": "Ranger_ArmLeft",
+            "index": 93,
             "bind": [
-              0.9318,
-              0.1334,
-              -0.9259
+              0.7988,
+              -0.1536,
+              0.0792
             ],
-            "distance": 0.6479,
-            "distanceRatio": 3.4731
+            "distance": 0.4635,
+            "distanceRatio": 3.5742
           }
         ]
       },
       "LowerLeg.R": {
         "region": "limb",
-        "vertexCount": 489,
-        "averageDistanceRatio": 2.153,
-        "maxDistanceRatio": 3.4172,
+        "vertexCount": 311,
+        "averageDistanceRatio": 2.5127,
+        "maxDistanceRatio": 3.5742,
         "samples": [
           {
-            "mesh": "Ranger_LegLeft",
-            "index": 62,
+            "mesh": "Ranger_ArmRight",
+            "index": 88,
             "bind": [
-              -0.7486,
-              0.3006,
-              -1.0031
+              -0.7988,
+              0.1329,
+              0.0792
             ],
-            "distance": 0.6375,
-            "distanceRatio": 3.4172
+            "distance": 0.4635,
+            "distanceRatio": 3.5742
           },
           {
-            "mesh": "Ranger_LegLeft",
-            "index": 63,
+            "mesh": "Ranger_ArmRight",
+            "index": 89,
             "bind": [
-              -0.7486,
-              0.3006,
-              -1.0031
+              -0.7988,
+              0.1329,
+              0.0792
             ],
-            "distance": 0.6375,
-            "distanceRatio": 3.4172
+            "distance": 0.4635,
+            "distanceRatio": 3.5742
           },
           {
-            "mesh": "Ranger_LegRight",
-            "index": 261,
+            "mesh": "Ranger_ArmRight",
+            "index": 92,
             "bind": [
-              -0.7468,
-              0.3006,
-              -1.0031
+              -0.7988,
+              -0.1536,
+              0.0792
             ],
-            "distance": 0.6366,
-            "distanceRatio": 3.4125
+            "distance": 0.4635,
+            "distanceRatio": 3.5742
           },
           {
-            "mesh": "Ranger_LegRight",
-            "index": 262,
+            "mesh": "Ranger_ArmRight",
+            "index": 93,
             "bind": [
-              -0.7468,
-              0.3006,
-              -1.0031
+              -0.7988,
+              -0.1536,
+              0.0792
             ],
-            "distance": 0.6366,
-            "distanceRatio": 3.4125
+            "distance": 0.4635,
+            "distanceRatio": 3.5742
           }
         ]
       },
       "Spine": {
         "region": "core",
-        "vertexCount": 1059,
-        "averageDistanceRatio": 1.9971,
-        "maxDistanceRatio": 3.6166,
+        "vertexCount": 767,
+        "averageDistanceRatio": 2.1458,
+        "maxDistanceRatio": 3.5082,
         "samples": [
           {
-            "mesh": "Ranger_Cape",
-            "index": 48,
+            "mesh": "Ranger_LegLeft",
+            "index": 420,
             "bind": [
-              0.7598,
-              0.5207,
-              -1.023
+              -0.5722,
+              -0.4317,
+              0.0689
             ],
-            "distance": 2.1307,
-            "distanceRatio": 3.6166
-          },
-          {
-            "mesh": "Ranger_Cape",
-            "index": 47,
-            "bind": [
-              -0.7592,
-              0.5207,
-              -1.023
-            ],
-            "distance": 2.1304,
-            "distanceRatio": 3.6163
+            "distance": 1.4366,
+            "distanceRatio": 3.5082
           },
           {
             "mesh": "Ranger_LegLeft",
-            "index": 48,
+            "index": 421,
             "bind": [
-              -0.7742,
-              0.4234,
-              -1.0031
+              -0.5722,
+              -0.4317,
+              0.0689
             ],
-            "distance": 2.0962,
-            "distanceRatio": 3.5582
+            "distance": 1.4366,
+            "distanceRatio": 3.5082
           },
           {
-            "mesh": "Ranger_LegLeft",
-            "index": 49,
+            "mesh": "Ranger_LegRight",
+            "index": 420,
             "bind": [
-              -0.7742,
-              0.4234,
-              -1.0031
+              0.5722,
+              -0.4317,
+              0.0689
             ],
-            "distance": 2.0962,
-            "distanceRatio": 3.5582
+            "distance": 1.4366,
+            "distanceRatio": 3.5082
+          },
+          {
+            "mesh": "Ranger_LegRight",
+            "index": 421,
+            "bind": [
+              0.5722,
+              -0.4317,
+              0.0689
+            ],
+            "distance": 1.4366,
+            "distanceRatio": 3.5082
           }
         ]
       },
       "UpperLeg.L": {
         "region": "limb",
-        "vertexCount": 845,
-        "averageDistanceRatio": 1.8954,
-        "maxDistanceRatio": 2.7873,
+        "vertexCount": 787,
+        "averageDistanceRatio": 2.1183,
+        "maxDistanceRatio": 3.3276,
         "samples": [
           {
-            "mesh": "Ranger_Quiver",
-            "index": 105,
+            "mesh": "Ranger_LegLeft",
+            "index": 659,
             "bind": [
-              0.9213,
-              -0.2924,
-              -0.4338
+              0.8646,
+              0.0586,
+              0.2539
             ],
-            "distance": 0.69,
-            "distanceRatio": 2.7873
+            "distance": 0.5992,
+            "distanceRatio": 3.3276
           },
           {
-            "mesh": "Ranger_Quiver",
-            "index": 106,
+            "mesh": "Ranger_LegLeft",
+            "index": 660,
             "bind": [
-              0.9213,
-              -0.2924,
-              -0.4338
+              0.8646,
+              0.0586,
+              0.2539
             ],
-            "distance": 0.69,
-            "distanceRatio": 2.7873
+            "distance": 0.5992,
+            "distanceRatio": 3.3276
           },
           {
-            "mesh": "Ranger_Quiver",
-            "index": 107,
+            "mesh": "Ranger_LegRight",
+            "index": 675,
             "bind": [
-              0.9213,
-              -0.2924,
-              -0.4338
+              0.8648,
+              0.0586,
+              0.254
             ],
-            "distance": 0.69,
-            "distanceRatio": 2.7873
+            "distance": 0.5992,
+            "distanceRatio": 3.3276
           },
           {
-            "mesh": "Ranger_Body",
-            "index": 2382,
+            "mesh": "Ranger_LegRight",
+            "index": 676,
             "bind": [
-              0.9118,
-              0.1964,
-              -0.4891
+              0.8648,
+              0.0586,
+              0.254
             ],
-            "distance": 0.6822,
-            "distanceRatio": 2.7554
+            "distance": 0.5992,
+            "distanceRatio": 3.3276
           }
         ]
       },
       "UpperLeg.R": {
         "region": "limb",
-        "vertexCount": 830,
-        "averageDistanceRatio": 1.8835,
-        "maxDistanceRatio": 2.7554,
+        "vertexCount": 762,
+        "averageDistanceRatio": 2.1286,
+        "maxDistanceRatio": 3.3276,
         "samples": [
           {
-            "mesh": "Ranger_Body",
-            "index": 1490,
+            "mesh": "Ranger_LegLeft",
+            "index": 675,
             "bind": [
-              -0.9118,
-              0.1964,
-              -0.4891
+              -0.8648,
+              0.0586,
+              0.254
             ],
-            "distance": 0.6822,
-            "distanceRatio": 2.7554
+            "distance": 0.5992,
+            "distanceRatio": 3.3276
           },
           {
-            "mesh": "Ranger_Body",
-            "index": 1485,
+            "mesh": "Ranger_LegLeft",
+            "index": 676,
             "bind": [
-              -0.9191,
-              0.1779,
-              -0.4854
+              -0.8648,
+              0.0586,
+              0.254
             ],
-            "distance": 0.6799,
-            "distanceRatio": 2.7464
+            "distance": 0.5992,
+            "distanceRatio": 3.3276
           },
           {
-            "mesh": "Ranger_Body",
-            "index": 1486,
+            "mesh": "Ranger_LegRight",
+            "index": 659,
             "bind": [
-              -0.9191,
-              0.1779,
-              -0.4854
+              -0.8646,
+              0.0586,
+              0.2539
             ],
-            "distance": 0.6799,
-            "distanceRatio": 2.7464
+            "distance": 0.5992,
+            "distanceRatio": 3.3276
           },
           {
-            "mesh": "Ranger_Body",
-            "index": 1513,
+            "mesh": "Ranger_LegRight",
+            "index": 660,
             "bind": [
-              -0.9118,
-              -0.1883,
-              -0.4891
+              -0.8646,
+              0.0586,
+              0.2539
             ],
-            "distance": 0.6799,
-            "distanceRatio": 2.7462
+            "distance": 0.5992,
+            "distanceRatio": 3.3276
           }
         ]
       }
@@ -3065,10 +3265,10 @@
   "humanoidDiagnostics": {
     "status": "pass",
     "coverageRatios": {
-      "core": 0.5696,
-      "arm": 0.0266,
-      "leg": 0.3664,
-      "foot": 0.0314
+      "core": 0.6615,
+      "arm": 0.029,
+      "leg": 0.282,
+      "foot": 0.0269
     },
     "warnings": []
   },
@@ -3077,273 +3277,273 @@
       "name": "Hips",
       "head": [
         0.0,
-        0.0,
-        0.571
+        -0.0103,
+        1.09
       ],
       "tail": [
         0.0,
-        0.0,
-        0.8983
+        -0.0103,
+        1.3174
       ],
-      "radius": 0.4909,
-      "verticalMin": 0.571,
-      "verticalMax": 0.8983
+      "radius": 0.3412,
+      "verticalMin": 1.09,
+      "verticalMax": 1.3174
     },
     {
       "name": "Spine",
       "head": [
         0.0,
-        0.0,
-        0.8983
+        -0.0103,
+        1.3174
       ],
       "tail": [
         0.0,
-        0.0,
-        1.291
+        -0.0103,
+        1.5904
       ],
-      "radius": 0.5891,
-      "verticalMin": 0.8983,
-      "verticalMax": 1.291
+      "radius": 0.4095,
+      "verticalMin": 1.3174,
+      "verticalMax": 1.5904
     },
     {
       "name": "Chest",
       "head": [
         0.0,
-        0.0,
-        1.291
+        -0.0103,
+        1.5904
       ],
       "tail": [
         0.0,
-        0.0,
-        1.7493
+        -0.0103,
+        1.9089
       ],
-      "radius": 0.6873,
-      "verticalMin": 1.291,
-      "verticalMax": 1.7493
+      "radius": 0.4777,
+      "verticalMin": 1.5904,
+      "verticalMax": 1.9089
     },
     {
       "name": "Neck",
       "head": [
         0.0,
-        0.0,
-        1.7493
+        -0.0103,
+        1.9089
       ],
       "tail": [
         0.0,
-        0.0,
-        2.1093
+        -0.0103,
+        2.1592
       ],
-      "radius": 0.216,
-      "verticalMin": 1.7493,
-      "verticalMax": 2.1093
+      "radius": 0.1501,
+      "verticalMin": 1.9089,
+      "verticalMax": 2.1592
     },
     {
       "name": "Head",
       "head": [
         0.0,
-        0.0,
-        1.7493
+        -0.0103,
+        1.9089
       ],
       "tail": [
         0.0,
-        0.0,
-        2.1093
+        -0.0103,
+        2.1592
       ],
-      "radius": 0.216,
-      "verticalMin": 1.7493,
-      "verticalMax": 2.1093
+      "radius": 0.1501,
+      "verticalMin": 1.9089,
+      "verticalMax": 2.1592
     },
     {
       "name": "UpperArm.L",
       "head": [
         0.6605,
-        0.0,
-        1.4547
+        -0.0103,
+        1.7042
       ],
       "tail": [
         0.4274,
-        0.0,
-        1.3892
+        -0.0103,
+        1.6587
       ],
-      "radius": 0.092,
-      "verticalMin": 1.3892,
-      "verticalMax": 1.4547
+      "radius": 0.0903,
+      "verticalMin": 1.6587,
+      "verticalMax": 1.7042
     },
     {
       "name": "LowerArm.L",
       "head": [
         0.4274,
-        0.0,
-        1.3892
+        -0.0103,
+        1.6587
       ],
       "tail": [
         0.7382,
-        0.0,
-        1.3565
+        -0.0103,
+        1.6359
       ],
-      "radius": 0.1188,
-      "verticalMin": 1.3565,
-      "verticalMax": 1.3892
+      "radius": 0.1184,
+      "verticalMin": 1.6359,
+      "verticalMax": 1.6587
     },
     {
       "name": "Hand.L",
       "head": [
         0.7382,
-        0.0,
-        1.3565
+        -0.0103,
+        1.6359
       ],
       "tail": [
         0.9324,
-        0.0,
-        1.3238
+        -0.0103,
+        1.6132
       ],
-      "radius": 0.0552,
-      "verticalMin": 1.3238,
-      "verticalMax": 1.3565
+      "radius": 0.0548,
+      "verticalMin": 1.6132,
+      "verticalMax": 1.6359
     },
     {
       "name": "UpperArm.R",
       "head": [
         -0.6605,
-        0.0,
-        1.4547
+        -0.0103,
+        1.7042
       ],
       "tail": [
         -0.4274,
-        0.0,
-        1.3892
+        -0.0103,
+        1.6587
       ],
-      "radius": 0.092,
-      "verticalMin": 1.3892,
-      "verticalMax": 1.4547
+      "radius": 0.0903,
+      "verticalMin": 1.6587,
+      "verticalMax": 1.7042
     },
     {
       "name": "LowerArm.R",
       "head": [
         -0.4274,
-        0.0,
-        1.3892
+        -0.0103,
+        1.6587
       ],
       "tail": [
         -0.7382,
-        0.0,
-        1.3565
+        -0.0103,
+        1.6359
       ],
-      "radius": 0.1188,
-      "verticalMin": 1.3565,
-      "verticalMax": 1.3892
+      "radius": 0.1184,
+      "verticalMin": 1.6359,
+      "verticalMax": 1.6587
     },
     {
       "name": "Hand.R",
       "head": [
         -0.7382,
-        0.0,
-        1.3565
+        -0.0103,
+        1.6359
       ],
       "tail": [
         -0.9324,
-        0.0,
-        1.3238
+        -0.0103,
+        1.6132
       ],
-      "radius": 0.0552,
-      "verticalMin": 1.3238,
-      "verticalMax": 1.3565
+      "radius": 0.0548,
+      "verticalMin": 1.6132,
+      "verticalMax": 1.6359
     },
     {
       "name": "UpperLeg.L",
       "head": [
         0.2331,
-        0.0,
-        0.571
+        -0.0103,
+        1.09
       ],
       "tail": [
         0.4274,
-        0.0,
-        -0.0509
+        -0.0103,
+        0.6577
       ],
-      "radius": 0.2476,
-      "verticalMin": -0.0509,
-      "verticalMax": 0.571
+      "radius": 0.1801,
+      "verticalMin": 0.6577,
+      "verticalMax": 1.09
     },
     {
       "name": "LowerLeg.L",
       "head": [
         0.4274,
-        0.0,
-        -0.0509
+        -0.0103,
+        0.6577
       ],
       "tail": [
         0.4274,
-        0.0,
-        -0.5418
+        -0.0103,
+        0.3165
       ],
-      "radius": 0.1866,
-      "verticalMin": -0.5418,
-      "verticalMax": -0.0509
+      "radius": 0.1297,
+      "verticalMin": 0.3165,
+      "verticalMax": 0.6577
     },
     {
       "name": "Foot.L",
       "head": [
         0.4274,
-        0.0,
-        -0.5418
+        -0.0103,
+        0.3165
       ],
       "tail": [
         0.4274,
-        -0.24,
-        -0.9018
+        -0.1363,
+        0.0662
       ],
-      "radius": 0.1212,
-      "verticalMin": -0.9018,
-      "verticalMax": -0.5418
+      "radius": 0.0784,
+      "verticalMin": 0.0662,
+      "verticalMax": 0.3165
     },
     {
       "name": "UpperLeg.R",
       "head": [
         -0.2331,
-        0.0,
-        0.571
+        -0.0103,
+        1.09
       ],
       "tail": [
         -0.4274,
-        0.0,
-        -0.0509
+        -0.0103,
+        0.6577
       ],
-      "radius": 0.2476,
-      "verticalMin": -0.0509,
-      "verticalMax": 0.571
+      "radius": 0.1801,
+      "verticalMin": 0.6577,
+      "verticalMax": 1.09
     },
     {
       "name": "LowerLeg.R",
       "head": [
         -0.4274,
-        0.0,
-        -0.0509
+        -0.0103,
+        0.6577
       ],
       "tail": [
         -0.4274,
-        0.0,
-        -0.5418
+        -0.0103,
+        0.3165
       ],
-      "radius": 0.1866,
-      "verticalMin": -0.5418,
-      "verticalMax": -0.0509
+      "radius": 0.1297,
+      "verticalMin": 0.3165,
+      "verticalMax": 0.6577
     },
     {
       "name": "Foot.R",
       "head": [
         -0.4274,
-        0.0,
-        -0.5418
+        -0.0103,
+        0.3165
       ],
       "tail": [
         -0.4274,
-        -0.24,
-        -0.9018
+        -0.1363,
+        0.0662
       ],
-      "radius": 0.1212,
-      "verticalMin": -0.9018,
-      "verticalMax": -0.5418
+      "radius": 0.0784,
+      "verticalMin": 0.0662,
+      "verticalMax": 0.3165
     }
   ],
   "bindSpaceDiagnostics": [
@@ -3402,25 +3602,16 @@
       "rawMaxZ": 1.362,
       "bindMinZ": 0.6051,
       "bindMaxZ": 1.362
-    },
-    {
-      "mesh": "Icosphere",
-      "rawMinZ": -1.0,
-      "rawMaxZ": 1.0,
-      "bindMinZ": -1.0,
-      "bindMaxZ": 1.0
     }
   ],
   "qa": {
-    "mesh_count": 9,
-    "vertex_count": 7776,
+    "mesh_count": 8,
+    "vertex_count": 7734,
     "bone_count": 17,
-    "unweighted_vertices": 42,
+    "unweighted_vertices": 0,
     "over_limit_vertices": 0,
     "export_profile": null,
-    "warnings": [
-      "Unweighted vertices: 42"
-    ],
+    "warnings": [],
     "errors": []
   }
 }

@@ -864,6 +864,141 @@ def test_cleanup_summary_from_scene_parses_removed_empty_groups():
     }
 
 
+def test_apply_capsule_weights_to_mesh_collection_does_not_depend_on_selection():
+    class FakeMesh:
+        def __init__(self, name):
+            self.name = name
+
+    class FakeResult:
+        def __init__(self, weighted_vertices):
+            self.weighted_vertices = weighted_vertices
+
+    armature = object()
+    meshes = [FakeMesh("SelectedMesh"), FakeMesh("HiddenAccessory")]
+    calls = []
+
+    def fake_bind(mesh, bound_armature):
+        calls.append((mesh.name, bound_armature))
+        return FakeResult(weighted_vertices=10 if mesh.name == "SelectedMesh" else 4)
+
+    summary = blender_asset_workflow.apply_capsule_weights_to_mesh_collection(
+        meshes,
+        armature,
+        bind_func=fake_bind,
+    )
+
+    assert calls == [
+        ("SelectedMesh", armature),
+        ("HiddenAccessory", armature),
+    ]
+    assert summary == {
+        "meshCount": 2,
+        "weightedVertices": 14,
+        "meshNames": ["SelectedMesh", "HiddenAccessory"],
+    }
+
+
+def test_cleanup_mesh_collection_reports_all_meshes_without_selection_context():
+    class FakeMesh:
+        def __init__(self, name):
+            self.name = name
+
+    class FakeResult:
+        def __init__(
+            self,
+            mesh_name,
+            *,
+            unweighted_vertices,
+            over_limit_vertices=0,
+            removed_empty_groups=0,
+            removed_empty_group_names=(),
+            pruned_weights=0,
+            normalized_vertices=0,
+        ):
+            self.mesh_name = mesh_name
+            self.unweighted_vertices = unweighted_vertices
+            self.over_limit_vertices = over_limit_vertices
+            self.removed_empty_groups = removed_empty_groups
+            self.removed_empty_group_names = removed_empty_group_names
+            self.pruned_weights = pruned_weights
+            self.normalized_vertices = normalized_vertices
+
+    meshes = [FakeMesh("SelectedMesh"), FakeMesh("HiddenAccessory")]
+    calls = []
+
+    def fake_cleanup(mesh):
+        calls.append(mesh.name)
+        if mesh.name == "HiddenAccessory":
+            return FakeResult(
+                mesh.name,
+                unweighted_vertices=4,
+                removed_empty_groups=2,
+                removed_empty_group_names=("Unused.A", "Unused.B"),
+                normalized_vertices=1,
+            )
+        return FakeResult(mesh.name, unweighted_vertices=0)
+
+    summary = blender_asset_workflow.cleanup_mesh_collection(
+        meshes,
+        cleanup_func=fake_cleanup,
+    )
+
+    assert calls == ["SelectedMesh", "HiddenAccessory"]
+    assert summary == {
+        "unweightedVertices": 4,
+        "overLimitVertices": 0,
+        "removedEmptyGroups": 2,
+        "removedEmptyGroupNames": ["Unused.A", "Unused.B"],
+        "prunedWeights": 0,
+        "normalizedVertices": 1,
+    }
+
+
+def test_remove_non_exportable_import_objects_drops_gltf_not_exported_meshes():
+    class FakeCollection:
+        def __init__(self, name):
+            self.name = name
+
+    class FakeObject:
+        def __init__(self, name, obj_type, collection_names):
+            self.name = name
+            self.type = obj_type
+            self.users_collection = [FakeCollection(name) for name in collection_names]
+
+    visible_mesh = FakeObject("VisibleMesh", "MESH", ["Collection"])
+    not_exported_mesh = FakeObject("Icosphere", "MESH", ["glTF_not_exported"])
+    hidden_empty = FakeObject("HiddenEmpty", "EMPTY", ["glTF_not_exported"])
+    removed = []
+
+    class FakeObjects(list):
+        def remove(self, obj, do_unlink):
+            assert do_unlink is True
+            removed.append(obj.name)
+            super().remove(obj)
+
+    class FakeScene:
+        objects = FakeObjects([visible_mesh, not_exported_mesh, hidden_empty])
+
+    class FakeData:
+        objects = FakeScene.objects
+
+    class FakeContext:
+        scene = FakeScene()
+
+    class FakeBpy:
+        context = FakeContext()
+        data = FakeData()
+
+    summary = blender_asset_workflow.remove_non_exportable_import_objects(FakeBpy)
+
+    assert summary == {
+        "removedObjects": 1,
+        "removedObjectNames": ["Icosphere"],
+    }
+    assert removed == ["Icosphere"]
+    assert [obj.name for obj in FakeScene.objects] == ["VisibleMesh", "HiddenEmpty"]
+
+
 def test_weight_region_summary_groups_influences_by_semantic_body_region():
     class FakeGroup:
         def __init__(self, name, index):
@@ -1563,6 +1698,68 @@ def test_select_export_objects_includes_mgr_armature_with_meshes():
     assert armature.selected is True
     assert landmark.selected is False
     assert FakeBpy.context.view_layer.objects.active is armature
+
+
+def test_select_export_objects_makes_non_selectable_meshes_exportable():
+    class FakeObject:
+        def __init__(self, name, obj_type, *, hide_select=False):
+            self.name = name
+            self.type = obj_type
+            self.hide_select = hide_select
+            self.selected = False
+
+        def select_set(self, value):
+            if self.hide_select:
+                self.selected = False
+                return
+            self.selected = bool(value)
+
+    visible_mesh = FakeObject("VisibleMesh", "MESH")
+    accessory_mesh = FakeObject("HiddenAccessory", "MESH", hide_select=True)
+    armature = FakeObject("MGR_Armature", "ARMATURE")
+
+    class FakeObjectMap(dict):
+        def get(self, name, default=None):
+            return super().get(name, default)
+
+    class FakeScene:
+        objects = [visible_mesh, accessory_mesh, armature]
+
+    class FakeViewLayer:
+        class Objects:
+            active = None
+
+        objects = Objects()
+
+    class FakeContext:
+        scene = FakeScene()
+        view_layer = FakeViewLayer()
+
+    class FakeObjectOps:
+        @staticmethod
+        def select_all(action):
+            assert action == "DESELECT"
+            for obj in FakeScene.objects:
+                obj.selected = False
+
+    class FakeOps:
+        object = FakeObjectOps()
+
+    class FakeData:
+        objects = FakeObjectMap({"MGR_Armature": armature})
+
+    class FakeBpy:
+        context = FakeContext()
+        ops = FakeOps()
+        data = FakeData()
+
+    selected = blender_asset_workflow.select_export_objects(FakeBpy)
+
+    assert selected == [visible_mesh, accessory_mesh, armature]
+    assert visible_mesh.selected is True
+    assert accessory_mesh.hide_select is False
+    assert accessory_mesh.selected is True
+    assert armature.selected is True
 
 
 def test_apply_unity_export_scale_normalization_scales_meshes_and_mgr_armature(monkeypatch):

@@ -9,6 +9,7 @@ import sys
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 ADDON_ROOT = REPO_ROOT / "addon"
+NON_EXPORT_COLLECTION_NAMES = frozenset({"glTF_not_exported"})
 
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
@@ -50,6 +51,23 @@ def import_asset(bpy_module, asset_path: Path) -> None:
         bpy_module.ops.wm.open_mainfile(filepath=str(asset_path))
         return
     raise ValueError(f"Unsupported asset format: {asset_path.suffix}")
+
+
+def remove_non_exportable_import_objects(bpy_module) -> dict[str, object]:
+    removed_names = []
+    for obj in list(bpy_module.context.scene.objects):
+        if obj.type != "MESH":
+            continue
+        collection_names = {collection.name for collection in getattr(obj, "users_collection", ())}
+        if collection_names.isdisjoint(NON_EXPORT_COLLECTION_NAMES):
+            continue
+        obj_name = obj.name
+        bpy_module.data.objects.remove(obj, do_unlink=True)
+        removed_names.append(obj_name)
+    return {
+        "removedObjects": len(removed_names),
+        "removedObjectNames": removed_names,
+    }
 
 
 def object_bbox(objects) -> dict[str, float]:
@@ -132,6 +150,7 @@ def main() -> int:
 
     reset_scene(bpy)
     import_asset(bpy, asset_path)
+    import_prune_result = remove_non_exportable_import_objects(bpy)
     metrics = collect_metrics(bpy)
     payload = {
         "schemaVersion": 1,
@@ -144,6 +163,7 @@ def main() -> int:
             "localPath": str(asset_path),
         },
         "metrics": metrics,
+        "importPrune": import_prune_result,
     }
 
     output_path.parent.mkdir(parents=True, exist_ok=True)

@@ -28,6 +28,7 @@ UNITY_EXPORT_SEVERE_MAX_DIMENSIONS = {
     "prop": 50.0,
 }
 UNITY_EXPORT_TARGET_HEADROOM_RATIO = 0.95
+NON_EXPORT_COLLECTION_NAMES = frozenset({"glTF_not_exported"})
 
 
 def humanoid_landmarks_from_bbox(bbox: dict[str, float]) -> dict[str, tuple[float, float, float]]:
@@ -483,6 +484,49 @@ def cleanup_summary_from_scene(scene) -> dict[str, int]:
         "prunedWeights": int(pairs.get("pruned", 0)),
         "normalizedVertices": int(pairs.get("normalized", 0)),
     }
+
+
+def apply_capsule_weights_to_mesh_collection(
+    meshes,
+    armature,
+    *,
+    bind_func,
+) -> dict[str, Any]:
+    weighted_vertices = 0
+    mesh_names = []
+    for mesh in meshes:
+        result = bind_func(mesh, armature)
+        weighted_vertices += result.weighted_vertices
+        mesh_names.append(mesh.name)
+    return {
+        "meshCount": len(mesh_names),
+        "weightedVertices": weighted_vertices,
+        "meshNames": mesh_names,
+    }
+
+
+def cleanup_mesh_collection(
+    meshes,
+    *,
+    cleanup_func,
+) -> dict[str, Any]:
+    totals: dict[str, Any] = {
+        "unweightedVertices": 0,
+        "overLimitVertices": 0,
+        "removedEmptyGroups": 0,
+        "removedEmptyGroupNames": [],
+        "prunedWeights": 0,
+        "normalizedVertices": 0,
+    }
+    for mesh in meshes:
+        result = cleanup_func(mesh)
+        totals["unweightedVertices"] += result.unweighted_vertices
+        totals["overLimitVertices"] += result.over_limit_vertices
+        totals["removedEmptyGroups"] += result.removed_empty_groups
+        totals["removedEmptyGroupNames"].extend(result.removed_empty_group_names)
+        totals["prunedWeights"] += result.pruned_weights
+        totals["normalizedVertices"] += result.normalized_vertices
+    return totals
 
 
 def weight_region_for_bone(bone_name: str) -> str:
@@ -1249,6 +1293,23 @@ def import_asset(bpy_module, asset_path: Path) -> None:
     raise ValueError(f"Unsupported asset format: {asset_path.suffix}")
 
 
+def remove_non_exportable_import_objects(bpy_module) -> dict[str, Any]:
+    removed_names = []
+    for obj in list(bpy_module.context.scene.objects):
+        if obj.type != "MESH":
+            continue
+        collection_names = {collection.name for collection in getattr(obj, "users_collection", ())}
+        if collection_names.isdisjoint(NON_EXPORT_COLLECTION_NAMES):
+            continue
+        obj_name = obj.name
+        bpy_module.data.objects.remove(obj, do_unlink=True)
+        removed_names.append(obj_name)
+    return {
+        "removedObjects": len(removed_names),
+        "removedObjectNames": removed_names,
+    }
+
+
 def mesh_bbox(bpy_module) -> dict[str, float]:
     from mathutils import Vector
 
@@ -1370,10 +1431,20 @@ def select_meshes(bpy_module) -> list[Any]:
     meshes = [obj for obj in bpy_module.context.scene.objects if obj.type == "MESH"]
     bpy_module.ops.object.select_all(action="DESELECT")
     for mesh in meshes:
+        make_object_selectable(mesh)
         mesh.select_set(True)
     if meshes:
         bpy_module.context.view_layer.objects.active = meshes[0]
     return meshes
+
+
+def make_object_selectable(obj) -> None:
+    if hasattr(obj, "hide_select"):
+        obj.hide_select = False
+    if hasattr(obj, "hide_viewport"):
+        obj.hide_viewport = False
+    if hasattr(obj, "hide_set"):
+        obj.hide_set(False)
 
 
 def select_export_objects(bpy_module) -> list[Any]:
@@ -1381,6 +1452,7 @@ def select_export_objects(bpy_module) -> list[Any]:
     armature = bpy_module.data.objects.get("MGR_Armature")
     export_objects = list(meshes)
     if armature is not None and getattr(armature, "type", None) == "ARMATURE":
+        make_object_selectable(armature)
         armature.select_set(True)
         bpy_module.context.view_layer.objects.active = armature
         export_objects.append(armature)
@@ -1510,7 +1582,9 @@ def main() -> int:
 
     sys.path.insert(0, str(ADDON_ROOT))
     import mac_game_rigger
+    from mac_game_rigger.core.weight_binding import apply_capsule_weights_to_mesh
     from mac_game_rigger.core.weight_binding import capsule_diagnostics
+    from mac_game_rigger.core.weight_cleanup import cleanup_mesh_weights
 
     evidence_dir.mkdir(parents=True, exist_ok=True)
     qa_path = evidence_dir / "qa-report.json"
@@ -1519,6 +1593,7 @@ def main() -> int:
 
     reset_scene(bpy)
     import_asset(bpy, asset_path)
+    import_prune_result = remove_non_exportable_import_objects(bpy)
     orientation_result = normalize_mesh_orientation(bpy)
     strip_result = strip_source_rig(bpy)
     imported_bbox = mesh_bbox(bpy)
@@ -1545,11 +1620,19 @@ def main() -> int:
         capsule_summary = capsule_diagnostics_summary(capsule_data)
 
         meshes = select_meshes(bpy)
-        run_operator("apply_capsule_weights", bpy.ops.mgr.apply_capsule_weights)
-        select_meshes(bpy)
-        run_operator("cleanup_weights", bpy.ops.mgr.cleanup_weights)
+        capsule_bind_summary = apply_capsule_weights_to_mesh_collection(
+            meshes,
+            armature,
+            bind_func=apply_capsule_weights_to_mesh,
+        )
+        bpy.context.scene["mgr_last_capsule_weighted_vertices"] = capsule_bind_summary[
+            "weightedVertices"
+        ]
+        cleanup_summary = cleanup_mesh_collection(
+            meshes,
+            cleanup_func=cleanup_mesh_weights,
+        )
         unity_scale_normalization = apply_unity_export_scale_normalization(bpy, args.template)
-        cleanup_summary = cleanup_summary_from_scene(bpy.context.scene)
         weight_diagnostics = weight_region_summary(meshes)
         bone_weight_summary = bone_weight_diagnostics(meshes)
         capsule_bind_weight_summary = capsule_bind_weight_diagnostics(meshes, capsule_data)
@@ -1606,6 +1689,7 @@ def main() -> int:
                 prop_hinge_base_x=args.prop_hinge_base_x,
                 prop_hinge_axis=args.prop_hinge_axis,
             ),
+            "importPrune": import_prune_result,
             "stripSourceRig": strip_result,
             "orientationNormalization": orientation_result,
             "meshCount": len(meshes),
@@ -1630,6 +1714,7 @@ def main() -> int:
             },
             "poseDeformation": pose_deformation,
             "unityScaleNormalization": unity_scale_normalization,
+            "capsuleBind": capsule_bind_summary,
             "cleanup": cleanup_summary,
             "weightDiagnostics": weight_diagnostics,
             "boneWeightDiagnostics": bone_weight_summary,

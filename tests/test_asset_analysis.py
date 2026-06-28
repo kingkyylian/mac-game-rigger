@@ -26,6 +26,20 @@ def test_suggests_humanoid_for_tall_mesh():
     assert suggest_category(stats) == "humanoid"
 
 
+def test_suggests_humanoid_for_rigged_split_mesh_with_wide_silhouette():
+    stats = MeshStats(
+        mesh_count=8,
+        vertex_count=7734,
+        face_count=8980,
+        width=1.9425,
+        depth=1.0494,
+        height=2.275,
+        has_armature=True,
+    )
+
+    assert suggest_category(stats) == "humanoid"
+
+
 def test_suggests_quadruped_for_long_mesh():
     stats = MeshStats(
         mesh_count=1,

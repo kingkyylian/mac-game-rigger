@@ -158,7 +158,7 @@ sleep 5
             "--unity",
             str(fake_unity),
             "--timeout-seconds",
-            "1",
+            "2",
         ],
         cwd=REPO_ROOT,
         text=True,
@@ -167,5 +167,5 @@ sleep 5
     )
 
     assert result.returncode == 124
-    assert "Unity import check timed out after 1 seconds" in result.stderr
+    assert "Unity import check timed out after 2 seconds" in result.stderr
     assert "Unity import still waiting" in result.stderr
