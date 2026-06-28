@@ -17,6 +17,13 @@ CONFIGURED_ANIMATOR_GATE_ISSUE_MARKERS = (
     "configured Animator",
 )
 CONFIGURED_ANIMATOR_MISSING_WARNING = "configuredAnimatorSmoke is not recorded yet"
+HUMANOID_AVATAR_GATE_ISSUE_MARKERS = (
+    "humanoidAvatarSmoke.passed",
+    "humanoid Avatar",
+    "mappedHumanBoneCount",
+    "requiredHumanBoneCount",
+)
+HUMANOID_AVATAR_MISSING_WARNING = "humanoidAvatarSmoke is not recorded yet"
 
 
 def parse_args() -> argparse.Namespace:
@@ -296,6 +303,28 @@ def configured_animator_strict_gate(report: dict[str, object]) -> dict[str, obje
     }
 
 
+def humanoid_avatar_strict_gate(report: dict[str, object]) -> dict[str, object]:
+    missing_slots: list[str] = []
+    for slot in report["slots"]:
+        slot_id = str(slot["id"])
+        issues = slot.get("issues")
+        if isinstance(issues, list) and any(
+            any(marker in str(issue) for marker in HUMANOID_AVATAR_GATE_ISSUE_MARKERS)
+            for issue in issues
+        ):
+            missing_slots.append(slot_id)
+            continue
+        warnings = slot.get("warnings")
+        if not isinstance(warnings, list):
+            continue
+        if any(HUMANOID_AVATAR_MISSING_WARNING in str(warning) for warning in warnings):
+            missing_slots.append(slot_id)
+    return {
+        "status": "pass" if not missing_slots else "blocked",
+        "missingSlots": missing_slots,
+    }
+
+
 def real_separate_mesh_humanoid_gate(report: dict[str, object]) -> dict[str, object]:
     source_mesh_count_by_slot = report.get("sourceMeshCountBySlot")
     if not isinstance(source_mesh_count_by_slot, dict):
@@ -366,6 +395,9 @@ def render_report(report: dict[str, object]) -> str:
     strict_configured_animator_gate = report.get("strictConfiguredAnimatorGate")
     if not isinstance(strict_configured_animator_gate, dict):
         strict_configured_animator_gate = configured_animator_strict_gate(report)
+    humanoid_avatar_gate = report.get("humanoidAvatarGate")
+    if not isinstance(humanoid_avatar_gate, dict):
+        humanoid_avatar_gate = humanoid_avatar_strict_gate(report)
     real_separate_mesh_gate = report.get("realSeparateMeshHumanoidGate")
     if not isinstance(real_separate_mesh_gate, dict):
         real_separate_mesh_gate = real_separate_mesh_humanoid_gate(report)
@@ -380,6 +412,11 @@ def render_report(report: dict[str, object]) -> str:
                 "| `configuredAnimatorSmokeForHumanoidScore3` | "
                 f"{strict_configured_animator_gate['status']} | "
                 f"{table_cell(', '.join(strict_configured_animator_gate['missingSlots']))} |"
+            ),
+            (
+                "| `humanoidAvatarSmokeForHumanoidScore3` | "
+                f"{humanoid_avatar_gate['status']} | "
+                f"{table_cell(', '.join(humanoid_avatar_gate['missingSlots']))} |"
             ),
             (
                 "| `realSeparateMeshHumanoidEvidence` | "
@@ -489,6 +526,7 @@ def main() -> int:
             evidence_root,
             report["slots"],
         )
+        report["humanoidAvatarGate"] = humanoid_avatar_strict_gate(report)
         report["realSeparateMeshHumanoidGate"] = real_separate_mesh_humanoid_gate(report)
     except Exception as exc:
         print(f"Failed to generate report: {exc}", file=sys.stderr)

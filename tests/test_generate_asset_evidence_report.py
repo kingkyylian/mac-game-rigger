@@ -100,6 +100,7 @@ def write_unity_import_result(
     *,
     bounds_max_dimension=1.8,
     configured_animator_smoke=None,
+    humanoid_avatar_smoke=None,
 ):
     path = evidence_root / f"evidence/{slot_id}/unity-import.json"
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -139,6 +140,8 @@ def write_unity_import_result(
     }
     if configured_animator_smoke is not None:
         result["configuredAnimatorSmoke"] = configured_animator_smoke
+    if humanoid_avatar_smoke is not None:
+        result["humanoidAvatarSmoke"] = humanoid_avatar_smoke
     path.write_text(
         json.dumps(
             {
@@ -471,6 +474,71 @@ def test_generate_asset_evidence_report_shows_configured_animator_strict_gate(tm
     assert result.returncode == 0
     assert "## Strict Quality Gates" in result.stdout
     assert "| `configuredAnimatorSmokeForHumanoidScore3` | blocked | H-001 |" in result.stdout
+
+
+def test_generate_asset_evidence_report_shows_humanoid_avatar_strict_gate(tmp_path):
+    manifest = clear_registered_assets(load_manifest())
+    slots = []
+    for slot in manifest["slots"]:
+        next_slot = copy.deepcopy(slot)
+        if slot["id"] == "H-001":
+            mark_complete(next_slot, tmp_path, score=3, visual_review="pass")
+            write_unity_import_result(
+                tmp_path,
+                "H-001",
+                configured_animator_smoke={"passed": True},
+                humanoid_avatar_smoke=None,
+            )
+            write_workflow_summary(
+                tmp_path,
+                "H-001",
+                pose_status="pass",
+                humanoid_diagnostics={"status": "pass", "warnings": []},
+            )
+        slots.append(next_slot)
+    manifest["slots"] = slots
+    manifest_path = write_manifest(tmp_path, manifest)
+
+    result = run_report(manifest_path, tmp_path, "--check-evidence-files")
+
+    assert result.returncode == 0
+    assert "| `humanoidAvatarSmokeForHumanoidScore3` | blocked | H-001 |" in result.stdout
+
+
+def test_generate_asset_evidence_report_passes_humanoid_avatar_strict_gate(tmp_path):
+    manifest = clear_registered_assets(load_manifest())
+    slots = []
+    for slot in manifest["slots"]:
+        next_slot = copy.deepcopy(slot)
+        if slot["id"] == "H-001":
+            mark_complete(next_slot, tmp_path, score=3, visual_review="pass")
+            write_unity_import_result(
+                tmp_path,
+                "H-001",
+                configured_animator_smoke={"passed": True},
+                humanoid_avatar_smoke={
+                    "passed": True,
+                    "avatarIsValid": True,
+                    "avatarIsHuman": True,
+                    "retargetReady": True,
+                    "mappedHumanBoneCount": 17,
+                    "requiredHumanBoneCount": 17,
+                },
+            )
+            write_workflow_summary(
+                tmp_path,
+                "H-001",
+                pose_status="pass",
+                humanoid_diagnostics={"status": "pass", "warnings": []},
+            )
+        slots.append(next_slot)
+    manifest["slots"] = slots
+    manifest_path = write_manifest(tmp_path, manifest)
+
+    result = run_report(manifest_path, tmp_path, "--check-evidence-files")
+
+    assert result.returncode == 0
+    assert "| `humanoidAvatarSmokeForHumanoidScore3` | pass |  |" in result.stdout
 
 
 def test_generate_asset_evidence_report_blocks_missing_real_separate_mesh_humanoid(tmp_path):

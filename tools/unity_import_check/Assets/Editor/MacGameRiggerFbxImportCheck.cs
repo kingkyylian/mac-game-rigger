@@ -2,6 +2,7 @@ using System.IO;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
@@ -61,6 +62,7 @@ public static class MacGameRiggerFbxImportCheck
         ConfiguredAnimatorSmokeResult configuredAnimatorSmoke = RunConfiguredAnimatorSmoke(instance, skinnedMeshRenderers);
         animatorCount = instance.GetComponentsInChildren<Animator>(true).Length;
         ModelImporter modelImporter = AssetImporter.GetAtPath(assetPath) as ModelImporter;
+        HumanoidAvatarSmokeResult humanoidAvatarSmoke = RunHumanoidAvatarSmoke(instance, skinnedMeshRenderers);
 
         if (rendererCount == 0 && meshFilterCount == 0 && skinnedMeshRendererCount == 0)
         {
@@ -116,6 +118,7 @@ public static class MacGameRiggerFbxImportCheck
                 boneTransformSmoke,
                 animationClipSmoke,
                 configuredAnimatorSmoke,
+                humanoidAvatarSmoke,
                 modelImporter
             )
         );
@@ -147,6 +150,7 @@ public static class MacGameRiggerFbxImportCheck
         BoneTransformSmokeResult boneTransformSmoke,
         AnimationClipSmokeResult animationClipSmoke,
         ConfiguredAnimatorSmokeResult configuredAnimatorSmoke,
+        HumanoidAvatarSmokeResult humanoidAvatarSmoke,
         ModelImporter modelImporter
     )
     {
@@ -205,6 +209,18 @@ public static class MacGameRiggerFbxImportCheck
             json.Append(",\"error\":").Append(JsonString(configuredAnimatorSmoke.error));
         }
         json.Append("}");
+        json.Append(",\"humanoidAvatarSmoke\":{");
+        json.Append("\"passed\":").Append(humanoidAvatarSmoke.passed ? "true" : "false");
+        json.Append(",\"avatarIsValid\":").Append(humanoidAvatarSmoke.avatarIsValid ? "true" : "false");
+        json.Append(",\"avatarIsHuman\":").Append(humanoidAvatarSmoke.avatarIsHuman ? "true" : "false");
+        json.Append(",\"retargetReady\":").Append(humanoidAvatarSmoke.retargetReady ? "true" : "false");
+        json.Append(",\"mappedHumanBoneCount\":").Append(humanoidAvatarSmoke.mappedHumanBoneCount);
+        json.Append(",\"requiredHumanBoneCount\":").Append(humanoidAvatarSmoke.requiredHumanBoneCount);
+        if (!string.IsNullOrEmpty(humanoidAvatarSmoke.error))
+        {
+            json.Append(",\"error\":").Append(JsonString(humanoidAvatarSmoke.error));
+        }
+        json.Append("}");
         json.Append(",\"modelImporter\":{");
         if (modelImporter == null)
         {
@@ -254,6 +270,100 @@ public static class MacGameRiggerFbxImportCheck
             bounds,
             maxDimension,
             finite && positive ? "" : "Renderer bounds are not finite or positive"
+        );
+    }
+
+    private static HumanoidAvatarSmokeResult RunHumanoidAvatarSmoke(
+        GameObject instance,
+        SkinnedMeshRenderer[] skinnedMeshRenderers
+    )
+    {
+        Transform[] boneCandidates = BoneCandidates(skinnedMeshRenderers);
+        if (boneCandidates.Length == 0)
+        {
+            return new HumanoidAvatarSmokeResult(false, false, false, false, 0, RequiredHumanBoneNames().Length, "No SkinnedMeshRenderer bone links found");
+        }
+
+        var transformByName = instance
+            .GetComponentsInChildren<Transform>(true)
+            .Where(transform => transform != null)
+            .GroupBy(transform => SimpleTransformName(transform.name))
+            .ToDictionary(group => group.Key, group => group.First());
+
+        string[] requiredHumanBoneNames = RequiredHumanBoneNames();
+        var humanBones = new List<HumanBone>();
+        foreach (string humanName in requiredHumanBoneNames)
+        {
+            string modelBoneName = ModelBoneNameForHumanBone(humanName);
+            if (string.IsNullOrEmpty(modelBoneName) || !transformByName.TryGetValue(modelBoneName, out Transform modelBone))
+            {
+                continue;
+            }
+
+            humanBones.Add(
+                new HumanBone
+                {
+                    humanName = humanName,
+                    boneName = modelBone.name,
+                    limit = new HumanLimit { useDefaultValues = true },
+                }
+            );
+        }
+
+        if (humanBones.Count < requiredHumanBoneNames.Length)
+        {
+            return new HumanoidAvatarSmokeResult(
+                false,
+                false,
+                false,
+                false,
+                humanBones.Count,
+                requiredHumanBoneNames.Length,
+                "Not all required humanoid bones are mapped"
+            );
+        }
+
+        SkeletonBone[] skeletonBones = instance
+            .GetComponentsInChildren<Transform>(true)
+            .Where(transform => transform != null)
+            .Select(
+                transform => new SkeletonBone
+                {
+                    name = transform.name,
+                    position = transform.localPosition,
+                    rotation = transform.localRotation,
+                    scale = transform.localScale,
+                }
+            )
+            .ToArray();
+
+        var humanDescription = new HumanDescription
+        {
+            human = humanBones.ToArray(),
+            skeleton = skeletonBones,
+            upperArmTwist = 0.5f,
+            lowerArmTwist = 0.5f,
+            upperLegTwist = 0.5f,
+            lowerLegTwist = 0.5f,
+            armStretch = 0.05f,
+            legStretch = 0.05f,
+            feetSpacing = 0f,
+            hasTranslationDoF = false,
+        };
+
+        Avatar avatar = AvatarBuilder.BuildHumanAvatar(instance, humanDescription);
+        bool avatarIsValid = avatar != null && avatar.isValid;
+        bool avatarIsHuman = avatar != null && avatar.isHuman;
+        bool retargetReady = avatarIsValid && avatarIsHuman;
+
+        return new HumanoidAvatarSmokeResult(
+            retargetReady,
+            avatarIsValid,
+            avatarIsHuman,
+            retargetReady,
+            humanBones.Count,
+            requiredHumanBoneNames.Length,
+            retargetReady ? "" : "Built Avatar is not a valid human avatar"
         );
     }
 
@@ -419,6 +529,85 @@ public static class MacGameRiggerFbxImportCheck
         return current == root ? path : "";
     }
 
+    private static string[] RequiredHumanBoneNames()
+    {
+        var names = new List<string>();
+        for (int index = 0; index < HumanTrait.BoneCount; index++)
+        {
+            string humanName = HumanTrait.BoneName[index];
+            if (!string.IsNullOrEmpty(ModelBoneNameForHumanBone(humanName)))
+            {
+                names.Add(humanName);
+            }
+        }
+        return names.ToArray();
+    }
+
+    private static string ModelBoneNameForHumanBone(string humanName)
+    {
+        switch (NormalizeBoneName(humanName))
+        {
+            case "Hips":
+                return "Hips";
+            case "Spine":
+                return "Spine";
+            case "Chest":
+                return "Chest";
+            case "Neck":
+                return "Neck";
+            case "Head":
+                return "Head";
+            case "LeftUpperLeg":
+                return "UpperLeg.L";
+            case "LeftLowerLeg":
+                return "LowerLeg.L";
+            case "LeftFoot":
+                return "Foot.L";
+            case "RightUpperLeg":
+                return "UpperLeg.R";
+            case "RightLowerLeg":
+                return "LowerLeg.R";
+            case "RightFoot":
+                return "Foot.R";
+            case "LeftUpperArm":
+                return "UpperArm.L";
+            case "LeftLowerArm":
+                return "LowerArm.L";
+            case "LeftHand":
+                return "Hand.L";
+            case "RightUpperArm":
+                return "UpperArm.R";
+            case "RightLowerArm":
+                return "LowerArm.R";
+            case "RightHand":
+                return "Hand.R";
+            default:
+                return "";
+        }
+    }
+
+    private static string NormalizeBoneName(string value)
+    {
+        return value.Replace(" ", "").Replace("_", "").Replace("-", "");
+    }
+
+    private static string SimpleTransformName(string value)
+    {
+        int namespaceIndex = value.LastIndexOf(':');
+        if (namespaceIndex >= 0 && namespaceIndex + 1 < value.Length)
+        {
+            value = value.Substring(namespaceIndex + 1);
+        }
+
+        int pathIndex = value.LastIndexOf('|');
+        if (pathIndex >= 0 && pathIndex + 1 < value.Length)
+        {
+            value = value.Substring(pathIndex + 1);
+        }
+
+        return value;
+    }
+
     private struct BoneTransformSmokeResult
     {
         public readonly bool passed;
@@ -512,6 +701,36 @@ public static class MacGameRiggerFbxImportCheck
             this.sampledBone = sampledBone;
             this.sampledBonePath = sampledBonePath;
             this.sampledRotationDeltaDegrees = sampledRotationDeltaDegrees;
+            this.error = error;
+        }
+    }
+
+    private struct HumanoidAvatarSmokeResult
+    {
+        public readonly bool passed;
+        public readonly bool avatarIsValid;
+        public readonly bool avatarIsHuman;
+        public readonly bool retargetReady;
+        public readonly int mappedHumanBoneCount;
+        public readonly int requiredHumanBoneCount;
+        public readonly string error;
+
+        public HumanoidAvatarSmokeResult(
+            bool passed,
+            bool avatarIsValid,
+            bool avatarIsHuman,
+            bool retargetReady,
+            int mappedHumanBoneCount,
+            int requiredHumanBoneCount,
+            string error
+        )
+        {
+            this.passed = passed;
+            this.avatarIsValid = avatarIsValid;
+            this.avatarIsHuman = avatarIsHuman;
+            this.retargetReady = retargetReady;
+            this.mappedHumanBoneCount = mappedHumanBoneCount;
+            this.requiredHumanBoneCount = requiredHumanBoneCount;
             this.error = error;
         }
     }

@@ -508,6 +508,32 @@ def unity_import_quality_issues(
                         f"{slot_id}: Unity import configured Animator sampledRotationDeltaDegrees must be > 0 for humanoid score >=3"
                     )
 
+        humanoid_avatar_smoke = result.get("humanoidAvatarSmoke")
+        if category == "humanoid" and humanoid_avatar_smoke is not None:
+            if not isinstance(humanoid_avatar_smoke, dict) or humanoid_avatar_smoke.get("passed") is not True:
+                issues.append(f"{slot_id}: Unity import humanoidAvatarSmoke.passed must be true for humanoid score >=3")
+            else:
+                if humanoid_avatar_smoke.get("avatarIsValid") is not True:
+                    issues.append(f"{slot_id}: Unity import humanoid Avatar avatarIsValid must be true for humanoid score >=3")
+                if humanoid_avatar_smoke.get("avatarIsHuman") is not True:
+                    issues.append(f"{slot_id}: Unity import humanoid Avatar avatarIsHuman must be true for humanoid score >=3")
+                if humanoid_avatar_smoke.get("retargetReady") is not True:
+                    issues.append(f"{slot_id}: Unity import humanoid Avatar retargetReady must be true for humanoid score >=3")
+                mapped_human_bone_count = humanoid_avatar_smoke.get("mappedHumanBoneCount")
+                required_human_bone_count = humanoid_avatar_smoke.get("requiredHumanBoneCount")
+                if not isinstance(mapped_human_bone_count, int) or mapped_human_bone_count < 1:
+                    issues.append(f"{slot_id}: Unity import mappedHumanBoneCount must be >= 1 for humanoid score >=3")
+                if not isinstance(required_human_bone_count, int) or required_human_bone_count < 1:
+                    issues.append(f"{slot_id}: Unity import requiredHumanBoneCount must be >= 1 for humanoid score >=3")
+                if (
+                    isinstance(mapped_human_bone_count, int)
+                    and isinstance(required_human_bone_count, int)
+                    and mapped_human_bone_count < required_human_bone_count
+                ):
+                    issues.append(
+                        f"{slot_id}: Unity import mappedHumanBoneCount must cover requiredHumanBoneCount for humanoid score >=3"
+                    )
+
         bounds_smoke = result.get("boundsSmoke")
         if not isinstance(bounds_smoke, dict) or bounds_smoke.get("passed") is not True:
             issues.append(f"{slot_id}: Unity import boundsSmoke.passed must be true for score >=3")
@@ -602,6 +628,37 @@ def unity_import_animator_migration_warnings(
     if "configuredAnimatorSmoke" in result:
         return []
     return [f"{slot_id}: Unity import configuredAnimatorSmoke is not recorded yet"]
+
+
+def unity_import_humanoid_avatar_migration_warnings(
+    slot_id: str,
+    category: Any,
+    score: Any,
+    evidence: dict[str, Any],
+    evidence_root: Path,
+) -> list[str]:
+    if category != "humanoid":
+        return []
+    if not isinstance(score, int) or score < 3:
+        return []
+    if evidence_status(evidence.get("unityImport")) != "pass":
+        return []
+
+    unity_import_path = evidence_root / "evidence" / slot_id / "unity-import.json"
+    if not unity_import_path.is_file():
+        return []
+
+    try:
+        payload = json.loads(unity_import_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return []
+
+    result = payload.get("result")
+    if not isinstance(result, dict):
+        return []
+    if "humanoidAvatarSmoke" in result:
+        return []
+    return [f"{slot_id}: Unity import humanoidAvatarSmoke is not recorded yet"]
 
 
 def humanoid_quality_issue_for_score(
@@ -820,6 +877,15 @@ def classify_slot(
         warnings.extend(unity_import_scale_warnings(slot["id"], slot.get("category"), evidence, evidence_root))
         warnings.extend(
             unity_import_animator_migration_warnings(
+                slot["id"],
+                slot.get("category"),
+                score,
+                evidence,
+                evidence_root,
+            )
+        )
+        warnings.extend(
+            unity_import_humanoid_avatar_migration_warnings(
                 slot["id"],
                 slot.get("category"),
                 score,

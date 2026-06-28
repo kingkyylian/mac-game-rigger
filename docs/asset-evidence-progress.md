@@ -34,6 +34,7 @@ Evidence root: `.`
 | Gate | Status | Missing Slots |
 |---|---|---|
 | `configuredAnimatorSmokeForHumanoidScore3` | pass |  |
+| `humanoidAvatarSmokeForHumanoidScore3` | pass |  |
 | `realSeparateMeshHumanoidEvidence` | pass |  |
 
 ## Category Counts

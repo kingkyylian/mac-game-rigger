@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "status": "pass",
-  "checkedOn": "2026-06-23",
+  "checkedOn": "2026-06-28",
   "unityEditor": "/Applications/Unity/Hub/Editor/6000.4.1f1/Unity.app/Contents/MacOS/Unity",
   "fbx": "evidence/H-006/export-unity.fbx",
   "verificationCommand": "scripts/verify_unity_fbx_import.sh --fbx evidence/H-006/export-unity.fbx --unity /Applications/Unity/Hub/Editor/6000.4.1f1/Unity.app/Contents/MacOS/Unity --timeout-seconds 240",
@@ -17,8 +17,16 @@
     "animatorCount": 1,
     "boundsSmoke": {
       "passed": true,
-      "boundsCenter": {"x": 0.07612282, "y": 4.63336229, "z": -0.0000238418579},
-      "boundsSize": {"x": 1.76291275, "y": 9.673617, "z": 8.664086},
+      "boundsCenter": {
+        "x": 0.07612282,
+        "y": 4.63336229,
+        "z": -2.38418579e-05
+      },
+      "boundsSize": {
+        "x": 1.76291275,
+        "y": 9.673617,
+        "z": 8.664086
+      },
       "boundsHeight": 9.673617,
       "maxDimension": 9.673617
     },
@@ -42,6 +50,14 @@
       "sampledBone": "Hips",
       "sampledBonePath": "MGR_Armature/Hips",
       "sampledRotationDeltaDegrees": 90.2450943
+    },
+    "humanoidAvatarSmoke": {
+      "passed": true,
+      "avatarIsValid": true,
+      "avatarIsHuman": true,
+      "retargetReady": true,
+      "mappedHumanBoneCount": 17,
+      "requiredHumanBoneCount": 17
     },
     "modelImporter": {
       "available": true,

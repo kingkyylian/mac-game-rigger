@@ -123,6 +123,14 @@ Expected successful output:
     "sampledBonePath": "MGR_Armature/Hips",
     "sampledRotationDeltaDegrees": 90.2450943
   },
+  "humanoidAvatarSmoke": {
+    "passed": true,
+    "avatarIsValid": true,
+    "avatarIsHuman": true,
+    "retargetReady": true,
+    "mappedHumanBoneCount": 17,
+    "requiredHumanBoneCount": 17
+  },
   "modelImporter": {
     "available": true,
     "animationType": "Generic",
@@ -147,6 +155,7 @@ The editor script checks that:
 - skinned mesh renderer bone links are sampled and one bone local rotation can be changed in editor batchmode;
 - a generated Unity `AnimationClip` can sample a curve onto a linked bone and produce a positive sampled rotation delta;
 - a temporary `Animator` and `AnimatorController` can be configured on the imported instance, with one state bound to a generated clip that samples a linked bone;
+- for MGR humanoid bone names, Unity `AvatarBuilder.BuildHumanAvatar` can attempt to build a Humanoid Avatar and record whether the result is valid, human, and retarget-ready;
 - Unity `ModelImporter` metadata is available and records animation type, animation import setting, and global scale;
 - the import process exits with a pass/fail status that the shell script can parse.
 
@@ -232,9 +241,14 @@ tail or wing creatures, and 50 for props. Assets above these limits are marked
 incomplete until the export scale is normalized or the evidence is updated with
 a corrected Unity import.
 
+The verifier now emits `humanoidAvatarSmoke` for humanoid evidence. Current
+score >= 3 Unity-pass humanoids record passing Humanoid Avatar smoke with valid
+human Avatars and complete required human-bone mapping. Invalid
+`humanoidAvatarSmoke` blocks score >= 3 humanoid evidence.
+
 For stronger production confidence beyond the current gate, continue collecting:
 
-- Humanoid Avatar or retarget-specific playback notes for the Unity-pass humanoid assets;
+- retarget-specific playback notes beyond Avatar construction;
 - scale normalization evidence for severe Unity scale anomalies;
 - prop pivot/origin notes for hinge-like assets;
 - QA JSON and preview PNG linked to the same exported FBX.

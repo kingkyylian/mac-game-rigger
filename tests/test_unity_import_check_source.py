@@ -52,6 +52,19 @@ def test_unity_import_checker_records_configured_animator_smoke_metadata():
     assert "skinnedMeshRendererCount > 0 && !configuredAnimatorSmoke.passed" in source
 
 
+def test_unity_import_checker_records_humanoid_avatar_smoke_metadata():
+    source = CHECKER_SOURCE.read_text(encoding="utf-8")
+
+    assert "AvatarBuilder.BuildHumanAvatar" in source
+    assert "HumanDescription" in source
+    assert "HumanTrait.BoneName" in source
+    assert "RunHumanoidAvatarSmoke" in source
+    assert "humanoidAvatarSmoke" in source
+    assert "avatarIsValid" in source
+    assert "avatarIsHuman" in source
+    assert "mappedHumanBoneCount" in source
+
+
 def test_unity_import_checker_records_bounds_smoke_metadata():
     source = CHECKER_SOURCE.read_text(encoding="utf-8")
 

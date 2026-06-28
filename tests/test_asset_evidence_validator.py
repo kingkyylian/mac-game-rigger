@@ -132,6 +132,7 @@ def write_unity_import_result(
     bone_transform_smoke="valid",
     animation_clip_smoke="valid",
     configured_animator_smoke="valid",
+    humanoid_avatar_smoke=None,
     bounds_smoke="valid",
     bounds_max_dimension=1.8,
 ):
@@ -180,6 +181,16 @@ def write_unity_import_result(
         }
     elif configured_animator_smoke is not None:
         result["configuredAnimatorSmoke"] = configured_animator_smoke
+    if humanoid_avatar_smoke == "valid":
+        result["humanoidAvatarSmoke"] = {
+            "passed": True,
+            "avatarIsValid": True,
+            "avatarIsHuman": True,
+            "mappedHumanBoneCount": 15,
+            "requiredHumanBoneCount": 15,
+        }
+    elif humanoid_avatar_smoke is not None:
+        result["humanoidAvatarSmoke"] = humanoid_avatar_smoke
     if bounds_smoke == "valid":
         result["boundsSmoke"] = {
             "passed": True,
@@ -814,6 +825,64 @@ def test_asset_evidence_validator_strict_flag_blocks_missing_configured_animator
         "Unity import configuredAnimatorSmoke is required for humanoid score >=3" in issue
         for issue in slot_payload["issues"]
     )
+
+
+def test_asset_evidence_validator_blocks_invalid_humanoid_avatar_smoke_when_recorded(tmp_path):
+    manifest = clear_registered_assets(load_base_manifest())
+    slot = manifest["slots"][0]
+    mark_complete(slot, score=3, unity="pass", unreal="blocked")
+    create_evidence_files(tmp_path, slot)
+    write_unity_import_result(
+        tmp_path,
+        slot["id"],
+        humanoid_avatar_smoke={
+            "passed": False,
+            "avatarIsValid": False,
+            "avatarIsHuman": False,
+            "mappedHumanBoneCount": 6,
+            "requiredHumanBoneCount": 15,
+        },
+    )
+    manifest_path = write_manifest(tmp_path, manifest)
+
+    result = run_validator(
+        manifest_path,
+        "--evidence-root",
+        str(tmp_path),
+        "--check-evidence-files",
+    )
+
+    assert result.returncode == 0
+    payload = json.loads(result.stdout)
+    incomplete = payload["incompleteRealAssets"]
+    assert incomplete
+    assert any("Unity import humanoidAvatarSmoke.passed must be true" in issue for issue in incomplete[0]["issues"])
+
+
+def test_asset_evidence_validator_warns_for_missing_humanoid_avatar_smoke_without_blocking_evidence(tmp_path):
+    manifest = clear_registered_assets(load_base_manifest())
+    slot = manifest["slots"][0]
+    mark_complete(slot, score=3, unity="pass", unreal="blocked")
+    create_evidence_files(tmp_path, slot)
+    write_unity_import_result(
+        tmp_path,
+        slot["id"],
+        humanoid_avatar_smoke=None,
+    )
+    manifest_path = write_manifest(tmp_path, manifest)
+
+    result = run_validator(
+        manifest_path,
+        "--evidence-root",
+        str(tmp_path),
+        "--check-evidence-files",
+    )
+
+    assert result.returncode == 0
+    payload = json.loads(result.stdout)
+    slot_payload = next(item for item in payload["slots"] if item["id"] == slot["id"])
+    assert slot_payload["evidenceComplete"] is True
+    assert any("Unity import humanoidAvatarSmoke is not recorded yet" in warning for warning in slot_payload["warnings"])
 
 
 def test_asset_evidence_validator_blocks_score_three_unity_pass_without_bounds_smoke(tmp_path):

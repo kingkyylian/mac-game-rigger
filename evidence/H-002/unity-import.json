@@ -51,6 +51,14 @@
       "sampledBonePath": "MGR_Armature/Hips",
       "sampledRotationDeltaDegrees": 90.2450943
     },
+    "humanoidAvatarSmoke": {
+      "passed": true,
+      "avatarIsValid": true,
+      "avatarIsHuman": true,
+      "retargetReady": true,
+      "mappedHumanBoneCount": 17,
+      "requiredHumanBoneCount": 17
+    },
     "modelImporter": {
       "available": true,
       "animationType": "Generic",
