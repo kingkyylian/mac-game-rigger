@@ -28,7 +28,7 @@ The recorder runs the verifier and writes the wrapped result to
 non-zero without overwriting existing evidence.
 
 List all score >= 3 humanoid Unity-pass assets still missing configured Animator
-smoke before running a migration batch:
+smoke before running or re-running a migration batch:
 
 ```bash
 scripts/check_unity_batchmode_health.py \
@@ -60,8 +60,7 @@ import problem. Pass `--preflight-output <path>` to write that health report
 somewhere else. Use `--skip-preflight` only when Unity batchmode health was
 already checked in the same terminal session.
 
-To audit the future strict gate before flipping it into the default production
-trial path, run:
+To audit the strict configured Animator gate, run:
 
 ```bash
 python3 scripts/validate_asset_evidence.py \
@@ -71,8 +70,8 @@ python3 scripts/validate_asset_evidence.py \
   --quiet
 ```
 
-This command currently fails until H-003, H-004, H-005, H-009, and H-010 have
-fresh Unity evidence with `configuredAnimatorSmoke`.
+This command is expected to pass for the current evidence set. The planner
+currently reports no configured Animator smoke migration gaps.
 
 Use the raw verifier when debugging Unity import output before recording it:
 
@@ -197,6 +196,7 @@ Alpha smoke has one successful Unity batchmode import verifier pass for a genera
 
 The production-trial gate now has at least three real asset Unity import passes:
 
+- `H-002`: `evidence/H-002/export-unity.fbx`
 - `H-003`: `evidence/H-003/export-unity.fbx`
 - `H-004`: `evidence/H-004/export-unity.fbx`
 - `H-005`: `evidence/H-005/export-unity.fbx`
@@ -213,13 +213,12 @@ Each pass was captured with Unity `6000.4.1f1` and recorded in the matching
 `evidence/<slot>/unity-import.json` file. The current production evidence now
 requires score >= 3 Unity-pass assets to pass bone transform smoke and
 generated animation clip sampling smoke, with positive rotation deltas for both.
-When `configuredAnimatorSmoke` is present for humanoid assets, it is also
+For score >= 3 humanoid Unity-pass assets, `configuredAnimatorSmoke` is now
 validated as a blocking quality signal: the temporary configured Animator must
 have a controller, at least one state, and a positive sampled bone rotation
-delta. H-006 currently records this configured Animator smoke evidence. The
-validator does not yet require the field to be present on every older humanoid
-evidence file until those Unity imports are regenerated. The gate also requires
-finite positive renderer bounds with a positive max dimension and height.
+delta. H-002, H-003, H-004, H-005, H-006, H-009, and H-010 currently record this
+configured Animator smoke evidence. The gate also requires finite positive
+renderer bounds with a positive max dimension and height.
 
 The evidence validator also emits non-blocking Unity scale warnings from
 recorded `boundsSmoke.maxDimension`. Current warning limits are 10 Unity units
@@ -235,8 +234,7 @@ a corrected Unity import.
 
 For stronger production confidence beyond the current gate, continue collecting:
 
-- configured Animator smoke evidence for the remaining Unity-pass humanoid assets;
-- imported animation playback or retargeting notes for the Unity-pass humanoid assets;
+- Humanoid Avatar or retarget-specific playback notes for the Unity-pass humanoid assets;
 - scale normalization evidence for severe Unity scale anomalies;
 - prop pivot/origin notes for hinge-like assets;
 - QA JSON and preview PNG linked to the same exported FBX.

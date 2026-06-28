@@ -84,7 +84,7 @@ def test_find_migration_gaps_returns_only_score3_humanoid_unity_passes_missing_c
     assert gaps[0]["fbx"] == "evidence/H-003/export-unity.fbx"
 
 
-def test_cli_json_outputs_gap_commands_for_current_manifest():
+def test_cli_json_reports_no_gaps_for_current_manifest():
     load_module()
 
     result = subprocess.run(
@@ -109,19 +109,10 @@ def test_cli_json_outputs_gap_commands_for_current_manifest():
 
     assert result.returncode == 0, result.stderr
     payload = json.loads(result.stdout)
-    assert [gap["slot"] for gap in payload["gaps"]] == ["H-003", "H-004", "H-005", "H-009", "H-010"]
-    assert payload["gaps"][0]["command"] == [
-        "scripts/record_unity_import_evidence.py",
-        "--fbx",
-        "evidence/H-003/export-unity.fbx",
-        "--unity",
-        "/Fake/Unity",
-        "--timeout-seconds",
-        "240",
-    ]
+    assert payload == {"gaps": []}
 
 
-def test_cli_text_outputs_runnable_recorder_commands():
+def test_cli_text_reports_no_gaps_for_current_manifest():
     load_module()
 
     result = subprocess.run(
@@ -144,8 +135,4 @@ def test_cli_text_outputs_runnable_recorder_commands():
     )
 
     assert result.returncode == 0, result.stderr
-    assert "H-003" in result.stdout
-    assert (
-        "scripts/record_unity_import_evidence.py --fbx evidence/H-003/export-unity.fbx "
-        "--unity /Fake/Unity --timeout-seconds 240"
-    ) in result.stdout
+    assert result.stdout == "No configured Animator smoke migration gaps found.\n"

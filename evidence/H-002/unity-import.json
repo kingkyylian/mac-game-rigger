@@ -3,32 +3,32 @@
   "status": "pass",
   "checkedOn": "2026-06-28",
   "unityEditor": "/Applications/Unity/Hub/Editor/6000.4.1f1/Unity.app/Contents/MacOS/Unity",
-  "fbx": "evidence/H-003/export-unity.fbx",
-  "verificationCommand": "scripts/verify_unity_fbx_import.sh --fbx evidence/H-003/export-unity.fbx --unity /Applications/Unity/Hub/Editor/6000.4.1f1/Unity.app/Contents/MacOS/Unity --timeout-seconds 240",
+  "fbx": "evidence/H-002/export-unity.fbx",
+  "verificationCommand": "scripts/verify_unity_fbx_import.sh --fbx evidence/H-002/export-unity.fbx --unity /Applications/Unity/Hub/Editor/6000.4.1f1/Unity.app/Contents/MacOS/Unity --timeout-seconds 240",
   "result": {
     "status": "pass",
     "assetPath": "Assets/MacGameRiggerImportCandidate/export-unity.fbx",
     "assetName": "export-unity",
     "instantiated": true,
-    "childCount": 20,
-    "rendererCount": 1,
-    "skinnedMeshRendererCount": 1,
+    "childCount": 27,
+    "rendererCount": 8,
+    "skinnedMeshRendererCount": 8,
     "meshFilterCount": 0,
     "animatorCount": 1,
     "boundsSmoke": {
       "passed": true,
       "boundsCenter": {
         "x": 0,
-        "y": 1.77603185,
-        "z": -0.1350863
+        "y": 1.10505772,
+        "z": 0.0103361607
       },
       "boundsSize": {
-        "x": 3.23966813,
-        "y": 3.5892446,
-        "z": 1.35047662
+        "x": 1.95408154,
+        "y": 2.335734,
+        "z": 1.04937887
       },
-      "boundsHeight": 3.5892446,
-      "maxDimension": 3.5892446
+      "boundsHeight": 2.335734,
+      "maxDimension": 2.335734
     },
     "boneTransformSmoke": {
       "passed": true,
@@ -40,7 +40,7 @@
       "passed": true,
       "sampledBone": "Hips",
       "sampledBonePath": "MGR_Armature/Hips",
-      "sampledRotationDeltaDegrees": 90.24508
+      "sampledRotationDeltaDegrees": 90.2450943
     },
     "configuredAnimatorSmoke": {
       "passed": true,
@@ -49,7 +49,7 @@
       "stateCount": 1,
       "sampledBone": "Hips",
       "sampledBonePath": "MGR_Armature/Hips",
-      "sampledRotationDeltaDegrees": 90.24508
+      "sampledRotationDeltaDegrees": 90.2450943
     },
     "modelImporter": {
       "available": true,
